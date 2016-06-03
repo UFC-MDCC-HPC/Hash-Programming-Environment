@@ -2,6 +2,14 @@
 /** The generic domain gov, which CCA claims to be a direct descendant of
 since more than just Department of Energy folks defined the specification. */
 using System;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.ports;
+using gov.cca.ports;
+
+
 namespace gov
 {
     /** Common Component Architecture. Component approaches for Scientific Computing. */
@@ -10,8 +18,14 @@ namespace gov
 
         /** All ports must derive from this port type */
         //(gkk) unchanged from 0.5
+		[ServiceContract]
+		[ServiceKnownType(typeof(GoPort))]
+		[ServiceKnownType(typeof(GoPortWrapper))]
+		[ServiceKnownType(typeof(InitializePort))]
+		[ServiceKnownType(typeof(InitializePortWrapper))]
+		[ServiceKnownType(typeof(ReconfigurationAdvicePort))]
+		[ServiceKnownType(typeof(ReconfigurationAdvicePortWrapper))]
         public interface Port { }
-
 
         /** 
          * Mapping of standard exceptional event types
@@ -82,8 +96,12 @@ namespace gov
 
 
         /** The one interface all frameworks must implement. A unique instance
-         of this is given to each component. */
-        public interface Services
+         * of this is given to each component. */		
+
+		[ServiceContract]
+		[ServiceKnownType(typeof(InitializePortWrapper))]
+		[ServiceKnownType(typeof(TypeMapImpl))]
+		public interface Services
         {
 
             /** 
@@ -113,7 +131,8 @@ namespace gov
              * @exception CCAException with the following types: NotConnected, PortNotDefined, 
              *                NetworkError, OutOfMemory.
              */
-            Port getPort(string portName);// throws CCAException;
+			[OperationContract]
+			Port getPort(string portName);// throws CCAException;
 
 
 
@@ -132,7 +151,14 @@ namespace gov
              * 	     the component now wants to use.
              * @exception CCAException with the following types: PortNotDefined, OutOfMemory.
              */
-            Port getPortNonblocking(string portName);// throws CCAException;
+			[OperationContract]
+			//[ServiceKnownType(typeof(GoPort))]
+			//[ServiceKnownType(typeof(GoPortWrapper))]
+			[ServiceKnownType(typeof(InitializePort))]
+			[ServiceKnownType(typeof(InitializePortWrapper))]
+			//[ServiceKnownType(typeof(ReconfigurationAdvicePort))]
+			//[ServiceKnownType(typeof(ReconfigurationAdvicePortWrapper))]
+			Port getPortNonblocking(string portName);// throws CCAException;
 
             /** 
              * Notifies the framework that this component is finished 
@@ -145,7 +171,8 @@ namespace gov
              * @param portName The name of a port.
              * @exception CCAException with the following types: PortNotDefined, PortNotInUse.
              */
-            void releasePort(string portName);// throws CCAException;
+			[OperationContract]
+			void releasePort(string portName);// throws CCAException;
 
 
             /**
@@ -185,7 +212,8 @@ namespace gov
              *       assumed.
              * @exception CCAException with the following types: PortAlreadyDefined, OutOfMemory.
              */
-            void registerUsesPort(string portName,
+			[OperationContract]
+			void registerUsesPort(string portName,
                           string type,
                           TypeMap properties);// throws CCAException ;
 
@@ -198,6 +226,7 @@ namespace gov
              * @param portName The name of a registered Port.
              * @exception CCAException with the following types: UsesPortNotReleased, PortNotDefined.
              */
+			[OperationContract]
             void unregisterUsesPort(string portName);// throws CCAException ;
 
 
@@ -239,6 +268,7 @@ namespace gov
              * assumed.
              * @exception CCAException with the following types: PortAlreadyDefined, OutOfMemory.
              */
+			[OperationContract]
             void addProvidesPort(Port inPort,
                          string portName,
                      	 string type,
@@ -254,6 +284,7 @@ namespace gov
                properties (i.e. from addProvidesPort/registerUsesPort) that it
                will honor.
                */
+			[OperationContract]
             TypeMap getPortProperties(string name);
 
             /** Notifies the framework that a previously exposed Port is no longer 
@@ -263,13 +294,15 @@ namespace gov
              * @exception PortNotDefined. In general, the framework will not dictate 
              * when the component chooses to stop offering services.
              */
+			[OperationContract]
             void removeProvidesPort(string portName);// throws CCAException ;
 
             /** 
              * Get a reference to the component to which this 
              * Services object belongs. 
              */
-            ComponentID getComponentID();
+			[OperationContract]
+			ComponentID getComponentID();
 
 
             /** Obtain a callback for component destruction.
@@ -282,6 +315,7 @@ namespace gov
          * callbacks are made for a specific component, subsequent usage
          * of the Services object is not allowed/is undefined.
          */
+			[OperationContract]
             void registerForRelease(ComponentRelease callBack);// throws CCAException;
         }
 
@@ -355,7 +389,8 @@ namespace gov
          * An opaque reference to a Component.
          */
 
-        [Serializable]
+        [DataContract]
+		[KnownType(typeof(WorkerComponentIDImpl))]
         public abstract class ComponentID
         {
             /** 
@@ -377,7 +412,7 @@ namespace gov
 
         /** The primitive data types (and arrays of same) supported by CCA
         TypeMaps and Babel. */
-        public enum Type
+		public enum Type
         {
             NoType, Int, Long, Float, Double, Fcomplex, Dcomplex, String, Bool,
             IntArray, LongArray, FloatArray, DoubleArray, FcomplexArray,
@@ -402,8 +437,11 @@ namespace gov
          *  getLong, getString, getIntArray and other get methods will
          *  fail (i.e. return the default value). 
          */
-        [Serializable]
-        public abstract class TypeMap
+		[DataContract]
+		[KnownType(typeof(TypeMapImpl))]
+		[KnownType(typeof(string[]))]
+		[KnownType(typeof(int[]))]
+		public abstract class TypeMap
         {
             /** Create an exact copy of this Map */
             public abstract TypeMap cloneTypeMap();
@@ -544,7 +582,10 @@ namespace gov
          *  }
          *  </pre></code>
          */
-        public interface AbstractFramework
+		[ServiceContract]
+		[ServiceKnownType(typeof(TypeMapImpl))]
+		//[ServiceKnownType(typeof(WorkerServicesImpl2))]
+		public interface AbstractFramework
         {
             /** 
              *  Create an empty TypeMap. Presumably this would be used in 
@@ -583,7 +624,10 @@ namespace gov
              *	    to the object passed into Component.setServices() 
              *	    when a component is created.
              */
-            Services getServices(string selfInstanceName, string selfClassName,
+            [OperationContract]
+			[ServiceKnownType(typeof(TypeMapImpl))]
+			//[ServiceKnownType(typeof(WorkerServicesImpl2))]
+			Services getServices(string selfInstanceName, string selfClassName,
                          TypeMap selfProperties);// throws CCAException ;
 
 
@@ -635,7 +679,8 @@ namespace gov
          *  by their string instance names.
          */
 
-        [Serializable]
+		[DataContract]
+		[KnownType(typeof(WorkerConnectionIDImpl))]
         public abstract class ConnectionID
         {
             /** 
@@ -700,6 +745,8 @@ namespace gov
             /**
              * Go, component, go!
              */
+			[ServiceContract]
+			[ServiceKnownType(typeof(GoPortWrapper))]
             public interface GoPort : Port
             {
                 /** 
@@ -708,6 +755,7 @@ namespace gov
                  * used further, and -2 if error so severe that component cannot
                  * be further used safely.
                  */
+				[OperationContract]
                 int go();
             }
 
@@ -848,6 +896,7 @@ namespace gov
              *   </pre>
              *  </p>
              */
+			[ServiceContract]
             public interface BuilderService : cca.Port
             {
 
@@ -865,6 +914,7 @@ namespace gov
                  * 		the returned ID does not destroy the component; 
                  * 		see destroyInstance instead.
                  */
+				[OperationContract]
                 cca.ComponentID createInstance(string instanceName, string className, cca.TypeMap properties);
                 //throws cca.CCAException ; 
 
@@ -916,6 +966,7 @@ namespace gov
                  *  @throws CCAException if toDie refers to an invalid component, or
                  *  if the operation takes longer than timeout seconds.
                  */
+				[OperationContract]
                 void destroyInstance(cca.ComponentID toDie, float timeout);
                 //throws cca.CCAException ;
 
@@ -924,7 +975,8 @@ namespace gov
                  *  @param cid the component.
                  *  @throws CCAException if cid refers to an invalid component.
                  */
-                string[] getProvidedPortNames(cca.ComponentID cid);
+				[OperationContract]
+				string[] getProvidedPortNames(cca.ComponentID cid);
                 //throws cca.CCAException ; 
 
                 /** 
@@ -932,7 +984,8 @@ namespace gov
                  *  @param cid the component.
                  *  @throws CCAException if cid refers to an invalid component. 
                  */
-                string[] getUsedPortNames(cca.ComponentID cid);
+				[OperationContract]
+				string[] getUsedPortNames(cca.ComponentID cid);
                 //throws cca.CCAException ; 
 
                 /** 
@@ -968,6 +1021,7 @@ namespace gov
                  * 	 with this operation, especially if the underlying connections 
                  * 	 involve networking.</ul>
                  */
+				[OperationContract]
                 cca.ConnectionID connect(cca.ComponentID user,
                              string usingPortName,
                              cca.ComponentID provider,
@@ -1015,7 +1069,8 @@ namespace gov
                  * </ul>
                  * 
                  */
-                void disconnect(cca.ConnectionID connID, float timeout);
+				[OperationContract]
+				void disconnect(cca.ConnectionID connID, float timeout);
                 //throws cca.CCAException ; 
 
                 /** Remove all connections between components id1 and id2 within 

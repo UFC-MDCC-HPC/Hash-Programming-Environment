@@ -311,7 +311,7 @@ Package component <http://www.example.org/HashComponent>
     Attribute transitive : Boolean
 
   Class UnitType
-    Reference super : UnitRefType
+    Reference super : UnitRefType<<0..*>>
     Reference slices : UnitSliceType<<0..*>>
     Reference visualDescription : VisualElementAttributes
     Attribute facet : Int
@@ -348,10 +348,10 @@ Package component <http://www.example.org/HashComponent>
     Literal Qualifier = 5
     Literal Application = 6
     Literal Enumerator = 7
-    Literal Facet = 8
-    Literal Binding = 9
-    Literal Topology = 10
-    Literal System = 11
+    Literal Binding = 8
+    Literal Topology = 9
+    Literal System = 10
+    Literal Proxy = 11
 
   Enum VarianceType
     Literal covariant = 0

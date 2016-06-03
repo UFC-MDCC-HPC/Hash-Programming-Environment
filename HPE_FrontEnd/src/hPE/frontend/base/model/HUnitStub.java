@@ -3,6 +3,7 @@ package hPE.frontend.base.model;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.interfaces.IUnit;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -231,6 +232,35 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		return this.getActualUnit().getUnitReplicaIndex();
 	}
 
+	@Override
+	public void colocateUnits(List<IHUnit> us) {
+		// TODO Auto-generated method stub
+		this.getActualUnit().colocateUnits(us);
+	}
+
+	@Override
+	public void setColocatingUnit(IHUnit hUnit) {
+		// TODO Auto-generated method stub
+		this.getActualUnit().setColocatingUnit(hUnit);
+	}
+
+	@Override
+	public IHUnit getColocatingUnit() {
+		// TODO Auto-generated method stub
+		return null; //this.getActualUnit().getColocatingUnit();
+	}
+
+	private List<IHUnit> colocated_units = new ArrayList<IHUnit>(); 
+
+	public List<IHUnit> getColocatedUnits()
+	{
+		return this.colocated_units;
+	}
+	
+    public void setColocatedUnits(List<IHUnit> colocated_units)
+    {
+    	this.colocated_units = colocated_units;
+    }
 
 
 

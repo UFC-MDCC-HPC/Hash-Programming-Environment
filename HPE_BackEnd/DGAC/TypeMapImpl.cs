@@ -1,15 +1,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.ServiceModel;
 
 namespace gov
 {
     namespace cca
-    {
-        [Serializable]
-        public abstract class HPETypeMap : gov.cca.TypeMap, IDictionary<string, object>
+    {	
+		[DataContract]
+		[KnownType(typeof(TypeMapImpl))]
+		[KnownType(typeof(string[]))]
+		[KnownType(typeof(int[]))]
+	    public abstract class HPETypeMap : gov.cca.TypeMap//, IDictionary<string, object>
         {
+			[DataMember]
             protected IDictionary<string, object> dict = null;
+
+			[DataMember]
             protected IDictionary<string, Type> property_type = null;
 
             #region IDictionary<string,object> Members
@@ -109,16 +117,18 @@ namespace gov
 
             #region IEnumerable Members
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return dict.GetEnumerator();
-            }
+          //  System.Collections.IEnumerator GetEnumerator()
+          //  {
+          //      return dict.GetEnumerator();
+           // }
 
             #endregion
         }
 
-        [Serializable]
-        public class TypeMapImpl : HPETypeMap
+		[DataContract]
+		[KnownType(typeof(string[]))]
+		[KnownType(typeof(int[]))]
+		public class TypeMapImpl : HPETypeMap
         {
 
 
@@ -252,6 +262,7 @@ namespace gov
                 property_type.Add(key, typeMapTypes[value.GetType()]);
             }
 
+			[DataMember]
             private static IDictionary<System.Type, gov.cca.Type> typeMapTypes = new Dictionary<System.Type, gov.cca.Type>();
 			
 			private void fill_typeMapTypes()

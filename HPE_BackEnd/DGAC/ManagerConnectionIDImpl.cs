@@ -103,6 +103,7 @@ namespace gov
             #region attributes
 
             private int[] nodes;
+			private bool ignore = false;
 
             #endregion
 
@@ -124,9 +125,19 @@ namespace gov
                 :  base(provider, providesPortName,user,usesPortName, worker_connections)
             {
                 this.nodes = nodes;
+				this.ignore = false;
             }
 
-            #endregion            
+			public ManagerConnectionIDImpl(ComponentID provider, 
+				string providesPortName, 
+				ComponentID user, 
+				string usesPortName) 
+				:  base(provider, providesPortName,user,usesPortName, null)
+			{
+				this.ignore = true;
+			}
+
+			#endregion            
 
             #region disconnection synchronization
 
@@ -165,6 +176,8 @@ namespace gov
             {
                 return !block_fetch;
             }
+
+			public bool Ignore { get { return this.ignore; } }
 
             #endregion
 			

@@ -37,31 +37,21 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface UnitType extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Super</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Super</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.UnitRefType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Super</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Super</em>' containment reference.
-	 * @see #setSuper(UnitRefType)
+	 * @return the value of the '<em>Super</em>' containment reference list.
 	 * @see hPE.xml.component.ComponentPackage#getUnitType_Super()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='super'"
 	 * @generated
 	 */
-	UnitRefType getSuper();
-
-	/**
-	 * Sets the value of the '{@link hPE.xml.component.UnitType#getSuper <em>Super</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Super</em>' containment reference.
-	 * @see #getSuper()
-	 * @generated
-	 */
-	void setSuper(UnitRefType value);
+	EList<UnitRefType> getSuper();
 
 	/**
 	 * Returns the value of the '<em><b>Slices</b></em>' containment reference list.

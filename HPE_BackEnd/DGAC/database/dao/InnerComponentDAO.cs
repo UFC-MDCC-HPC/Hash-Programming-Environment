@@ -101,8 +101,7 @@ public class InnerComponentDAO{
 	   int id_abstract = id_abstract_start;
 		
 	   while (id_abstract > 0) 
-	   {
-			
+	   {			
 		   IDbConnection dbcon = Connector.DBcon;
 	       IDbCommand dbcmd = dbcon.CreateCommand();
 	       string sql =
@@ -132,14 +131,12 @@ public class InnerComponentDAO{
 				
            AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
 		   if (acf.Id_functor_app_supertype > 0)
-			{
+		   {
 			   AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
 			   id_abstract = acfa.Id_abstract;
-			}
-			else 
-				id_abstract = -1;
-				
-				
+		   }
+		   else 
+			   id_abstract = -1;			
 	   }
 			
        return list;

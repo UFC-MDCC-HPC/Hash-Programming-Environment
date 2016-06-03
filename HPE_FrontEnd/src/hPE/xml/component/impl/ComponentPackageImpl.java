@@ -3793,7 +3793,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getUnitSliceType_Transitive(), theXMLTypePackage.getBoolean(), "transitive", null, 0, 1, UnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(unitTypeEClass, UnitType.class, "UnitType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getUnitType_Super(), this.getUnitRefType(), null, "super", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUnitType_Super(), this.getUnitRefType(), null, "super", null, 0, -1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUnitType_Slices(), this.getUnitSliceType(), null, "slices", null, 0, -1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUnitType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Facet(), theXMLTypePackage.getInt(), "facet", "0", 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3831,10 +3831,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.QUALIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.APPLICATION);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENUMERATOR);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.FACET);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.BINDING);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TOPOLOGY);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SYSTEM);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.PROXY);
 
 		initEEnum(varianceTypeEEnum, VarianceType.class, "VarianceType");
 		addEEnumLiteral(varianceTypeEEnum, VarianceType.COVARIANT);

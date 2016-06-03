@@ -5,6 +5,7 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasPortsUnit;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSig;
+import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
@@ -36,7 +37,4 @@ public class HBindingUnit extends HHasPortsUnit implements IHBindingUnit {
 		return new HBindingUnitSlice(the_unit, this, where);
 	}
 	
-  /*  public HUnitStub createStub() {
-    	return new HQualifierUnitStub(this);
-    } */
 }

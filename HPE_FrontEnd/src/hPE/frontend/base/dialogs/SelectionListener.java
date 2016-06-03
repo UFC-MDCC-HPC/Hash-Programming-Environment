@@ -2,7 +2,7 @@ package hPE.frontend.base.dialogs;
 
 import java.util.Map;
 
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.ComboListener;
 import hPE.frontend.base.model.HInterface.ListHBESourceVersion;
@@ -32,14 +32,14 @@ public class SelectionListener implements ListSelectionListener {
 		System.out.println(rowIndex);
 	    ComboListener.getInstance().setRowIndex(rowIndex);
 
-    	HBESourceVersion<HBEAbstractFile> srcVersion = l.getSourceVersionList().get(rowIndex);
+    	HBESourceVersion srcVersion = l.getSourceVersionList().get(rowIndex);
 		
 	    Map<Integer, String> selectedFileNames = ComboListener.getInstance().getSelectedFileNames();
 	    String fileName = selectedFileNames.get(new Integer(rowIndex));
 
 	    theComboBox.setEnabled(false);
 		theComboBox.removeAllItems();
-	    for (HBEAbstractFile file : srcVersion.getFiles()) {
+	    for (HBEAbstractSourceCodeFile file : srcVersion.getFiles()) {
 		     theComboBox.addItem(file.getFileName());	
 	    }
 	    theComboBox.setEnabled(true);

@@ -12,7 +12,9 @@ using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
-	
+	public class FreeVariableException : Exception
+	{
+	}
 	
 	public class GenerateTree
 	{
@@ -93,6 +95,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
 						Trace.WriteLine ("acfaActual 1 ??? " + spc.Id_functor_app_actual);
                         acfaActual = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);	
+						if (acfaActual == null)
+							throw new FreeVariableException ();
 							//flag_par = true;	
                     }
                     else if (sp is SupplyParameterParameter)

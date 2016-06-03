@@ -15,23 +15,96 @@ using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using gov.cca.ports;
 using br.ufc.pargo.hpe.ports;
-//using br.ufc.lia.hpe.kinds;
 using System.Diagnostics;
 using br.ufc.pargo.hpe.kinds;
+using System.ServiceModel;
+using System.Runtime.Serialization;
+using System.Collections;
 
 
 delegate void GoMethod();
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 { 
-	//WORKER
-    public class WorkerObject : MarshalByRefObject, gov.cca.AbstractFramework, 
-	                                                gov.cca.ports.BuilderService,
-		                                            gov.cca.Services,
-                                                    gov.cca.Component,
-													gov.cca.ports.ServiceRegistry
-    {
-		
+
+	[ServiceContract(SessionMode = SessionMode.Allowed)]
+	[ServiceKnownType(typeof(TypeMapImpl))]
+	public interface IWorkerObject : gov.cca.Services, gov.cca.Component, gov.cca.ports.BuilderService, gov.cca.AbstractFramework
+	{
+		[OperationContract]
+		RemoteGoPort getRemoteGoPort(string portName);
+
+		[OperationContract]
+		RemoteGoPort getRemoteGoPortNonBlocking(string portName);
+
+		[OperationContract]
+		int perform_go(int id);
+
+		[OperationContract]
+		RemoteInitializePort getRemoteInitializePort(string portName);
+
+		[OperationContract]
+		RemoteInitializePort getRemoteInitializePortNonBlocking(string portName);
+
+		[OperationContract]
+		void perform_on_initialize(int id);
+
+		[OperationContract]
+		void perform_after_initialize(int id);
+
+		[OperationContract]
+		TypeMap createTypeMap();
+			
+		[OperationContract]
+		void createRemoteServices(int key, ComponentID cid, TypeMap selfProperties);
+
+		[OperationContract]
+		void linkToRemoteServices(int key, ComponentID cid);
+
+		[OperationContract]
+		void releaseServices(Services services);
+
+		[OperationContract]
+		void shutdownFramework();
+
+		[OperationContract]
+		AbstractFramework createEmptyFramework(); 
+
+		[OperationContract]
+		WorkerServices getServicesObjectOf(string instanceName);
+
+		[OperationContract]
+		void createInstanceNull();
+
+		[OperationContract]
+		void setUpCommunicationScope();
+
+		[OperationContract]
+		void registerComponentID_unit(ComponentID cid, Services services, br.ufc.pargo.hpe.basic.IUnit unit);
+
+		[OperationContract]
+		void registerComponentID(ComponentID cid, Services services);
+
+		[OperationContract]
+		void registerForReleaseServices(Services services, ComponentRelease callBack);
+
+		[OperationContract]
+		Port getServicePort(ComponentID user, string usedPortName);
+
+		[OperationContract]
+		void setServicesByKey(int services);
+	}
+
+	 [DataContract]
+	// [ServiceKnownType(typeof(InitializePortWrapper))]
+	 [ServiceBehavior(InstanceContextMode=InstanceContextMode.Single)]
+	 public class WorkerObject : gov.cca.AbstractFramework, 
+                                 gov.cca.ports.BuilderService,
+                                 gov.cca.Services,
+                                 gov.cca.Component,
+								 gov.cca.ports.ServiceRegistry, 
+							     IWorkerObject
+    {		
 		#region Tables
 		
 		private IDictionary<string, br.ufc.pargo.hpe.basic.IUnit> unitInstances = new Dictionary<string, br.ufc.pargo.hpe.basic.IUnit>();
@@ -61,9 +134,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private IDictionary<string, ConnectionID> connByUserPort = new Dictionary<string, ConnectionID>();
         private IDictionary<string, IList<ConnectionID>> connByProviderPort = new Dictionary<string, IList<ConnectionID>>();
 
-        private IDictionary<string, Services> componentServices = new Dictionary<string, Services>();
-
-		
+		private IDictionary<string, Services> componentServices = new Dictionary<string, Services>();
+				
 		private void registerProvidesPortInfo(ComponentID cid, Port port, string portName, string type, TypeMap properties) 
 		{
 			IList<string> portList;
@@ -123,12 +195,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		}
 
 		
-		public void registerComponentID(ComponentID cid, Services services, br.ufc.pargo.hpe.basic.IUnit unit) 
+		public void registerComponentID_unit(ComponentID cid, Services services, br.ufc.pargo.hpe.basic.IUnit unit) 
 		{
             if (!componentIDs.ContainsKey(cid.getInstanceName()))
             {
                 unitInstances.Add(cid.getInstanceName(), unit);
                 componentIDs.Add(cid.getInstanceName(), cid);
+				Trace.WriteLine ("regiterComponentID_unit " + cid.getInstanceName());
                 componentServices.Add(cid.getInstanceName(), services);
                 unit.CID = cid;
             }
@@ -139,6 +212,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             if (!componentIDs.ContainsKey(cid.getInstanceName()))
             {
                 componentIDs.Add(cid.getInstanceName(), cid);
+				Trace.WriteLine ("registerComponentID " + cid.getInstanceName() + ", componentIDs.Count=" + componentIDs.Count + " this = " + this.GetHashCode());
                 componentServices.Add(cid.getInstanceName(), services);
             }
         }
@@ -165,6 +239,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             this.global_communicator = MPI.Communicator.world;
             my_global_rank = this.global_communicator.Rank;
 
+			Trace.WriteLine ("WORKER OBJECT - MY RANK is " + my_global_rank + ", size = " + MPI.Communicator.world.Size + ", id=" + this.GetHashCode());
         }
 		
 		#endregion
@@ -194,12 +269,37 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             ComponentID cid = new WorkerComponentIDImpl(selfInstanceName);
             unitProperties.Add(cid, selfProperties);
             WorkerServicesImpl services = new WorkerServicesImpl(this, cid);
-            this.registerComponentID(cid, services);
+            //this.registerComponentID(cid, services);
 
-            return services;            
+			return services;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
+		private IDictionary<int,Services> remote_services = new Dictionary<int,Services>();
+
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public void createRemoteServices(int key, ComponentID cid, TypeMap selfProperties)
+		{
+			Trace.WriteLine ("createRemoteServices 1 " + cid.getInstanceName());
+			unitProperties.Add(cid, selfProperties);
+			WorkerServicesImpl services = new WorkerServicesImpl(this, cid);
+			remote_services.Add (key, services);
+			registerComponentID (cid, services);
+			Trace.WriteLine ("createRemoteServices 2 " + cid.getInstanceName());
+		}
+
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public void linkToRemoteServices(int key, ComponentID cid)
+		{
+			WorkerServicesImpl services = (WorkerServicesImpl) this.getServicesObjectOf (cid.getInstanceName ());
+			if (remote_services.ContainsKey (key))
+				Trace.WriteLine (this.my_global_rank + ": linkToRemoteServices - key " + key + " ALREADY REGISTERED in remote_services -- " + cid.getInstanceName());
+			Trace.WriteLine (this.my_global_rank + ": linkToRemoteServices - REGISTERING " + key + " in remote_services -- " + cid.getInstanceName());
+			remote_services.Add (key, services);
+			registerComponentID (cid, services);
+		}
+
+
+		[MethodImpl(MethodImplOptions.Synchronized)]
         public void releaseServices(gov.cca.Services services)
         {
             if (releaseRegister.ContainsKey(services))
@@ -241,15 +341,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         #endregion
 
+		public void setServicesByKey(int services)
+		{
+			setServices (remote_services [services]);
+		}
+
 
         #region BuilderService Members
 
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
+        //[MethodImpl(MethodImplOptions.Synchronized)]
         public ComponentID createInstance(string instanceName,
                                           string className,    // unit name (data)
                                           TypeMap properties)
         {
+			Trace.WriteLine("CREATE INSTANCE");
 			Trace.WriteLine(my_global_rank + ": createInstance --- " + properties.getString(Constants.KIND_KEY, "") + " " + instanceName + " --- " + className);
             ComponentID cid = null;
 
@@ -289,7 +395,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
                 ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
 
-                IUnit unit_slice;
+				IUnit unit_slice;
                 unitInstances.TryGetValue(cid_app.getInstanceName(), out unit_slice);
                 br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind)unit_slice;
 
@@ -306,21 +412,29 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		void configure_facet_address (IBindingRootKind unit_slice, string[] ip_address_facets, int[] port_facets)
 		{
-			for (int i=0; i<ip_address_facets.Length; i++)
+			foreach (KeyValuePair<int,int[]> facet in unit_slice.FacetIndexes) 
 			{
-				FacetAccess facet_access = new FacetAccess(ip_address_facets[i], port_facets[i]);
-
-				unit_slice.addFacetAccessInfo(i, facet_access);
-
-				Trace.WriteLine ("ADDING FACET TO UNIT SLICE - fact=" + i + ", address = " + ip_address_facets[i] + ", port = " + port_facets[i]);
+				foreach (int i in facet.Value) 
+				{
+					FacetAccess facet_access = new FacetAccess (ip_address_facets [i], port_facets [i]);
+					unit_slice.addFacetAccessInfo (i, facet_access);
+					Trace.WriteLine ("ADDING FACET TO UNIT SLICE - fact=" + i + ", address = " + ip_address_facets [i] + ", port = " + port_facets [i]);
+				}
 			}
+
+//			for (int i=0; i<ip_address_facets.Length; i++)
+//			{
+//				FacetAccess facet_access = new FacetAccess(ip_address_facets[i], port_facets[i]);
+//				unit_slice.addFacetAccessInfo(i, facet_access);
+//				Trace.WriteLine ("ADDING FACET TO UNIT SLICE - fact=" + i + ", address = " + ip_address_facets[i] + ", port = " + port_facets[i]);
+//			}
 		}
 
         private ComponentID createInstanceBaseForAllKinds(string instanceName, string class_name, TypeMap properties)
         {
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
 			try {
-				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 1");
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 1 " + instanceName);
 	            unitProperties.Add(cid, properties);
 				
 				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 2");
@@ -329,6 +443,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
 				string[] portNames = properties.getStringArray(Constants.PORT_NAMES_KEY, new string[0]);
 				int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
+				string unit_mapping_xml = properties.getString(Constants.NODES_KEY, "");
+				Instantiator.UnitMappingType[] unit_mapping = LoaderApp.deserialize<Instantiator.UnitMappingType[]>(unit_mapping_xml);
 
 				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 3 ; assembly_string = " + assembly_string + "; class name = "+  class_name);
 	
@@ -361,6 +477,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					// BRIDGE BINDING INTER-COMMUNICATOR
 					Trace.WriteLine(my_global_rank +  "," + unit_slice.Communicator.Rank + ": createInstanceBaseForAllKinds - 7");
 
+
+					int this_facet_instance = properties.getInt(Constants.FACET_INSTANCE, 0);
+					int this_facet = properties.getInt(Constants.FACET, 0);
+					unit_slice.ThisFacetInstance = this_facet_instance;
+					unit_slice.ThisFacet = this_facet;
+
+					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 7 - PASSOU DIRETO");
+
+					unit_slice.configure_facet_topology(properties.getIntArray(Constants.FACET_TOPOLOGY,new int[0]), unit_mapping);
+					unit_slice.calculate_topology();
+
 					if (kind == Constants.KIND_BINDING)
 					{
 						IBindingKind unit_slice_binding = (IBindingKind) unit_slice; 
@@ -373,18 +500,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							IBindingRootKind unit_slice_binding_root = (IBindingRootKind) unit_slice;
 							string[] ip_address_facets = properties.getStringArray(Constants.FACET_IP_ADDRESS, new string[0]);
 							int[] port_facets = properties.getIntArray(Constants.FACET_PORT, new int[0]);
-							int this_facet = properties.getInt(Constants.FACET_NUMBER, 0);
 							Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 9" + ip_address_facets.Length + "," + port_facets.Length);
 							configure_facet_address(unit_slice_binding_root, ip_address_facets, port_facets);
 							Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 10");
-					unit_slice_binding_root.ThisFacet = this_facet;
-							Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 11 " + this_facet);
 						}
+
+						Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 11 ");
+
 					}
-
-					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 7 - PASSOU DIRETO");
-
-					unit_slice.calculate_topology();
 
 					Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - SIZE");
 					foreach (KeyValuePair<string, int> unit_size in unit_slice.UnitSize)
@@ -412,6 +535,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			}
             return cid;
         }
+
 
 
         private IDictionary<string, int> readEnumerators(HPETypeMap properties)
@@ -539,23 +663,35 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string[] getUsedPortNames(ComponentID cid)
         {
+			Trace.WriteLine ("getUsedPortNames !! #0" + (cid==null));
+			Trace.WriteLine ("getUsedPortNames !! #1 - " + (cid==null) + " - " + cid.getInstanceName());
+			foreach (string k in componentIDs.Keys)
+				Trace.WriteLine("--- KEY = " + k);
 			if (componentIDs.ContainsKey(cid.getInstanceName()))
 			{
 			    IList<string> portList;
+				Trace.WriteLine ("getUsedPortNames !! #2");
 				if (usesPortNames.ContainsKey(cid.getInstanceName())) 
 				{
+					Trace.WriteLine ("getUsedPortNames !! #3");
 					usesPortNames.TryGetValue(cid.getInstanceName(), out portList);			
+					Trace.WriteLine ("getUsedPortNames !! #5");
 					string[] ports = new string[portList.Count];
+					Trace.WriteLine ("getUsedPortNames !! #6");
 					portList.CopyTo(ports,0);
+					Trace.WriteLine ("getUsedPortNames !! #7");
 		            return ports;
 				} 
 				else
 				{
+					Trace.WriteLine ("getUsedPortNames !! #4");
 					return new string[] {};
 				}
 			}
 			else
 			{	
+				Trace.WriteLine ("getUsedPortNames !! #8");
+
 				foreach (string k in usesPortNames.Keys)
 					Trace.WriteLine("KEY = " + k);
 				
@@ -622,25 +758,25 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			Trace.WriteLine(my_global_rank + ": begin connect " + user_port_name + " to " + provider_port_name);
 
-			Trace.WriteLine(my_global_rank + ": connect 1");			
+		//	Trace.WriteLine(my_global_rank + ": connect 1");			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
-			Trace.WriteLine(my_global_rank + ": connect 2 " + (connection.ToString()));
+		//	Trace.WriteLine(my_global_rank + ": connect 2 " + (connection.ToString()));
             connectionList.Add(connection.ToString(), connection);
-			Trace.WriteLine(my_global_rank + ": connect 3");
+		//	Trace.WriteLine(my_global_rank + ": connect 3");
             bool first_connection = addConnByProviderPort(provider_port_name, connection);
-			Trace.WriteLine(my_global_rank + ": connect 4");
+		//	Trace.WriteLine(my_global_rank + ": connect 4");
             connByUserPort.Add(user_port_name, connection);			
-			Trace.WriteLine(my_global_rank + ": connect 5");
+		//	Trace.WriteLine(my_global_rank + ": connect 5");
 			port_manager.resetPort(user_port_name);
-			Trace.WriteLine(my_global_rank + ": connect 6");
+		//	Trace.WriteLine(my_global_rank + ": connect 6");
             this.tryAwakeConnectingUserPort(user_port_name);
-			Trace.WriteLine(my_global_rank + ": connect 7");
+		//	Trace.WriteLine(my_global_rank + ": connect 7");
 
             IUnit user_unit, provider_unit;
             this.unitInstances.TryGetValue(user.getInstanceName(), out user_unit);
-			Trace.WriteLine(my_global_rank + ": connect 8");
+		//	Trace.WriteLine(my_global_rank + ": connect 8");
             this.unitInstances.TryGetValue(provider.getInstanceName(), out provider_unit);
-			Trace.WriteLine(my_global_rank + ": connect 9");
+		//	Trace.WriteLine(my_global_rank + ": connect 9");
 
             if (user_unit != null)
 				user_unit.addSlice(provider_unit,usingPortName);
@@ -728,6 +864,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void disconnect(ConnectionID connID, float timeout)
         {
+			Trace.WriteLine ("WORKER OBJECT - disconnecting ...");
+
             WorkerConnectionID hpeconnID = (WorkerConnectionID) connID;
 			
 			string user_port_name = connID.getUser().getInstanceName() + ":" + connID.getUserPortName();
@@ -818,7 +956,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             Port providesPort;
             providesPorts.TryGetValue(providesPortName, out providesPort);
             
-			//Trace.WriteLine("PORT TYPE of " + providesPortName + " = " + providesPort.GetType());
+			Trace.WriteLine("PORT TYPE of " + providesPortName + " = " + providesPort.GetType());
 			
 			port_manager.addPortFetch(portName);
 			
@@ -830,7 +968,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         	public Port getServicePort(ComponentID user, string usedPortName)
 			{
 				Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "): checking service port " + usedPortName);
-				string portType;
+				string portType;	
 				if (usesPortTypes.TryGetValue(usedPortName, out portType))
 				{
 					Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "):port type is " + portType);
@@ -859,8 +997,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				return null;
 			}
 
-//		[MethodImpl(MethodImplOptions.Synchronized)]
-        public Port getPort(string portName)
+		public Port getPort(string portName)
         {
             Trace.WriteLine("Worker" + my_global_rank + ": BEGIN getPort " + portName);
             if (!usesPortNamesInv.ContainsKey(portName))
@@ -893,8 +1030,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             return port;
 
         }
+			
 
-//        [MethodImpl(MethodImplOptions.Synchronized)]
         public Port getPortNonblocking(string portName)
         {
             if (!usesPortNamesInv.ContainsKey(portName))
@@ -912,7 +1049,104 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             return this.getPortProceed(portName);
         }
         
-        [MethodImpl(MethodImplOptions.Synchronized)]
+		private IDictionary<int, Port> remote_ports_dict = null;
+
+		public RemoteGoPort getRemoteGoPort(string portName)
+		{
+			GoPort go_port = (GoPort) this.getPort (portName);
+
+			if (remote_ports_dict == null)
+				remote_ports_dict = new Dictionary<int, Port> ();
+
+			int id = go_port.GetHashCode ();
+
+			RemoteGoPort remote_go_port = new RemoteGoPort (id);
+			remote_ports_dict.Add (id, go_port);
+
+			return remote_go_port;
+		}
+
+		public RemoteGoPort getRemoteGoPortNonBlocking(string portName)
+		{
+			GoPort go_port = (GoPort) this.getPortNonblocking (portName);
+
+			if (remote_ports_dict == null)
+				remote_ports_dict = new Dictionary<int, Port> ();
+
+			int id = go_port.GetHashCode ();
+
+			RemoteGoPort remote_go_port = new RemoteGoPort (id);
+			remote_ports_dict.Add (id, go_port);
+
+			return remote_go_port;
+		}
+
+		public int perform_go(int id)
+		{
+			return ((GoPort)remote_ports_dict[id]).go();
+		}
+			
+		public RemoteInitializePort getRemoteInitializePort(string portName)
+		{
+			InitializePort init_port = (InitializePort) this.getPort (portName);
+
+			if (remote_ports_dict == null)
+				remote_ports_dict = new Dictionary<int, Port> ();
+
+			int id = init_port.GetHashCode ();
+
+			RemoteInitializePort remote_init_port = new RemoteInitializePort (id);
+			remote_ports_dict.Add (id, init_port);
+
+			return remote_init_port;
+		}
+
+		public RemoteInitializePort getRemoteInitializePortNonBlocking(string portName)
+		{
+			try{
+
+			Console.WriteLine ("getRemoteInitializePortNonBlocking 1 - " + portName);
+			InitializePort init_port = (InitializePort) this.getPortNonblocking (portName);
+			int id = init_port.GetHashCode ();
+			Console.WriteLine ("getRemoteInitializePortNonBlocking 2 - " + portName + ", id = " + id);
+
+			if (remote_ports_dict == null)
+				remote_ports_dict = new Dictionary<int, Port> ();
+
+			Port remote_init_port;
+			if (!remote_ports_dict.ContainsKey(id))
+				remote_ports_dict.Add (id, init_port);
+			remote_init_port = new RemoteInitializePort (id);
+			
+				Console.WriteLine ("getRemoteInitializePortNonBlocking 3 - " + portName + ", type = " + remote_init_port.GetType());
+
+			return (RemoteInitializePort) remote_init_port;
+			}
+			catch (Exception e) 
+			{
+				Console.WriteLine("EXCEPTION = " + e.Message);
+				Console.WriteLine("STACK TRACE : " + e.StackTrace);
+				if (e.InnerException != null) 
+				{
+					Console.WriteLine("INNER EXCEPTION = " + e.InnerException.Message);
+					Console.WriteLine("INNER STACK TRACE : " + e.InnerException.StackTrace);
+				}
+				throw e;
+			}
+
+		}
+
+		public void perform_on_initialize(int id)
+		{
+			((InitializePort)remote_ports_dict[id]).on_initialize();
+		}
+
+		public void perform_after_initialize(int id)
+		{
+			((InitializePort)remote_ports_dict[id]).after_initialize();
+		}
+
+		[MethodImpl(MethodImplOptions.Synchronized)]
         public void releasePort(string portName)
         {
 			Trace.WriteLine (my_global_rank + ": RELEASE PORT " + portName + " ATTEMPT");
@@ -939,35 +1173,40 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
-			Trace.WriteLine("registering port " + portName);
+			Trace.WriteLine("registering port 0" + portName );
 			
 			if (usesPortNamesInv.ContainsKey(portName))
 			{
+				Trace.WriteLine("throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);");
 				throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);
 			}
-			
-            HPETypeMap hpe_properties = (HPETypeMap) properties;
 
-            Connector.openConnection();
+			HPETypeMap hpe_properties = (HPETypeMap) properties;
 
-            string instanceName; 
+			Connector.openConnection();
+
+			string instanceName; 
             string id_inner;
             readPortName(portName, out instanceName, out id_inner);
 
-            ComponentID cid;
+			ComponentID cid;
             if (componentIDs.ContainsKey(instanceName))
             {
                 componentIDs.TryGetValue(instanceName, out cid);
             }
             else
             {
-                throw new CCAExceptionImpl("Bad Instance Name");
+				Trace.WriteLine ("BadInstanceName 1 : " + instanceName + "componentIDs.Count = " + componentIDs.Count + " this = " + this.GetHashCode());
+				foreach (string key in ComponentIDs.Keys)
+					Trace.WriteLine (key);
+				Trace.WriteLine ("BadInstanceName 2 : " + instanceName);
+				throw new CCAExceptionImpl("Bad Instance Name: " + instanceName);
             }
-
-            this.registerUsesPortInfo(cid, portName, type, properties);
+				
+			this.registerUsesPortInfo(cid, portName, type, properties);
             
-            Connector.closeConnection();            
-        }
+			Connector.closeConnection();            
+		}
 
         private void readPortName(string portName, out string instanceName, out string innerName)
         {
@@ -1117,7 +1356,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private IDictionary<Services, ComponentRelease> releaseRegister = new Dictionary<Services, ComponentRelease>();
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void registerForRelease(Services services, ComponentRelease callBack)
+        public void registerForReleaseServices(Services services, ComponentRelease callBack)
         {
             releaseRegister.Add(services, callBack);
         }
@@ -1162,7 +1401,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
      * 		see destroyInstance instead.
      */
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void createInstance()
+        public void createInstanceNull()
         {
 			Trace.WriteLine("BEGIN - NULL Worker " + my_global_rank + ": Split " + " !!!");
             this/*.global_communicator*/.worker_communicator.Split(0, my_global_rank); // HERON ----
@@ -1259,10 +1498,306 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		}
 		#endregion
 		
-		
     }
 
-       
+	[ServiceContract]
+	[ServiceKnownType(typeof(IWorkerObject))]
+	public interface IWorkerObjectFactory
+	{
+		[OperationContract]
+		WorkerObject createWorkerObject();
+	}
 
-        
+	[ServiceBehavior(InstanceContextMode=InstanceContextMode.Single)]
+	public class WorkerObjectFactory : IWorkerObjectFactory
+	{
+		public int instance_counter = 0;
+
+		public WorkerObject createWorkerObject()
+		{
+			instance_counter++;
+			return new WorkerObject ();
+		}
+	}
+
+	public class RemoteWorkerObjectFactory : ClientBase<IWorkerObjectFactory>, IWorkerObjectFactory
+	{
+		public RemoteWorkerObjectFactory (System.ServiceModel.Channels.Binding binding, EndpointAddress address) : base (binding, address) { }
+
+		public WorkerObject createWorkerObject()
+		{
+			return Channel.createWorkerObject ();
+		}				
+	}
+
+
+	public class RemoteWorkerObject : ClientBase<IWorkerObject>, IWorkerObject, gov.cca.AbstractFramework
+	{
+		private IDictionary<string, Services> componentServices = new Dictionary<string, Services>();
+		private IDictionary<string, ComponentID> componentIDs = new Dictionary<string, ComponentID>();
+		private IDictionary<ComponentID, TypeMap> unitProperties = new Dictionary<ComponentID, TypeMap>();
+
+		public RemoteWorkerObject (System.ServiceModel.Channels.Binding binding, EndpointAddress address) : base (binding, address) { }
+
+		public TypeMap createTypeMap() 
+		{
+			return Channel.createTypeMap ();	
+		}
+
+		public Services getServices(string selfInstanceName, string selfClassName, TypeMap selfProperties) 
+		{
+			//return Channel.getServices (selfInstanceName, selfClassName, selfProperties);
+
+			ComponentID cid = new WorkerComponentIDImpl(selfInstanceName);
+			unitProperties.Add(cid, selfProperties);
+			RemoteWorkerServicesImpl services = new RemoteWorkerServicesImpl(this, cid);
+			this.createRemoteServices(services.RemoteKey, cid, selfProperties);
+			Trace.WriteLine ("MyWorkerObject - getServices " + services.getComponentID().getInstanceName());
+			return services;
+		}
+
+		public void createRemoteServices(int key, ComponentID cid, TypeMap selfProperties)
+		{
+			Channel.createRemoteServices (key, cid, selfProperties);
+		}
+
+		public void linkToRemoteServices(int key, ComponentID cid)
+		{
+			Channel.linkToRemoteServices (key, cid);
+		}
+
+		public void releaseServices(Services services) 
+		{
+			Channel.releaseServices (services);
+		}
+
+		public void shutdownFramework() 
+		{
+			Channel.shutdownFramework ();
+		}
+
+		public AbstractFramework createEmptyFramework() 
+		{
+			return Channel.createEmptyFramework ();
+		}
+
+		public WorkerServices getServicesObjectOf(string instanceName)
+		{
+			Services services;
+			this.componentServices.TryGetValue (instanceName, out services);
+			//	return Channel.getServicesObjectOf (instanceName);
+			return (WorkerServices) services;
+		}
+
+		public void createInstanceNull()
+		{
+			Channel.createInstanceNull ();
+		}
+
+		public void setUpCommunicationScope()
+		{
+			Channel.setUpCommunicationScope ();
+		}
+
+		public void registerComponentID_unit(ComponentID cid, Services services, br.ufc.pargo.hpe.basic.IUnit unit) 
+		{
+			Channel.registerComponentID_unit (cid, services, unit);
+		}
+
+		public void registerComponentID(ComponentID cid, Services services)
+		{
+			//Channel.registerComponentID (cid, services);
+
+			if (!componentIDs.ContainsKey(cid.getInstanceName()))
+			{
+				componentIDs.Add(cid.getInstanceName(), cid);
+				componentServices.Add(cid.getInstanceName(), services);
+			}
+		}
+
+		public Port getPort(string portName)
+		{
+			if (portName.EndsWith ("go")) 
+			{
+				Trace.WriteLine ("REMOTE WORKER OBJECT - getPort(go)");
+				return getRemoteGoPort (portName);
+			}
+			else if (portName.EndsWith ("initialize_port")) 
+			{
+				Trace.WriteLine ("REMOTE WORKER OBJECT - getPort(initialize_port)");
+				return getRemoteInitializePort (portName);
+			}
+
+			Trace.WriteLine ("REMOTE WORKER OBJECT - getPort(*)");
+			return Channel.getPort (portName);
+		}
+
+		public Port getPortNonblocking(string portName)
+		{
+			if (portName.EndsWith ("go")) 
+			{
+				Trace.WriteLine ("REMOTE WORKER OBJECT - getPort(go)");
+				return getRemoteGoPortNonBlocking (portName);
+			}
+			if (portName.EndsWith ("initialize_port")) 
+			{
+				Trace.WriteLine ("REMOTE WORKER OBJECT - getPort(initialize)");
+				return getRemoteInitializePortNonBlocking (portName);
+			}
+
+			Trace.WriteLine ("REMOTE WORKER OBJECT - getPort(*)");
+			return Channel.getPortNonblocking (portName);
+		}
+
+		public RemoteGoPort getRemoteGoPort(string portName)
+		{
+			RemoteGoPort remote_go_port = Channel.getRemoteGoPort (portName);
+			remote_go_port.Framework = this;
+			return remote_go_port;
+		}
+
+		public RemoteGoPort getRemoteGoPortNonBlocking(string portName)
+		{
+			RemoteGoPort remote_go_port = Channel.getRemoteGoPortNonBlocking (portName);
+			remote_go_port.Framework = this;
+			return remote_go_port;
+		}
+
+		public int perform_go(int id)
+		{
+			return Channel.perform_go (id);
+		}
+
+		public RemoteInitializePort getRemoteInitializePort(string portName)
+		{
+			RemoteInitializePort remote_init_port = Channel.getRemoteInitializePort (portName);
+			remote_init_port.Framework = this;
+			return remote_init_port;
+		}
+
+		public RemoteInitializePort getRemoteInitializePortNonBlocking(string portName)
+		{
+			RemoteInitializePort remote_init_port = Channel.getRemoteInitializePortNonBlocking (portName);
+			remote_init_port.Framework = this;
+			return remote_init_port;
+		}
+
+		public void perform_on_initialize(int id)
+		{
+			Channel.perform_on_initialize (id);
+		}
+
+		public void perform_after_initialize(int id)
+		{
+			Channel.perform_after_initialize (id);
+		}
+
+		public void releasePort(string portName)
+		{
+			Channel.releasePort (portName);
+		}
+
+		public void registerUsesPort(string portName, string type, TypeMap properties)
+		{
+			Channel.registerUsesPort (portName, type, properties);
+		}
+
+		public void unregisterUsesPort(string portName)
+		{
+			Channel.unregisterUsesPort (portName);
+		}
+
+		public void addProvidesPort(Port inPort, string portName, string type, TypeMap properties)
+		{
+			Channel.addProvidesPort (inPort, portName, type, properties);
+		}
+
+		public TypeMap getPortProperties(string name)
+		{
+			return Channel.getPortProperties (name);
+		}
+
+		public void removeProvidesPort(string portName)
+		{
+			Channel.removeProvidesPort (portName);
+		}
+
+		public ComponentID getComponentID()
+		{
+			return Channel.getComponentID ();
+		}
+
+		public void registerForRelease(ComponentRelease callBack)
+		{
+			Channel.registerForRelease (callBack);
+		}
+
+		public void registerForReleaseServices(Services services, ComponentRelease callBack)
+		{
+			Channel.registerForReleaseServices(services, callBack);
+		}
+
+		public Port getServicePort(ComponentID user, string usedPortName)
+		{
+			if (usedPortName.EndsWith("builder_service")) 
+			{
+				Trace.WriteLine ("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 9");
+				return this;
+			}
+			Trace.WriteLine ("********************************** 3");
+			return Channel.getServicePort (user, usedPortName);
+		}
+
+		public void setServicesByKey(int services)
+		{
+			Channel.setServicesByKey (services);
+		}
+
+		public void setServices(Services services)
+		{					
+			Channel.setServicesByKey (((RemoteWorkerServicesImpl)services).RemoteKey);
+		}
+
+		public ComponentID createInstance(string instanceName, string className, TypeMap properties) 
+		{ 
+			return Channel.createInstance(instanceName,className,properties);
+		}
+
+		public ComponentID[] getComponentIDs() { return Channel.getComponentIDs(); }
+
+		public TypeMap getComponentProperties(ComponentID cid) { return Channel.getComponentProperties(cid); }
+
+		public void setComponentProperties(ComponentID cid, TypeMap map) { Channel.setComponentProperties(cid,map); }
+
+		public ComponentID getDeserialization(string s) { return Channel.getDeserialization(s); }
+
+		public ComponentID getComponentID(string componentInstanceName) { return Channel.getComponentID(componentInstanceName); }
+
+		public void destroyInstance(ComponentID toDie, float timeout) { Channel.destroyInstance(toDie, timeout); }
+
+		public string[] getProvidedPortNames(ComponentID cid) { return Channel.getProvidedPortNames(cid); }
+
+		public string[] getUsedPortNames(ComponentID cid) 
+		{ 
+			return Channel.getUsedPortNames(cid); 
+		}
+
+		public TypeMap getPortProperties(ComponentID cid, string portName) { return Channel.getPortProperties(cid,portName); }
+
+		public void setPortProperties(ComponentID cid, string portName, TypeMap map) { Channel.setPortProperties(cid,portName,map); }
+
+		public ConnectionID connect(ComponentID user, string usingPortName, ComponentID provider, string providingPortName) {Trace.WriteLine("RemoteWorkerObject - connecting ..."); return Channel.connect(user,usingPortName,provider,providingPortName); }
+
+		public ConnectionID[] getConnectionIDs(ComponentID[] componentList) { return Channel.getConnectionIDs(componentList); }
+
+		public TypeMap getConnectionProperties(ConnectionID connID) { return Channel.getConnectionProperties(connID); }
+
+		public void setConnectionProperties(ConnectionID connID, TypeMap map) { Channel.setConnectionProperties(connID, map); }
+
+		public void disconnect(ConnectionID connID, float timeout) {Trace.WriteLine("RemoteWorkerObject - disconnecting ..."); Channel.disconnect(connID, timeout); }
+
+		public void disconnectAll(ComponentID id1, ComponentID id2,float timeout) { Channel.disconnectAll(id1,id2,timeout); }// throws cca.CCAException ; 
+
+	} // end interface BuilderService
+
 }

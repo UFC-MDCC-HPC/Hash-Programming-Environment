@@ -12,7 +12,45 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database{
 [Serializable()]
 public class AbstractComponentFunctorApplicationDAO{
 
+		public int insert(AbstractComponentFunctorApplication ac)
+		{
+			return insert (ac, 0);
+		}
 
+		public int insert(AbstractComponentFunctorApplication ac, int facet_index)
+		{
+			IDbConnection dbcon = Connector.DBcon;
+			IDbCommand dbcmd = dbcon.CreateCommand();
+			String sql =
+				"INSERT INTO abstractcomponentfunctorapplication (id_abstract, id_functor_app_next, facet_index)" +
+				" VALUES (" + ac.Id_abstract + "," +  ac.Id_functor_app_next + "," + facet_index + "); " + 
+				"SELECT max(id_functor_app) as id_functor_app from abstractcomponentfunctorapplication where facet_index="+facet_index;
+
+			Trace.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
+
+			dbcmd.CommandText = sql;
+			IDataReader reader = dbcmd.ExecuteReader();
+			while(reader.Read()) {
+				ac.Id_functor_app = (int)reader["id_functor_app"];
+			}
+
+			// clean up
+			reader.Close();
+			reader = null;
+			dbcmd.Dispose();
+			dbcmd = null;
+
+
+			if (cache_acfa.ContainsKey(ac.Id_functor_app))
+			{
+				cache_acfa.Remove(ac.Id_functor_app);
+				cache_acfa.Add(ac.Id_functor_app, ac);
+			}
+
+			return ac.Id_functor_app;
+		}
+
+		/*
     public int insert(AbstractComponentFunctorApplication ac)
     {
         if (ac.Id_functor_app <= 0) {
@@ -20,8 +58,9 @@ public class AbstractComponentFunctorApplicationDAO{
 		}
 
         String sql =
-            "INSERT INTO abstractcomponentfunctorapplication (id_functor_app, id_abstract, id_functor_app_next)" +
-            "VALUES (" + ac.Id_functor_app + "," + ac.Id_abstract + "," +  ac.Id_functor_app_next + ")";
+            "INSERT INTO abstractcomponentfunctorapplication (id_abstract, id_functor_app_next)" +
+				" VALUES (" + ac.Id_abstract + "," +  ac.Id_functor_app_next + "); " + 
+			"SELECT max(id_functor_app) as id_functor_app from abstractcomponentfunctorapplication";
 
      Trace.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
 
@@ -34,7 +73,7 @@ public class AbstractComponentFunctorApplicationDAO{
         }
 
         return ac.Id_functor_app;
-    }
+    }*/
 
     IDictionary<int, AbstractComponentFunctorApplication> cache_acfa = new Dictionary<int, AbstractComponentFunctorApplication>();
 
@@ -50,6 +89,7 @@ public class AbstractComponentFunctorApplicationDAO{
            "SELECT id_abstract, id_functor_app, id_functor_app_next " +
            "FROM abstractcomponentfunctorapplication " +
            "WHERE id_functor_app="+id_functor_app;
+			Trace.WriteLine ("AbstractComponentFunctorApplicationDAO - retrieve: " + sql);
        dbcmd.CommandText = sql;
        IDataReader reader = dbcmd.ExecuteReader();
        while(reader.Read()) {

@@ -335,7 +335,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
         	 String eRef = split.getERef();
         	 List<String> splitEnums = split.getSplitEnumerator();
         	 
-        	 // 1. PARA TODO componentes direto C que expõe o enumerador eRef mas não expõe os enumeradores em splitEnums.        	 
+        	 // 1. PARA TODO componentes direto C que expï¿½e o enumerador eRef mas nï¿½o expï¿½e os enumeradores em splitEnums.        	 
         	 List<String> rList1 = new ArrayList<String>();
         	 List<Public_Component> l = this.imported_enumerators.get(eRef);
         	 for (Public_Component pc1 : l) {
@@ -363,7 +363,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
         		 }
         	 }        	         	 
         	 
-        	 // 2. PARA CADA unidade U de C que é fatia de múltiplas unidades replicadas por enumeradores em splitEnums.
+        	 // 2. PARA CADA unidade U de C que ï¿½ fatia de mï¿½ltiplas unidades replicadas por enumeradores em splitEnums.
         	 for (Entry<String, String> c : cs.entrySet()) 
         	 {
     			 boolean ok = true;
@@ -453,7 +453,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void saveFusions(Component c, EList<FusionType> xFs) {
 
-         for (Entry<String, List<String>> port : ports.entrySet()) {
+         for (Entry<String, List<String>> port : ports.entrySet()) 
+         {
         	 String port_id = port.getKey();
         	 List<String> cRefs = port.getValue();
         	 if (cRefs.size() > 1) 

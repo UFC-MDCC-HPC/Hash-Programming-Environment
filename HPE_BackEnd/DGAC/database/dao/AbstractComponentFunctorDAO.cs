@@ -217,6 +217,39 @@ public class AbstractComponentFunctorDAO{
         dbcmd = null;
         return acfaList;
     }
+
+	public IList<AbstractComponentFunctor> listByKind(string kind)
+	{
+		IList<AbstractComponentFunctor> acfaList = new List<AbstractComponentFunctor>();
+		IDbConnection dbcon = Connector.DBcon;
+		IDbCommand dbcmd = dbcon.CreateCommand();
+		string sql =
+			"SELECT id_abstract, id_functor_app_supertype, library_path, hash_component_UID, kind " +
+			"FROM abstractcomponentfunctor " +
+			"WHERE kind=" + kind;
+		dbcmd.CommandText = sql;
+		IDataReader reader = dbcmd.ExecuteReader();
+		while (reader.Read())
+		{
+			AbstractComponentFunctor acf = new AbstractComponentFunctor();
+			acf.Hash_component_UID = (string)reader["hash_component_UID"]; /* LINE ADDED BY HERON (new field in abstractcomponentfunctor) */
+			acf.Id_abstract = (int)reader["id_abstract"];
+			acf.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
+			acf.Library_path = (string)reader["library_path"];
+			acf.Kind = (string)reader["kind"];
+			acfaList.Add(acf);
+			if (!cache_acf.ContainsKey(acf.Id_abstract)) 
+					cache_acf.Add(acf.Id_abstract, acf);
+		}//if
+
+		// clean up
+		reader.Close();
+		reader = null;
+		dbcmd.Dispose();
+		dbcmd = null;
+		return acfaList;
+	}
+			
 }//class
 
 }//namespace

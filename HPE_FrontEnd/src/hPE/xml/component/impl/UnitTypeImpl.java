@@ -46,14 +46,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitType {
 	/**
-	 * The cached value of the '{@link #getSuper() <em>Super</em>}' containment reference.
+	 * The cached value of the '{@link #getSuper() <em>Super</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getSuper()
 	 * @generated
 	 * @ordered
 	 */
-	protected UnitRefType super_;
+	protected EList<UnitRefType> super_;
 
 	/**
 	 * The cached value of the '{@link #getSlices() <em>Slices</em>}' containment reference list.
@@ -284,42 +284,11 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public UnitRefType getSuper() {
+	public EList<UnitRefType> getSuper() {
+		if (super_ == null) {
+			super_ = new EObjectContainmentEList<UnitRefType>(UnitRefType.class, this, ComponentPackage.UNIT_TYPE__SUPER);
+		}
 		return super_;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetSuper(UnitRefType newSuper, NotificationChain msgs) {
-		UnitRefType oldSuper = super_;
-		super_ = newSuper;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_TYPE__SUPER, oldSuper, newSuper);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSuper(UnitRefType newSuper) {
-		if (newSuper != super_) {
-			NotificationChain msgs = null;
-			if (super_ != null)
-				msgs = ((InternalEObject)super_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ComponentPackage.UNIT_TYPE__SUPER, null, msgs);
-			if (newSuper != null)
-				msgs = ((InternalEObject)newSuper).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ComponentPackage.UNIT_TYPE__SUPER, null, msgs);
-			msgs = basicSetSuper(newSuper, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_TYPE__SUPER, newSuper, newSuper));
 	}
 
 	/**
@@ -658,7 +627,7 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ComponentPackage.UNIT_TYPE__SUPER:
-				return basicSetSuper(null, msgs);
+				return ((InternalEList<?>)getSuper()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.UNIT_TYPE__SLICES:
 				return ((InternalEList<?>)getSlices()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.UNIT_TYPE__VISUAL_DESCRIPTION:
@@ -709,7 +678,8 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.UNIT_TYPE__SUPER:
-				setSuper((UnitRefType)newValue);
+				getSuper().clear();
+				getSuper().addAll((Collection<? extends UnitRefType>)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__SLICES:
 				getSlices().clear();
@@ -752,7 +722,7 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ComponentPackage.UNIT_TYPE__SUPER:
-				setSuper((UnitRefType)null);
+				getSuper().clear();
 				return;
 			case ComponentPackage.UNIT_TYPE__SLICES:
 				getSlices().clear();
@@ -794,7 +764,7 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ComponentPackage.UNIT_TYPE__SUPER:
-				return super_ != null;
+				return super_ != null && !super_.isEmpty();
 			case ComponentPackage.UNIT_TYPE__SLICES:
 				return slices != null && !slices.isEmpty();
 			case ComponentPackage.UNIT_TYPE__VISUAL_DESCRIPTION:

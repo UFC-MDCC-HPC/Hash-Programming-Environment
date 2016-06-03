@@ -1,17 +1,41 @@
-﻿<Properties>
+﻿<Properties StartupItem="TestService/TestService.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/LoaderSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/Unit.cs">
     <Files>
-      <File FileName="../DGAC/LoaderSystem.cs" Line="554" Column="45" />
-      <File FileName="../DGAC/base/ProxyKind.cs" Line="15" Column="5" />
-      <File FileName="../ws/BackEndWS.asmx.cs" Line="74" Column="69" />
-      <File FileName="../DGAC/DGAC.cs" Line="432" Column="51" />
-      <File FileName="../DGAC/ManagerObject.cs" Line="1878" Column="60" />
-      <File FileName="../DGAC/CommandLineUtil.cs" Line="211" Column="5" />
+      <File FileName="../DGAC/ManagerObject.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/WorkerObject.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/WorkerConnectionIDImpl.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/ManagerConnectionIDImpl.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/tree/Resolution.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/DGAC.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/database/dao/SupplyParameterDAO.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/database/dao/AbstractComponentFunctorParameterDAO.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/WorkerServicesImpl.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/CCA.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/base/BindingKind.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/base/Unit.cs" Line="25" Column="6" />
+      <File FileName="../DGAC/base/UnitImpl.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/base/ActivateKind.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/CoreService/Core.asmx.cs" line="188" column="1" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/BackEnd.asmx.cs" line="69" column="20" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/BackEnd.asmx.cs" line="129" column="19" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/BackEnd.asmx.cs" line="105" column="26" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/tree/GenerateTree.cs" line="138" column="49" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/ServiceUtils/ServiceUtils.cs" line="48" column="33" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/ServiceUtils/ServiceUtils.cs" line="329" column="23" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/ws/BackEndWS.asmx.cs" line="65" column="29" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/CommandLineUtil.cs" line="281" column="47" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/PlatformService/Platform.asmx.cs" line="31" column="21" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/BackEndWS.asmx.cs" line="65" column="39" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/BackEndWS.asmx.cs" line="101" column="34" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/DGAC.cs" line="676" column="48" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/ServiceUtils/CoreServiceUtils.cs" line="241" column="29" />
+      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/ServiceUtils/CoreServiceUtils.cs" line="249" column="22" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

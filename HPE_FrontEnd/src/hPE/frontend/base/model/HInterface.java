@@ -1,6 +1,6 @@
 package hPE.frontend.base.model;
 
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.codegen.c_sharp.HBESourceVersionCSharp;
@@ -9,6 +9,7 @@ import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
+import hPE.frontend.base.settings.HPlatformSettingsFileSet;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
@@ -200,7 +201,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		List<Triple<String, HInterface, String>> parameters = new ArrayList<Triple<String, HInterface, String>>();
 
 		List<HInterfaceSlice> slices = this.getSlices();
-		for (HInterfaceSlice s : slices) {
+		for (HInterfaceSlice s : slices) 
+		{
 			HInterface is = (HInterface) s.getInterface();
 			HInterface is_supplier = null;
 			List<IHPrimUnit> uList = is.getCompliantUnits();
@@ -434,34 +436,33 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		 * @uml.associationEnd multiplicity="(0 -1)"
 		 *                     elementType="hPE.backend.cluster.synthesizer.HBESourceVersion"
 		 */
-		private Map<String, HBESourceVersion<HBEAbstractFile>> sourceVersionList = null;
+		private Map<String, HBESourceVersion> sourceVersionList = null;
 
-		public List<HBESourceVersion<HBEAbstractFile>> getSourceVersionList() {
-			List<HBESourceVersion<HBEAbstractFile>> l = new ArrayList<HBESourceVersion<HBEAbstractFile>>();
+		public List<HBESourceVersion> getSourceVersionList() {
+			List<HBESourceVersion> l = new ArrayList<HBESourceVersion>();
 			if (this.sourceVersionList == null)
-				this.sourceVersionList = new HashMap<String, HBESourceVersion<HBEAbstractFile>>();
+				this.sourceVersionList = new HashMap<String, HBESourceVersion>();
 			l.addAll(sourceVersionList.values());
 			return l;
 		}
 
 		public void addSourceVersion(
-				HBESourceVersion<HBEAbstractFile> sourceVersion) {
+				HBESourceVersion sourceVersion) {
 			if (this.sourceVersionList == null)
-				this.sourceVersionList = new HashMap<String, HBESourceVersion<HBEAbstractFile>>();
-			this.sourceVersionList.put(sourceVersion.getVersionID(),
-					sourceVersion);
+				this.sourceVersionList = new HashMap<String, HBESourceVersion>();
+			this.sourceVersionList.put(sourceVersion.getVersionID(),sourceVersion);
 		}
 
 		public void delSourceVersion(
-				HBESourceVersion<HBEAbstractFile> sourceVersion) {
+				HBESourceVersion sourceVersion) {
 			if (this.sourceVersionList == null)
-				this.sourceVersionList = new HashMap<String, HBESourceVersion<HBEAbstractFile>>();
+				this.sourceVersionList = new HashMap<String, HBESourceVersion>();
 			this.sourceVersionList.remove(sourceVersion.getVersionID());
 		}
 
-		public HBESourceVersion<HBEAbstractFile> getVersion(String versionID) {
+		public HBESourceVersion getVersion(String versionID) {
 			if (this.sourceVersionList == null)
-				this.sourceVersionList = new HashMap<String, HBESourceVersion<HBEAbstractFile>>();
+				this.sourceVersionList = new HashMap<String, HBESourceVersion>();
 			return this.sourceVersionList.get(versionID);
 		}
 
@@ -471,10 +472,10 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		}
 
 		public void cleanSources() {
-			this.sourceVersionList = new HashMap<String, HBESourceVersion<HBEAbstractFile>>();
+			this.sourceVersionList = new HashMap<String, HBESourceVersion>();
 		}
 
-		public void cleanSource(HBESourceVersion<HBEAbstractFile> srcVersion) {
+		public void cleanSource(HBESourceVersion srcVersion) {
 
 			this.sourceVersionList.remove(srcVersion.getVersionID());
 
@@ -508,8 +509,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		}
 
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
-			HBESourceVersion<HBEAbstractFile> srcVersion = this
-					.getSourceVersionList().get(rowIndex);
+			HBESourceVersion srcVersion = this.getSourceVersionList().get(rowIndex);
 
 			switch (columnIndex) {
 			case 0:
@@ -528,16 +528,13 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 		public Object getValueAt(int rowIndex, int columnIndex) {
 
-			HBESourceVersion<HBEAbstractFile> srcVersion = this
-					.getSourceVersionList().get(rowIndex);
+			HBESourceVersion srcVersion = this.getSourceVersionList().get(rowIndex);
 
 			HComponent c = (HComponent) i.getConfiguration();
 
 			boolean abs = c.isAbstractConfiguration();
 
-			String type = srcVersion.getFiles().size() == 0 ? (srcsUndef
-					.containsKey(srcVersion) ? srcsUndef.get(srcVersion)
-					: "Undefined") : srcVersion.getSynthesizerType(abs);
+			String type = srcVersion.getFiles().size() == 0 ? (srcsUndef.containsKey(srcVersion) ? srcsUndef.get(srcVersion) : "Undefined") : srcVersion.getSynthesizerType(abs);
 
 			switch (columnIndex) {
 			case 0:
@@ -610,10 +607,10 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			this.setSelectedFileNames(null);
 		}
 
-		private Map<HBESourceVersion<HBEAbstractFile>, String> srcsUndef = new HashMap<HBESourceVersion<HBEAbstractFile>, String>();
+		private Map<HBESourceVersion, String> srcsUndef = new HashMap<HBESourceVersion, String>();
 
 		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-			HBESourceVersion<HBEAbstractFile> srcVersion = this
+			HBESourceVersion srcVersion = this
 					.getSourceVersionList().get(rowIndex);
 			if (columnIndex == 1 && srcVersion.getFiles().size() == 0)
 				srcsUndef.put(srcVersion, (String) aValue.toString());
@@ -679,11 +676,11 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return srcVersions;
 	}
 
-	public Collection<HBESourceVersion<HBEAbstractFile>> getSourceVersions() {
+	public Collection<HBESourceVersion> getSourceVersions() {
 		return getSourceVersionList().getSourceVersionList();
 	}
 
-	public HBESourceVersion<HBEAbstractFile> getSourceVersion(String versionID) {
+	public HBESourceVersion getSourceVersion(String versionID) {
 		return srcVersions.getVersion(versionID);
 	}
 
@@ -695,7 +692,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		getSourceVersionList().cleanSources();
 	}
 
-	public void cleanSource(HBESourceVersion<HBEAbstractFile> srcVersion) {
+	public void cleanSource(HBESourceVersion srcVersion) {
 		getSourceVersionList().cleanSource(srcVersion);
 	}
 
@@ -916,9 +913,11 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			return new hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp();
 		} else if (sourceType.equals(HBESourceVersionCSharp.getType())) {
 			return new HBESourceVersionCSharp();
-		} else {
+		} else if (sourceType.equals(HPlatformSettingsFileSet.getType())){
+			return new HPlatformSettingsFileSet();
+		} else
 			return null;
-		}
+		
 	}
 
 	public static String toStringVersion(Integer[] v) {

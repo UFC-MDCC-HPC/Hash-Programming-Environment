@@ -1,7 +1,7 @@
 package hPE.frontend.base.model;
 
 import hPE.HPEProperties;
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.interfaces.IComponent;
@@ -48,6 +48,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.internal.PartService;
 
 public abstract class HComponent extends HVisualElement implements HNamed,
 		Cloneable, IComponent, Serializable, IHasColor,
@@ -122,8 +123,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		for (HInterface i : this.getInterfaces()) {
 			if (i.getConfiguration() == this) {
-				HBESourceVersion<HBEAbstractFile> srcVersion = i
-						.getSourceVersion(version);
+				HBESourceVersion srcVersion = i.getSourceVersion(version);
 				if (srcVersion == null || srcVersion.getFiles().isEmpty())
 					return false;
 			}
@@ -223,8 +223,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	 * 
 	 * @see hPE.base.model.IComponent#getUnits()
 	 */
-	public List<IHUnit> getUnits() {
-		return units;		
+	public List<IHUnit> getUnits() 
+	{
+		List<IHUnit> r= new ArrayList<IHUnit>();
+		for (IHUnit u : units)
+		{
+		  if (u.getColocatingUnit() == null)
+			  r.add(u);			  
+		}		
+		return r;		
 	}
 
 	/*
@@ -234,7 +241,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public List<IHUnit> getAllUnits() 
 	{
 		List<IHUnit> ls = new ArrayList<IHUnit>();
-		for (IHUnit u : this.getUnits()) 
+		for (IHUnit u : units) 
 		{
 			ls.add((IHUnit) u);
 		}
@@ -245,7 +252,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public void setExtends(HComponent inheritedFrom) {
 
-		List<IHUnit> us = ((List<IHUnit>) ((ArrayList<IHUnit>) inheritedFrom.getAllUnits()).clone());
+		List<IHUnit> us = ((List<IHUnit>) ((ArrayList<IHUnit>) inheritedFrom.getUnits()).clone());
 		
 		for (IHUnit the_source : us) {
 			HComponent c = (HComponent) the_source.getConfiguration();
@@ -289,23 +296,27 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	private HComponent itImplements = null;
 
-	public void setImplements(HComponent itImplements) {
-
+	public void setImplements(HComponent itImplements) 
+	{
 		this.itImplements = itImplements;
 
-		List<IHUnit> us = ((List<IHUnit>) ((ArrayList<IHUnit>) itImplements.getAllUnits()).clone());
+		List<IHUnit> us = ((List<IHUnit>) ((ArrayList<IHUnit>) itImplements.getUnits()).clone());
 
-		for (IHUnit the_source : us) {
+		for (IHUnit the_source : us) 
+		{
 			HComponent c = (HComponent) the_source.getConfiguration();
-			if (!the_source.getHidden()) {
-				IBindingTarget the_target = c.newStubFor((HUnit) the_source,
-						false, true, (HComponent) c.getTopConfiguration());
-				new HBinding(c, the_target, the_source); // TODO: setBindig ...
+			if (!the_source.getHidden()) 
+			{
+				IBindingTarget the_target = c.newStubFor((HUnit) the_source, false, true, (HComponent) c.getTopConfiguration());
+				new HBinding(c, the_target, the_source); // TODO: setBinding ...
 				HInterface i = (HInterface) the_target.getInterface();
 				i.setImplements(); // mark versions to be overriden ...
-				try {
+				try 
+				{
 					((HUnit) the_source).updatePorts();
-				} catch (HPEAbortException e) {
+				} 
+				catch (HPEAbortException e) 
+				{
 					e.printStackTrace();
 				}
 			}
@@ -544,10 +555,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 						//HComponent cx__ = (HComponent) (cx_.getSupplier() == null ? cx_ : cx_.getSupplier());
 						String n1 = cx_.getSavedName().get(cx);
 						
-						HComponent cx_prime = n1 != null ? cx.getInnerComponent(n1) : null;
+						//HComponent cx_prime = n1 != null ? cx.getInnerComponent(n1) : null;
+						HComponent cx_prime = n1 != null ? c.getInnerComponent(n1) : null;
 						cx_prime = cx_prime == null ? cx_ : cx_prime /*(cx_prime.getSupplier() == null ? cx_prime : cx_prime.getSupplier())*/;
 
-						if (cx_prime != null && !cs.contains(cx_prime) && (cx_.isPublic() || (!cx_.isPublic() && cx_.IsExposedFalsifiedContextTop())))
+						if (cx_prime != null && !cs.contains(cx_prime) && (cx_prime.isPublic() || (!cx_prime.isPublic() && cx_prime.IsExposedFalsifiedContextTop())))
 							cs.add(cx_prime);
 					}
 				}
@@ -1105,7 +1117,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public Collection<IHPrimUnit> getObservableEntries() 
 	{
 		List<IHPrimUnit> ls = new ArrayList<IHPrimUnit>();
-		for (IHUnit u : this.getAllUnits()) 
+		for (IHUnit u : this.getUnits()) 
 		{
 			if (!u.getHidden()) 
 			{   
@@ -1119,20 +1131,6 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}			
 			
 		}
-		
-		//for (HComponent c : this.getInnerComponents())
-		//{
-		//	if (!c.isParameter()) 
-		//	{
-		//		for (IHUnit u : c.getUnits())
-		//		{
-		//			if (u.getBinding() == null)
-		//			{
-		//				ls.add(u);
-		//			}
-		//		}
-		//	}
-		//}
 		
 		return ls;
 	}
@@ -1201,10 +1199,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		List<String> l = new ArrayList<String>();
 		for (IHUnit u : this.getUnits()) {
 			HInterface i = (HInterface) u.getInterface();
-			for (HBESourceVersion<HBEAbstractFile> m : i.getSourceVersions()) {
+			for (HBESourceVersion m : i.getSourceVersions()) {
 				if (m.getVersionID().equals(
 						version == null ? "1.0.0.0" : version)) {
-					for (HBEAbstractFile f : m.getFiles()) {
+					for (HBEAbstractSourceCodeFile f : m.getFiles()) {
 						l.add(f.getBinaryPath().toString());
 					}
 				}
@@ -1358,12 +1356,6 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	{
 		if (this.variableName == null)
 			this.variableName = new HashMap<Integer, String>();
-
-		Integer idx_top = 3472;
-		if (idx_top == ctx.getMyInstanceId() && varName.equals("I"))
-		{
-		   System.out.println("assert");
-		}
 		
 		String currVar = this.variableName.get(ctx.getMyInstanceId());
 		if (currVar == null || (currVar != null && !currVar.equals(varName))) {
@@ -2181,7 +2173,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	 */
 	public boolean isSubTypeOf(HComponent c) {
 
-		return getSubTypeImageOf2(c) != null;
+		List<Pair<HComponent,HComponent>> r = getSubTypeImageOf2(c);
+		
+		return r != null;
 
 	}
 
@@ -2228,14 +2222,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			// Collection i = this.getParameters();
 			// Collection j = c.getParameters();
 
-			if (lll1.size() == lll2.size()) {
+			if (lll1.size() == lll2.size()) 
+			{
 				// C[V1,V2,...,Vn] <: C[X1,X2,...,Xn] iif V1 <: X1 & V2 <: X2 &
 				// ... & Vn <: Xn
-				Iterator<Entry<String, List<HComponent>>> ps = lll2.entrySet()
-						.iterator();
+				Iterator<Entry<String, List<HComponent>>> ps = lll2.entrySet().iterator();
 				boolean checkParameters = true;
 				int pos = 0;
-				while (ps.hasNext() && checkParameters) {
+				while (ps.hasNext() && checkParameters) 
+				{
 					Entry<String, List<HComponent>> valCEntry = ps.next();
 					String parId = valCEntry.getKey(); // (String)
 														// valC.getParameterIdentifier(this);
@@ -2243,15 +2238,18 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 					List<HComponent> v = this.getParameterByName(parId);
 					HComponent v0 = v.get(0);
 					HComponent valC0 = valC.get(0);
-					if (v != null) {
+					if (v != null) 
+					{
 						// Check parameter subtyping
 
-						checkParameters = v0.isSubTypeOf(valC0)
-								&& checkParameters;
-						if (checkParameters) {
+						checkParameters = v0.isSubTypeOf(valC0)	&& checkParameters;
+						if (checkParameters) 
+						{
 							lr.addAll(v0.getSubTypeImageOf2(valC0));
 						}
-					} else {
+					} 
+					else 
+					{
 						System.out
 								.println("CONSISTENCY ERROR !!! (isSubTypeOf): Variable Name NOT found !");
 						return null;
@@ -2275,11 +2273,13 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		if (c.getClass() == this.getClass()) {
 			// C = C1 # C2 # ... # Cn: D <: C if D <: C1 | D <: C2 | ... | D <:
 			// Cn
-			for (HComponent sc : this.getComponents()) {
-				if (sc.allUnitsAreStubs()) {
-					List<Pair<HComponent, HComponent>> c1 = sc
-							.getSubTypeImageOf2(c);
-					if (c1 != null && c1.size() > 0) {
+			for (HComponent sc : this.getComponents()) 
+			{
+				if (sc.allUnitsAreStubs()) 
+				{
+					List<Pair<HComponent, HComponent>> c1 = sc.getSubTypeImageOf2(c);
+					if (c1 != null && c1.size() > 0) 
+					{
 						lr.addAll(c1);
 						return lr;
 					}
@@ -2438,10 +2438,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public void supplyParameter(String varName, HComponent model) 
-	{
-		
-		try {
-			
+	{		
+		try 
+		{			
 			Map<String, Pair<HComponent,Boolean>> toSupply = new HashMap<String,Pair<HComponent,Boolean>>();
 			Pair<HComponent,Boolean> pair_model = new Pair<HComponent,Boolean>(model,false);
 			toSupply.put(varName, pair_model);
@@ -2449,15 +2448,17 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			Map<String, List<HComponent>> free_parameter_list = this.getFreeParameters(this, this.BY_VARID);
 			List<HComponent> supplied_list = free_parameter_list.get(varName);
 			if (supplied_list != null)
-			for (HComponent supplied : supplied_list) 
-			{
-				unify(model,supplied,toSupply);
-				alignPublicInnerComponents(model,supplied);
-			}
+				for (HComponent supplied : supplied_list) 
+				{
+					unify(model, supplied, toSupply);
+					alignPublicInnerComponents(model, supplied);
+				}
 			
 			supplyParameter(toSupply);
 		
-		} catch (UnifySignaturesException e) {
+		} 
+		catch (UnifySignaturesException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -2520,7 +2521,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				{
 					if (c_.getSupplier() == null) 
 					{
-						String varName_ = c_.getVariableName();
+						String varName_ = c_.getVariableName(this);
 						if (varName_.equals(varName)) 
 						{
 							//HComponent model = model_.getMyCopy();
@@ -2645,9 +2646,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public IBindingTarget newStubFor(HUnit unit, boolean forSubTyping,
 			boolean forImplements, HComponent topConfiguration) {
 
-		if (!this.getDirectParentConfigurations().contains(topConfiguration)) {
-			JOptionPane.showMessageDialog(null, "(TODO) Cannot create a stub",
-					"newStubFor", JOptionPane.ERROR_MESSAGE);
+		if (!this.getDirectParentConfigurations().contains(topConfiguration)) 
+		{
+			JOptionPane.showMessageDialog(null, "(TODO) Cannot create a stub","newStubFor", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 
@@ -2666,6 +2667,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		this.getUnits().add(iu, uStub); // PLACE uStub in the same position of
 										// unit
 
+		uStub.setColocatedUnits(unit.getColocatedUnits());
+		unit.emptyColocatedUnits();
+		
 		HInterface i = (HInterface) unit.getInterface();
 		i.setEditable(true);
 		String iSubName = i.toString();
@@ -3273,6 +3277,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		cList.add(c2);
 		cTop.addFusion(cRef,cList);
 		
+		matchParameters(c1,c2);		
+		
 		c1.getSavedName().putAll(c2.getSavedName());
 		for (HComponent c1f: c1.getFusedWith())
 			c1f.getSavedName().putAll(c2.getSavedName());
@@ -3285,6 +3291,46 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			c.updateConnections();
 			c.forceUpdateName();
 		}
+	}
+
+	private static void matchParameters(HComponent c1, HComponent c2) 
+	{	
+		Map<String, List<HComponent>> pars1 = c1.getParameters();
+		Map<String, List<HComponent>> pars2 = c2.getParameters();
+		
+	    for (Entry<String,List<HComponent>> par: pars1.entrySet())
+	    {
+	        String par_id = par.getKey();
+	        HComponent cvar_1 = par.getValue().get(0);
+	        if (pars2.containsKey(par_id))
+	        { 
+	        	HComponent cvar_2 = pars2.get(par_id).get(0);
+	        	HComponent cvar_2_enclosing = (HComponent) cvar_2.getInnerTopConfigurations().get(0);
+	
+		        if (cvar_1.isSubTypeOf(cvar_2) && !cvar_1.isEquivalentTo(cvar_2))
+		        {   
+		        	cvar_2_enclosing.supplyParameter(cvar_2.getVariableName(cvar_2_enclosing), cvar_1);
+		        }
+	        }
+	    }
+		
+	    for (Entry<String,List<HComponent>> par: pars2.entrySet())
+	    {
+	        String par_id = par.getKey();
+	        HComponent cvar_2 = par.getValue().get(0);
+	        if (pars1.containsKey(par_id))
+	        { 
+		        HComponent cvar_1 = pars1.get(par_id).get(0);
+	        	HComponent cvar_1_enclosing = (HComponent) cvar_1.getInnerTopConfigurations().get(0);
+	
+		        if (cvar_2.isSubTypeOf(cvar_1) /*&& !cvar_2.isEquivalentTo(cvar_1)*/) 
+		        {
+		        	cvar_1_enclosing.supplyParameter(cvar_1.getVariableName(cvar_1_enclosing), cvar_2);
+		        }
+	        }
+	    }
+		
+		
 	}
 
 	static public void supersede2(HComponent c1, HComponent c2, boolean forSupply) {
@@ -3406,22 +3452,24 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		HComponent topC = (HComponent) c1.getTopConfiguration();
 		Iterator<IHUnit> us2 = ((ArrayList<IHUnit>) ((ArrayList<IHUnit>) im_c1inc2.getEntries()).clone()).iterator();
 		Iterator us1 = ((ArrayList) ((ArrayList) c1.getEntries()).clone()).iterator();
-		while (us1.hasNext() && us2.hasNext()) {
+		while (us1.hasNext() && us2.hasNext()) 
+		{
 			IHUnit u2 = us2.next();
 			IHUnit u1 = (IHUnit) us1.next();
-
-			// ALinhar unidades...
-			//Pair<IHPrimUnit, IHPrimUnit> pair = alignUnits(u1, u2);
-			//u1 = (IHUnit) pair.fst();
-			//u2 = (IHUnit) pair.snd();
 
 			IHUnit topU2 = (IHUnit) u2.getTopUnit(null);
 			IHUnit topU1 = (IHUnit) u1.getTopUnit(null);
 			HComponent topC1 = (HComponent) topU1.getConfiguration();
 			HComponent topC2 = (HComponent) topU2.getConfiguration();
 
-			if (!((topU1 == topU2 && topC1 == topC2 && topC2 == topC) || (topU1 != topU2 && topC1 != topC2)))
-				return false;
+			/* TODO: é preciso refazer as condições para "fusão" de componentes. No caso abaixo, é aceito se os componentes residem no 
+			 * mesmo componente mais externo e são a mesma unidade, ou então residem em componentes diferentes e as unidades são diferentes.
+			 * Isso não funciona para o caso onde há uma unidade de uma faceta múltipla (várias instâncias de uma mesma faceta), quando pode haver 
+			 * a mesma unidade em componentes distintos. 
+			 */
+			
+			//if (!((topU1 == topU2 && topC1 == topC2 && topC2 == topC) || (topU1 != topU2 && topC1 != topC2)))
+			//	return false;
 
 		}
 
@@ -3432,7 +3480,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		List<HComponent> l = new ArrayList<HComponent>(); // this.getAllParentConfigurations();
 
 		HComponent topC = (HComponent) this.getTopConfiguration();
-		for (HComponent c : this.getDirectParentConfigurations()) {
+		for (HComponent c : this.getAllParentConfigurations()) {
 			if (c.getDirectParentConfigurations().contains(topC)) {
 				l.add(c);
 				l.addAll(c.getExposedComponents());
@@ -3731,7 +3779,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			if (i.getConfiguration() == this) {
 				HBESourceVersion version = i.getSourceVersion(versionStr);
 				for (Object obj : version.getFiles()) {
-					HBEAbstractFile file = (HBEAbstractFile) obj;
+					HBEAbstractSourceCodeFile file = (HBEAbstractSourceCodeFile) obj;
 					IPath binPath = file.getBinaryPath();
 
 					return HComponentFactoryImpl.existsInWorkspace(binPath);

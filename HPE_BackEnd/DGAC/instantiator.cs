@@ -15,7 +15,7 @@ namespace Instantiator {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -23,24 +23,17 @@ namespace Instantiator {
     [System.Xml.Serialization.XmlRootAttribute("application", Namespace="http://www.example.org/instantiator", IsNullable=false)]
     public partial class InstanceType {
         
-        private string instance_refField;
-        
         private ComponentFunctorApplicationType contextual_typeField;
+        
+        private int facet_instanceField;
+        
+        private bool facet_instanceFieldSpecified;
         
         private UnitMappingType[] unit_mappingField;
         
         private FacetAddressType[] facet_addressField;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string instance_ref {
-            get {
-                return this.instance_refField;
-            }
-            set {
-                this.instance_refField = value;
-            }
-        }
+        private string instance_refField;
         
         /// <remarks/>
         public ComponentFunctorApplicationType contextual_type {
@@ -49,6 +42,27 @@ namespace Instantiator {
             }
             set {
                 this.contextual_typeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int facet_instance {
+            get {
+                return this.facet_instanceField;
+            }
+            set {
+                this.facet_instanceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool facet_instanceSpecified {
+            get {
+                return this.facet_instanceFieldSpecified;
+            }
+            set {
+                this.facet_instanceFieldSpecified = value;
             }
         }
         
@@ -73,30 +87,30 @@ namespace Instantiator {
                 this.facet_addressField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string instance_ref {
+            get {
+                return this.instance_refField;
+            }
+            set {
+                this.instance_refField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/instantiator")]
     public partial class ComponentFunctorApplicationType {
         
-        private string component_refField;
-        
         private ContextArgumentType[] argumentField;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string component_ref {
-            get {
-                return this.component_refField;
-            }
-            set {
-                this.component_refField = value;
-            }
-        }
+        private string component_refField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("argument")]
@@ -108,34 +122,34 @@ namespace Instantiator {
                 this.argumentField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string component_ref {
+            get {
+                return this.component_refField;
+            }
+            set {
+                this.component_refField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/instantiator")]
     public partial class ContextArgumentType {
         
-        private string parameter_idField;
-        
         private object itemField;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string parameter_id {
-            get {
-                return this.parameter_idField;
-            }
-            set {
-                this.parameter_idField = value;
-            }
-        }
+        private string parameter_idField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("type", Type=typeof(ComponentFunctorApplicationType))]
-        [System.Xml.Serialization.XmlElementAttribute("variable", Type=typeof(string))]
+        [System.Xml.Serialization.XmlElementAttribute("type", typeof(ComponentFunctorApplicationType))]
+        [System.Xml.Serialization.XmlElementAttribute("variable", typeof(string))]
         public object Item {
             get {
                 return this.itemField;
@@ -144,43 +158,143 @@ namespace Instantiator {
                 this.itemField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string parameter_id {
+            get {
+                return this.parameter_idField;
+            }
+            set {
+                this.parameter_idField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/instantiator")]
+    public partial class FacetAddressType {
+        
+        private int facet_instanceField;
+        
+        private bool facet_instanceFieldSpecified;
+        
+        private int facetField;
+        
+        private bool facetFieldSpecified;
+        
+        private string addressField;
+        
+        private int portField;
+        
+        private bool portFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int facet_instance {
+            get {
+                return this.facet_instanceField;
+            }
+            set {
+                this.facet_instanceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool facet_instanceSpecified {
+            get {
+                return this.facet_instanceFieldSpecified;
+            }
+            set {
+                this.facet_instanceFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int facet {
+            get {
+                return this.facetField;
+            }
+            set {
+                this.facetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool facetSpecified {
+            get {
+                return this.facetFieldSpecified;
+            }
+            set {
+                this.facetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string address {
+            get {
+                return this.addressField;
+            }
+            set {
+                this.addressField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int port {
+            get {
+                return this.portField;
+            }
+            set {
+                this.portField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool portSpecified {
+            get {
+                return this.portFieldSpecified;
+            }
+            set {
+                this.portFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/instantiator")]
     public partial class UnitMappingType {
         
+        private int[] nodeField;
+        
+        private int facet_instanceField;
+        
+        private bool facet_instanceFieldSpecified;
+        
+        private int facetField;
+        
+        private bool facetFieldSpecified;
+        
         private string unit_idField;
         
         private int unit_indexField;
         
-        private int[] nodeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string unit_id {
-            get {
-                return this.unit_idField;
-            }
-            set {
-                this.unit_idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.ComponentModel.DefaultValue(0)]
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public int unit_index {
-            get {
-                return this.unit_indexField;
-            }
-            set {
-                this.unit_indexField = value;
-            }
+        public UnitMappingType() {
+            this.unit_indexField = 0;
         }
         
         /// <remarks/>
@@ -193,52 +307,94 @@ namespace Instantiator {
                 this.nodeField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int facet_instance {
+            get {
+                return this.facet_instanceField;
+            }
+            set {
+                this.facet_instanceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool facet_instanceSpecified {
+            get {
+                return this.facet_instanceFieldSpecified;
+            }
+            set {
+                this.facet_instanceFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int facet {
+            get {
+                return this.facetField;
+            }
+            set {
+                this.facetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool facetSpecified {
+            get {
+                return this.facetFieldSpecified;
+            }
+            set {
+                this.facetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string unit_id {
+            get {
+                return this.unit_idField;
+            }
+            set {
+                this.unit_idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(0)]
+        public int unit_index {
+            get {
+                return this.unit_indexField;
+            }
+            set {
+                this.unit_indexField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/instantiator")]
-    public partial class FacetAddressType {
+    [System.Xml.Serialization.XmlRootAttribute("unit_mapping", Namespace="http://www.example.org/instantiator", IsNullable=false)]
+    public partial class UnitMappingDescriptionType {
         
-        private string addressField;
-        
-        private int portField;
-        
-        private bool portSpecifiedField;
+        private UnitMappingType[] unitField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string address {
+        [System.Xml.Serialization.XmlElementAttribute("unit")]
+        public UnitMappingType[] unit {
             get {
-                return this.addressField;
+                return this.unitField;
             }
             set {
-                this.addressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public int port {
-            get {
-                return this.portField;
-            }
-            set {
-                this.portField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore()]
-        public virtual bool portSpecified {
-            get {
-                return this.portSpecifiedField;
-            }
-            set {
-                this.portSpecifiedField = value;
+                this.unitField = value;
             }
         }
     }

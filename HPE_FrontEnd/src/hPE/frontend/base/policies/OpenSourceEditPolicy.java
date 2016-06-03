@@ -2,7 +2,7 @@ package hPE.frontend.base.policies;
 
 import hPE.HPEVersionEditor;
 import hPE.frontend.NAntBuilder;
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.dialogs.HBEVersionControlDialog;
@@ -87,7 +87,7 @@ public void execute(){
 	boolean onlyEdit = isSubTyping || isImplementing;
 
 	int result = -1;
-	HBESourceVersion<HBEAbstractFile> version = null;
+	HBESourceVersion version = null;
 	HBEAbstractSynthesizer synthesizer = null;
 	
 	i.keepVersionConsistency();
@@ -102,10 +102,10 @@ public void execute(){
 	        synthesizer = dialog.getSeletectedSourceType();
 	    }
 	} else {
-		Collection<HBESourceVersion<HBEAbstractFile>> vs = i.getSourceVersions();
+		Collection<HBESourceVersion> vs = i.getSourceVersions();
 		if (vs.size()==1) {
 			Object[] vsa = vs.toArray();
-			version = (HBESourceVersion<HBEAbstractFile>) vsa[0];
+			version = (HBESourceVersion) vsa[0];
 			synthesizer = i.getSupportedSynthesizers().get(0);
 		} else {
 			throw new Exception("Unexpected interface with more than one version (OpenSourceEditPolicy)");
@@ -155,11 +155,11 @@ public boolean canExecute() {
 		return true;
 }
 
-public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceVersion) {
+public void openExistingSourceCodeFile(HBESourceVersion sourceVersion) {
 	
 	try {
 
-	for (HBEAbstractFile srcFile : sourceVersion.getFiles()) 
+	for (HBEAbstractSourceCodeFile srcFile : sourceVersion.getFiles()) 
 	{ 
 		srcFile.persistSourceFile();
 		if (srcFile.getSrcType().equals("user"))  
@@ -220,9 +220,9 @@ public void closeSourceCodeFile(HBESourceVersion sourceVersion) {
 	
 	HPEVersionEditor editor = (HPEVersionEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 	
-	Iterator<HBEAbstractFile> ss = sourceVersion.getFiles().iterator();
+	Iterator ss = sourceVersion.getFiles().iterator();
 	while (ss.hasNext()) {
-		HBEAbstractFile srcFile = (HBEAbstractFile) ss.next();			
+		HBEAbstractSourceCodeFile srcFile = (HBEAbstractSourceCodeFile) ss.next();			
 		String sPath = (String) srcFile.getSourcePath().toString();
 		IPath path = new Path(sPath);
 		// IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);

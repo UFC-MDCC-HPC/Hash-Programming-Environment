@@ -13,7 +13,7 @@ namespace gov
             public abstract string InstanceName { get; set; }
 			public abstract string ClassName { get; set; }
             public abstract int[] WorkerNodes { get; set; }
-            public abstract string[] WorkerUnitNames { get; set; }
+            public abstract IList<string>[] WorkerUnitNames { get; set; }
             public abstract int[] WorkerUnitIndexes { get; set; }
 			public abstract int Version {get; set;}
 
@@ -25,13 +25,14 @@ namespace gov
             public abstract int Kind { get; }
         }
 
+
         [Serializable]
         public class ManagerComponentIDImpl : ManagerComponentID
         {
             #region attributes
 
             private int[] nodes = null;
-            private string[] unit_ids = null;
+            private IList<string>[] unit_ids = null;
             private int[] indexes = null;
             private string instanceNamePrim = null;
             private string classNamePrim = null;
@@ -56,7 +57,7 @@ namespace gov
             }
 			
 			// For registering a #-component
-            public ManagerComponentIDImpl(string instanceName, string className, int[] nodes, string[] unit_ids, int[] indexes, /*WorkerComponentID[] wcids,*/ int id_functor_app, int kind, string portName)
+            public ManagerComponentIDImpl(string instanceName, string className, int[] nodes, IList<string>[] unit_ids, int[] indexes, /*WorkerComponentID[] wcids,*/ int id_functor_app, int kind, string portName)
             {
                 this.instanceNamePrim = instanceName;
 				this.classNamePrim = className;
@@ -103,7 +104,7 @@ namespace gov
                 set { this.nodes = value; }
             }
 
-            public override string[] WorkerUnitNames
+            public override IList<string>[] WorkerUnitNames
             {
                 get { return unit_ids; }
                 set { this.unit_ids = value; }
@@ -140,11 +141,11 @@ namespace gov
 			
             public override WorkerComponentID getWorkerComponentID(int node)
             {
-                WorkerComponentID wcid;
-				//foreach (KeyValuePair<int,WorkerComponentID> uuu in wcids)
-				//	Trace.WriteLine("node = " + uuu.Key + "; " + "wcid = " + uuu.Value.getInstanceName());
-                wcids.TryGetValue(node, out wcid);
-                return wcid;
+				Trace.WriteLine ("getWorkerComponentID - SIZE=" + wcids.Count + " --- node=" + node);
+				foreach (KeyValuePair<int,WorkerComponentID> t in wcids)
+					Trace.WriteLine ("getWorkerComponentID - KEY=" + t.Key + ", VALUE=" + t.Value.getInstanceName());
+
+				return wcids [node];
             }
 
             public override string ToString()

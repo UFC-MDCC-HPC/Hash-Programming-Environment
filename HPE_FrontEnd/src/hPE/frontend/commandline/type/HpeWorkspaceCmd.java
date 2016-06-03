@@ -2,7 +2,7 @@ package hPE.frontend.commandline.type;
 
 import hPE.HPEProperties;
 import hPE.frontend.NAntBuilder;
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
@@ -169,10 +169,10 @@ public class HpeWorkspaceCmd implements HpeGenericCmd {
 							.get(PreferenceConstants.GACUTIL_PATH);
 					for (IHUnit u : c.getUnits()) {
 						HInterface i = (HInterface) u.getInterface();
-						Collection<HBESourceVersion<HBEAbstractFile>> sources = i
+						Collection<HBESourceVersion> sources = i
 								.getSourceVersions();
-						for (HBESourceVersion<HBEAbstractFile> source : sources) {
-							for (HBEAbstractFile srcfile : source.getFiles()) {
+						for (HBESourceVersion source : sources) {
+							for (HBEAbstractSourceCodeFile srcfile : source.getFiles()) {
 								IPath path = srcfile.getBinaryPath();
 								CommandLine.runCommand(new String[] {
 										gacutil_path, "-i", path.toString() },

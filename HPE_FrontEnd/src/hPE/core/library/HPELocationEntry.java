@@ -3,7 +3,7 @@ package hPE.core.library;
 //import hPE.core.HLocationService;
 //import hPE.core.LocationService;
 import hPE.HPEProperties;
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
@@ -211,19 +211,15 @@ public class HPELocationEntry {
 	}
 
 	public static void getBinaryFile(String packageName, String componentName,
-			String versionID, HBEAbstractFile binFile, URI locationSite) {
+			String versionID, HBEAbstractSourceCodeFile binFile, URI locationSite) {
 
 		try {
 			URL url = new URL(locationSite.toString());
 
 			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
-			HPE_Location_Server server = locationServerService
-					.getHPE_Location_Server(url);
-			String fileName = (new Path(binFile.getFileName()))
-					.removeFileExtension().addFileExtension(
-							binFile.getBinaryExtension()).toString();
-			byte[] contents = server.getBinaryFile(packageName, componentName,
-					versionID, fileName);
+			HPE_Location_Server server = locationServerService.getHPE_Location_Server(url);
+			String fileName = (new Path(binFile.getFileName())).removeFileExtension().addFileExtension(binFile.getBinaryExtension()).toString();
+			byte[] contents = server.getBinaryFile(packageName, componentName, versionID, fileName);
 
 			File file = binFile.getBinaryPath().toFile();
 
@@ -236,8 +232,7 @@ public class HPELocationEntry {
 			if (!file.exists()) {
 				try {
 					file.createNewFile();
-					FileOutputStream fos = new FileOutputStream(file
-							.getAbsolutePath());
+					FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
 					fos.write(contents);
 					fos.close();
 
@@ -340,7 +335,7 @@ public class HPELocationEntry {
 			if (i.getConfiguration() == c) {
 				HBESourceVersion srcVersion = i.getSourceVersion(version);
 				for (Object objFile : srcVersion.getFiles()) {
-					HBEAbstractFile file = (HBEAbstractFile) objFile;
+					HBEAbstractSourceCodeFile file = (HBEAbstractSourceCodeFile) objFile;
 					IPath binPath = file.getBinaryPath();
 					// IFile binFile =
 					// ResourcesPlugin.getWorkspace().getRoot().getFile(binPath);
@@ -358,11 +353,10 @@ public class HPELocationEntry {
 		}
 	}
 
-	private static String makeFileID(HHasExternalReferences i,
-			HBEAbstractFile file) {
+	private static String makeFileID(HHasExternalReferences i, HBEAbstractSourceCodeFile file) 
+	{
 		IPath filePath = new Path(file.getFileName());
-		String fileName = filePath.removeFileExtension().addFileExtension(
-				file.getBinaryExtension()).toString();
+		String fileName = filePath.removeFileExtension().addFileExtension(file.getBinaryExtension()).toString();
 
 		return fileName;
 	}

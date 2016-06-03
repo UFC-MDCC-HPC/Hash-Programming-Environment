@@ -289,11 +289,12 @@ public class XMLConfigurationGenerator {
 			List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
 			List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
 			
-			List<HUnitSlice> ports = /* new ArrayList<HUnitSlice>(); */ u.getPorts();
+			List<List<HUnitSlice>> ports_list = /* new ArrayList<HUnitSlice>(); */ u.getPorts();
 			List<HUnitSlice> slices = /* new ArrayList<HUnitSlice>(); */ u.getSlices();
-			//calculateSlices(c, u, ports, slices);
+
+			for (List<HUnitSlice> ports_list_item : ports_list)
+				transitiveSlices.addAll(ports_list_item);		
 			
-			transitiveSlices.addAll(ports);
 			for (HUnitSlice usx : slices) {
 				if (!transitiveSlices.contains(usx))
 					transitiveSlices.add(usx);
@@ -318,10 +319,13 @@ public class XMLConfigurationGenerator {
 		HComponent c = c_;
 	   	while (u != null) 
 	   	{
-			for (HUnitSlice uport : u.getPorts())
+			for (List<HUnitSlice> uport_list : u.getPorts())
 			{
-			   if (!ports.contains(uport))
-				   ports.add(uport);
+			   for (HUnitSlice uport : uport_list)
+			   {
+				   if (!ports.contains(uport))
+					   ports.add(uport);
+			   }
 			}
 			
 			for (HUnitSlice uslice : u.getSlices()) 
@@ -354,37 +358,22 @@ public class XMLConfigurationGenerator {
 
 	private static void xmlConfig_saveSlice(List<HUnitSlice> directSlices, List<HUnitSlice> transitiveSlices, EList<HpesliceType> uSlice, hPE.frontend.connector.xml.component.ComponentFactory factory) 
 	{		
-	/*	for (HUnitSlice slice : directSlices)
-		{
-			HpesliceType sX = factory.createHpesliceType();
-			
-			IHUnit unit_of_slice = (IHUnit) slice.getComponentEntry();
-			
-			String sInner = unit_of_slice.getConfiguration().getRef();
-			String sUnit = unit_of_slice.getName2();
-			int sIndex = unit_of_slice.getIndex();
-			
-			sX.setInner(sInner);
-			sX.setUnit(sUnit);
-			sX.setIndex(sIndex);
-			
-			uSlice.add(sX);
-		}*/
-		
 		
 		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
 
 		Map<String, String> portNames = new HashMap<String, String>();
-		for (HUnitSlice slice : transitiveSlices) {
-			//if (slice.getBinding().getConfiguration() == component) {
-				HUnit uSource = (HUnit) slice.getComponentEntry();
-				List<HUnitSlice> usPorts = uSource.getPorts();
-				for (HUnitSlice usPort : usPorts) {
-					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
+		for (HUnitSlice slice : transitiveSlices) 
+		{
+			HUnit uSource = (HUnit) slice.getComponentEntry();
+			List<List<HUnitSlice>> usPorts = uSource.getPorts();
+			for (List<HUnitSlice> usPort_list : usPorts) 
+			{
+				for (HUnitSlice usPort : usPort_list)
+				{
 					String usPortName = usPort.getConfiguration().getRef();
 					portNames.put(usPortName, usPortName);
 				}
-			//}
+			}
 		}
 
 		for (HUnitSlice slice : transitiveSlices)

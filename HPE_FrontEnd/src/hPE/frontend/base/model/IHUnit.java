@@ -85,6 +85,11 @@ public interface IHUnit extends IHPrimUnit, IUnit,
 
 	public abstract Map<HPrimUnit, Integer> whatIsThePath(HUnitSlice uslice);
 
+	public abstract void colocateUnits(List<IHUnit> us);
+	
+	public abstract List<IHUnit> getColocatedUnits();
 
-
+	public abstract void setColocatingUnit(IHUnit hUnit);
+	
+	public abstract IHUnit getColocatingUnit();
 }

@@ -242,8 +242,21 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		
 		List r = new ArrayList();
 		
-		HBinding b = ((ModelType)getModel()).getBinding();
-		if (b!= null && b.isVisible()) r.add(b);
+		ModelType unit = (ModelType)getModel();
+		List<IHUnit> colocated_units = unit.getColocatedUnits();
+		if (colocated_units == null || colocated_units.isEmpty())
+		{
+	   	   HBinding b = unit.getBinding();
+		   if (b!= null && b.isVisible()) r.add(b);
+		}
+		else
+		{
+			for (IHUnit u : colocated_units)
+			{
+			   HBinding b = u.getBinding();
+		       if (b!= null && b.isVisible()) r.add(b);
+			}
+		}
 		
 		return r;
 	}

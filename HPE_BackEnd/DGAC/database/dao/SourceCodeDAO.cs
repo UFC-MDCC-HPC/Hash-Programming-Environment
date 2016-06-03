@@ -56,6 +56,41 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         }//list
 
+		public IList<SourceCode> listByFileType(char type_owner, int id_owner_container, string id_owner, string source_type)
+		{
+			SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
+			IList<SourceCode> list = new List<SourceCode>();
+			IDbConnection dbcon = Connector.DBcon;
+			IDbCommand dbcmd = dbcon.CreateCommand();
+			string sql =
+				"SELECT type_owner, id_owner_container, id_owner, contents, file_type, file_name, file_order " +
+				"FROM sourcecode " +
+				"WHERE type_owner like '" + type_owner + "' AND id_owner_container=" + id_owner_container + " AND id_owner like '" + id_owner + "' AND file_type like '" + source_type + "'" +
+				"ORDER BY file_type, file_order";
+			dbcmd.CommandText = sql;
+			IDataReader reader = dbcmd.ExecuteReader();
+			while (reader.Read())
+			{
+				SourceCode sc = new SourceCode();
+				sc.Type_owner = ((string)reader["type_owner"])[0];
+				sc.Id_owner_container = (int)reader["id_owner_container"];
+				sc.Id_owner = (string)reader["id_owner"];
+				sc.Contents = ((string)reader["contents"]).Replace("\'","'");
+				sc.File_name = (string)reader["file_name"];
+				sc.File_type = (string)reader["file_type"];               
+				sc.Order = (int)reader["file_order"];
+
+				list.Add(sc);
+			}//while
+			// clean up
+			reader.Close();
+			reader = null;
+			dbcmd.Dispose();
+			dbcmd = null;
+			return list;
+
+		}//list
+
 
         internal void update(SourceCode ss)
         {

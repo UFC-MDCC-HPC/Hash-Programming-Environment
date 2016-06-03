@@ -16,6 +16,7 @@ DGAC/catalog.cs
 DGAC/CCA.cs
 DGAC/WorkerComponentIDImpl.cs
 DGAC/ManagerComponentIDImpl.cs
+DGAC/ManagerIgnoredComponentIDImpl.cs
 DGAC/ManagerConnectionIDImpl.cs
 DGAC/WorkerServicesImpl.cs
 DGAC/WorkerConnectionIDImpl.cs
@@ -32,6 +33,7 @@ DGAC/ManagerServicesImpl.cs
 DGAC/GoPortImpl.cs
 DGAC/InitializePortImpl.cs
 DGAC/ReconfigurationAdvicePortImpl.cs
+DGAC/component_ref_instantiator.cs
 DGAC/connector/*.cs
 DGAC/connector/config/*.cs
 DGAC/connector/config/reconfig/*.cs
@@ -57,4 +59,5 @@ DGAC/connector/wrapper/*.cs
 -r:System.Xml
 -r:/usr/lib/mono/MPI/MPI.dll
 -r:System.ServiceModel
+-r:System.Runtime.Serialization
 -out:bin/DGAC.dll

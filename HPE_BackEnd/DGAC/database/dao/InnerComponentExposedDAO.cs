@@ -120,6 +120,35 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return ice;
         }
 		
+		internal InnerComponentExposed retrieve2(int id_abstract, string id_inner_rename)
+		{
+			InnerComponentExposed ice = null ;
+			IDbConnection dbcon = Connector.DBcon;
+			IDbCommand dbcmd = dbcon.CreateCommand();
+			string sql =
+				"SELECT id_abstract, id_inner_rename, id_inner_owner, id_inner " +
+				"FROM innercomponentexposed " +
+				"WHERE id_abstract=" + id_abstract + " AND " +
+				"id_inner_rename like '" + id_inner_rename;
+			dbcmd.CommandText = sql;
+			IDataReader reader = dbcmd.ExecuteReader();
+			if (reader.Read())
+			{
+				ice = new InnerComponentExposed();
+				ice.Id_abstract = (int)reader["id_abstract"];
+				ice.Id_inner_rename = (string)reader["id_inner_rename"];
+				ice.Id_inner_owner = (string)reader["id_inner_owner"];
+				ice.Id_inner = (string)reader["id_inner"];
+			}//while
+			// clean up
+			reader.Close();
+			reader = null;
+			dbcmd.Dispose();
+			dbcmd = null;
+
+			return ice;
+		}
+
         internal InnerComponentExposed retrieveContainer(int id_abstract_start, string id_inner_owner, string id_inner)
         {
 			int id_abstract = id_abstract_start;
@@ -135,6 +164,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                "WHERE id_abstract=" + id_abstract + " AND " +
 	                      "id_inner like '" + id_inner + "' AND " +
 	                      "id_inner_owner like '" + id_inner_owner + "'";
+				Trace.WriteLine ("retrieveContainer: " + sql);
 	            dbcmd.CommandText = sql;
 	            IDataReader reader = dbcmd.ExecuteReader();
 	            if (reader.Read())

@@ -17,9 +17,8 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 
-public abstract class HUnit extends HPrimUnit 
-                            implements IHUnit {
-
+public abstract class HUnit extends HPrimUnit implements IHUnit 
+{
 	static final long serialVersionUID = 1;	
 	
 	private int facet = 0;
@@ -30,10 +29,7 @@ public abstract class HUnit extends HPrimUnit
 
 	public void setFacet(int facet) {
 		this.facet = facet;
-	}
-
-	
-	
+	}	
 	
 	/** 
 	 * @uml.property name="unit_slice_abstractions"
@@ -64,10 +60,10 @@ public abstract class HUnit extends HPrimUnit
 		return unitSlices;
 	}
 	
-	public List<HUnitSlice> getPorts() 
+	public List<List<HUnitSlice>> getPorts() 
 	{
 		 
-		 Map<String, HUnitSlice> ports = new HashMap<String, HUnitSlice>();
+		 Map<String, List<HUnitSlice>> ports = new HashMap<String, List<HUnitSlice>>();
 		 HComponent c0 = (HComponent) this.getConfiguration();
 		
 		 HComponent c0x = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier());
@@ -103,23 +99,33 @@ public abstract class HUnit extends HPrimUnit
   	    	 
   	    	 if ((c.isPublic() || c.IsExposedFalsifiedContextTop())) 
   	    	 {
-  	    		 ports.put(c.getRef(), us);
+  	    		 String ref = c.getRef();
+  	    		 List<HUnitSlice> us_list = null;
+    			 us_list = ports.containsKey(ref) ? ports.get(ref) : new ArrayList<HUnitSlice>();
+    			 us_list.add(us);
+  	    		 ports.put(ref, us_list);
   	    		 units.add(u);
   	    	 }
   	    	 
-  	    	 for (HUnitSlice us_ : u.getPorts()) 
+  	    	 for (List<HUnitSlice> us_list_ : u.getPorts()) 
   	    	 {
-  	    		 HUnit u_entry = (HUnit) us_.getBinding().getEntry();
-  	    		 HComponent c_entry = (HComponent) u_entry.getConfiguration();
-  	    		 String pRef = c_entry.getRef();
-  	    		 if (!units.contains(u_entry) && !ports.containsKey(pRef)) 
+  	    		 for (HUnitSlice us_ : us_list_)
   	    		 {
-  	    			 ports.put(pRef, us_);
-  	    		     units.add(u_entry);  	    		     
+	  	    		 HUnit u_entry = (HUnit) us_.getBinding().getEntry();
+	  	    		 HComponent c_entry = (HComponent) u_entry.getConfiguration();
+	  	    		 String pRef = c_entry.getRef();
+	  	    		 if (!units.contains(u_entry) /*&& !ports.containsKey(pRef)*/) 
+	  	    		 {
+	  	  	    		 List<HUnitSlice> us_list = null;
+	  	    			 us_list = ports.containsKey(pRef) ? ports.get(pRef) : new ArrayList<HUnitSlice>();
+	  	    			 us_list.add(us_);
+	  	  	    		 ports.put(pRef, us_list);
+	  	    		     units.add(u_entry);  	    		     
+	  	    		 }
   	    		 }
   	    	 }  	    	 
   	     }
-  	    List<HUnitSlice> unit_list = new ArrayList<HUnitSlice>();
+  	    List<List<HUnitSlice>> unit_list = new ArrayList<List<HUnitSlice>>();
   	    unit_list.addAll(ports.values());
 		return unit_list; 
     } 
@@ -773,7 +779,10 @@ public abstract class HUnit extends HPrimUnit
 	    }
 	    
 	    public boolean hasStubs() {
-	    	return !stubs.isEmpty();
+	    	if (this.getColocatedUnits().isEmpty())
+	    	    return !stubs.isEmpty();
+	    	else 
+	    		return true;
 	    }
 	    
 	    public void addStub(HUnitStub stub) {
@@ -784,8 +793,23 @@ public abstract class HUnit extends HPrimUnit
 	    	stubs.remove(stub);
 	    }
 	    
-	    public HUnitStub getMostRecentStub() {
-	    	return stubs.get(stubs.size()-1);
+	    public List<HUnitStub> getMostRecentStub() 
+	    {
+    		List<HUnitStub> l = new ArrayList<HUnitStub>();
+    		List<IHUnit> colocated_units = this.getColocatedUnits();
+	    	if (colocated_units.isEmpty())
+	    	{   
+	    	    l.add(stubs.get(stubs.size()-1));
+	    	}
+	    	else 
+	    	{
+	            for (IHUnit u : colocated_units)
+	            {
+	            	HUnit u_ = (HUnit) u;
+	            	l.add(u_.stubs.get(u_.stubs.size()-1));
+	            }
+	    	}
+    		return l;	
 	    }
 	    
 	    private Rectangle savedBounds;
@@ -1071,7 +1095,42 @@ public abstract class HUnit extends HPrimUnit
 		this.is_multiple = is_multiple;
 		getListeners().firePropertyChange(CHANGE_MULTIPLE,null,this.getBounds());	
 	}
-		
 
+	private List<IHUnit> colocated_units = new ArrayList<IHUnit>(); 
+
+	public List<IHUnit> getColocatedUnits()
+	{
+		return this.colocated_units;
+	}
+	
+	public void colocateUnits(List<IHUnit> us) 
+	{
+		 HComponent c = (HComponent) this.getConfiguration();
+	     colocated_units.addAll(us);
+	     for (IHUnit u : us)
+	     {
+	        c.removeInterface((HHasExternalReferences) u.getInterface());
+	        u.setColocatingUnit(this);
+	     }
+	}
+	
+	
+	private IHUnit colocating_unit = null;
+	
+    public void setColocatingUnit(IHUnit unit)
+	{
+		this.colocating_unit = unit;
+	}
+	
+	public IHUnit getColocatingUnit()
+	{
+		return this.colocating_unit;
+	}
+
+	public void emptyColocatedUnits() 
+	{
+	  colocated_units.clear();
+		
+	}
 
 }

@@ -239,7 +239,7 @@ public class CommandLineUtil {
 		return ExitCode;
 	}
 
-	public static System.Diagnostics.Process runCommandStart(string cmd, string args, string userName, string password_, String curDir) 
+		public static System.Diagnostics.Process runCommandStart(string cmd, string args, string userName, string password_, String curDir, Tuple<string,string>[] environment) 
 	{
 			int ExitCode;
 
@@ -259,6 +259,8 @@ public class CommandLineUtil {
 			proc.EnableRaisingEvents = false;
 			proc.StartInfo.CreateNoWindow = true;
 			proc.StartInfo.UseShellExecute = false;
+			foreach (Tuple<string,string> env in environment)
+				proc.StartInfo.EnvironmentVariables.Add (env.Item1,env.Item2);
 			proc.StartInfo.FileName = cmd;
 			proc.StartInfo.Arguments = args;
 			proc.StartInfo.RedirectStandardError = true;
@@ -292,15 +294,56 @@ public class CommandLineUtil {
 			return proc;
 	}
 
-	public static int runCommand(string cmd, string args) {
+	public static System.Diagnostics.Process runCommand(string cmd, string args) {
         return runCommand(cmd, args, null, null, null);			
     }
 
-    public static int runCommand(string cmd, string args, string userName, string password_, String curDir)
+	public static System.Diagnostics.Process runCommand(string cmd, string args, Tuple<string,string>[] environment) {
+		return runCommand(cmd, args, null, null, null, environment);			
+	}
+
+	public static System.Diagnostics.Process runCommand(string cmd, string args, string curDir) {
+		return runCommand(cmd, args, null, null, curDir);			
+	}
+
+	public static System.Diagnostics.Process runCommand(string cmd, string args, string curDir, Tuple<string,string>[] environment) {
+		return runCommand(cmd, args, null, null, curDir, environment);			
+	}
+
+	public static System.Diagnostics.Process runCommand(string cmd, string args, string userName, string password_, string curDir)
+	{
+		return runCommand (cmd, args, userName, password_, curDir, new Tuple<string,string>[0]);
+	}
+
+	public static System.Diagnostics.Process runCommand(string cmd, string args, string userName, string password_, string curDir, Tuple<string,string>[] environment)
     {
-			System.Diagnostics.Process proc = runCommandStart(cmd, args, userName, password_, curDir);			
-			return runCommandComplete (proc);
+		System.Diagnostics.Process proc = runCommandStart(cmd, args, userName, password_, curDir, environment);			
+		runCommandComplete (proc);
+		Console.WriteLine (output_str);
+		return proc;
     }
+
+		public static System.Diagnostics.Process runCommandStart(string cmd, string args) {
+			return runCommandStart(cmd, args, null, null, null);			
+		}
+
+		public static System.Diagnostics.Process runCommandStart(string cmd, string args, Tuple<string,string>[] environment) {
+			return runCommandStart(cmd, args, null, null, null, environment);			
+		}
+
+		public static System.Diagnostics.Process runCommandStart(string cmd, string args, string curDir) {
+			return runCommandStart(cmd, args, null, null, curDir);			
+		}
+
+		public static System.Diagnostics.Process runCommandStart(string cmd, string args, string curDir, Tuple<string,string>[] environment) {
+			return runCommandStart(cmd, args, null, null, curDir, environment);			
+		}
+
+		public static System.Diagnostics.Process runCommandStart(string cmd, string args, string userName, string password_, string curDir)
+		{
+			return runCommandStart (cmd, args, userName, password_, curDir, new Tuple<string,string>[0]);
+		}
+
 
 
     private static string output_str = null;

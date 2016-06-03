@@ -43,11 +43,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="AfterBuild" command="sudo /usr/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" pauseExternalConsole="True" />
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -71,6 +66,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -263,9 +259,6 @@
     </Compile>
     <Compile Include="..\..\DGAC\LoaderConcreteComponent.cs">
       <Link>deploy\LoaderConcreteComponent.cs</Link>
-    </Compile>
-    <Compile Include="..\..\DGAC\ManagerComponentIDImpl.cs">
-      <Link>manager\ManagerComponentIDImpl.cs</Link>
     </Compile>
     <Compile Include="..\..\DGAC\ManagerObject.cs">
       <Link>manager\ManagerObject.cs</Link>
@@ -465,8 +458,17 @@
     <Compile Include="..\..\DGAC\base\ProxyKind.cs">
       <Link>base\ProxyKind.cs</Link>
     </Compile>
-    <Compile Include="..\..\SAFe_architecture_V4.cs">
-      <Link>deploy\SAFe_architecture_V4.cs</Link>
+    <Compile Include="..\..\DGAC\SAFe_architecture_V5.cs">
+      <Link>deploy\SAFe_architecture_V5.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\component_ref_instantiator.cs">
+      <Link>component_ref\component_ref_instantiator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ManagerComponentIDImpl.cs">
+      <Link>manager\ManagerComponentIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ManagerIgnoredComponentIDImpl.cs">
+      <Link>manager\ManagerIgnoredComponentIDImpl.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -545,6 +547,7 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="instantiator\" />
+    <Folder Include="component_ref\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

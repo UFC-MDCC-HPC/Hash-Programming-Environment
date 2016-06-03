@@ -22,7 +22,7 @@ public class SupersedeCommand extends Command {
 	public void execute() {
 
 			
-	    HComponent.supersede3(target, source, false);
+	    HComponent.supersede3(source, target, false);
 	    try {
 			source.updatePorts();
 		} catch (HPEAbortException e) {
@@ -52,7 +52,7 @@ public class SupersedeCommand extends Command {
     	varSource = !varSource.contains("@") ? varSource : varSource.substring(0,varSource.indexOf('@')); 
     	varTarget = !varTarget.contains("@") ? varTarget : varTarget.substring(0,varTarget.indexOf('@'));
 
-        boolean cond1 = source.isSubTypeOf(target) && this.source.isPublic() == this.target.isPublic() && topC.isAbstractConfiguration(); 
+        boolean cond1 = /*source.isSubTypeOf(target) &&*/ this.source.isPublic() == this.target.isPublic() && topC.isAbstractConfiguration(); 
         boolean cond2 = cond1 && this.source.getName2().equals(this.target.getName2());
         boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !varSource.equals(varTarget));
         boolean cond4 = cond3 && HComponent.checkConsistencyOfUnitsInSuperseding(this.target, this.source) && HComponent.checkConsistencyOfCardinalityInSuperseding(target,source); 

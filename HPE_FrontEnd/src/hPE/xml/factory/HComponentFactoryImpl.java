@@ -3,7 +3,7 @@ package hPE.xml.factory;
 import hPE.HPEProperties;
 import hPE.core.library.HPEComponentFileNotFound;
 import hPE.core.library.HPELocationEntry;
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpClassDefinition;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpMainDefinition;
@@ -23,6 +23,7 @@ import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.model.IHasColor;
+import hPE.frontend.base.settings.HPlatformSettingsFile;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.protocol.HProtocolChoice;
 import hPE.frontend.kinds.activate.model.protocol.HProtocolCombinator;
@@ -122,6 +123,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.graphics.Color;
 
 //TODO tirar essa referencia ao LOCAL_LOCATION.
@@ -158,7 +160,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	public static class UndefinedRefInnerException extends Exception {
 
 		public UndefinedRefInnerException(HComponent ic) {
-			super("Undefined ID for an inner component of type " + ic.getComponentName());
+			super("Undefined ID for an inner component of type "
+					+ ic.getComponentName());
 		}
 	}
 
@@ -239,21 +242,25 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Loads a ComponentType object from XML in a HComponent object
-	public ComponentType loadComponentX(URI uri, boolean cache, boolean relativePath) throws HPEInvalidComponentResourceException {
+	public ComponentType loadComponentX(URI uri, boolean cache,
+			boolean relativePath) throws HPEInvalidComponentResourceException {
 		try {
 			ResourceSet resourceSet = new ResourceSetImpl();
 			resourceSet
 					.getResourceFactoryRegistry()
 					.getExtensionToFactoryMap()
-					.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new ComponentResourceFactoryImpl());
-			resourceSet.getPackageRegistry().put(ComponentPackage.eNS_URI, ComponentPackage.eINSTANCE);
+					.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+							new ComponentResourceFactoryImpl());
+			resourceSet.getPackageRegistry().put(ComponentPackage.eNS_URI,
+					ComponentPackage.eINSTANCE);
 
 			Resource resource = null;
 			/*
 			 * if (this.workspace != null || cache) { resource =
 			 * resourceSet.getResource(uri, true); } else
 			 */if (relativePath) {
-				URI uriFull = URI.createFileURI(this.getWorkspacePath() + Path.SEPARATOR + uri.toString());
+				URI uriFull = URI.createFileURI(this.getWorkspacePath()
+						+ Path.SEPARATOR + uri.toString());
 				resource = resourceSet.getResource(uriFull, true);
 			} else {
 				URI uriFull = uri; // URI.createFileURI(uri.toString());
@@ -266,7 +273,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (rs.size() != 1)
 				throw new HPEInvalidComponentResourceException();
 
-			ComponentType component = ((DocumentRootImpl) rs.get(0)).getComponent();
+			ComponentType component = ((DocumentRootImpl) rs.get(0))
+					.getComponent();
 
 			return component;
 
@@ -371,11 +379,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			String package_ = baseComponent.getPackage();
 			String name = baseComponent.getName();
-			URI locationUri = URI.createURI(package_ + "." + name + Path.SEPARATOR + name + ".hpe");
+			URI locationUri = URI.createURI(package_ + "." + name
+					+ Path.SEPARATOR + name + ".hpe");
 			VisualElementAttributes v = baseComponent.getVisualDescription();
 			Rectangle bounds = new Rectangle((int) v.getX(), (int) v.getY(),
 					(int) v.getW(), (int) v.getH());
-			//String version = baseComponent.getVersion();
+			// String version = baseComponent.getVersion();
 
 			java.io.File fileCache = getCachePath(package_, name);
 			URI innerUri = null;
@@ -491,12 +500,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 					String name = xInnerC.getName();
 					String package_ = xInnerC.getPackage();
-					String location = package_ + "." + name + Path.SEPARATOR + name + ".hpe"; 
-					URI locationUri = location /* xInnerC.getLocation() */ != null 
-												? URI.createURI(location) 
-												: URI.createURI(HPEProperties.get(PreferenceConstants.LOCAL_LOCATION));
+					String location = package_ + "." + name + Path.SEPARATOR + name + ".hpe";
+					URI locationUri = location /* xInnerC.getLocation() */!= null ? URI.createURI(location) : URI.createURI(HPEProperties.get(PreferenceConstants.LOCAL_LOCATION));
 					String ref = xInnerC.getLocalRef();
-					//String version = xInnerC.getVersion();
+					// String version = xInnerC.getVersion();
 					boolean isExposed = xInnerC.isExposed();
 					boolean isMultiple = xInnerC.isSetMultiple() ? xInnerC.isMultiple() : false;
 					java.io.File fileCache = getCachePath(package_, name);
@@ -504,24 +511,18 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 					boolean copyToCache = false;
 					boolean retrieveLibraries = false;
-					if (!fileCache.exists()) 
-					{
-						if (locationUri.scheme() == null || !locationUri.scheme().equals("http")) 
-						{
+					if (!fileCache.exists()) {
+						if (locationUri.scheme() == null || !locationUri.scheme().equals("http")) {
 							IPath pathC = new Path(locationUri.toString());
 							IPath path = HComponentFactoryImpl.buildWPath(pathC);
 							innerUri = URI.createFileURI(path.toString().replaceAll("%20", " "));
 							copyToCache = true;
-						} 
-						else 
-						{
+						} else {
 							java.io.File file = HPELocationEntry.getComponent(package_.replace(".", ":").split(":"), name, null, locationUri);
 							innerUri = URI.createFileURI(file.getAbsolutePath());
 							retrieveLibraries = true;
 						}
-					} 
-					else 
-					{
+					} else {
 						if (locationUri.scheme() == null || !locationUri.scheme().equals("http")) {
 							// COMPARE DATES OF THE PROJECT FILE AND CACHED
 							// FILE.
@@ -533,52 +534,32 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							java.io.File fileProject = new File(path.toString());
 							long lastDateProject = fileProject.lastModified();
 							// COMPARE BINARY FOLDERS
-							java.io.File parentFileCache = new File(fileCache
-									.getParentFile().getAbsolutePath()
-									+ Path.SEPARATOR
-									+ "bin"
-									+ Path.SEPARATOR
-									+ "1.0.0.0");
-							java.io.File parentFileProject = new File(
-									fileProject.getParentFile()
-											.getAbsolutePath()
-											+ Path.SEPARATOR
-											+ "bin"
-											+ Path.SEPARATOR
-											+ "1.0.0.0");
-							FilenameFilter filter = new FilenameFilter() 
-							{
+							java.io.File parentFileCache = new File(fileCache.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");
+							java.io.File parentFileProject = new File(fileProject.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");
+							FilenameFilter filter = new FilenameFilter() {
 								@Override
-								public boolean accept(File dir, String name) 
-								{
+								public boolean accept(File dir, String name) {
 									return name.endsWith(".dll");
 								}
 							};
 							java.io.File[] fsCache = parentFileCache.listFiles(filter);
 							java.io.File[] fsProject = parentFileProject.listFiles(filter);
 
-							if ((fsCache != null && fsProject != null)
-									&& (lastDateProject > lastDataCache
-											|| fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) 
-							{
+							if ((fsCache != null && fsProject != null)	&& (lastDateProject > lastDataCache	|| fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) {
 								IPath pathC1 = new Path(locationUri.toString());
 								IPath path1 = HComponentFactoryImpl.buildWPath(pathC1);
 								innerUri = URI.createFileURI(path1.toString().replaceAll("%20", " "));
 								copyToCache = true;
-							} 
-							else
+							} else
 								innerUri = URI.createFileURI(fileCache.getAbsolutePath());
-						} 
-						else 
-						{
+						} else {
 							innerUri = URI.createFileURI(fileCache.getAbsolutePath());
 						}
 					}
 
 					HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri, false, false, false,!copyToCache, false);
 
-					if (locationUri.scheme() != null && locationUri.scheme().equals("http")) 
-					{
+					if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
 						innerC.setRemoteURI(locationUri);
 					}
 
@@ -592,8 +573,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 					int x, y, w, h, r, g, b;
 					Color color;
-					if (xInnerC.getVisualDescription() != null) 
-					{
+					if (xInnerC.getVisualDescription() != null) {
 						x = (int) xInnerC.getVisualDescription().getX();
 						y = (int) xInnerC.getVisualDescription().getY();
 						w = (int) xInnerC.getVisualDescription().getW();
@@ -602,9 +582,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						g = xInnerC.getVisualDescription().getColor().getG();
 						b = xInnerC.getVisualDescription().getColor().getB();
 						color = new Color(null, r, g, b);
-					} 
-					else 
-					{
+					} else {
 						x = 0;
 						y = 0;
 						w = 100;
@@ -625,26 +603,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					loadPorts(xInnerC, this.component, innerC);
 					loadUnitBounds(xInnerC, innerC);
 
-				} 
-				catch (HPEInvalidComponentResourceException e) 
-				{
-					String message = "ERROR loading component "
-							+ xInnerC.getPackage() + "." + xInnerC.getName() 
-							+ "! (inner component " + xInnerC.getLocalRef()
-							+ ").";
-					;
+				} catch (HPEInvalidComponentResourceException e) {
+					String message = "ERROR loading component " + xInnerC.getPackage() + "." + xInnerC.getName() + "! (inner component " + xInnerC.getLocalRef() + ").";
 					System.err.println(message);
 					JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
-				} 
-				catch (HPEComponentFileNotFound e) 
-				{
-					String message = "Component " + xInnerC.getPackage() + "."
-							+ xInnerC.getName() + " NOT fuound in "
-							+ xInnerC.getLocalRef() + ").";
+				} catch (HPEComponentFileNotFound e) {
+					String message = "Component " + xInnerC.getPackage() + "." + xInnerC.getName() + " NOT fuound in " + xInnerC.getLocalRef() + ").";
 					System.err.println(message);
-					JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, message, "Loading Component Error",	JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 		// catch (IOException e) {
 
@@ -660,10 +627,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (i.getConfiguration() == innerC) {
 				// for (Integer[] version : versions) {
 				String versionID = null; // HInterface.toStringVersion(version);
-				HBESourceVersion<HBEAbstractFile> sv = i
-						.getSourceVersion(versionID == null ? "1.0.0.0"
-								: versionID);
-				for (HBEAbstractFile file : sv.getFiles()) {
+				HBESourceVersion sv = i.getSourceVersion(versionID == null ? "1.0.0.0" : versionID);
+				for (HBEAbstractSourceCodeFile file : sv.getFiles()) {
 					String packageName = innerC.getPackagePath().toString();
 					String componentName = innerC.getComponentName();
 					HPELocationEntry.getBinaryFile(packageName, componentName,
@@ -674,13 +639,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	public static void copyProjectToCache(HComponent innerC, URI locationURI) 
-	{
+	public static void copyProjectToCache(HComponent innerC, URI locationURI) {
 		copyProjectToCache(innerC, "1.0.0.0", locationURI);
 	}
-	
 
-	private static void copyProjectToCache(HComponent innerC, String version, URI locationURI) {
+	private static void copyProjectToCache(HComponent innerC, String version,
+			URI locationURI) {
 
 		IPath pathC = new Path(innerC.getLocalLocation());
 		if (pathC.segment(0).equals("file:")) {
@@ -787,14 +751,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	public static File getCachePath(String pk, String componentName)
-	{
+	public static File getCachePath(String pk, String componentName) {
 		return getCachePath(pk, componentName, "1.0.0.0");
 	}
-	
-	private static File getCachePath(String pk, String componentName, String version) {
 
-		URI locationURI = HComponent.getStandardLocationPath(pk, componentName, version);
+	private static File getCachePath(String pk, String componentName,
+			String version) {
+
+		URI locationURI = HComponent.getStandardLocationPath(pk, componentName,
+				version);
 
 		return getCachePath(locationURI);
 	}
@@ -1055,7 +1020,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			baseC.setParameter(par_id);
 			if (param.isSetOrder())
 				component.setParameterOrder(par_id, order);
-			component.setParameterVariance(par_id, component.getParameterVariance(par_id, param.getVariance()));
+			component
+					.setParameterVariance(
+							par_id,
+							component.getParameterVariance(par_id,
+									param.getVariance()));
 		}
 
 	}
@@ -1133,7 +1102,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Builds an HComponent object
-	public HComponent buildComponent(ComponentType xC, URI uri, boolean isTop, boolean isExtending, boolean isImplementing) {
+	public HComponent buildComponent(ComponentType xC, URI uri, boolean isTop,
+			boolean isExtending, boolean isImplementing) {
 
 		try {
 			ComponentHeaderType xCheader = xC.getHeader();
@@ -1236,15 +1206,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return null;
 	}
 
-	private void loadExternalLibraries(ComponentBodyType xCinfo) 
-	{
-	    for (ExternalLibraryType ext_library : xCinfo.getExternalLibrary())
-	    {
-	    	String name = ext_library.getName();
-	    	String[] external_dependency = (String[]) ext_library.getExternalDependency().toArray();
-	    	this.component.addExternalLibrary(name, external_dependency);
-	    }
-		
+	private void loadExternalLibraries(ComponentBodyType xCinfo) {
+		for (ExternalLibraryType ext_library : xCinfo.getExternalLibrary()) {
+			String name = ext_library.getName();
+			String[] external_dependency = (String[]) ext_library
+					.getExternalDependency().toArray();
+			this.component.addExternalLibrary(name, external_dependency);
+		}
+
 	}
 
 	private void checkKeyFile() throws IOException {
@@ -1322,19 +1291,21 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void applyRenaming(ComponentBodyType xI) {
 
-		for (InnerRenamingType ir : xI.getInnerRenaming()) 
-		{
+		for (InnerRenamingType ir : xI.getInnerRenaming()) {
 			String cRef = ir.getCRef();
 			String oldName = ir.getCOldName();
 			String newName = ir.getCNewName();
 
 			if (cRef != null) {
 				if (mC1.containsKey(cRef)) {
-					HComponent cc = mC2.get(mC1.get(cRef)).getExposedComponentByName(oldName);
+					HComponent cc = mC2.get(mC1.get(cRef))
+							.getExposedComponentByName(oldName);
 					if (cc != null)
 						cc.setName(newName);
 				} else {
-					System.err.println("applyRenaming: inner component not found (" + cRef + ")");
+					System.err
+							.println("applyRenaming: inner component not found ("
+									+ cRef + ")");
 				}
 			} else {
 				// mC2.get(mC1.get(oldName)).setName(newName);
@@ -1349,7 +1320,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		List<HComponent> toFuse = new ArrayList<HComponent>();
 
 		EList<FusionType> fs = xI.getFusion();
-		for (FusionType f : fs) {
+		for (FusionType f : fs) 
+		{
 			toFuse.clear();
 			EList<String> cs = f.getCRefs();
 			String pRef = f.getPRef();
@@ -1363,43 +1335,44 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 
 			HComponent aux = null;
-			HComponent source = toFuse.get(0);
-			for (HComponent target : toFuse) {
-				if (source != target) {
-					if (target.isSubTypeOf(source)
-							&& !source.isSubTypeOf(target)) {
-						aux = source;
-						source = target;
-						target = aux;
-					}
-					SupersedeCommand c = new SupersedeCommand(
-							(HComponent) source, (HComponent) target);
-					if (c.canExecute()) {
-						// c.execute();
-						HComponent.supersede3(target, source, false);
-					} else {
-						aux = source;
-						source = target;
-						target = aux;
-						SupersedeCommand c_ = new SupersedeCommand(
-								(HComponent) source, (HComponent) target);
-						if (c_.canExecute())
-							// c_.execute();
-							HComponent.supersede3(target, source, false);
-						else {
-							String message = "CANNOT FUSE INNER COMPONENTS ! source = "
-									+ source.getRef()
-									+ " ("
-									+ source.getComponentName()
-									+ ") target = "
-									+ target.getRef()
-									+ " ("
-									+ target.getComponentName() + ")";
-							System.err.println(message);
-							JOptionPane.showMessageDialog(null, message,
-									"Loading Component Error",
-									JOptionPane.ERROR_MESSAGE);
-							// throw new HPEInvalidComponentResourceException();
+			if (toFuse.size() > 1) {
+				HComponent source = toFuse.get(0);
+				for (HComponent target : toFuse) {
+					if (source != target) {
+						if (target.isSubTypeOf(source)	&& !source.isSubTypeOf(target)) {
+							aux = source;
+							source = target;
+							target = aux;
+						}
+						SupersedeCommand c = new SupersedeCommand((HComponent) source, (HComponent) target);
+						if (c.canExecute()) {
+							// c.execute();
+							HComponent.supersede3(source,target,false);
+						} else {
+							aux = source;
+							source = target;
+							target = aux;
+							SupersedeCommand c_ = new SupersedeCommand((HComponent) source, (HComponent) target);
+							if (c_.canExecute())
+								//c_.execute();
+								HComponent.supersede3(source, target, false);
+							else {
+								String message = "CANNOT FUSE INNER COMPONENTS ! source = "
+										+ source.getRef()
+										+ " ("
+										+ source.getComponentName()
+										+ ") target = "
+										+ target.getRef()
+										+ " ("
+										+ target.getComponentName()
+										+ ")";
+								System.err.println(message);
+								JOptionPane.showMessageDialog(null, message,
+										"Loading Component Error",
+										JOptionPane.ERROR_MESSAGE);
+								// throw new
+								// HPEInvalidComponentResourceException();
+							}
 						}
 					}
 				}
@@ -1436,7 +1409,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// save kind
 		xH.setKind(SupportedKinds.get(c.kindString()));
 		// save base type
-		HComponent sC = c.isAbstractConfiguration() ? c.getSuperType() : c.getWhoItImplements();
+		HComponent sC = c.isAbstractConfiguration() ? c.getSuperType() : c
+				.getWhoItImplements();
 		if (sC != null)
 			saveBaseType(sC, xH, c.isAbstractConfiguration());
 		// save package path
@@ -1510,12 +1484,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		saveParameterRenamings(baseType, parameterRenaming); // OK !
 		savePorts(baseType, superTypeX.getPort());
-		saveUnitBounds(baseType.getAllUnits(), unitBounds);
+		saveUnitBounds(baseType.getUnits(), unitBounds);
 	}
 
 	private void saveInfo(HComponent c, ComponentBodyType xI)
 			throws UndefinedRefInnerException, DuplicatedRefInnerException,
 			DuplicatedSliceNamesException {
+
+		supply_parameter_memory.clear();
 
 		hidden_supplies.clear();
 
@@ -1525,55 +1501,57 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		for (Pair<InnerComponentType, ParameterSupplyType> pc : hidden_supplies) {
 			xI.getInnerComponent().add(pc.fst());
-			xI.getSupplyParameter().add(pc.snd());
+			saveSupplyParameter(xI.getSupplyParameter(),pc.snd());			
 		}
 
 		hidden_supplies.clear();
 
 		saveInnerRenamings(c, xI.getInnerRenaming());
 		saveFusions(c, xI.getFusion());
-		// saveSplits(c, xI.getSplit());
 		saveInterfaces(c, xI.getInterface());
 		saveUnits(c, xI.getUnit());
 		saveRecursiveEntries(c, xI.getRecursiveEntry());
 		saveExternalLibraries(c.getExternalLibrarySet(), xI.getExternalLibrary());
-		// saveEnumerator(c.gettReplicators(), xI.getEnumerator());
-		// saveEnumeratorFusions(c.gettReplicators(),
-		// xI.getFusionsOfReplicators());
+	}
+
+	private Map<String, ParameterSupplyType> supply_parameter_memory = new HashMap<String,ParameterSupplyType>();
+	
+	private void saveSupplyParameter(EList<ParameterSupplyType> supplyParameter, ParameterSupplyType sp) 
+	{		
+		if (!supply_parameter_memory.containsKey(sp.getCRef()))
+		{
+		    supplyParameter.add(sp);
+		    supply_parameter_memory.put(sp.getCRef(), sp);
+		}
 	}
 
 	private void saveExternalLibraries(
 			Map<String, String[]> externalLibrarySet,
-			EList<ExternalLibraryType> externalLibrary) 
-	{
-		for (Entry<String, String[]> e : externalLibrarySet.entrySet())
-		{
+			EList<ExternalLibraryType> externalLibrary) {
+		for (Entry<String, String[]> e : externalLibrarySet.entrySet()) {
 			String library_name = e.getKey();
 			ExternalLibraryType elt = factory.createExternalLibraryType();
 			externalLibrary.add(elt);
-		    elt.setName(library_name);
-		    String source_code = null;
-		    source_code = this.getCurrentContents(library_name);
-		    
+			elt.setName(library_name);
+			String source_code = null;
+			source_code = this.getCurrentContents(library_name);
+
 			elt.setContents(source_code);
-			
+
 			EList<String> l = elt.getExternalDependency();
 			for (String external_dependency : e.getValue())
 				l.add(external_dependency);
 		}
-		
+
 	}
 
 	private void saveInnerRenamings(HComponent c, EList<InnerRenamingType> xRs) {
 
 		Map<HComponent, List<HComponent>> vcs = new HashMap<HComponent, List<HComponent>>();
 
-		for (HComponent vc : c.getComponents()) 
-		{
-			if (!vc.isHiddenInnerComponent()) 
-			{
-				for (HComponent vc_ : vc.getExposedComponents())
-				{
+		for (HComponent vc : c.getComponents()) {
+			if (!vc.isHiddenInnerComponent()) {
+				for (HComponent vc_ : vc.getExposedComponents()) {
 					if (!vcs.containsKey(vc_)) {
 						List<HComponent> l = new ArrayList<HComponent>();
 						l.add(vc);
@@ -1586,17 +1564,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 		}
 
-		for (Entry<HComponent, List<HComponent>> vc : vcs.entrySet()) 
-		{
+		for (Entry<HComponent, List<HComponent>> vc : vcs.entrySet()) {
 			List<HComponent> d1s = vc.getValue();
 			HComponent d2 = vc.getKey();
-			for (HComponent d1 : d1s) 
-			{
+			for (HComponent d1 : d1s) {
 				String cRef = d1.getRef();
 				String oldName = d2.getSavedName().get(d1);
 				String newName = d2.getRef();
-				if (oldName != null && !oldName.equals(newName)) 
-				{
+				if (oldName != null && !oldName.equals(newName)) {
 					InnerRenamingType ir = factory.createInnerRenamingType();
 					ir.setCRef(cRef);
 					ir.setCOldName(oldName);
@@ -1607,15 +1582,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	private void saveFusions(HComponent c, EList<FusionType> xFs) {
-		for (Entry<String, List<HComponent>> fusion : c.getFusions().entrySet()) {
+	private void saveFusions(HComponent c, EList<FusionType> xFs) 
+	{
+		for (Entry<String, List<HComponent>> fusion : c.getFusions().entrySet()) 
+		{
 			String cRef = fusion.getKey();
 			List<HComponent> cList = fusion.getValue();
 			FusionType f = factory.createFusionType();
 			xFs.add(f);
 			f.setPRef(cRef);
 			EList<String> ps = f.getCRefs();
-			List<HComponent> cParentList = new ArrayList<HComponent>();
+			
 			for (HComponent c_ : cList) {
 				for (HComponent c__ : c_.getTopParentConfigurations()) {
 					ps.add(c__.getName2());
@@ -1717,7 +1694,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				// parameters must be saved with an order.
 				int order = component.getParameterOrder(par_id);
 				if (order < 0)
-					unordered_parameters.add(new Pair<String, ParameterType>(par_id, p));
+					unordered_parameters.add(new Pair<String, ParameterType>(
+							par_id, p));
 				else {
 					p.setOrder(order);
 					max_order = order > max_order ? order : max_order;
@@ -1762,13 +1740,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		/* if (!c.isTransitiveSupplier(p.getKey())) */
 		{
 			String cRef = p.snd().getRef();
-			cRef = c.isTransitiveSupplier(p.fst()) ? "T###" + cRef
-					+ p.snd().hashCode() : cRef;
-			if (!(cRefsSupply.contains(cRef) && cRef.startsWith("T###"))) {
-				if (cRefsSupply.contains(cRef)) {
+			cRef = c.isTransitiveSupplier(p.fst()) ? "T###" + cRef + p.snd().hashCode() : cRef;
+			if (!(cRefsSupply.contains(cRef) && cRef.startsWith("T###"))) 
+			{
+				if (cRefsSupply.contains(cRef)) 
+				{
 					throw new DuplicatedRefInnerException(cRef);
-				} else {
-					if (!cRefs.contains(cRef)) {
+				} 
+				else 
+				{
+					if (!cRefs.contains(cRef)) 
+					{
 						cs.add(i++, p.snd());
 						newRefMap.put(p.snd(), cRef);
 						cRefs.add(cRef);
@@ -1786,11 +1768,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		 * DuplicatedRefInnerException(cRef); } else { cRefs.add(cRef); } } } }
 		 * }
 		 */
-		for (HComponent ic : cs) {
-
-			if (!ic.isDerivedFromPermutation() && ic != c.getSuperType()
-					&& ic != c.getWhoItImplements()) {
-
+		for (HComponent ic : cs) 
+		{
+			if (!ic.isDerivedFromPermutation() && ic != c.getSuperType() && ic != c.getWhoItImplements()) 
+			{
 				InnerComponentType d = factory.createInnerComponentType();
 
 				String oldRef = ic.getRef();
@@ -1830,7 +1811,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		String package_ = ic.getPackagePath().toString();
 		boolean exposed = ic.isPublic();
 		boolean isMultiple = ic.isMultiple();
-		//String hash_component_UID = ic.getHashComponentUID();
+		// String hash_component_UID = ic.getHashComponentUID();
 
 		String parameterId = ic.getParameterIdentifier(this.component);
 
@@ -1845,7 +1826,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// d.setVersion(version);
 		d.setExposed(exposed);
 		d.setMultiple(isMultiple);
-		//d.setHashComponentUID(hash_component_UID);
+		// d.setHashComponentUID(hash_component_UID);
 		d.setVisualDescription(v);
 		if (!parameterId.equals("type ?"))
 			d.setParameterId(parameterId);
@@ -1857,7 +1838,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		saveParameterRenamings(ic, parameterRenaming); // OK !
 		savePorts(ic, ports);
-		saveUnitBounds(ic.getAllUnits(), unitBounds);
+		saveUnitBounds(ic.getUnits(), unitBounds);
 		saveVisualDescription(ic, v);
 
 	}
@@ -1880,8 +1861,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveUnitBounds(List<IHUnit> units,
-			EList<UnitBoundsType> unitBounds) {
+	private void saveUnitBounds(List<IHUnit> units,	EList<UnitBoundsType> unitBounds) {
 
 		for (IHUnit u_ : units) {
 			for (IHPrimUnit u : u_.getClones()) {
@@ -1932,11 +1912,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void saveParameterRenamings(HComponent c,
 			EList<ParameterRenaming> parameterRenamings)
-			throws UndefinedRefInnerException {
-
-		for (Entry<String, List<HComponent>> param : c.getParameters()
-				.entrySet()) {
-			String formField = null;
+			throws UndefinedRefInnerException 
+	{
+		for (Entry<String, List<HComponent>> param : c.getParameters().entrySet()) 
+		{
+			String formField = param.getKey();
 			String varName = null;
 
 			// SETUP VARIABLES: look for the current variable name of the
@@ -1946,37 +1926,35 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			// if (cc.getSupplier() == null && cc.getWhoISupply().isEmpty())
 			{
 				varName = cc.getVariableName(component);
-				if (varName.equals("?")) {
-					InnerComponentType par_port = factory
-							.createInnerComponentType();
+				
+				if (varName.equals("?")) 
+				{
+					InnerComponentType par_port = factory.createInnerComponentType();
 					String cRefSave = cc.getRef();
 					String cRefNew = "C###" + par_port.hashCode();
 					cc.setName(cRefNew);
 					saveInnerComponent(cc, par_port);
 					cc.setName(cRefSave);
-					varName = varName.equals("?") ? "X###"
-							+ par_port.hashCode() : varName;
+					varName = varName.equals("?") ? "X###" + par_port.hashCode() : varName;
 
 					ParameterSupplyType s = factory.createParameterSupplyType();
 					s.setCRef(cRefNew);
 					s.setVarName(varName);
 
-					hidden_supplies
-							.add(new Pair<InnerComponentType, ParameterSupplyType>(
-									par_port, s));
+					hidden_supplies.add(new Pair<InnerComponentType, ParameterSupplyType>(par_port, s));
 				}
 				// varName =
 				// cc.getVariableName(c.getTopParentConfigurations().get(0));
 
 				if (varName.indexOf('@') >= 0)
 					varName = varName.substring(0, varName.indexOf('@'));
-				formField = cc.getParameterIdentifier(c).equals("type ?") ? cc
-						.getParameterIdentifier(cc) : cc
-						.getParameterIdentifier(c);
+				formField = cc.getParameterIdentifier(c).equals("type ?") ? cc.getParameterIdentifier(cc) : cc.getParameterIdentifier(c);
 
 				// ---------------
 
-				if (!formField.equals("type ?")) {
+				if (!formField.equals("type ?")) 
+				{
+					
 					ParameterRenaming r = factory.createParameterRenaming();
 
 					r.setFormFieldId(formField);
@@ -2237,8 +2215,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				int order = component.getParameterOrder(par_id);
 				if (order >= 0) {
-					parameter_order.put(order, parX); // record parameter global
-														// orders
+					parameter_order.put(order, parX); // record parameter global orders
 					max_order = order > max_order ? order : max_order;
 				}
 				// else
@@ -2252,8 +2229,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		int size = max_order + 1;
 		InterfaceParameterType[] pars = new InterfaceParameterType[size];
-		for (Entry<Integer, InterfaceParameterType> p_order : parameter_order
-				.entrySet())
+		for (Entry<Integer, InterfaceParameterType> p_order : parameter_order.entrySet())
 			pars[p_order.getKey()] = p_order.getValue();
 
 		int count = 0;
@@ -2362,18 +2338,18 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	public String getCurrentContents(String libraryName) 
-	{
+	public String getCurrentContents(String libraryName) {
 		String return_contents = null;
-		
-		IPath rootPath = new Path(this.component.getRelativeLocation());		
-		IPath path = rootPath.removeLastSegments(1).append("src").append(libraryName);
-		    	
-    	java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
-    	
-    	StringBuffer s = new StringBuffer();
 
-		try {				
+		IPath rootPath = new Path(this.component.getRelativeLocation());
+		IPath path = rootPath.removeLastSegments(1).append("src")
+				.append(libraryName);
+
+		java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
+
+		StringBuffer s = new StringBuffer();
+
+		try {
 			FileInputStream contents = new FileInputStream(file);
 			if (contents != null) {
 				Reader reader = new InputStreamReader(contents);
@@ -2383,33 +2359,31 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					s.append(readBuffer, 0, n);
 					n = reader.read(readBuffer);
 				}
-				 			
+
 				return_contents = s.toString();
-				
-			} 
-						
-		}  
-		catch (IOException e) {
-        	JOptionPane.showMessageDialog(null,
-        		    "Error Reading File Contents - ".concat(e.getMessage()),
-        		    "Error",
-        		    JOptionPane.ERROR_MESSAGE);
+
+			}
+
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error Reading File Contents - ".concat(e.getMessage()),
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 		return return_contents;
-		
+
 	}
 
-	private void saveSources(
-			Collection<HBESourceVersion<HBEAbstractFile>> sources,
-			EList<SourceType> sourcesX) {
-
-		for (HBESourceVersion<HBEAbstractFile> src : sources) {
+	private void saveSources(Collection<HBESourceVersion> sources, EList<SourceType> sourcesX) 
+	{
+		for (HBESourceVersion src : sources) 
+		{
 			SourceType s = factory.createSourceType();
 
-			List<SourceFileType> fsX = s.getFile(); 	 	
+			List<SourceFileType> fsX = s.getFile();
 
-			for (HBEAbstractFile f : src.getFiles()) {
+			for (HBEAbstractSourceCodeFile f : src.getFiles()) 
+			{
 				SourceFileType fX = factory.createSourceFileType();
 				String uri = f.getBinaryPath().toString();
 				String versionIdF = f.getVersionID();
@@ -2417,7 +2391,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				fX.setUri(uri);
 				fX.setName(f.getFileName());
 				fX.setContents(f.getCurrentContents());
-				fX.setVersionId(checkVersion(versionIdF) ? versionIdF : "1.0.0.0");
+				fX.setVersionId(versionIdF != null && checkVersion(versionIdF) ? versionIdF : "1.0.0.0");
 				if (srcType != null)
 					fX.setSrcType(srcType);
 				List<String> deps = fX.getDependency();
@@ -2431,7 +2405,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String srcType = src.getFileType();
 
 			s.setSourceType(srcType);
-			s.setVersionId(checkVersion(version) ? version : "1.0.0.0");
+			s.setVersionId(version != null && checkVersion(version) ? version : "1.0.0.0");
 
 			if (!s.getFile().isEmpty())
 				sourcesX.add(s);
@@ -2503,8 +2477,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			throws DuplicatedSliceNamesException {
 
 		Map<String, List<HUnitSlice>> slice_replica = new HashMap<String, List<HUnitSlice>>();
-		
-		for (IHUnit u_ : c.getUnits()) {
+
+		for (IHUnit u_ : c.getUnits()) 
+		{
 			String uRef = null;
 			String iRef = null;
 			boolean isPrivate = false;
@@ -2513,8 +2488,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			boolean visibleInterface = true;
 			int index;
 			int facet;
-			String cRefSuper = null;
-			String uRefSuper = null;
+			String[] cRefSuper = null;
+			String[] uRefSuper = null;
 			Integer replica = null;
 
 			for (IHPrimUnit u__ : u_.getClones()) 
@@ -2534,10 +2509,18 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				HInterface i = (HInterface) u.getInterface();
 
 				iRef = i != null ? i.getPrimName() : null;
-				if (isSubUnit) {
-					HUnitStub stubU = u.getMostRecentStub();
-					cRefSuper = ((HComponent) stubU.getConfiguration()).getRef();
-					uRefSuper = stubU.getOriginalName();
+				if (isSubUnit) 
+				{
+					List<HUnitStub> stubU_list = u.getMostRecentStub();
+					cRefSuper = new String[stubU_list.size()];
+					uRefSuper = new String[stubU_list.size()];
+					int j = 0;
+					for (HUnitStub stubU : stubU_list)
+					{	
+					  cRefSuper[j] = ((HComponent) stubU.getConfiguration()).getRef();
+					  uRefSuper[j] = stubU.getOriginalName();
+					  j++;
+					}
 				}
 
 				// ---------------
@@ -2551,28 +2534,36 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				uX.setReplica(index);
 				uX.setFacet(facet);
 
-				if (isSubUnit) {
-					UnitRefType superUnit = factory.createUnitRefType();
-					superUnit.setCRef(cRefSuper);
-					superUnit.setURef(uRefSuper);
-					if (replica != null)
-						superUnit.setSliceReplica(replica);
-					uX.setSuper(superUnit);
+				if (isSubUnit) 
+				{
+					EList<UnitRefType> superUnit_list = uX.getSuper();
+					int j=0;
+					for (j=0; j<cRefSuper.length; j++)
+					{
+						UnitRefType superUnit = factory.createUnitRefType();
+						superUnit.setCRef(cRefSuper[j]);
+						superUnit.setURef(uRefSuper[j]);
+						if (replica != null)  // essa comparação não leva a nada.
+							superUnit.setSliceReplica(replica);						
+						superUnit_list.add(superUnit);
+					}
 				}
 				saveVisualDescription(u, v);
 
 				EList<UnitSliceType> slicesX = uX.getSlices();
 				List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
 				List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
-				List<HUnitSlice> ports = u.getPorts();
+				List<List<HUnitSlice>> ports_list = u.getPorts();
 				List<HUnitSlice> slices = u.getSlices();
-				transitiveSlices.addAll(ports);
-				for (HUnitSlice usx : slices) {
+				for (List<HUnitSlice> ports : ports_list)
+					transitiveSlices.addAll(ports);
+				for (HUnitSlice usx : slices) 
+				{
 					if (!transitiveSlices.contains(usx))
 						transitiveSlices.add(usx);
 				}
 				directSlices.addAll(slices);
-				saveUnitSlices(directSlices, transitiveSlices, slicesX, slice_replica);
+				saveUnitSlices(directSlices, transitiveSlices, slicesX,	slice_replica);
 
 				xI.add(uX);
 			}
@@ -2582,30 +2573,34 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private void saveUnitSlices(List<HUnitSlice> directSlices,
-			List<HUnitSlice> transitiveSlices, EList<UnitSliceType> slicesX, Map<String, List<HUnitSlice>> slice_replica)
-			throws DuplicatedSliceNamesException 
-	{
+			List<HUnitSlice> transitiveSlices, EList<UnitSliceType> slicesX,
+			Map<String, List<HUnitSlice>> slice_replica)
+			throws DuplicatedSliceNamesException {
 
 		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
 
 		Map<String, String> portNames = new HashMap<String, String>();
-		for (HUnitSlice slice : transitiveSlices) {
-			if (slice.getBinding().getConfiguration() == this.component) {
+		for (HUnitSlice slice : transitiveSlices) 
+		{
+			if (slice.getBinding().getConfiguration() == this.component) 
+			{
 				HUnit uSource = (HUnit) slice.getComponentEntry();
-				List<HUnitSlice> usPorts = uSource.getPorts();
-				for (HUnitSlice usPort : usPorts) {
-					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
-					String usPortName = usPort.getConfiguration().getRef();
-					portNames.put(usPortName, usPortName);
+				List<List<HUnitSlice>> usPorts_list = uSource.getPorts();
+				for (List<HUnitSlice> usPorts : usPorts_list)
+				{
+					for (HUnitSlice usPort : usPorts) 
+					{
+						HUnit usPortSource = (HUnit) usPort.getComponentEntry();
+						String usPortName = usPort.getConfiguration().getRef();
+						portNames.put(usPortName, usPortName);
+					}
 				}
 			}
 		}
 
 		for (HUnitSlice slice : transitiveSlices)
-			if (slice.getBinding().getConfiguration() == this.component
-					|| (/* !directSlices.contains(slice) && */portNames
-							.containsKey(slice.getName()))) {
-
+			if (slice.getBinding().getConfiguration() == this.component	|| (portNames.containsKey(slice.getName()))) 
+			{
 				if (savedSlices.containsKey(slice.getName())) {
 					// throw new DuplicatedSliceNamesException(slice);
 				}
@@ -2647,19 +2642,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				sliceX.setSliceName(sName);
 				sliceX.setVisualDescription(v);
 				sliceX.setTransitive(!directSlices.contains(slice));
-				
-				
-				
+
 				int inner_replica = fetch_inner_replica(sliceX, slice, slice_replica);
 				sliceX.setInnerReplica(inner_replica);
-			
-				
-				
-				List<HUnitSlice> usPorts = uSource.getPorts();
-				for (HUnitSlice usPort : usPorts) 
+
+				List<List<HUnitSlice>> usPorts_list = uSource.getPorts();
+				for (List<HUnitSlice> usPorts : usPorts_list)
 				{
-					String usPortName = usPort.getConfiguration().getRef();
-					portsX.add(usPortName);
+					for (HUnitSlice usPort : usPorts) {
+						String usPortName = usPort.getConfiguration().getRef();
+						portsX.add(usPortName);
+					}
 				}
 
 				saveVisualDescription(slice, v);
@@ -2668,35 +2661,31 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 	}
 
-	private int fetch_inner_replica(UnitSliceType sliceX, HUnitSlice slice,	Map<String, List<HUnitSlice>> slice_info) 
-	{
+	private int fetch_inner_replica(UnitSliceType sliceX, HUnitSlice slice,
+			Map<String, List<HUnitSlice>> slice_info) {
 		String cRef = sliceX.getCRef();
 		String uRef = sliceX.getURef();
 		int slice_replica = sliceX.getSliceReplica();
-		
+
 		String key = cRef + "." + uRef + "[" + slice_replica + "]";
-		
+
 		List<HUnitSlice> unit_slice_list = null;
-		if (slice_info.containsKey(key))
-		{
-		   unit_slice_list = slice_info.get(key);
+		if (slice_info.containsKey(key)) {
+			unit_slice_list = slice_info.get(key);
+		} else {
+			unit_slice_list = new ArrayList<HUnitSlice>();
+			slice_info.put(key, unit_slice_list);
 		}
-		else
-		{
-		   unit_slice_list = new ArrayList<HUnitSlice>();
-		   slice_info.put(key, unit_slice_list);
-		}
-		
+
 		unit_slice_list.add(slice);
-	
-		
+
 		return unit_slice_list.size() - 1;
 	}
 
-	private void saveSupplyParameters(HComponent c,
-			EList<ParameterSupplyType> xI) {
-
-		for (Pair<String, HComponent> pair : c.getSupplierComponents()) {
+	private void saveSupplyParameters(HComponent c, EList<ParameterSupplyType> xI) 
+	{
+		for (Pair<String, HComponent> pair : c.getSupplierComponents()) 
+		{
 			ParameterSupplyType s = factory.createParameterSupplyType();
 			String cRef = null;
 			String varName = null;
@@ -2710,31 +2699,30 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			// ---------------
 
-			cRef = c.isTransitiveSupplier(pair.fst()) ? "T###" + cRef
-					+ supplier.hashCode() : cRef;
+			cRef = c.isTransitiveSupplier(pair.fst()) ? "T###" + cRef + supplier.hashCode() : cRef;
 			s.setCRef(cRef);
 			s.setVarName(varName);
 			s.setDirect(!c.isTransitiveSupplier(pair.fst()));
 
-			xI.add(s);
+			saveSupplyParameter(xI,s);
 		}
 
 	}
 
-	private HUnit lookForSuperUnit(UnitRefType xUsuper)
-			throws HPEInvalidComponentResourceException {
+	private HUnit lookForSuperUnit(UnitRefType xUsuper) throws HPEInvalidComponentResourceException 
+	{
 		HUnit u = null;
 		String cNameSuper = xUsuper.getCRef();
 		String uNameSuper = xUsuper.getURef();
 		HComponent cSuper = component.getSuperType(); // mC2.get(mC1.get(cNameSuper));
-		if (cSuper == null) {
-			String message = "IHUnit " + uNameSuper + " not found in "
-					+ cNameSuper;
+		if (cSuper == null) 
+		{
+			String message = "IHUnit " + uNameSuper + " not found in " + cNameSuper;
 			System.err.println(message);
-			JOptionPane.showMessageDialog(null, message,
-					"Loading Component Error", JOptionPane.ERROR_MESSAGE);
-			// throw new HPEInvalidComponentResourceException();
-		} else {
+			JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+		} 
+		else 
+		{
 			IHUnit u_ = cSuper.fetchUnit(uNameSuper);
 			u = (HUnit) u_.getTopUnit(null);
 		}
@@ -2746,15 +2734,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		HUnit u = null;
 		String cNameSuper = xUsuper.getCRef();
 		String uNameSuper = xUsuper.getURef();
-		HComponent cSuper = component.getWhoItImplements(); // mC2.get(mC1.get(cNameSuper));
-		if (cSuper == null) {
-			String message = "IHUnit " + uNameSuper + " not found in "
-					+ cNameSuper;
+		HComponent cSuper = component.getWhoItImplements();
+		if (cSuper == null) 
+		{
+			String message = "IHUnit " + uNameSuper + " not found in "	+ cNameSuper;
 			System.err.println(message);
-			JOptionPane.showMessageDialog(null, message,
-					"Loading Component Error", JOptionPane.ERROR_MESSAGE);
-			// throw new HPEInvalidComponentResourceException();
-		} else {
+			JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+		} 
+		else 
+		{
 			IHUnit u_ = cSuper.fetchUnit(uNameSuper);
 			u = (HUnit) u_.getTopUnit(null);
 		}
@@ -2823,8 +2811,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						}
 
 						if (u1 == null) {
-							System.err.println("HComponentFactoryImpl.loadSlices(): IHUnit " + uRef + " not found in " + cRef);
-							JOptionPane.showMessageDialog(null,	"HComponentFactoryImpl.loadSlices(): IHUnit " + uRef + " not found in " + cRef,
+							System.err
+									.println("HComponentFactoryImpl.loadSlices(): IHUnit "
+											+ uRef + " not found in " + cRef);
+							JOptionPane.showMessageDialog(null,
+									"HComponentFactoryImpl.loadSlices(): IHUnit "
+											+ uRef + " not found in " + cRef,
 									"Loading Component Error",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
@@ -2870,19 +2862,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	private void loadInterface(UnitType xU, HUnit u, boolean isTop,
-			boolean isImplementing)
-			throws HPEInvalidComponentResourceException, HPEAbortException {
-
+	private void loadInterface(UnitType xU, HUnit u, boolean isTop,	boolean isImplementing)	throws HPEInvalidComponentResourceException, HPEAbortException 
+	{
 		String iName = xU.getIRef();
 		InterfaceType xI = mI1.get(iName);
 		HInterface i = null;
-		UnitRefType xUsuper = xU.getSuper();
+		EList<UnitRefType> xUsuper_list = xU.getSuper();
 
-		if (xI != null) {
-			if (xUsuper == null) { // The interface is not inherited from the
-				// super unit
-
+		if (xI != null) 
+		{
+			if (xUsuper_list.size()!=1) // The interface is not inherited from the super unit 
+			{ 
 				if (!mI2.containsKey(xI)) {
 					i = buildInterface(u, xI, isTop, isImplementing);
 				} else {
@@ -3079,9 +3069,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return newguard;
 	}
 
-	private HUnit buildUnit(UnitType xU, HComponent c)
-			throws HPEInvalidComponentResourceException, HPEAbortException {
-
+	private HUnit buildUnit(UnitType xU, HComponent c)	throws HPEInvalidComponentResourceException, HPEAbortException 
+	{
 		String uName = xU.getURef();
 		int index = xU.getReplica();
 		int facet = xU.getFacet();
@@ -3090,32 +3079,55 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		int w = (int) xU.getVisualDescription().getW();
 		int h = (int) xU.getVisualDescription().getH();
 
-		UnitRefType xUsuper = xU.getSuper();
+		EList<UnitRefType> xUsuper_list = xU.getSuper();
 
-		HUnit u;// = (HUnit) c.getUnitByName(uName,index);
-		// if (u == null) {
-		if (index == 0) {
-			if (component.getSuperType() != null) {
-				u = xUsuper != null ? lookForSuperUnit(xUsuper) : c.createUnit();
-			} else if (!component.isAbstractConfiguration()) {
-				u = xUsuper != null ? lookForImplementingUnit(xUsuper) : c.createUnit();
-			} else {
-				u = c.createUnit();
+		HUnit u;	
+		
+		if (component.getSuperType() != null && !xUsuper_list.isEmpty())
+		{
+			List<IHUnit> us = new ArrayList<IHUnit>();
+			for (UnitRefType xUsuper : xUsuper_list)
+			{
+				HUnit u_ = lookForSuperUnit(xUsuper);
+				us.add(u_);
 			}
-		} else {
-			if (component.getSuperType() != null) {
-				IHPrimUnit u_ = c.getUnitByName(uName, 0);
-				u = (HUnit) (xUsuper != null ? lookForSuperUnit(xUsuper) : u_.createReplica(u_, index));
-			} else if (!component.isAbstractConfiguration()) {
-				IHPrimUnit u_ = c.getUnitByName(uName, 0);
-				u = (HUnit) (xUsuper != null ? lookForImplementingUnit(xUsuper) : u_.createReplica(u_, index));
-			} else {
-				IHPrimUnit u_ = c.getUnitByName(uName, 0);
-				u = (HUnit) u_.createReplica(u_, index - 1);
+			if (xUsuper_list.size() == 1)
+				u = (HUnit) us.get(0);
+			else
+			{
+			   u = c.createUnit();
+			   u.colocateUnits(us); 
+			   for (IHUnit u_super : us)
+				   for (HUnitSlice u_super_slice : u_super.getSlices())
+				   {   
+					   u_super_slice.setUnit(u);
+					   u.addUnitSlice(u_super_slice);
+				   }
 			}
 		}
-
-		// }
+		else if (!component.isAbstractConfiguration() && !xUsuper_list.isEmpty())
+		{
+			List<IHUnit> us = new ArrayList<IHUnit>();
+			for (UnitRefType xUsuper : xUsuper_list)
+			{
+				HUnit u_ = lookForImplementingUnit(xUsuper);
+				us.add(u_);
+			}
+			if (xUsuper_list.size() == 1)
+				u = (HUnit) us.get(0);
+			else
+			{
+			   u = c.createUnit();
+			   u.colocateUnits(us); // TODO: ?
+			}
+		}
+		else if (index == 0) 
+		    u = c.createUnit();
+		else 
+		{
+			IHPrimUnit u_ = c.getUnitByName(uName, 0);
+			u = (HUnit) u_.createReplica(u_, index);
+		}		
 
 		mU1.put(uName + index, xU);
 		mU2.put(xU, u);
@@ -3130,7 +3142,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		if (this.component.isAbstractConfiguration())
 			loadSlices(xU, u);
-		// loadInterface(xU,u);
 
 		if (xU.isVisibleInterface())
 			u.showInterface();
@@ -3213,27 +3224,26 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		for (SourceType s : xI.getSources()) {
 			String versionId = s.getVersionId();
-			versionId = checkVersion(versionId) ? versionId : "1.0.0.0";
+			versionId = versionId != null && checkVersion(versionId) ? versionId : "1.0.0.0";
 			String sourceType = s.getSourceType();
-			HBESourceVersion<HBEAbstractFile> source = i.createSourceVersion(sourceType);
+			HBESourceVersion source = i.createSourceVersion(sourceType);
 			source.setVersionID(versionId);
 
-			for (SourceFileType f : s.getFile()) 
-			{
-				String fileType = "library";
+			for (SourceFileType f : s.getFile()) {
+				String fileType = f.getFileType() != null ? f.getFileType()	: "library";
 				String locallocation = this.component.getRelativeLocation();
 				URI uriRootPath = URI.createURI(locallocation);
 				String rootPath = uriRootPath.toString();
 				rootPath = rootPath.replaceAll("%20", " ");
 
 				String versionIdF = f.getVersionId();
-				versionIdF = checkVersion(versionIdF) ? versionIdF : "1.0.0.0";
+				versionIdF = versionIdF != null && checkVersion(versionIdF) ? versionIdF : "1.0.0.0";
 				String name = f.getName();
 				String contents = f.getContents();
 
 				String srcType = f.getSrcType();
 
-				HBEAbstractFile ff = createFile(fileType, name, contents, rootPath, versionIdF, i, srcType);
+				HBEAbstractSourceCodeFile ff = createFile(fileType, name, contents, rootPath, versionIdF, i, srcType);
 				ff.setDependencies(new ArrayList<String>(f.getDependency()));
 				ff.addExternalReferences(new ArrayList<String>(f.getExternalDependency()));
 
@@ -3251,7 +3261,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private HBEAbstractFile createFile(String fileType, String name,
+	private HBEAbstractSourceCodeFile createFile(String fileType, String name,
 			String contents, String rootPath, String versionID,
 			HHasExternalReferences i, String srcType) {
 		if (fileType.equals(HBESourceCSharpClassDefinition.getType())) {
@@ -3259,6 +3269,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					versionID, i, srcType);
 		} else if (fileType.equals(HBESourceCSharpMainDefinition.getType())) {
 			return new HBESourceCSharpMainDefinition(name, contents, rootPath,
+					versionID, i, srcType);
+		} else if (fileType.equals(HPlatformSettingsFile.getType())) {
+			return new HPlatformSettingsFile(name, contents, rootPath,
 					versionID, i, srcType);
 		} else
 			return null;

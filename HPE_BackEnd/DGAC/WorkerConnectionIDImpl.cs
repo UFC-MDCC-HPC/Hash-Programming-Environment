@@ -1,26 +1,36 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace gov
 {
     namespace cca
     {
-		[Serializable]
-        public abstract class WorkerConnectionID : ConnectionID
+		[DataContract]
+		[KnownType(typeof(WorkerConnectionIDImpl))]
+		public abstract class WorkerConnectionID : ConnectionID
         {
         }
 		
-		[Serializable]
+		[DataContract]
         public class WorkerConnectionIDImpl : WorkerConnectionID
         {
             # region attribute
 
-            private ComponentID provider;
+			[DataMember]
+			private ComponentID provider;
+
+			[DataMember]
             private string providesPortName;
+
+			[DataMember]
             private ComponentID user;
+
+			[DataMember]
             private string usesPortName;
 
+			[DataMember]
             private string connectionString = null;
 
             #endregion

@@ -3748,7 +3748,7 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_TYPE = 58;
 
 	/**
-	 * The feature id for the '<em><b>Super</b></em>' containment reference.
+	 * The feature id for the '<em><b>Super</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -6702,10 +6702,10 @@ public interface ComponentPackage extends EPackage {
 	EClass getUnitType();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link hPE.xml.component.UnitType#getSuper <em>Super</em>}'.
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.UnitType#getSuper <em>Super</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Super</em>'.
+	 * @return the meta object for the containment reference list '<em>Super</em>'.
 	 * @see hPE.xml.component.UnitType#getSuper()
 	 * @see #getUnitType()
 	 * @generated
@@ -9105,7 +9105,7 @@ public interface ComponentPackage extends EPackage {
 		EClass UNIT_TYPE = eINSTANCE.getUnitType();
 
 		/**
-		 * The meta object literal for the '<em><b>Super</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Super</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

@@ -12,6 +12,7 @@ using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels.Ipc;
 using CommandLine.Utility;
 using System.Diagnostics;
+using System.ServiceModel;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
@@ -60,33 +61,36 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private void startWorkerServer()
         {
           try 
-          {  
+          {             
 			string service_name = Constants.WORKER_SERVICE_NAME + (session_id == null ? "" : "-" + session_id) + "-" + my_rank;	
 
             if (port < 0) 
                 port = Constants.WORKER_PORT + my_rank;
  
-            Trace.WriteLine("Starting " + service_name + " listening on port ... " + port);
+				string uri_str = "http://" + "localhost" + ":" + port + "/" + service_name;
 
-			try {
-	            ch = new TcpChannel(port);
-	            ChannelServices.RegisterChannel(ch);
-			}
-			catch (RemotingException e)
-			{
-					Trace.WriteLine ("EXCEPTION: " + e.Message + " ... continuing execution.");
-			}
-				
-			RemotingConfiguration.ApplicationName = service_name;
-            RemotingConfiguration.RegisterActivatedServiceType(typeof(WorkerObject));
-				
-            Trace.WriteLine("Worker #" + my_rank + " running !");
+				Trace.WriteLine("Starting " + service_name + " listening on port ... " + port);
+				Trace.WriteLine("uri_str = " + uri_str);
+
+				var binding = new BasicHttpBinding ();
+				var address = new Uri (uri_str);
+				var host = new ServiceHost(typeof(WorkerObject));
+				host.AddServiceEndpoint (typeof(IWorkerObject), binding, address);
+				host.Open ();
+	
+				Trace.WriteLine("Worker #" + my_rank + " running !");
+
+				//	host.Close ();
+
           }
           catch (Exception e)
           {
             Trace.WriteLine(e.Message);
           }
         }
+
+
+
 
         private void stopWorkerServer()
         {

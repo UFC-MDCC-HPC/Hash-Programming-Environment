@@ -62,16 +62,23 @@ namespace Back_End_WS
         {
             try
             {
-			    string filename = "newConfig";
-                string path = Constants.PATH_TEMP_WORKER + filename + ".xml";
+				string filename = Path.GetTempFileName();
+				File.WriteAllBytes(filename,data);
+
                 if (data != null)
                 {
-                    FileUtil.saveByteArrayIntoFile(data, path);
-                    ComponentType c = LoaderApp.DeserializeObject(path);
-                    if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType1.implements)
-                        BackEnd.registerConcreteComponentTransaction(c, userName, password, curDir);
+					ComponentType c = LoaderApp.DeserializeObject(filename);
+					int res;
+                    if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
+                        res = BackEnd.registerConcreteComponentTransaction(c, userName, password, curDir);
                     else
-                        BackEnd.registerAbstractComponentTransaction(c, userName, password, curDir);
+                        res = BackEnd.registerAbstractComponentTransaction(c, userName, password, curDir);
+
+					if (res>=0) 
+					{
+						string component_reference = c.header.packagePath + "." + c.header.name;
+						File.Copy(filename,Constants.PATH_TEMP_WORKER + component_reference + ".hpe",true);
+					}
                 }
             } 
 			catch (Exception e) 
@@ -204,12 +211,12 @@ namespace Back_End_WS
 		}
 
 		[WebMethod] 
-		public void createComponentInstance
+		public void createApplicationInstance
 			          (string session_id_string,     // Identification of the session of the application workflow.
 			 		   string instance_name,         // Name of the component instance in the application.
 			           string instantiator_string)   // Description of the component and its placement.
 		{
-			BackEnd.createApplicationInstance (instance_name, instantiator_string, session_id_string);
+			BackEnd.createSystemComponentInstance (null, instance_name, instantiator_string, session_id_string);
 		}
 
 

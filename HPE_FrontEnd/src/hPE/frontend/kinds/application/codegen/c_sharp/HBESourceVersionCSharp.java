@@ -1,6 +1,7 @@
 package hPE.frontend.kinds.application.codegen.c_sharp;
 
 
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpClassDefinition;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpMainDefinition;
 
@@ -19,8 +20,8 @@ public class HBESourceVersionCSharp extends hPE.frontend.base.codegen.c_sharp.HB
 		this.mainSrc = mainSrc;
 	}
 	
-	public List<HBESourceCSharpClassDefinition> getFiles() {
-		List<HBESourceCSharpClassDefinition> l = super.getFiles();
+	public List<HBEAbstractSourceCodeFile> getFiles() {
+		List<HBEAbstractSourceCodeFile> l = super.getFiles();
 		if (this.mainSrc != null)
 			l.add(this.mainSrc);
 		return l;

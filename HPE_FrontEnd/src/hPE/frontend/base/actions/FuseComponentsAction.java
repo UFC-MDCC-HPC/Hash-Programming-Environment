@@ -69,8 +69,10 @@ public class FuseComponentsAction extends SelectionAction {
 		for (int i=1;i<cs.size();i++) {
 			HComponent c0_ = (HComponent) cs.get(i);
 			HComponent c_ = (HComponent) (c0_.getSupplier() == null ? c0_ : c0_.getSupplier());
-			if (!c_.isEquivalentTo(c)) return false;
-			if (c0.isPublic() != c0_.isPublic()) return false;
+			//if (!c_.isEquivalentTo(c)) 
+			//	return false;
+			if (c0.isPublic() != c0_.isPublic()) 
+				return false;
 			// if (!c.getName2().equals(c_.getName2())) return false;
 	        
 	        if (!HComponent.checkConsistencyOfUnitsInSuperseding(c0_, c0)) return false;
@@ -98,7 +100,7 @@ public class FuseComponentsAction extends SelectionAction {
 		HComponent source = csfuse.get(0);		
 		for (int i=1; i<csfuse.size(); i++){
 			HComponent target = csfuse.get(i);
-		    SupersedeCommand c = new SupersedeCommand((HComponent)source, (HComponent)target);
+		    SupersedeCommand c = new SupersedeCommand( (HComponent)target, (HComponent)source);
 		    cc.add(c);
 		}
 		

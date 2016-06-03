@@ -15,7 +15,7 @@ namespace HPE_DGAC_LoadDB
         protected IList<ParameterType> parameter = null;
         protected IList<ParameterSupplyType> parameterSupply = null;
         protected IList<InnerRenamingType> innerRenaming = null;
-        protected IList<FusionType> fusion = null;
+        protected IDictionary<string,string> fusion = null;
         protected IList<SplitType> split = null;
         protected IList<RecursiveEntryType> recursiveEntry = null;
         protected IList<InterfaceType> anInterface = null;
@@ -73,8 +73,9 @@ namespace HPE_DGAC_LoadDB
                 }
                 else if (o is FusionType)
                 {
-                    if (fusion == null) fusion = new List<FusionType>();
-                    fusion.Add((FusionType)o);
+					if (fusion == null) fusion = new Dictionary<string, string>();
+					FusionType fo = (FusionType)o;
+					fusion.Add(fo.pRef,fo.cRefs[0]);
                 }
                 else if (o is SplitType)
                 {

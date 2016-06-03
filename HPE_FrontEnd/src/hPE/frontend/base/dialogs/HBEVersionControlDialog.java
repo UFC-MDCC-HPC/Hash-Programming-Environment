@@ -1,7 +1,7 @@
 package hPE.frontend.base.dialogs;
 
 import hPE.HPEVersionEditor;
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HInterface;
@@ -216,12 +216,12 @@ public class HBEVersionControlDialog extends JDialog {
 	            public void actionPerformed(ActionEvent e) {
 	            	if (jTable.getSelectedColumn()>=0) {
 	            		  int row = jTable.getSelectedRow();
-	            		  HBESourceVersion<HBEAbstractFile> version = (HBESourceVersion<HBEAbstractFile>) jTable.getValueAt(row, 0);
+	            		  HBESourceVersion version = (HBESourceVersion) jTable.getValueAt(row, 0);
 	            		  String fileName = (String) jTable.getValueAt(row, 2);
 
 	            		  
-	            		  HBEAbstractFile ff = null;
-	            		  for (HBEAbstractFile f : version.getFiles()) {
+	            		  HBEAbstractSourceCodeFile ff = null;
+	            		  for (HBEAbstractSourceCodeFile f : version.getFiles()) {
 	            			  if (f.getFileName().equals(fileName)) {
 	            				  ff = f;
 	            			  }
@@ -269,8 +269,8 @@ public class HBEVersionControlDialog extends JDialog {
 		return (HBEAbstractSynthesizer) this.typesOfSourceV.get(v);
 	}
 	
-	public HBESourceVersion<HBEAbstractFile> getSelectedSourceVersion () {
-		return (HBESourceVersion<HBEAbstractFile>) getJTable().getValueAt(jTable.getSelectedRow(),0);
+	public HBESourceVersion getSelectedSourceVersion () {
+		return (HBESourceVersion) getJTable().getValueAt(jTable.getSelectedRow(),0);
 	}
 	
 	private int buttonPressed = -1;

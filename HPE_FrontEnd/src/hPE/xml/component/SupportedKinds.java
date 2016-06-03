@@ -99,16 +99,6 @@ public enum SupportedKinds implements Enumerator {
 	ENUMERATOR(7, "Enumerator", "Enumerator"),
 
 	/**
-	 * The '<em><b>Facet</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #FACET_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	FACET(8, "Facet", "Facet"),
-
-	/**
 	 * The '<em><b>Binding</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -116,7 +106,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	BINDING(9, "Binding", "Binding"),
+	BINDING(8, "Binding", "Binding"),
 
 	/**
 	 * The '<em><b>Topology</b></em>' literal object.
@@ -126,7 +116,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	TOPOLOGY(10, "Topology", "Topology"), /**
+	TOPOLOGY(9, "Topology", "Topology"), /**
 	 * The '<em><b>System</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -134,7 +124,15 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	SYSTEM(11, "System", "System");
+	SYSTEM(10, "System", "System"), /**
+	 * The '<em><b>Proxy</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #PROXY_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	PROXY(11, "Proxy", "Proxy");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -258,21 +256,6 @@ public enum SupportedKinds implements Enumerator {
 
 
 	/**
-	 * The '<em><b>Facet</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Facet</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #FACET
-	 * @model name="Facet"
-	 * @generated
-	 * @ordered
-	 */	
-	public static final int FACET_VALUE = 8;
-
-	/**
 	 * The '<em><b>Binding</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -285,7 +268,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int BINDING_VALUE = 9;
+	public static final int BINDING_VALUE = 8;
 	
 	
 	/**
@@ -301,7 +284,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TOPOLOGY_VALUE = 10;
+	public static final int TOPOLOGY_VALUE = 9;
 
 	/**
 	 * The '<em><b>System</b></em>' literal value.
@@ -316,7 +299,22 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SYSTEM_VALUE = 11;
+	public static final int SYSTEM_VALUE = 10;
+
+	/**
+	 * The '<em><b>Proxy</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Proxy</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #PROXY
+	 * @model name="Proxy"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROXY_VALUE = 11;
 
 	/**
 	 * An array of all the '<em><b>Supported Kinds</b></em>' enumerators.
@@ -334,10 +332,10 @@ public enum SupportedKinds implements Enumerator {
 			QUALIFIER,
 			APPLICATION,
 			ENUMERATOR,
-			FACET,
 			BINDING,
 			TOPOLOGY,
 			SYSTEM,
+			PROXY,
 		};
 
 	/**
@@ -396,10 +394,10 @@ public enum SupportedKinds implements Enumerator {
 			case QUALIFIER_VALUE: return QUALIFIER;
 			case APPLICATION_VALUE: return APPLICATION;
 			case ENUMERATOR_VALUE: return ENUMERATOR;
-			case FACET_VALUE: return FACET;
 			case BINDING_VALUE: return BINDING;
 			case TOPOLOGY_VALUE: return TOPOLOGY;
 			case SYSTEM_VALUE: return SYSTEM;
+			case PROXY_VALUE: return PROXY;
 		}
 		return null;
 	}

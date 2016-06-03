@@ -41,10 +41,7 @@ public class HComputationUnit extends HActivateUnit implements IHComputationUnit
 	public HUnitSlice newSlice(IHUnit the_unit, Point where) throws HPEAbortException{
 		return new HComputationUnitSlice(the_unit, this, where);
 	}
-	
- /*   public HUnitStub createStub() {
-    	return new HComputationUnitStub(this);
-    } */
+
 
 }
 

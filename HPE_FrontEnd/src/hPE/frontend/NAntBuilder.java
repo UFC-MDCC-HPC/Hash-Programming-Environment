@@ -1,7 +1,7 @@
 package hPE.frontend;
 
 import hPE.HPEProperties;
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.dialogs.AddReferencesDialog;
 import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
@@ -151,7 +151,7 @@ public class NAntBuilder implements Runnable {
 		NAntCoreTasksPropertyTask propMono = factory
 				.createNAntCoreTasksPropertyTask();
 		propMono.setName("nant.settings.currentframework");
-		// TODO resolver essa quest‹o de vers‹o!
+		// TODO resolver essa questï¿½o de versï¿½o!
 		propMono.setValue("mono-2.0");
 		properties.add(propMono);
 
@@ -188,12 +188,12 @@ public class NAntBuilder implements Runnable {
 				for (HInterface i : c.getInterfaces())
 					if (i.getConfiguration() == c) {
 
-						HBESourceVersion<HBEAbstractFile> v = i
+						HBESourceVersion v = i
 								.getSourceVersion(HInterface
 										.toStringVersion(version));
 
 						if (v != null)
-							for (HBEAbstractFile src : v.getFiles()) {
+							for (HBEAbstractSourceCodeFile src : v.getFiles()) {
 
 								NAntDotNetTasksCscTask compile = factory
 										.createNAntDotNetTasksCscTask();

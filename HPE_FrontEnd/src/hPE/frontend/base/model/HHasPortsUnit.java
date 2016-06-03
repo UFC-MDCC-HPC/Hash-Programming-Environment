@@ -1,8 +1,5 @@
 package hPE.frontend.base.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.kinds.base.model.HHasPortsInterface;
 

@@ -27,7 +27,7 @@ namespace br.ufc.pargo.hpe.kinds
 		{
 			try 
 			{
-				this.main();
+				this.main(); 
 			}
 			catch(Exception e)
 			{

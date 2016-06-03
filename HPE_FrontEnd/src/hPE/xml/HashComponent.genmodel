@@ -23,10 +23,10 @@
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Qualifier"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Application"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Enumerator"/>
-      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Facet"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Binding"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Topology"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/System"/>
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Proxy"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="component.ecore#//VarianceType">
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//VarianceType/covariant"/>

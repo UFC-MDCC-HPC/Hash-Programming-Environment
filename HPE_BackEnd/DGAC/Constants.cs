@@ -145,8 +145,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 
 		public const string FACET_IP_ADDRESS = "facet_ip_address";
 		public const string FACET_PORT = "facet_ip_port";
-		public static string FACET_NUMBER = "facet_number";
-		public static string ENCLOSING_FACET_NUMBER = "enclosing_facet_number";
+		public static string FACET_INSTANCE = "facet_instance";
+		public static string ENCLOSING_FACET_INSTANCE = "enclosing_facet_instance";
+		public static string FACET = "facet";
+		public static string ENCLOSING_FACET = "enclosing_facet";
+		public static string FACET_TOPOLOGY = "facet_topology";
+		public static string BINDING_SEQUENTIAL = "binding_sequential";
+		public static string IGNORE = "ignore";
 
         public static string INITIALIZE_PORT_NAME = "initialize_port";
         public static string INITIALIZE_PORT_TYPE = "br.ufc.pargo.hpe.ports.AutomaticSlicesPort";
@@ -201,6 +206,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 			{EnvironmentPortType.user,"client"},
 			{EnvironmentPortType.provider, "server"}
 		};
+
+		public static string tskUnitName = "peer";
 
 		public static IDictionary<EnvironmentPortType, string> envInterfaceName = new Dictionary<EnvironmentPortType, string>()
 		{

@@ -1,5 +1,6 @@
 -r:System.Runtime.Remoting.dll
 -r:System.ServiceProcess.dll
+-r:System.ServiceModel.dll
 
 -lib:"/usr/lib/mono/DGAC"
 -pkg:dotnet

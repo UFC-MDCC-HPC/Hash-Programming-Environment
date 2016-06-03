@@ -25,12 +25,11 @@ namespace br.ufc.hpe.backend.DGAC
 
 		#region AutomaticSlicesPort implementation
 		public void on_initialize ()
-		{
-			
+		{			
             IDictionary<Thread, InitializeThread> thread_list = new Dictionary<Thread,InitializeThread>();
-            for (int i=0; i<w_initialize_port.Length; i++)
+			foreach (Port port in w_initialize_port)
             {		       
-				InitializeThread thread = new InitializeThread((InitializePort) w_initialize_port[i]);
+				InitializeThread thread = new InitializeThread((InitializePort) port);
                 Thread t = new Thread(thread.Run);
                 thread_list.Add(t,thread);
                 t.Start();

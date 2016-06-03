@@ -16,14 +16,17 @@ using br.ufc.pargo.hpe.kinds;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using Instantiator;
+using System.Runtime.Serialization;
+using System.ServiceModel;
 
 namespace br.ufc.pargo.hpe.basic
 {
-
-	public class GoPortWrapper : MarshalByRefObject, gov.cca.ports.GoPort
+	[ServiceContract]
+	public class GoPortWrapper : gov.cca.ports.GoPort
 	{
 		public delegate int Go_app();
-		
+
+		[DataMember]
 		private Go_app go_app;
 		
 		
@@ -44,16 +47,26 @@ namespace br.ufc.pargo.hpe.basic
 		}
 		#endregion
 	}
-	
-	public class InitializePortWrapper : MarshalByRefObject, InitializePort
-	{
-		
+
+	[DataContract]
+	public class InitializePortWrapper : InitializePort
+	{		
 		public delegate void MTH();
-		
-		private MTH initialize_mth;
+
+	    private MTH initialize_mth;
+
 		private MTH after_initialize_mth;
-		
-		
+
+		[DataMember]
+		public MTH InitializeMth { get { return initialize_mth; } set { this.initialize_mth = value; } }
+
+		[DataMember]
+		public MTH AfterInitializeMth { get { return after_initialize_mth; } set { this.after_initialize_mth = value; } }
+
+		public InitializePortWrapper()
+		{
+		}
+
 		public InitializePortWrapper(MTH initialize_mth, MTH after_initialize_mth)
 		{
 			this.initialize_mth = initialize_mth;
@@ -73,12 +86,14 @@ namespace br.ufc.pargo.hpe.basic
 
 
 	}
-	
-	public class ReconfigurationAdvicePortWrapper : MarshalByRefObject, ReconfigurationAdvicePort
+
+	[DataContract]
+	public class ReconfigurationAdvicePortWrapper : ReconfigurationAdvicePort
 	{
 		
 		public delegate void MTH(string portName);
 		
+		[DataMember]
 		private MTH changePort_mth;
 		
 		public ReconfigurationAdvicePortWrapper(MTH changePort_mth)
@@ -95,10 +110,18 @@ namespace br.ufc.pargo.hpe.basic
 
 	}
 
-    //[Serializable]
-    public abstract class Unit : MarshalByRefObject, IUnit
+    [DataContract]
+    public abstract class Unit : IUnit
     {
-        public Unit()
+		private bool trace_flag = false;
+
+		public bool TraceFlag 
+		{ 
+			get { return trace_flag; }  
+			set { trace_flag = value; } 
+		}
+
+       	public Unit()
         {
         }
 
@@ -182,6 +205,26 @@ namespace br.ufc.pargo.hpe.basic
 		public bool IsParallelUnit {get { return PeerSize > 1; }}
 		public bool IsSingletonUnit {get { return !IsParallelUnit; }}
 
+		#region facet configuration
+
+		private int this_facet;
+		public int ThisFacet { get { return this_facet; } set {this_facet = value; } }
+
+		private int this_facet_instance;
+		public int ThisFacetInstance { get { return this_facet_instance; } set {this_facet_instance = value; } }
+
+		private IDictionary<int,int[]> facet_indexes = new Dictionary<int, int[]>(); 
+		public IDictionary<int,int[]> FacetIndexes { get { return facet_indexes; } }
+
+		private IDictionary<int,int> facet_multiplicity = new Dictionary<int, int>(); 
+		public IDictionary<int,int> FacetMultiplicity { get { return facet_multiplicity; } }
+
+		private IDictionary<int, IDictionary<string,int>> unit_size_in_facet = new Dictionary<int, IDictionary<string, int>>();
+		public IDictionary<int, IDictionary<string,int>> UnitSizeInFacet { get { return unit_size_in_facet; } }
+
+		#endregion 
+
+
 		public void calculate_topology ()
 		{
 			string[] rank_units = this.Communicator.Allgather<string>(this.Id_unit);
@@ -216,9 +259,76 @@ namespace br.ufc.pargo.hpe.basic
 				ranks.CopyTo(ranks_array,0);
 				this.unit_ranks.Add(id_unit,ranks_array);
 			}
-		
 		}
-		
+		public void configure_facet_topology(int[] facet_topology, Instantiator.UnitMappingType[] unit_mapping)
+		{
+			Trace.WriteLine ("configure_facet_topology 1 - " + facet_topology.Length);
+			foreach (int f in facet_topology)
+				Trace.Write (f + ",");
+			Trace.WriteLine (".");
+
+			IDictionary<int,IList<int>> facet_instances_list = new Dictionary<int, IList<int>> ();
+
+			for (int facet_instance = 0; facet_instance < facet_topology.Length; facet_instance++) 
+			{
+				int facet = facet_topology [facet_instance];
+				if (facet >= 0) 
+				{
+					IList<int> facet_instance_list = null;
+					if (!facet_instances_list.TryGetValue (facet, out facet_instance_list)) 
+					{
+						facet_instance_list = new List<int> ();
+						facet_instances_list.Add (facet, facet_instance_list);
+					}
+					facet_instance_list.Add (facet_instance);
+				}
+			}
+
+			Trace.WriteLine ("configure_facet_topology 2 - " + facet_instances_list.Count);
+
+			foreach (KeyValuePair<int,IList<int>> f in facet_instances_list) 
+			{
+				int facet = f.Key;
+				IList<int> facet_instance_list = f.Value;
+				FacetMultiplicity.Add (facet, facet_instance_list.Count);
+				int[] facet_instance_array = new int[FacetMultiplicity [facet]];
+				facet_instance_list.CopyTo (facet_instance_array, 0);
+				FacetIndexes.Add (facet, facet_instance_array);
+			}
+
+			foreach (KeyValuePair<int,int[]> kv in FacetIndexes) 
+			{
+				Trace.Write ("configure_facet_topology - facet=" + kv.Key + ": ");
+				foreach (int v in kv.Value)
+					Trace.Write (v + " ");
+				Trace.WriteLine (".");
+			}
+
+			foreach (KeyValuePair<int,int> kv in FacetMultiplicity) 
+			{
+				Trace.WriteLine ("configure_facet_topology - facet=" + kv.Key + " - size=" + kv.Value);
+			}
+
+
+
+			foreach (Instantiator.UnitMappingType unit_mapping_item in unit_mapping) 
+			{
+				int facet_instance = unit_mapping_item.facet_instance;
+				string unit_id = unit_mapping_item.unit_id;
+				int size = unit_mapping_item.node.Length;
+				IDictionary<string,int> dict;
+				if (!UnitSizeInFacet.TryGetValue(facet_instance, out dict))
+				{   dict = new Dictionary<string, int> ();
+					UnitSizeInFacet [facet_instance] = dict; 
+				}
+				dict[unit_id] = size;
+			}
+
+			foreach (KeyValuePair<int,IDictionary<string,int>> r in UnitSizeInFacet) 
+				foreach(KeyValuePair<string,int> s in r.Value)
+					Trace.WriteLine (this.GlobalRank + ": UnitSizeInFacet: facet_instance = " + r.Key + " --  unit_id = " + s.Key + " -- size = " + s.Value);
+		}
+			
         private ComponentID cid = null;
 
         public ComponentID CID 

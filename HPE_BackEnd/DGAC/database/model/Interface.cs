@@ -71,34 +71,55 @@ public class Interface {
 		set { protocol = value; }
 	}
 		
-    public string Id_interface_super_top
+    	public string Id_interface_super_top
     {
-        get {
-            if (id_interface_super_top == null) {
-
-                if (id_interface_super.Equals("")) {
+        get 
+		{
+				Trace.WriteLine("Id_interface_super_top ... BEGIN");
+            if (id_interface_super_top == null) 
+			{
+                if (id_interface_super.Equals("")) 
+				{
+						Trace.WriteLine ("Id_interface_super_top 1: " + id_interface);
                     id_interface_super_top = id_interface;
-					unit_replica_super_top = unit_replica;
-                } else {
-                    string id_interface_super_ = Id_interface_super;
-					int partition_index_super_ = Unit_replica_super;
+                } 
+				else 
+				{
+						Trace.WriteLine ("Id_interface_super_top 2.1: " + id_interface_super + " / " + id_abstract);
+					string[] id_interface_super_list_ = Interface.splitIDs(Id_interface_super);
                     AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+						Trace.WriteLine ("Id_interface_super_top 2.2: " + acf.Id_functor_app_supertype);
                     if (acf.Id_functor_app_supertype != 0)
                     {
                         AbstractComponentFunctorApplication acfaSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
-                        Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, id_interface_super_, partition_index_super_);
-                        id_interface_super_top = iSuper.Id_interface_super_top;
-						unit_replica_super_top = iSuper.Unit_replica_super_top;
+							if (id_interface_super_list_.Length == 0)
+								id_interface_super_top = "";
+							else 
+							{
+								string id_interface_super_1 = id_interface_super_list_[0];
+								Interface iSuper1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve (acfaSuper.Id_abstract, id_interface_super_1);
+								id_interface_super_top = iSuper1.Id_interface_super_top;
+								for (int j = 1; j < id_interface_super_list_.Length; j++) 
+								{
+									string id_interface_super_2 = id_interface_super_list_[j];
+									Trace.WriteLine ("Id_interface_super_top 3.1: " + id_interface_super_2);
+									Interface iSuper2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve (acfaSuper.Id_abstract, id_interface_super_2);
+									id_interface_super_top += "+" + iSuper2.Id_interface_super_top;
+									Trace.WriteLine ("Id_interface_super_top 3.2: " + id_interface_super_top);
+								}
+							}
                     }
                     else
                     {
                         id_interface_super_top = id_interface;
-						unit_replica_super_top = unit_replica;
                     }
                 }
-                br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, unit_replica, id_interface_super_top, unit_replica_super_top);
-                return id_interface_super_top;
-            } else {
+                br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, id_interface_super_top);
+					Trace.WriteLine("Id_interface_super_top ... END ");
+			    return id_interface_super_top;
+            } 
+			else 
+			{
                 return id_interface_super_top;
             }
         }
@@ -109,9 +130,6 @@ public class Interface {
     }
     
     private int id_abstract;
-    private int unit_replica;
-	private int unit_replica_super;
-	private int unit_replica_super_top;
 	private string assembly_string;
 
     private string class_name; // Nome da interface no Front-End.
@@ -148,18 +166,6 @@ public class Interface {
         get { return id_interface_super; }
         set { id_interface_super = value; }
     }
-		
-    public int Unit_replica_super
-    {
-        get {return unit_replica_super;}
-        set {unit_replica_super = value;}
-    }
-		
-    public int Unit_replica_super_top
-    {
-        get {return unit_replica_super_top;}
-        set {unit_replica_super_top = value;}
-    }
 
     public int Id_abstract
     {
@@ -167,23 +173,11 @@ public class Interface {
         set {id_abstract = value;}
     }
     
-    public int Unit_replica
-    {
-        get {return unit_replica;}
-        set {unit_replica = value;}
-    }
-		
-    public string Assembly_string{
-        get {
-    //          string[] s = assembly_string.Split(',');
-    //          string culture = s[1];
-    //          string version = s[2];
-    //          string key = s[3];
-    //          string new_assembly_string = Class_name + "," + s[1] + "," + s[2] + "," + s[3];
-    //          return new_assembly_string;
-           return assembly_string;
-        }
-        set {assembly_string = value;}
+
+    public string Assembly_string
+	{
+        get { return assembly_string; }
+        set { assembly_string = value; }
     }
 
 
@@ -201,16 +195,16 @@ public class Interface {
 
     public IList<string> fetchReferences(IDictionary <string, AbstractComponentFunctorApplication> pars) 
     {
-			Trace.WriteLine("ENTER fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
+		Trace.WriteLine("ENTER fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
 
-							foreach (KeyValuePair<string, AbstractComponentFunctorApplication> y in pars )
-							{
-								if (y.Key != null && y.Value != null)
-									Trace.WriteLine("key=" + y.Key + ", value=" + y.Value.Id_abstract);
-								else {
-										Trace.WriteLine("somthing strange : " + (y.Key==null ? "null" : y.Key.ToString()) + " , " + (y.Value==null ? "null" : y.Value.ToString()));
-								}
-							}
+		foreach (KeyValuePair<string, AbstractComponentFunctorApplication> y in pars )
+		{
+			if (y.Key != null && y.Value != null)
+				Trace.WriteLine("key=" + y.Key + ", value=" + y.Value.Id_abstract);
+			else {
+					Trace.WriteLine("somthing strange : " + (y.Key==null ? "null" : y.Key.ToString()) + " , " + (y.Value==null ? "null" : y.Value.ToString()));
+			}
+		}
 
         IList<string> refs = new List<string>();
 			
@@ -221,22 +215,32 @@ public class Interface {
             AbstractComponentFunctor acfsuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(cSuperApp.Id_abstract);
             IDictionary<string, AbstractComponentFunctorApplication> parsSuper = null;
             collectParameters(pars, cSuperApp, out parsSuper);
-            Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super, this.Unit_replica_super);
-            refs = iSuper.fetchReferences(parsSuper);
-            string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
-            if (!refs.Contains(refname))
-                refs.Add(refname);
-            //string refnamebase = LoaderApp.buildDllNameBase(acfsuper.Library_path, iSuper.Assembly_string);
-            //if (!refs.Contains(refnamebase))
-            //    refs.Add(refnamebase);
+
+			string[] id_interface_super_list = Interface.splitIDs (this.Id_interface_super);
+				Trace.WriteLine ("fetchReferences: id_interface_super_list.Length = " + id_interface_super_list.Length + ", this.Id_Interface_super=" + this.Id_interface_super);
+				foreach (string sss in id_interface_super_list) 
+				{
+					Trace.WriteLine ("fetchReference - SUPER: " + sss);
+				}
+
+			foreach (string id_interface_super in id_interface_super_list) 
+			{
+				Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, id_interface_super);
+				foreach (string iref in iSuper.fetchReferences(parsSuper))
+					refs.Add (iref);
+				string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
+				if (!refs.Contains(refname))
+					refs.Add(refname);
+			}
+
         }
 
         // Traverse slices.
-        IList<Slice> slices = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface, Unit_replica);
+        IList<Slice> slices = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface);
 
         foreach (Slice s in slices)
         {
-			Trace.WriteLine("SLICE (fetchReference): " + Id_abstract + ":" + Id_interface + ":" + s.Id_inner + " - " + s.PortName + " -- " + s.Slice_replica);
+			Trace.WriteLine("SLICE (fetchReference): " + Id_abstract + ":" + Id_interface + ":" + s.Id_inner + " - " + s.PortName );
 
             InnerComponent ic = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract, s.Id_inner); 
 			if (ic != null)
@@ -253,7 +257,7 @@ public class Interface {
 					}
 					else
 					{
-							Trace.WriteLine("fetchReferences - TRACE 1.2 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract + ", ic.id_inner=" + ic.Id_inner);
+						Trace.WriteLine("fetchReferences - TRACE 1.2 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract + ", ic.id_inner=" + ic.Id_inner);
 					}
                 }
                 else
@@ -264,27 +268,26 @@ public class Interface {
 
                 collectParameters(pars, acfa, out parsSlice);
 
-				Trace.WriteLine("RETRIEVE BY MATCHING: " + acfa.Id_abstract + "," +  ic.Id_abstract_inner + "," + s.Id_interface_slice + "," + s.Slice_replica);
-                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice, s.Slice_replica);
-                if (i == null) {
+				Trace.WriteLine("RETRIEVE BY MATCHING: " + acfa.Id_abstract + "," +  ic.Id_abstract_inner + "," + s.Id_interface_slice);
+                Interface[] i_list = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice);
+
+				if (i_list == null || i_list.Length == 0) {
                    Trace.WriteLine("i is null : " + acfa.Id_abstract + "," + ic.Id_abstract_inner + "," + s.Id_interface_slice);
                 }
                 AbstractComponentFunctor acfSlice = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
 
-                // ---------------------------------------------------------------------------------------
+				foreach (Interface i in i_list)
+				{
+	                IList<string> refsSlice = i.fetchReferences(parsSlice);
 
-                IList<string> refsSlice = i.fetchReferences(parsSlice);
+	                foreach (string r in refsSlice)
+	                    if (!refs.Contains(r))
+	                        refs.Add(r);
 
-                foreach (string r in refsSlice)
-                    if (!refs.Contains(r))
-                        refs.Add(r);
-
-                string refname = LoaderApp.buildDllName(acfSlice.Library_path, i.Assembly_string);
-                if (!refs.Contains(refname))
-                    refs.Add(refname);
-                //string refnamebase = LoaderApp.buildDllNameBase(acfSlice.Library_path, i.Assembly_string);
-                //if (!refs.Contains(refnamebase))
-                //    refs.Add(refnamebase);
+	                string refname = LoaderApp.buildDllName(acfSlice.Library_path, i.Assembly_string);
+	                if (!refs.Contains(refname))
+	                    refs.Add(refname);
+				}
             }
         }
 
@@ -407,7 +410,11 @@ public class Interface {
        
     }
 
-     
+	public static string[] splitIDs (string id_interface_composed)
+	{
+		return id_interface_composed.Split (new char[1] { '+' });
+	}
+
 	
 }//class
 

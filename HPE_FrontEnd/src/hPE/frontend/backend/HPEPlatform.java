@@ -31,16 +31,16 @@ public class HPEPlatform {
 		byte[] t = new byte[is.available()];		
 		is.read(t);
 		
-		IPath filePathHCL = filePath.removeFileExtension().addFileExtension("hcl");
-		java.io.File fileHCL = HComponentFactoryImpl.getFileInWorkspace(filePathHCL.setDevice(null));
+		//IPath filePathHCL = filePath.removeFileExtension().addFileExtension("hcl");
+		//java.io.File fileHCL = HComponentFactoryImpl.getFileInWorkspace(filePathHCL.setDevice(null));
 
-		byte[] t_hcl = null;
-		if (fileHCL.exists()	)
-		{
-			InputStream is_hcl = new FileInputStream(fileHCL);	
-			t_hcl = new byte[is_hcl.available()];		
-			is_hcl.read(t_hcl);
-		}		
+		//byte[] t_hcl = null;
+		//if (fileHCL.exists()	)
+		//{
+	//		InputStream is_hcl = new FileInputStream(fileHCL);	
+		//	t_hcl = new byte[is_hcl.available()];		
+		//	is_hcl.read(t_hcl);
+	//	}		
 		
 		BackEnd_WSLocator server = new BackEnd_WSLocator();
 		server.setBackEnd_WSSoapEndpointAddress(urlWS);
@@ -48,9 +48,9 @@ public class HPEPlatform {
 		BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
 		
 		String result = null;
-		if (t_hcl != null)
-			result = backend.deployHashConfiguration(t, t_hcl, userName, password, curDir);
-		else
+		//if (t_hcl != null)
+		//	result = backend.deployHashConfiguration(t, t_hcl, userName, password, curDir);
+		//else
 			result = backend.deployHashComponent(t, userName, password, curDir);
 
 		return result;

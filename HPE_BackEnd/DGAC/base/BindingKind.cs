@@ -30,6 +30,8 @@ namespace br.ufc.pargo.hpe.kinds
     public interface IBindingKind : IUnit
 	{	
 
+		int ThisFacetInstance { get; set; }
+		int ThisFacet { get; set; }
 		// FACET
 		/* Para acessar o endereço IP (Facet[<unit_id>][<unit_index>].ip_address) ou 
 		 * porta (Facet[<unit_id>][<unit_index>].port) de uma faceta.
@@ -40,15 +42,14 @@ namespace br.ufc.pargo.hpe.kinds
 		Intercommunicator RootCommunicator { get; set; }
 
 
-		IDictionary<int,int> FacetSize { get; }
-		int ThisFacet { get; }
+		///IDictionary<int,int> FacetSize { get; }
+	//	int ThisFacet { get; }
 
 	}
 
 	public interface IBindingRootKind : IBindingKind
 	{
 		IDictionary<int,FacetAccess> Facet { get; }
-		int ThisFacet { get; set; }
 
 		void addFacetAccessInfo(int facet_number, FacetAccess facet_access);
 
@@ -68,27 +69,31 @@ namespace br.ufc.pargo.hpe.kinds
 			set { this.root_communicator = value; }
 		}
 
+		private int this_facet;
+		public int ThisFacet { get { return this_facet; } set {this_facet = value; } }
+
+		private int this_facet_instance;
+		public int ThisFacetInstance { get { return this_facet_instance; } set {this_facet_instance = value; } }
+
 		#region IBindingKind implementation
 
-		int IBindingKind.ThisFacet {
-			get {
-				throw new NotImplementedException ();
-			}
-		}
+	//	int IBindingKind.ThisFacet {
+	//		get {
+	//			throw new NotImplementedException ();
+	//		}
+	//	}
 
-		IDictionary<int, int> IBindingKind.FacetSize {
-			get {
-				throw new NotImplementedException ();
-			}
-		}
+	//	IDictionary<int, int> IBindingKind.FacetSize {
+	//		get {
+	//			throw new NotImplementedException ();
+	//		}
+	//	}
 		#endregion
 	}	
 
 	public abstract class BindingRoot : Binding, IBindingRootKind, IDisposable
 	{
-		private int this_facet;
-		public int ThisFacet { get { return this_facet; } set {this_facet = value; } }
-
+		
 		private IDictionary<int,FacetAccess> facet = null;
 		public IDictionary<int,FacetAccess> Facet { get { return facet;	} }
 
@@ -106,7 +111,7 @@ namespace br.ufc.pargo.hpe.kinds
 
 		public override void after_initialize()
 		{
-			Console.WriteLine (this.Rank + ": BINDING ROOT POST_INITIALIZE ");
+			Console.WriteLine (this.Rank + ": BINDING ROOT AFTER INITIALIZE ");
 			server_thread = new Thread (server);
 			client_thread = new Thread (client);
 			server_thread.Start();

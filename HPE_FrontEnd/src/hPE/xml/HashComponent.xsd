@@ -52,7 +52,7 @@
 
 	<complexType name="UnitType">
 		<sequence>
-			<element name="super" type="tns:UnitRefType" maxOccurs="1"
+			<element name="super" type="tns:UnitRefType" maxOccurs="unbounded"
 				minOccurs="0">
 			</element>
 			<element name="slices" maxOccurs="unbounded" minOccurs="0"

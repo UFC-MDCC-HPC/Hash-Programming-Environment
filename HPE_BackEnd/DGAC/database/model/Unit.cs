@@ -14,7 +14,6 @@ public class Unit {
 	private string assembly_string;
     private int id_abstract;
     private string id_interface;
-    private int unit_replica;
     private int order;
 	private bool is_parallel;
 
@@ -97,11 +96,11 @@ public class Unit {
         set {id_interface = value;}
 	}
 		
-	public int Unit_replica
-    {
-		get {return unit_replica;}
-        set {unit_replica = value;}
-	}
+//	public int Unit_replica
+//    {
+//		get {return unit_replica;}
+ //       set {unit_replica = value;}
+//	}
 
     public int Id_abstract
     {

@@ -9,6 +9,7 @@ using System;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC
@@ -18,7 +19,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		IDictionary<int, WorkerServices> WorkerServices {get;}
 		void registerWorkerService(int i, WorkerServices worker_service);
 	}
-	
+
     public class ManagerServicesImpl : ManagerServices
     {		
 		private ManagerObject frw = null;
@@ -37,7 +38,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private IDictionary<int, WorkerServices> worker_services_list = new Dictionary<int, WorkerServices>();
 
         public void registerWorkerService(int i, WorkerServices worker_services)
-        {
+		{   
+			Trace.WriteLine ("REGISTER WORKER SERVICES 0 " + (worker_services == null));
+			var cidxxx = worker_services.getComponentID ();
+			Trace.WriteLine ("REGISTER WORKER SERVICES ------------------- " + (cidxxx == null));
+
             this.worker_services_list.Add(i, worker_services);
 			this.cid.registerWorkerComponentID(i, (WorkerComponentID) worker_services.getComponentID());
         }
@@ -70,21 +75,25 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		void Services.releasePort (string portName)
 		{
-			Trace.WriteLine ("RELEASE PORT 1 " + portName);
-
-			int[] nodes = cid.WorkerNodes;
-			for (int i=0; i<nodes.Length; i++)
+			Trace.WriteLine ("RELEASE PORT 1.0 " + portName + "/" + mkPortName(portName) + " --- " + cid.getInstanceName());
+			ComponentID cid_inner = frw.getComponentID (mkPortName(portName));
+			Trace.WriteLine ("RELEASE PORT 1.1 " + portName +  " --- " + (cid_inner == null ? "NULL" : cid_inner.getInstanceName()));
+			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
-				Trace.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
-				gov.cca.Services ws = WorkerServices[nodes[i]];
-				try {
-					ws.releasePort(portName);
-				}
-				catch (CCAExceptionImpl e)
-			    {
-					Trace.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
-					//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
-					//	throw e;
+				int[] nodes = cid.WorkerNodes;
+				for (int i=0; i<nodes.Length; i++)
+				{
+					Trace.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
+					gov.cca.Services ws = WorkerServices[nodes[i]];
+					try {
+						ws.releasePort(portName);
+					}
+					catch (Exception e)
+				    {
+						Trace.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
+						//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
+						//	throw e;
+					}
 				}
 			}
 			Trace.WriteLine ("RELEASE PORT 4 " + portName);
@@ -99,30 +108,40 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		void Services.registerUsesPort (string portName, string type, gov.cca.TypeMap properties)
 		{
-			int[] nodes = cid.WorkerNodes;
-			for (int i=0; i<nodes.Length; i++)
+			ComponentID cid_inner = frw.getComponentID (mkPortName(portName));
+			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
-				Trace.WriteLine ("registerUsesPort - " + nodes[i]);
-				gov.cca.Services ws = WorkerServices[nodes[i]];
-				ws.registerUsesPort(portName, type, properties);
+				int[] nodes = cid.WorkerNodes;
+				for (int i=0; i<nodes.Length; i++)
+				{
+					Trace.WriteLine ("registerUsesPort 1 - " + nodes[i]);
+					gov.cca.Services ws = WorkerServices[nodes[i]];
+					Trace.WriteLine ("registerUsesPort 2 - " + nodes[i]);
+					ws.registerUsesPort(portName, type, properties);
+					Trace.WriteLine ("registerUsesPort 3 - " + nodes[i]);
+				}
 			}
 			frw.registerUsesPort(mkPortName(portName), type, properties);
 		}
 
 		void Services.unregisterUsesPort (string portName)
 		{
-			int[] nodes = cid.WorkerNodes;
-			for (int i=0; i<nodes.Length; i++)
+			ComponentID cid_inner = frw.getComponentID (mkPortName(portName));
+			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
-				gov.cca.Services ws = WorkerServices[nodes[i]];
-				try
+				int[] nodes = cid.WorkerNodes;
+				for (int i=0; i<nodes.Length; i++)
 				{
-					ws.unregisterUsesPort(portName);
-				}
-				catch (CCAExceptionImpl e)
-				{
-					//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
-					//	throw e;
+					gov.cca.Services ws = WorkerServices[nodes[i]];
+					try
+					{
+						ws.unregisterUsesPort(portName);
+					}
+					catch (Exception e)
+					{
+						//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
+						//	throw e;
+					}
 				}
 			}
 			frw.unregisterUsesPort(mkPortName(portName));
@@ -130,11 +149,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		
 		void Services.addProvidesPort (Port inPort, string portName, string type, gov.cca.TypeMap properties)
 		{
-			int[] nodes = cid.WorkerNodes;
-			for (int i=0; i<nodes.Length; i++)
+			ComponentID cid_inner = frw.getComponentID (mkPortName(portName));
+			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
-				gov.cca.Services ws = WorkerServices[nodes[i]];				
-				ws.addProvidesPort(inPort, portName, type, properties);
+				int[] nodes = cid.WorkerNodes;
+				for (int i=0; i<nodes.Length; i++)
+				{
+					gov.cca.Services ws = WorkerServices[nodes[i]];				
+					ws.addProvidesPort(inPort, portName, type, properties);
+				}
 			}
 			frw.addProvidesPort(inPort, mkPortName(portName), type, properties);
 		}
@@ -146,18 +169,22 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		void Services.removeProvidesPort (string portName)
 		{
-			int[] nodes = cid.WorkerNodes;
-			for (int i=0; i<nodes.Length; i++)
+			ComponentID cid_inner = frw.getComponentID (mkPortName(portName));
+			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
-				gov.cca.Services ws = WorkerServices[nodes[i]];
-				try 
+				int[] nodes = cid.WorkerNodes;
+				for (int i=0; i<nodes.Length; i++)
 				{
-					ws.removeProvidesPort(portName);
-				}
-				catch (CCAExceptionImpl e)
-				{
-					//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
-					//	throw e;
+					gov.cca.Services ws = WorkerServices[nodes[i]];
+					try 
+					{
+						ws.removeProvidesPort(portName);
+					}
+					catch (Exception e)
+					{
+						//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
+						//	throw e;
+					}
 				}
 			}
 			frw.removeProvidesPort(mkPortName(portName));

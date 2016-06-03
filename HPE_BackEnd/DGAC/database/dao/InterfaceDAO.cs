@@ -18,28 +18,20 @@ public class InterfaceDAO{
     {
         String sql =
             "INSERT INTO interface (id_interface, " +
-                                   "unit_replica, " +
-								   "facet, " + 
+ 								   "facet, " + 
                                    "id_abstract, " +
                                    "assembly_string, " +
-                                   "id_interface_super, " /*+
-                                   "unit_replica_super, " +
-                                   "id_interface_super_top, " */+
-                                   "unit_replica_super_top, " +
-                                   "class_name, " +
+                                   "id_interface_super, " +
+                                    "class_name, " +
                                    "class_nargs, " +
                                    "uri_source, " +
                                    "is_parallel, " +
                                    "`order`)" +
             " VALUES ('" + ac.Id_interface + "'," 
-					     + ac.Unit_replica + ", "
 						 + ac.Facet + ", "
 					     + ac.Id_abstract + ",'" 
 					     + ac.Assembly_string + "','" 
-					     + ac.Id_interface_super + "'," 
-					     + ac.Unit_replica_super + ",'" /*
-					     + ac.Id_interface_super_top + "'," 
-					     + ac.unit_replica_super_top + ",'" */
+					     + ac.Id_interface_super + "','" 
 					     + ac.Class_name + "'," 
 					     + ac.Class_nargs + ",'" 
 					     + ac.URI_Source + "'," 
@@ -55,41 +47,40 @@ public class InterfaceDAO{
 
 	
     // UPDATED BY HERON (id_abstract is now a key)
-	public Interface retrieve(int id_abstract, string id_interface, int unit_replica){
+	public Interface retrieve(int id_abstract, string id_interface){
 	   
 	   Interface i = null;
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_interface, unit_replica, facet, id_abstract, assembly_string, id_interface_super, unit_replica_super, id_interface_super_top, unit_replica_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+           "SELECT id_interface, facet, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
            "FROM interface "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
-				"id_abstract=" + id_abstract 
-				/*+ " AND unit_replica = " + unit_replica*/  
-				// TODO: it is not yet supported splitting of units (only slices), i.e. unit_replica of units is always 0s.
-				;
+				"id_abstract=" + id_abstract;
+			
        dbcmd.CommandText = sql;
-       IDataReader reader = dbcmd.ExecuteReader();
+			Trace.WriteLine (sql);
+			      IDataReader reader = dbcmd.ExecuteReader();
        if (reader.Read())
        {
            i = new Interface();
            i.Id_interface = (string)reader["id_interface"];
-	       i.Unit_replica = (int)reader["unit_replica"];
+	       //i.Unit_replica = (int)reader["unit_replica"];
 		   i.Facet = (int)reader["facet"];
            i.Id_abstract = (int)reader["id_abstract"];
            i.Assembly_string = (string)reader["assembly_string"];
            i.Id_interface_super = (string)reader["id_interface_super"];
-	       i.Unit_replica_super = (int)reader["unit_replica_super"];
+	      // i.Unit_replica_super = (int)reader["unit_replica_super"];
 	       i.Is_parallel = ((int)reader["is_parallel"]) != 0;
            if (reader["id_interface_super_top"].ToString().Equals(""))
            {
                i.Id_interface_super_top = null;
-			   i.Unit_replica_super_top = -1;
+			  // i.Unit_replica_super_top = -1;
            }
            else
            {
                i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-	           i.Unit_replica_super_top = (int)reader["unit_replica"];					
+	       //    i.Unit_replica_super_top = (int)reader["unit_replica"];					
            }
            i.Class_name = (string)reader["class_name"];
            i.Class_nargs = (int)reader["class_nargs"];
@@ -121,16 +112,20 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, facet, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+            "SELECT id_interface, facet, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " ORDER BY `order`";
+			Trace.WriteLine ("InterfaceDAO - list :" + sql);
         dbcmd.CommandText = sql;
+			Trace.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
+
+
         while (reader.Read())
         {
             Interface i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
-			i.Unit_replica = (int)reader["unit_replica"];
+			//i.Unit_replica = (int)reader["unit_replica"];
 			i.Facet = (int)reader["facet"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
@@ -138,16 +133,14 @@ public class InterfaceDAO{
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
-				i.Unit_replica_super_top = -1;
             } 
 			else 
 			{
                 i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-			    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
             }
 
             i.Id_interface_super = (string)reader["id_interface_super"];
-			i.Unit_replica_super = (int)reader["unit_replica_super"];
+			//i.Unit_replica_super = (int)reader["unit_replica_super"];
             
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
@@ -161,6 +154,9 @@ public class InterfaceDAO{
         reader = null;
         dbcmd.Dispose();
         dbcmd = null;
+
+	
+
         return iList;
     }
 
@@ -171,16 +167,17 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, facet, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+            "SELECT id_interface, facet, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " and id_interface ='" + id_interface + "' ORDER BY `order`";
         dbcmd.CommandText = sql;
+			Trace.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {
             Interface i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
-			i.Unit_replica = (int)reader["unit_replica"];
+		//	i.Unit_replica = (int)reader["unit_replica"];
 			i.Facet = (int)reader["facet"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
@@ -188,15 +185,15 @@ public class InterfaceDAO{
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
-				i.Unit_replica_super_top = -1;
+			//	i.Unit_replica_super_top = -1;
             } 
 			else {
                 i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-			    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
+		//	    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
             }
 
             i.Id_interface_super = (string)reader["id_interface_super"];
-			i.Unit_replica_super = (int)reader["unit_replica_super"];
+			//i.Unit_replica_super = (int)reader["unit_replica_super"];
             
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
@@ -213,39 +210,60 @@ public class InterfaceDAO{
         return iList;
     }
 
-    internal void setInterfaceSuperTop(int id_abstract, string id_interface, int unit_replica, string id_interface_super_top, int unit_replica_super_top)
+    internal void setInterfaceSuperTop(int id_abstract, string id_interface, string id_interface_super_top)
     {
         String sql =
-            "UPDATE interface SET id_interface_super_top = '" + id_interface_super_top + "', unit_replica_super_top = " + unit_replica_super_top +
-            " WHERE id_abstract=" + id_abstract + " AND id_interface like '" + id_interface + "' AND unit_replica = " + unit_replica;
+            "UPDATE interface SET id_interface_super_top = '" + id_interface_super_top + "' " +
+            " WHERE id_abstract=" + id_abstract + " AND id_interface like '" + id_interface + "'";
 
+			Trace.WriteLine ("setInterfaceSuperTop: " + sql);
+ 
         Connector.performSQLUpdate(sql);
     }
 
-    internal Interface retrieveByMatching(int id_abstract_1, int id_abstract_2, string id_interface, int unit_replica)
+    internal Interface[] retrieveByMatching(int id_abstract_1, int id_abstract_2, string id_interface)
     {
-        Interface i = retrieve(id_abstract_2,id_interface, unit_replica);
-        string id_interface_super_top_2 = i.Id_interface_super_top;
-		int unit_replica_super_top_2 = i.Unit_replica_super_top;
+        Interface i = retrieve(id_abstract_2, id_interface);
+		string[] id_interface_super_top_2 = Interface.splitIDs(i.Id_interface_super_top);
+		//int[] unit_replica_super_top_2 = i.Unit_replica_super_top;
+
+		IList<Interface> result_list = new List<Interface> ();
 
         IList<Interface> iList = list(id_abstract_1);
         foreach (Interface iSuperCandidate in iList)
         {
-            string id_interface_super_top_1 = iSuperCandidate.Id_interface_super_top;
-			int unit_replica_super_top_1 = iSuperCandidate.Unit_replica_super_top;
-            if (id_interface_super_top_1.Equals(id_interface_super_top_2) &&
-				    unit_replica_super_top_1 == unit_replica_super_top_2)
-            {
-                return iSuperCandidate;
-            }
+			string[] id_interface_super_top_1 = Interface.splitIDs(iSuperCandidate.Id_interface_super_top);
+			//int[] unit_replica_super_top_1 = iSuperCandidate.Unit_replica_super_top;
+			
+			// CHECK WHETHER this candidate to unit 1 is transitively inherited from a subset of the units from which the unit 2 was derived.
+			bool found=false;
+			foreach (string x in id_interface_super_top_1) 
+			{
+				found = false;
+				foreach (string y in id_interface_super_top_2) 
+				{
+						if (x.Equals(y)) 
+						{
+							found = true;
+							break;
+						}
+				}
+				if (!found)
+					break;
+			}
+			if (found)
+				result_list.Add (iSuperCandidate);	
         }
-        
-        return null;
+
+		Interface[] result_array = new Interface[result_list.Count];
+		result_list.CopyTo (result_array, 0);
+
+		return result_array;
     }
 
-    internal void setPublicKey(int id_abstract, string id_interface, int unit_replica, string publicKey)
+    internal void setPublicKey(int id_abstract, string id_interface, string publicKey)
     {
-        Interface i = this.retrieve(id_abstract, id_interface, unit_replica);
+        Interface i = this.retrieve(id_abstract, id_interface);
 
         String s = ", PublicKey=";
 
@@ -281,31 +299,32 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, facet, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+            "SELECT id_interface, facet, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE class_name like '" + library_path + "'";
         dbcmd.CommandText = sql;
+			Trace.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
         if (reader.Read())
         {
             i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
-			i.Unit_replica = (int)reader["unit_replica"];
+		//	i.Unit_replica = (int)reader["unit_replica"];
 			i.Facet = (int)reader["facet"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
             i.Id_interface_super = (string)reader["id_interface_super"];
-			i.Unit_replica_super = (int)reader["unit_replica_super"];
+		//	i.Unit_replica_super = (int)reader["unit_replica_super"];
 	        i.Is_parallel = ((int)reader["is_parallel"]) != 0;
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
-				i.Unit_replica_super_top = -1;
+			//	i.Unit_replica_super_top = -1;
             }
             else
             {
                 i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-			    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
+		//	    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
             }
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
@@ -324,46 +343,66 @@ public class InterfaceDAO{
         return i;
     }
 
-    internal Interface retrieveTop(int id_abstract, string id_interface, int unit_replica)
+    internal Interface retrieveTop(int id_abstract, string id_interface)
     {
         IList<Interface> iList = BackEnd.idao.list(id_abstract);
         foreach (Interface i in iList)
         {
-            if (i.Id_interface_super_top.Equals(id_interface) && i.Unit_replica == unit_replica)
-            {
-                return i;
-            }
+			Trace.WriteLine ("i.Id_interface_top = " + i.Id_interface_super_top + " = " + id_interface + " ?");
+			string[] interface_ids_tops = Interface.splitIDs(i.Id_interface_super_top);
+
+			foreach (string interface_id_top in interface_ids_tops) 
+			{
+				if (interface_id_top.Equals (id_interface)) 
+				{
+					return i;
+				}
+			}
         }
 
         return null;
     }
 
-    internal Interface retrieveSuper(int id_abstract, string id_interface, int unit_replica)
+    internal Interface retrieveSuper(int id_abstract, string id_interface)
     {
+
+			Trace.WriteLine ("retrieveSuper - BEGIN 1 " + id_abstract + "/" + id_interface);
         bool loop;
         AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract);
 
         IList<Interface> iList = BackEnd.idao.list(id_abstract);
+			Trace.WriteLine ("retrieveSuper - BEGIN 2 " + iList.Count);
         foreach (Interface i in iList)
         {
-            Interface iCurr = i;
-            AbstractComponentFunctor acfCurr = acf;
-            do
+			IList<Tuple<AbstractComponentFunctor, Interface>> queue = new List<Tuple<AbstractComponentFunctor, Interface>> ();
+			queue.Add (new Tuple<AbstractComponentFunctor, Interface> (acf,i));
+			while (queue.Count > 0)
             {
-                if (iCurr.Id_interface.Equals(id_interface) && iCurr.Unit_replica == unit_replica)
+				AbstractComponentFunctor acfCurr = queue[0].Item1;
+				Interface iCurr = queue[0].Item2;
+				queue.RemoveAt(0);
+					Trace.WriteLine ("retrieveSuper - DEQUEUE - id_abstract=" + acfCurr.Id_abstract + " / id_interface=" + iCurr.Id_interface);
+                if (iCurr.Id_interface.Equals(id_interface))
                 {
-                    return i;
+					Trace.WriteLine ("retrieveSuper: found id_abstract=" + acfCurr.Id_abstract + " / id_interface=" + iCurr.Id_interface);
+		            return i;
                 }
                 else if (loop = acfCurr.Id_functor_app_supertype > 0)
                 {
                     AbstractComponentFunctorApplication acfaSuper = DGAC.BackEnd.acfadao.retrieve(acfCurr.Id_functor_app_supertype);
                     acfCurr = DGAC.BackEnd.acfdao.retrieve(acfaSuper.Id_abstract);
-                    iCurr = DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, iCurr.Id_interface_super, iCurr.Unit_replica_super);
+					string[] id_interface_super_list = Interface.splitIDs(iCurr.Id_interface_super);
+					foreach (string id_interface_super in id_interface_super_list) 
+					{
+						Trace.WriteLine ("retrieveSuper: id_abstract=" + acfCurr.Id_abstract + " / id_interface=" +iCurr.Id_interface);
+						iCurr = DGAC.BackEnd.idao.retrieve (acfaSuper.Id_abstract, id_interface_super);
+						queue.Add (new Tuple<AbstractComponentFunctor, Interface> (acfCurr,iCurr));
+					}
                 }
             }
-            while (loop);
         }
 
+			Trace.WriteLine ("retrieveSuper - END NULL");
         return null;
     }
 

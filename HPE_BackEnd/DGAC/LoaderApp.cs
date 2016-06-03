@@ -15,6 +15,43 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
     public class LoaderApp
     {
 
+		public static ComponentReference.ComponentReference loadComponentReference(string contents)
+		{
+			// Declare an object variable of the type to be deserialized.
+			ComponentReference.ComponentReference i = null;
+			FileStream fs = null;
+			try
+			{
+				// Create an instance of the XmlSerializer specifying type and namespace.
+				XmlSerializer serializer = new XmlSerializer(typeof(ComponentReference.ComponentReference));
+
+				string filename = Path.GetTempFileName();
+				File.WriteAllText(filename, contents);
+
+				// A FileStream is needed to read the XML document.
+				fs = new FileStream(filename, FileMode.OpenOrCreate);
+
+				XmlReader reader =  new XmlTextReader(fs);
+
+				// Use the Deserialize method to restore the object's state.
+				i = (ComponentReference.ComponentReference)serializer.Deserialize(reader);
+
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine(e.StackTrace);
+			}
+			finally
+			{
+				if (fs != null)
+					fs.Close();
+			}
+
+			return i;
+
+		}
+
+
         public static ComponentType DeserializeObject(string filename)
         {
             // Declare an object variable of the type to be deserialized.
@@ -22,7 +59,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             FileStream fs = null;
             try
             {
-                Trace.WriteLine("Reading with XmlReader");
+                Trace.WriteLine("Reading with XmlReader " + filename);
 
                 // Create an instance of the XmlSerializer specifying type and namespace.
                 XmlSerializer serializer = new XmlSerializer(typeof(ComponentType));
@@ -50,7 +87,45 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         }
 
-        public static Instantiator.InstanceType DeserializeInstantiator(string filename)
+		public static T deserialize<T>(string contents)
+		{
+			string filename = Path.GetTempFileName ();
+			File.WriteAllText (filename,contents);
+
+			// Declare an object variable of the type to be deserialized.
+			T i = default(T);
+			FileStream fs = null;
+			try
+			{
+				Trace.WriteLine("Reading with XmlReader " + filename);
+
+				// Create an instance of the XmlSerializer specifying type and namespace.
+				XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+				// A FileStream is needed to read the XML document.
+				fs = new FileStream(filename, FileMode.Open);
+
+				XmlReader reader = new XmlTextReader(fs);
+
+				// Use the Deserialize method to restore the object's state.
+				i = (T)serializer.Deserialize(reader);
+
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine(e.StackTrace);
+			}
+			finally
+			{
+				if (fs != null)
+					fs.Close();
+			}
+
+			return i;
+
+		}
+
+		public static Instantiator.InstanceType DeserializeInstantiator(string filename)
         {
             // Declare an object variable of the type to be deserialized.
             Instantiator.InstanceType i = null;
@@ -117,13 +192,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 			fs.Close();
 
-        //    BinaryReader br = new BinaryReader(fs);
-        //    int count = (int)fs.Length;
-        //    fs.Position = 0;
-
-        //    byte[] data = br.ReadBytes(count);
-        //    br.Close();
-        //    fs.Close();
 
  			string result = System.IO.File.ReadAllText(filename);
 
@@ -146,7 +214,43 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			
         }
 		
-        public static byte[] serializeInstantiator(string filename, Instantiator.InstanceType inst)
+		public static string serializeInstantiator(Instantiator.InstanceType instance)
+		{
+			XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.InstanceType));
+
+			string filename = Path.GetTempFileName ();
+
+			FileStream fs = new FileStream(filename, FileMode.Open);
+
+			XmlWriter writer = new XmlTextWriter(fs, null);
+
+			serializer.Serialize(writer, instance);
+
+			fs.Close();
+
+			return File.ReadAllText(filename);	
+
+		}
+
+	/*	public static string serialize<T>(T instance)
+		{
+			XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+			string filename = Path.GetTempFileName ();
+
+			FileStream fs = new FileStream(filename, FileMode.Open);
+
+			XmlWriter writer = new XmlTextWriter(fs, null);
+
+			serializer.Serialize(writer, instance);
+
+			fs.Close();
+
+			return File.ReadAllText(filename);	
+
+		}
+*/
+		public static byte[] serializeInstantiator(string filename, Instantiator.InstanceType inst)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.InstanceType));
 
@@ -167,28 +271,46 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return data;
         }
 
-        public static string serializeInstantiatorToString(Instantiator.ComponentFunctorApplicationType inst)
+
+		public static string serializeContractToString(Instantiator.ComponentFunctorApplicationType inst)
         {
-            string filename = Constants.PATH_TEMP_WORKER + "service.xml";
+			string filename = Path.GetTempFileName ();
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.InstanceType));
+			XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.ComponentFunctorApplicationType));
 
-            FileStream fs = new FileStream(filename, FileMode.Create);
+			FileStream fs = new FileStream(filename, FileMode.OpenOrCreate);
 
             XmlWriter writer = new XmlTextWriter(fs, null);
 
             serializer.Serialize(writer, inst);
 
-            TextReader br = File.OpenText(filename);
-            string result = br.ReadToEnd();
+			fs.Close();     
 
-            br.Close();
-            fs.Close();            
+			string result = File.ReadAllText(filename);                 
 
             return result;
         }
 
-        //receives id_concrete and id inner wich belongs for that inner
+		public static string serialize<T>(T inst)
+		{
+			string filename = Path.GetTempFileName ();
+
+			XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+			FileStream fs = new FileStream(filename, FileMode.OpenOrCreate);
+
+			XmlWriter writer = new XmlTextWriter(fs, null);
+
+			serializer.Serialize(writer, inst);
+
+			fs.Close();     
+
+			string result = File.ReadAllText(filename);                 
+
+			return result;
+		}
+
+		//receives id_concrete and id inner wich belongs for that inner
         //returns a impl of the inner
         //return -1 if the impl doesnt exist    
 
@@ -225,7 +347,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             if (componentRef == null)
             {
-                Trace.WriteLine("componentRef NULL ! acfaRef = " + acfaRef.Id_functor_app);
+				Trace.WriteLine("componentRef NULL ! id_functor_app = " + acfaRef.Id_functor_app + ", id_abstract = " + acfaRef.Id_abstract);
                 return null;
             }
             else
@@ -235,8 +357,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             }
 
         }//resolution
-
-
+			
 
         //returns an icollection of 
         public static IList<InfoCompile> getReferences_Concrete(int id_concrete)
@@ -247,7 +368,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             foreach (br.ufc.pargo.hpe.backend.DGAC.database.Unit unit in unitList)
             {
-                Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_abstract, unit.Id_interface, unit.Unit_replica);
+                Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_abstract, unit.Id_interface);
 
 				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
 
@@ -275,15 +396,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 				InfoCompile info = new InfoCompile();
 
-				info.sourceContents = new Tuple<string,string>[scList.Count];
-				int source_counter = 0;
+				IList<Tuple<string,string>> sourceContents_list = new List<Tuple<string, string>> ();
+
 				foreach (SourceCode sc in scList)
                 {
-                    IList<string> sourceRefs = sc.ExternalReferences;
-					foreach (string sourceRef in sourceRefs) referencesArrayAll_list.Add (sourceRef);
-					info.sourceContents [source_counter] = new Tuple<string,string> (sc.File_name.Split('.')[0], sc.Contents);
-					source_counter ++;
+					if (sc.File_type.Equals ("dll")) 
+					{
+						IList<string> sourceRefs = sc.ExternalReferences;
+						foreach (string sourceRef in sourceRefs)
+							referencesArrayAll_list.Add (sourceRef);
+						sourceContents_list.Add(new Tuple<string,string> (sc.File_name.Split ('.') [0], sc.Contents));
+					} 
                 }
+
+				info.sourceContents = new Tuple<string,string>[sourceContents_list.Count];
+				sourceContents_list.CopyTo (info.sourceContents, 0);
 
 				string[] referencesArrayAll = new string[referencesArrayAll_list.Count];
 				referencesArrayAll_list.CopyTo (referencesArrayAll, 0);
@@ -341,7 +468,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				AbstractComponentFunctor acf1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
 				info.moduleName = i.Class_name;
 				info.unitId = i.Id_interface;
-				info.partition_index = i.Unit_replica;
+			//	info.partition_index = i.Unit_replica;
 				info.cuid = acf1.Hash_component_UID;
 				info.library_path = acf1.Library_path;
 				info.id = acf1.Id_abstract;

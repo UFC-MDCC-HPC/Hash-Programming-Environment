@@ -141,10 +141,15 @@ public class SupplyParameterDAO{
 
     public IList<SupplyParameter> list(int id_functor_app){
 
-        IList<SupplyParameter> list = null;
-        if (cache_c_pars.TryGetValue(id_functor_app, out list)) return list;
+			Trace.WriteLine ("SupplyParameterDAO: list ENTER " + id_functor_app);
+
+			IList<SupplyParameter> list = null;
+	//		if (cache_c_pars.TryGetValue (id_functor_app, out list)) {
+	//			Trace.WriteLine ("SupplyParameterDAO: list RETURN count=" + list.Count);
+	//			return list;
+	//		}
         list = new List<SupplyParameter>();
-        cache_c_pars.Add(id_functor_app, list);
+   //     cache_c_pars.Add(id_functor_app, list);
 
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
@@ -155,9 +160,12 @@ public class SupplyParameterDAO{
            "FROM supplyparameter " +
            "WHERE id_functor_app=" + id_functor_app;
        dbcmd.CommandText = sql;
+			Trace.WriteLine ("SupplyParameterDAO: SQL = " + sql);
+
        IDataReader reader = dbcmd.ExecuteReader();
        while(reader.Read()) {
            string id_parameter = (string)reader["id_parameter"];;
+		   Trace.WriteLine ("SupplyParameterDAO: reading parameter " + id_parameter);
            parameters.Add(id_parameter);
        }//while
        // clean up
@@ -168,9 +176,12 @@ public class SupplyParameterDAO{
 
        foreach (string id_parameter in parameters)
        {
+		   Trace.WriteLine ("SupplyParameterDAO: fetching parameter " + id_parameter + " / " + id_functor_app);
            SupplyParameter sp = retrieve(id_parameter, id_functor_app);
            list.Add(sp);
        }
+
+			Trace.WriteLine ("SupplyParameterDAO: list EXIT count=" + list.Count);
 
        return list;
        

@@ -19,6 +19,8 @@ import org.eclipse.emf.common.util.EList;
 public interface UnitTypeValidator {
 	boolean validate();
 
+	boolean validateSuper(EList<UnitRefType> value);
+
 	boolean validateSuper(UnitRefType value);
 	boolean validateSlices(EList<UnitSliceType> value);
 	boolean validateVisualDescription(VisualElementAttributes value);

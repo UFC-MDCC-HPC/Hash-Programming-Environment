@@ -112,10 +112,14 @@ namespace HPE_DGAC_LoadDB
             {
                 string uref = u.uRef;
                 string iRef = u.iRef;
-                string urefSuper = u.super == null ? null : u.super.uRef;
-				int partition_index = u.replicaSpecified ? u.replica : 0;
+ 				int partition_index = u.replicaSpecified ? u.replica : 0;
 
-                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref, partition_index);
+				string uRefSuper = u.super.Length == 0 ? "" : u.super[0].uRef;
+				for (int j=1; j<u.super.Length;j++) 
+					uRefSuper += "+" + u.super[j].uRef;
+				
+
+                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref);
 
                 InterfaceType ui = lookForInterface(iRef);
 
@@ -124,8 +128,8 @@ namespace HPE_DGAC_LoadDB
                 uu.Id_unit = uref;
                 uu.Id_abstract = id_abstract;
                 uu.Id_interface = uref;
-                uu.Id_unit_super = urefSuper;
-                uu.Unit_replica = partition_index;
+                uu.Id_unit_super = uRefSuper;
+              //  uu.Unit_replica = partition_index;
                 uu.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                 uu.Class_nargs = i.Class_nargs;
                 uu.Assembly_string = uu.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
@@ -144,7 +148,7 @@ namespace HPE_DGAC_LoadDB
 					
 					 IWrapperGenerator wg = new WrapperGenerator();
 					 string[] dependencies = null;
-					 CodeCompileUnit compile_unit = wg.create_wrapper(c.Library_path, ui.iRef, uu.Id_abstract, uu.Id_interface, uu.Unit_replica, out dependencies); 
+					 CodeCompileUnit compile_unit = wg.create_wrapper(c.Library_path, ui.iRef, uu.Id_abstract, uu.Id_interface, out dependencies); 
 					 string source_code = wg.generate_source_code(ui.iRef, compile_unit);
 					
 					 Trace.WriteLine(source_code);
@@ -162,54 +166,68 @@ namespace HPE_DGAC_LoadDB
 				else if (ui.sources != null)
 				{
 	                int order = 0;
-	                foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file) 
-	                {
- 						 Trace.WriteLine ("loadUnits - 1 " + sft.name);
-	                     SourceCode ss = new SourceCode();
-	                     ss.Type_owner = 'u';
-	                     ss.Id_owner_container = uu.Id_concrete;
-	                     ss.Id_owner = uu.Id_unit;
-	                     ss.Contents = sft.contents;
-	                     ss.File_type= "dll";
-	                     ss.File_name = sft.name ;
-	                     ss.Order = order++;
-	                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.insert(ss);
-						Trace.WriteLine ("loadUnits - 2");
+					foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file) 
+					{
+						if (sft.srcType.Equals ("user") || sft.srcType.Equals ("base")) 
+						{							
+							Trace.WriteLine ("loadUnits - 1 " + sft.name);
+							SourceCode ss = new SourceCode ();
+							ss.Type_owner = 'u';
+							ss.Id_owner_container = uu.Id_concrete;
+							ss.Id_owner = uu.Id_unit;
+							ss.Contents = sft.contents;
+							ss.File_type = "dll";
+							ss.File_name = sft.name;
+							ss.Order = order++;
+							br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.insert (ss);
+							Trace.WriteLine ("loadUnits - 2");
 	
-	                     int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
-	                                (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+							int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
+							           (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
 
-						Trace.WriteLine ("loadUnits - 3");
+							Trace.WriteLine ("loadUnits - 3");
 
-	                     if (size > 0)
-	                     {
-							Trace.WriteLine ("loadUnits - 4");
-	                         string[] allRefs = new string[size];
-	                         if (ui.externalReferences != null)
-	                             ui.externalReferences.CopyTo(allRefs, 0);
+							if (size > 0) {
+								Trace.WriteLine ("loadUnits - 4");
+								string[] allRefs = new string[size];
+								if (ui.externalReferences != null)
+									ui.externalReferences.CopyTo (allRefs, 0);
 	
-	                         if (sft.externalDependency != null)
-	                             sft.externalDependency.CopyTo(allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+								if (sft.externalDependency != null)
+									sft.externalDependency.CopyTo (allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
 	
-							Trace.WriteLine ("loadUnits - 5");
+								Trace.WriteLine ("loadUnits - 5");
 
-	                         foreach (string extRef in allRefs)
-	                         {
-								Trace.WriteLine ("loadUnits - 6 - " + extRef);
-	                             SourceCodeReference ssr = new SourceCodeReference();
-	                             ssr.Type_owner = ss.Type_owner;
-	                             ssr.Id_owner_container = ss.Id_owner_container;
-	                             ssr.Id_owner = ss.Id_owner;
-	                             ssr.File_name = ss.File_name;
-	                             ssr.Reference = extRef;
-	                             if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.retrieve(ssr) == null)
-	                             {
-	                                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
-								 }
-								Trace.WriteLine ("loadUnits - 7 - " + extRef);
-	                         }
-	                     }	
-	                }
+								foreach (string extRef in allRefs) 
+								{
+									Trace.WriteLine ("loadUnits - 6 - " + extRef);
+									SourceCodeReference ssr = new SourceCodeReference ();
+									ssr.Type_owner = ss.Type_owner;
+									ssr.Id_owner_container = ss.Id_owner_container;
+									ssr.Id_owner = ss.Id_owner;
+									ssr.File_name = ss.File_name;
+									ssr.Reference = extRef;
+									if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.retrieve (ssr) == null) 
+									{
+										br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.insert (ssr);
+									}
+									Trace.WriteLine ("loadUnits - 7 - " + extRef);
+								}
+							}	
+						} 
+						else if (sft.srcType.Equals ("platform.settings")) 
+						{
+							SourceCode ss = new SourceCode ();
+							ss.Type_owner = 'u';
+							ss.Id_owner_container = uu.Id_concrete;
+							ss.Id_owner = uu.Id_unit;
+							ss.Contents = sft.contents;
+							ss.File_type = "platform.settings";
+							ss.File_name = sft.name;
+							ss.Order = order++;
+							br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.insert (ss);
+						}
+					}
 				} 
 				else 
 				{
@@ -241,10 +259,10 @@ namespace HPE_DGAC_LoadDB
            {
                string uref = u.uRef;
                string iRef = u.iRef;
-               string urefSuper = u.super == null ? null : u.super.uRef;
+               //string urefSuper = u.super == null ? null : u.super.uRef;
 			   int partition_index =  u.replicaSpecified ? u.replica : 0;
 
-               Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref, partition_index);
+               Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref);
                InterfaceType ui = lookForInterface(iRef);
 
                foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
@@ -254,7 +272,7 @@ namespace HPE_DGAC_LoadDB
                    ss.Id_owner_container = c.Id_concrete;
                    ss.Id_owner = uref;
                    ss.Contents = sft.contents;
-                   ss.File_type = "dll";
+				   ss.File_type = sft.srcType.Equals("user") || sft.srcType.Equals("base") ? "dll" : "platform.settings";
                    ss.File_name = sft.name;
                    br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.update(ss);
                    if (sft.externalDependency != null)

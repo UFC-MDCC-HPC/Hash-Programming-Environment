@@ -30,6 +30,34 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			return null;
 		}
 
+		public static Component[] tryGeneralizeAll(TreeNode CTop, TreeNode C)
+		{
+			IDictionary<string,Component> cList = new Dictionary<string,Component> ();
+
+			C.reset ();
+			do {
+				Component[] CTopImpl;
+				if (C.Next != null)
+					CTopImpl = tryGeneralizeAll (CTop, C.Next);
+				else {
+					Component c = findImplementation(CTop);
+					CTopImpl = c != null ? new Component[1] {c} : new Component[0];
+				}
+
+				foreach (Component c in CTopImpl)
+					if (!cList.ContainsKey(c.Library_path))
+						cList.Add(c.Library_path, c);
+
+				C.generalize ();
+
+			} while (!C.OnTop);
+
+			Component[] cArray = new Component[cList.Count];
+			cList.Values.CopyTo (cArray, 0);
+
+			return cArray;
+		}
+
         private static string writeTreeNode(TreeNode t)
         {
 			string result = t.Parameter_id + "@" + t.GetHashCode() + "=" + t.Functor_app.Id_abstract + (t.Children.Count > 0 ? "[" : ""); 
@@ -230,5 +258,47 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return c; // if c is null, there is not an implementation ....			
         }
 
-    }
+		public static Component[] findHashComponentAll(AbstractComponentFunctorApplication acfaRef)
+		{
+			try 
+			{
+				
+			Connector.openConnection();
+
+			Trace.WriteLine("FIND HASH COMPONENT ALL: " + acfaRef.Id_functor_app);
+
+			Component[] cAll;
+
+			TreeNode root = GenerateTree.generate(new Dictionary<string, int>(), acfaRef);
+
+			Resolution.sort(root);
+
+			TreeNode tn = root;
+			while (tn != null) 
+			{
+				Trace.Write (tn.Functor_app.Id_abstract + "@" + tn.GetHashCode() + "->");
+				tn = tn.Next;
+			}
+
+			writeTreeNode (root);
+
+			Trace.WriteLine ("AFTER Resolution.sort(root) - ALL");
+
+			cAll = Resolution.tryGeneralizeAll(root, root);
+
+			Trace.WriteLine ("AFTER Resolution.tryGeneralize(root, root) - ALL");
+
+			return cAll; // if c is null, there is not an implementation ....
+			}
+			catch (Exception e) 
+			{
+				throw e;
+			}
+			finally 
+			{
+				Connector.closeConnection ();
+			}
+		}
+
+	}
 }

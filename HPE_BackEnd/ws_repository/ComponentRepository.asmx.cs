@@ -37,21 +37,9 @@ namespace br.ufc.pargo.hpe.cca.ports.ComponentRepository
 
             br.ufc.pargo.hpe.backend.DGAC.BackEnd.releaseManager(ch);
 			
-			/*foreach (gov.cca.ComponentClassDescription u in cs) 
-			{
-				string t = u.getComponentClassName();
-				Console.WriteLine(t);
-			}*/
-			
             return /*new gov.cca.ComponentClassDescription[0]; // */ cs;           
         }
 		
-        [WebMethod]
-        public gov.cca.ManagerComponentClassDescriptionImpl[] presisei_colocar_esse_metodo()
-        {
-			
-            return new gov.cca.ManagerComponentClassDescriptionImpl[0]; 
-        } 
         #endregion
 		
 		

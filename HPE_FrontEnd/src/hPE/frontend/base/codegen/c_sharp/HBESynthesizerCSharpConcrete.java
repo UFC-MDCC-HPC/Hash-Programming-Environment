@@ -1,6 +1,6 @@
 package hPE.frontend.base.codegen.c_sharp;
 
-import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.exceptions.HPEAbortException;
@@ -99,7 +99,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		HBESourceCSharpClassDefinition baseClassDef = this.synthesizeBaseClass(i, versionID); 
 		HBESourceCSharpClassDefinition userClassDef = this.synthesizeUserClass(i, versionID); 
 		
-        HBESourceVersion<HBEAbstractFile> superVersion = i.getSourceVersion(versionID);
+        HBESourceVersion superVersion = i.getSourceVersion(versionID);
 
 		HBESourceVersionCSharp version = createNewSourceVersion();
 		version.setBaseSource(baseClassDef);
@@ -599,7 +599,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	
 	public void setIsSubclass(HInterface i, String versionID) {
 		
-        HBESourceVersion<HBEAbstractFile> superVersion = i.getSourceVersion(versionID);
+        HBESourceVersion superVersion = i.getSourceVersion(versionID);
         subclass = i.hasSuperType() && superVersion.getFiles().isEmpty();
 
 	}

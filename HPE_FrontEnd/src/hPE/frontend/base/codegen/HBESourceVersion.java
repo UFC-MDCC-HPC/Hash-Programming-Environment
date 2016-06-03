@@ -3,7 +3,7 @@ package hPE.frontend.base.codegen;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class HBESourceVersion<FileType extends HBEAbstractFile> implements Serializable {
+public abstract class HBESourceVersion implements Serializable {
 
 	static final long serialVersionUID = 1;
 	
@@ -11,9 +11,9 @@ public abstract class HBESourceVersion<FileType extends HBEAbstractFile> impleme
 		super();
 	}
 	
-	public abstract List<FileType> getFiles();
+	public abstract List<HBEAbstractSourceCodeFile> getFiles();
 	
-	public abstract void addFile(FileType f) throws Exception;
+	public abstract void addFile(HBEAbstractSourceCodeFile f) throws Exception;
 	
 	public abstract String getFileType();
 	

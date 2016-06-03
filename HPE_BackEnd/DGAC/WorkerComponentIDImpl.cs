@@ -1,20 +1,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace gov {	
 	namespace cca {
 
-        [Serializable]
+        [DataContract]
+		[KnownType(typeof(WorkerComponentIDImpl))]
         public abstract class WorkerComponentID : ComponentID
         {
         }
 
-        [Serializable]
+        [DataContract]
 		public class WorkerComponentIDImpl : WorkerComponentID
         {
             #region attributes
 
+			[DataMember]
             private string instanceNamePrim = null;
 
             #endregion

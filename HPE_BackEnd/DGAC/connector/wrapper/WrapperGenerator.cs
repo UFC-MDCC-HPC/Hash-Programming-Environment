@@ -15,7 +15,7 @@ namespace br.ufc.hpe.backend.DGAC
 {
 	public interface IWrapperGenerator
 	{
-		CodeCompileUnit create_wrapper(string package_path, string unit_class_name, int id_abstract, string id_unit, int partition_index, out string[] dependencies);				
+		CodeCompileUnit create_wrapper(string package_path, string unit_class_name, int id_abstract, string id_unit, out string[] dependencies);				
 		
 		string generate_source_code(string source_code_name, CodeCompileUnit compileUnit);
 		
@@ -37,7 +37,7 @@ namespace br.ufc.hpe.backend.DGAC
 		#region IWrapperGenerator implementation
 		private const string wrapper_source_name_suffix = "WrapperImpl";
 
-		public CodeCompileUnit create_wrapper (string package_path, string unit_class_name, int id_abstract, string id_interface, int partition_index, out string[] dependencies)
+		public CodeCompileUnit create_wrapper (string package_path, string unit_class_name, int id_abstract, string id_interface, out string[] dependencies)
 		{			
 			this.id_abstract = id_abstract;
 			this.id_interface = id_interface;
@@ -105,7 +105,7 @@ namespace br.ufc.hpe.backend.DGAC
 			#region namespace
 			
 			AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(id_abstract);
-			Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);
+			Interface i = BackEnd.idao.retrieve(id_abstract, id_interface);
 			
 			CodeNamespace globalNamespace = new CodeNamespace();		
 			compileUnit.Namespaces.Add(globalNamespace);
@@ -147,7 +147,7 @@ namespace br.ufc.hpe.backend.DGAC
 			
 			#region class / public slice accessors
 			
-			IList<Slice> slice_list = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
+			IList<Slice> slice_list = BackEnd.sdao.listByInterface(id_abstract, id_interface);
 			
 			foreach (Slice s in slice_list) 
 			{
@@ -239,7 +239,7 @@ namespace br.ufc.hpe.backend.DGAC
 		{
 			IList<CodeNamespaceImport> using_dependencies_list = new List<CodeNamespaceImport>();
 			
-			IList<Slice> slice_list = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
+			IList<Slice> slice_list = BackEnd.sdao.listByInterface(id_abstract, id_interface);
 			
 			foreach (Slice s in slice_list) 
 			{
@@ -312,7 +312,7 @@ namespace br.ufc.hpe.backend.DGAC
 				AbstractComponentFunctorParameter acfp = BackEnd.acfpdao.retrieve(i.Id_abstract, par_id);
 				AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(acfp.Bounds_of);
 				AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(acfa.Id_abstract);
-				Interface i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, iPar.the_interface.Id_interface_super_top, iPar.the_interface.Unit_replica_super_top);
+				Interface i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, iPar.the_interface.Id_interface_super_top);
 			
 				iPar.package_path = acf.Library_path;
 				iPar.the_interface = i_;
@@ -505,7 +505,7 @@ namespace br.ufc.hpe.backend.DGAC
 			isig.varId = new Dictionary<string,string>();
 			isig.slice_types = new Dictionary<string, InterfaceSignature>();
 			
-			IList<Slice> slice_list = BackEnd.sdao.listByInterface(i.Id_abstract, i.Id_interface, i.Unit_replica);
+			IList<Slice> slice_list = BackEnd.sdao.listByInterface(i.Id_abstract, i.Id_interface);
 			// id_abstract, id_inner, id_interface_slice, partition_index, id_interface, property_name, transitive
 			// '43', 'cells_info', 'cells', '0', 'compute_rhs', 'Cells', '0'
 			// '43', 'problem_data', 'problem', '0', 'compute_rhs', 'Problem', '0'
@@ -523,7 +523,7 @@ namespace br.ufc.hpe.backend.DGAC
 				// 1st loop: id_functor_app_actual = 131 
 				// 2nd loop: id_functor_app_actual = 132
                 					
-				Interface i_ = BackEnd.idao.retrieve(ic.Id_abstract_inner, s.Id_interface_slice, s.Slice_replica);
+				Interface i_ = BackEnd.idao.retrieve(ic.Id_abstract_inner, s.Id_interface_slice);
 				// id_abstract, id_interface, partition_index, id_interface_super, partition_index_super, uri_source, class_nargs, id_interface_super_top, partition_index_super_top, order
 				// 1st loop:
 				// '31', 'cells', '0', '', '0', 'common.datapartition.MultiPartitionCells.ICells', '', '0', 'cells', '0', '1', NULL, NULL, NULL
@@ -536,7 +536,7 @@ namespace br.ufc.hpe.backend.DGAC
 						id_functor_app_actual = closed_pars[ic.Parameter_top];
 					InterfaceParameter ip = BackEnd.ipdao.retrieve(i.Id_abstract, i.Id_interface, ic.Parameter_top);
 					AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_actual);
-					i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, ip.Id_unit_parameter, i.Unit_replica);
+					i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, ip.Id_unit_parameter);
 				}
 				
 				IList<string> parameters = new List<string>();
@@ -689,7 +689,7 @@ namespace br.ufc.hpe.backend.DGAC
 		{
 			// generate source code
 			
-			Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);
+			Interface i = BackEnd.idao.retrieve(id_abstract, id_interface);
 			//string sourceFileName = i.Class_name + wrapper_source_name_suffix;
 			
 			string source_code = generateCSharpCode(compileUnit, sourceFileName);
