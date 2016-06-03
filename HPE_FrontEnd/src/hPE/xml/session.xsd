@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://www.example.org/session" 
+xmlns:tns="http://www.example.org/session" 
+elementFormDefault="qualified" 
+xmlns:Q1="http://www.example.org/instantiator">
+
+    <import schemaLocation="instantiator.xsd" namespace="http://www.example.org/instantiator"></import>
+    <element name="session" type="tns:SessionType"></element>
+    
+    <complexType name="SessionType">
+    	<sequence>
+    		<element name="instance" type="Q1:InstanceType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="instance_view" type="tns:InstanceViewType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="uses_port_view" type="tns:PortViewType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="provides_port_view" type="tns:PortViewType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="binding" type="tns:BindingType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="process_group" type="tns:ProcessGroupType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="unit_mapping"
+    			type="tns:ProcessGroupUnitMappingType" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="port_mapping" type="tns:PortMappingType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+            <element name="automatic_uses_port" type="tns:AutomaticUsesPortType" maxOccurs="unbounded" minOccurs="0"></element>
+        </sequence>
+    	<attribute name="backend_location" type="anyURI"></attribute>
+    </complexType>
+
+    <complexType name="BindingType">
+    	<attribute name="component_ref_uses" type="string"></attribute>
+    	<attribute name="port_ref_uses" type="string"></attribute>
+    	<attribute name="component_ref_provides" type="string"></attribute>
+    	<attribute name="port_ref_provides" type="string"></attribute>
+    </complexType>
+
+    <complexType name="PortViewType">
+    	<complexContent>
+    		<extension base="tns:ShapeViewType">
+    			<attribute name="instance_ref" type="string"></attribute>
+    			<attribute name="port_ref" type="string"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+    
+
+    <complexType name="ShapeViewType">
+    	<sequence></sequence>
+    	<attribute name="x" type="int"></attribute>
+    	<attribute name="y" type="int"></attribute>
+    	<attribute name="w" type="int"></attribute>
+    	<attribute name="h" type="int"></attribute>
+    </complexType>
+
+    <complexType name="InstanceViewType">
+    	<complexContent>
+    		<extension base="tns:ShapeViewType">
+    			<attribute name="instance_ref" type="string"></attribute>
+
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="ProcessGroupType">
+    	<sequence>
+    		<element name="group_color" type="tns:RGBColorType"></element>
+    		<element name="group_node" type="int" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="group_name" type="string"></attribute>
+    </complexType>
+
+    <complexType name="RGBColorType">
+    	<attribute name="red" type="int"></attribute>
+    	<attribute name="green" type="int"></attribute>
+    	<attribute name="blue" type="int"></attribute>
+    </complexType>
+
+    <complexType name="ProcessGroupUnitMappingType">
+    	<sequence>
+    		<element name="group_name" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="instance_name" type="string"></attribute>
+    	<attribute name="unit_name" type="string"></attribute>
+    </complexType>
+
+    <complexType name="PortMappingType">
+    	<attribute name="instance_ref" type="string"></attribute>
+    	<attribute name="uses_port_ref" type="string"></attribute>
+    	<attribute name="slice_unit_ref" type="string"></attribute>
+    	<attribute name="host_unit_ref" type="string"></attribute>
+    </complexType>
+
+    <complexType name="AutomaticUsesPortType">
+    	<attribute name="instance_ref" type="string"></attribute>
+    	<attribute name="uses_port_ref" type="string"></attribute>
+    </complexType>
+</schema>

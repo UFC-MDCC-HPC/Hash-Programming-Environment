@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/catalog" xmlns:tns="http://www.example.org/catalog" elementFormDefault="qualified" xmlns:Q1="http://www.example.org/instantiator">
+
+    <import schemaLocation="instantiator.xsd" namespace="http://www.example.org/instantiator"></import>
+    <element name="catalog" type="tns:CatalogType"></element>
+    
+    <complexType name="CatalogType">
+    	<sequence>
+    		<element name="component" type="tns:ComponentType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    	<attribute name="site_name" type="string"></attribute>
+    	<attribute name="backend_url" type="anyURI"></attribute>
+    </complexType>
+
+    <complexType name="ComponentType">
+    	<sequence>
+    		<element name="unit" type="tns:UnitType"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    		<element name="uses_port" type="tns:UsesPortType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="provides_port" type="tns:ProvidesPortType"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    		<element name="parameter" type="tns:ParameterType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    	<attribute name="component_ref" type="string"></attribute>
+    	<attribute name="kind" type="string"></attribute>
+    	<attribute name="component_ref_super" type="string" use="optional"></attribute>
+    </complexType>
+
+    <complexType name="UnitType">
+    	<attribute name="unit_ref" type="string"></attribute>
+    	<attribute name="is_parallel" type="boolean" use="optional" default="false"></attribute>
+    </complexType>
+
+    <complexType name="ProvidesPortType">
+    	<complexContent>
+    		<extension base="tns:PortType"></extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="UsesPortType">
+    	<complexContent>
+    		<extension base="tns:PortType">
+    			<sequence>
+    				<element name="slice" type="tns:SliceType" maxOccurs="unbounded" minOccurs="1"></element>
+    			</sequence>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="PortType">
+    	<sequence>
+    		<element name="type" type="Q1:ComponentFunctorApplicationType"></element>
+    	</sequence>
+    	<attribute name="port_ref" type="string"></attribute>
+    </complexType>
+
+    <attribute name="NewAttribute" type="string"></attribute>
+
+
+
+    <complexType name="ParameterType">
+    	<sequence>
+    		<element name="bounds_type"
+    			type="Q1:ComponentFunctorApplicationType">
+    		</element>
+    	</sequence>
+    	<attribute name="parameter_id" type="string"></attribute>
+    	<attribute name="variable_id" type="string"></attribute>
+    </complexType>
+
+    <complexType name="SliceType">
+    	<attribute name="host_unit" type="string"></attribute>
+    	<attribute name="slice_unit" type="string"></attribute>
+    </complexType>
+</schema>

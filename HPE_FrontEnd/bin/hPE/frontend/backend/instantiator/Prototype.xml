@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" library_path="skeleton.Farm" xmlns="http://www.example.org/Instantiator" >
+	<context_parameter formal_parameter_id="gather strategy">
+		<actual_parameter library_path="skeleton.Farm.Collect.SumAreas">
+			<context_parameter formal_parameter_id="data source">
+				<actual_parameter library_path="jefferson.data.Double"></actual_parameter>
+	        </context_parameter>
+	        <context_parameter formal_parameter_id="data target">
+				<actual_parameter library_path="jefferson.data.Double"></actual_parameter>
+	        </context_parameter>
+	    </actual_parameter>
+	</context_parameter>
+	<context_parameter formal_parameter_id="input type">
+		<actual_parameter library_path="data.IntegralCase">
+			<context_parameter formal_parameter_id="function">
+				<actual_parameter library_path="data.Function.TestingFunction"></actual_parameter>
+			</context_parameter>
+		</actual_parameter>
+	</context_parameter>
+	<context_parameter formal_parameter_id="work task">
+		<actual_parameter library_path="skeleton.Farm.Work.ApproximateIntegral">
+			<context_parameter formal_parameter_id="function">
+				<actual_parameter library_path="data.Function.TestingFunction"></actual_parameter>
+			</context_parameter>
+		    <context_parameter formal_parameter_id="input data">
+				<actual_parameter library_path="data.List">
+					<context_parameter formal_parameter_id="element type">
+						<actual_parameter library_path="data.IntegralCase">
+							<context_parameter formal_parameter_id="function">
+								<actual_parameter library_path="data.Function.TestingFunction"></actual_parameter>
+							</context_parameter>
+						</actual_parameter>
+					</context_parameter>
+				</actual_parameter>
+			</context_parameter>
+			<context_parameter formal_parameter_id="output data">
+				<actual_parameter library_path="jefferson.data.Double"></actual_parameter>
+			</context_parameter>
+		</actual_parameter>
+	</context_parameter>
+	<context_parameter formal_parameter_id="output type">
+		<actual_parameter library_path="jefferson.data.Double"></actual_parameter>
+	</context_parameter>
+	<context_parameter formal_parameter_id="result type">
+		<actual_parameter library_path="jefferson.data.Double"></actual_parameter>
+	</context_parameter>
+	<context_parameter formal_parameter_id="scatter strategy">
+		<actual_parameter library_path="skeleton.Farm.Distribute.DistributeInterval">
+			<context_parameter formal_parameter_id="data source">
+				<actual_parameter library_path="data.IntegralCase">
+					<context_parameter formal_parameter_id="function">
+						<actual_parameter library_path="data.Function.TestingFunction"></actual_parameter>
+					</context_parameter>
+				</actual_parameter>
+			</context_parameter>
+			<context_parameter formal_parameter_id="data target">
+				<actual_parameter library_path="data.List">
+					<context_parameter formal_parameter_id="element type">
+						<actual_parameter library_path="data.IntegralCase">
+							<context_parameter formal_parameter_id="function">
+								<actual_parameter library_path="data.Function.TestingFunction"></actual_parameter>
+							</context_parameter>
+						</actual_parameter>
+					</context_parameter>
+				</actual_parameter>
+			</context_parameter>
+			<context_parameter formal_parameter_id="function">
+				<actual_parameter library_path="data.Function.TestingFunction"></actual_parameter>
+			</context_parameter>
+		</actual_parameter>
+	</context_parameter>
+	<context_parameter formal_parameter_id="job type">
+		<actual_parameter library_path="data.List">
+			<context_parameter formal_parameter_id="element type">
+				<actual_parameter library_path="data.IntegralCase">
+					<context_parameter formal_parameter_id="function">
+						<actual_parameter library_path="data.Function.TestingFunction"></actual_parameter>
+					</context_parameter>
+				</actual_parameter>
+			</context_parameter>
+		</actual_parameter>
+	</context_parameter>
+	<node>0</node>
+	<node>2</node>
+	<node>1</node>
+	<node>3</node></application>

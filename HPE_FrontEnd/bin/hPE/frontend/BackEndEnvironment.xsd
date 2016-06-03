@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/BackEndEnvironment" xmlns:tns="http://www.example.org/BackEndEnvironment" elementFormDefault="qualified">
+
+    <element name="environment" type="tns:EnvironmentType"></element>
+
+    <complexType name="DeployedComponentInfoType">
+    	<sequence>
+    		<element name="package" type="string" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="enumerator" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="parameter" type="tns:DeployedParameterType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="cid" type="int"></attribute>
+    	<attribute name="kind" type="string"></attribute>
+    	<attribute name="abstract" type="boolean"></attribute>
+    	<attribute name="locationURI" type="anyURI"></attribute>
+    	<attribute name="cidBase" type="int"></attribute>
+    </complexType>
+
+    <complexType name="EnvironmentType">
+    	<sequence>
+    		<element name="deployed" type="tns:DeployedComponentInfoType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="DeployedParameterType">
+    	<sequence>
+    		<element name="actual" type="int" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="bound" type="int"></element>
+    		<element name="parameter" type="tns:DeployedParameterType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="parameter_id" type="string"></attribute>
+    </complexType>
+</schema>

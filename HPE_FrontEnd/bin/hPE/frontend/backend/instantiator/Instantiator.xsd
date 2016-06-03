@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Instantiator" xmlns:tns="http://www.example.org/Instantiator" elementFormDefault="qualified">
+
+    <element name="application" type="tns:ComponentFunctorApplicationType"></element>
+    
+    <complexType name="ComponentFunctorApplicationType">
+    	<sequence>
+    		<element name="context_parameter"
+    			type="tns:ContextParameterType" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="node" type="int" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="unit_mapping" type="tns:UnitMappingType"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    	</sequence>
+    	<attribute name="library_path" type="string"></attribute>
+    </complexType>
+
+
+    <complexType name="ContextParameterType">
+    	<sequence>
+    		<element name="actual_parameter" type="tns:ComponentFunctorApplicationType"></element>
+    	</sequence>
+    	<attribute name="formal_parameter_id" type="string"></attribute>
+    </complexType>
+
+    <complexType name="NodeMappingType">
+    	<attribute name="unit_id" type="string" use="required"></attribute>
+    	<attribute name="unit_index" type="int"></attribute>
+    	<attribute name="node" type="int"></attribute>
+    </complexType>
+
+    <complexType name="UnitMappingType">
+    	<sequence>
+    		<element name="node" type="int" maxOccurs="unbounded"
+    			minOccurs="1">
+    		</element>
+    	</sequence>
+    	<attribute name="unit_id" type="string" use="required"></attribute>
+    	<attribute name="unit_index" type="int" use="optional"
+    		default="0">
+    	</attribute>
+    </complexType>
+
+    <attribute name="NewAttribute" type="string"></attribute>
+
+</schema>
