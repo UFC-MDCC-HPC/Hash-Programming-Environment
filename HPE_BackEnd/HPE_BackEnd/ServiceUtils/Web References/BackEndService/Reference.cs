@@ -27,10 +27,12 @@ namespace ServiceUtils.BackEndService {
         /// CodeRemarks
         public BackEnd() {
             this.Url = "http://127.0.0.1:8081/BackEnd.asmx";
+			this.Timeout = int.MaxValue;
         }
         
         public BackEnd(string url) {
             this.Url = url;
+			this.Timeout = int.MaxValue;
         }
         
         /// CodeRemarks

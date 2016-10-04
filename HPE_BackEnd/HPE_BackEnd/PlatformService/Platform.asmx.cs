@@ -7,6 +7,8 @@ using br.ufc.pargo.hpe.backend.DGAC;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
+using gov.cca;
+using System.Threading;
 
 namespace PlatformService
 {
@@ -14,12 +16,34 @@ namespace PlatformService
 	{
 		/* config_contents is the contents of the .hpe file */
 
-		private int number_of_nodes;
+		private int number_of_nodes = 0;
 
 		[WebMethod]
 		public int getNumberOfNodes()
 		{
 			return number_of_nodes;
+		}
+
+		[WebMethod]
+		public int getBaseBindingPort()
+		{
+			int base_binding_port = -1;
+
+			try
+			{
+				base_binding_port = Constants.BASE_BINDING_FACET_PORT;
+			}
+			catch (Exception e) 
+			{
+				Console.Error.WriteLine (e.Message);
+				Console.Error.WriteLine (e.StackTrace);
+				if (e.InnerException != null) 
+				{
+					Console.Error.WriteLine (e.InnerException.Message);
+					Console.Error.WriteLine (e.InnerException.StackTrace);
+				}
+			}
+			return base_binding_port;
 		}
 
 		[WebMethod]
@@ -53,53 +77,152 @@ namespace PlatformService
 			return "deployed " + res;
 		}
 
-		/* component_ref é a referência do componente no sistema computacional (identificador do componente aninhado do componente de sistema).
-		 * A plataforma já possui o componente de sistema previamente instanciado. 
-		 */
+		private static string platform_ref = null;
 
 		[WebMethod]
-		public string instantiate(string component_ref, int facet_instance, int[] facet, string[] facet_address /*Tuple<int,string>[] facet_address_list*/)
+		public void setPlatformRef(string arch_ref)
 		{
-			if (component_ref.EndsWith ("System"))  // app_name + ".System"
-				instantiateSystemComponent (component_ref);
-			else {
-				Tuple<int,string>[] facet_address_list = new Tuple<int, string>[facet.Length];
-				for (int i = 0; i < facet.Length; i++)
-					facet_address_list[i] = new Tuple<int, string> (facet[i],facet_address[i]);				
-				instantiateSolutionComponentOrBinding (component_ref, facet_instance, facet_address_list);
+			platform_ref = arch_ref;
+		}
+
+		[WebMethod]
+		public string getPlatformRef()
+		{
+			return platform_ref;
+		}
+
+		/* component_ref é a referência do componente no sistema computacional (identificador do componente aninhado do componente de sistema).
+		 * A plataforma já possui o componente de sistema previamente instanciado. 
+		 */ 
+
+		[WebMethod]
+		public string instantiate(string app_name, string component_ref, int facet_instance, int[] facet, string[] facet_address, int[] nodes)
+		{
+			try
+			{
+				Connector.openConnection ();
+
+				Tuple<int,string>[] facet_address_list = new Tuple<int, string>[facet_address.Length];
+				for (int i = 0; i < facet_address.Length; i++)
+					facet_address_list [i] = new Tuple<int, string> (facet [i], facet_address [i]);	
+
+				Console.WriteLine("INSTANTIATE -- " + platform_ref + " / " + component_ref + " / " + facet_address[facet_instance]);
+
+				if (platform_ref.Equals(component_ref))
+					instantiateSystemComponent (app_name, facet_instance, facet_address_list, nodes);
+
+				instantiateSolutionComponent (component_ref);
+
+				Connector.closeConnection ();
+			} 
+			catch(Exception e) 
+			{
+				Console.Error.WriteLine (e.Message);
+				
 			}
 
-			return null;
+			string result = "instantiated";
+
+			return result;
 		}
+			
+		private static ManagerComponentID app_cid = null;
+		private static br.ufc.pargo.hpe.backend.DGAC.BackEnd.ISession session = null;
 
 		// Search for the single Application component deployed in the platform and instantiate it.
-		private void instantiateSystemComponent(string component_ref /* <app_name>.System */)
+		private void instantiateSystemComponent(string app_name, int facet_instance, Tuple<int,string>[] facet_address_list, int[] nodes)
 		{
-			IList<AbstractComponentFunctor> acf_list = BackEnd.acfdao.listByKind (Constants.KIND_APPLICATION_NAME);
-			Debug.Assert (acf_list.Count == 1);
+			try{
+				string instantiator_string = buildInstantiatorStringOfSystem (app_name + ".System", facet_instance, facet_address_list, nodes);
+				Console.WriteLine (instantiator_string);
 
-			string instantiator_string = buildInstantiatorStringOfSystem (component_ref, acf_list [0]);
+				string session_id_string = "system";
+				session = BackEnd.startSession(session_id_string);
+				gov.cca.Services frwServices = session.Services;
 
-			string session_id_string = "system";
-			BackEnd.runApplication (instantiator_string, session_id_string);
+				// INSTANTIATE THE APPLICATION
+				Trace.WriteLine("Creating an instance of the application");
+				app_cid = (ManagerComponentID) BackEnd.createSystemComponentInstance ("app", instantiator_string, session_id_string);
+
+/*				// CONNECT THE GO PORT OF THE APPLICATION TO THE SESSION DRIVER.
+				Trace.WriteLine("Connecting to the GoPort of the application");
+				gov.cca.ComponentID host_cid = frwServices.getComponentID();
+				gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
+				bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
+				gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
+
+				system_go = new Thread(delegate() {
+					go_port.go(); 
+				});
+*/
+				//t.Start();						
+				// The system becomes ready for workflow synchronization.
+			} 
+			catch (Exception e) 
+			{
+				Console.Error.WriteLine (e.Message);
+				if (e.InnerException != null)
+					Console.Error.WriteLine (e.InnerException.Message);
+			}
 		}
 
-		private string buildInstantiatorStringOfSystem(string component_ref, AbstractComponentFunctor acf)
+
+		private string buildInstantiatorStringOfSystem(string component_ref, int facet_instance, Tuple<int,string>[] facet_address_list, int[] nodes)
 		{
+			IList<AbstractComponentFunctor> acf_list = BackEnd.acfdao.listByKind (Constants.KIND_APPLICATION_NAME);
+			AbstractComponentFunctor acf = acf_list [0];
+
 			Instantiator.InstanceType instantiator = new Instantiator.InstanceType();
 			Instantiator.ComponentFunctorApplicationType contract = new Instantiator.ComponentFunctorApplicationType();
 			contract.component_ref = component_ref;
+			contract.argument = new Instantiator.ContextArgumentType[0];
 
-			//instantiator.facet_address;  // TODO
-			instantiator.unit_mapping = new Instantiator.UnitMappingType[1];
-			instantiator.unit_mapping [0].unit_id = "peer";
+			instantiator.contextual_type = contract;
+			instantiator.facet_instanceSpecified = true;
+			instantiator.facet_instance = facet_instance;
 
-			int number_of_nodes = getNumberOfNodes ();
-			instantiator.unit_mapping [0].node = new int[number_of_nodes];
-			for (int n = 0; n < number_of_nodes; n++)
-				instantiator.unit_mapping [0].node [n] = n;
+			IList<Interface> units = BackEnd.idao.list (acf.Id_abstract);
+			instantiator.unit_mapping = new Instantiator.UnitMappingType[units.Count];
 
-			return LoaderApp.serializeInstantiator (instantiator);
+			int iu = 0;
+			foreach (Interface u in units) 
+			{
+				instantiator.unit_mapping [iu] = new Instantiator.UnitMappingType ();
+
+				instantiator.unit_mapping [iu].unit_id = u.Id_interface;
+				instantiator.unit_mapping [iu].unit_index = 0;
+
+				instantiator.unit_mapping [iu].facet_instanceSpecified = true;
+				instantiator.unit_mapping [iu].facet_instance = instantiator.unit_mapping [iu].facet = u.Facet;
+
+				int number_of_nodes = nodes[instantiator.unit_mapping [iu].facet_instance];
+				instantiator.unit_mapping [iu].node = new int[number_of_nodes];
+				for (int n = 0; n < number_of_nodes; n++)
+					instantiator.unit_mapping [iu].node [n] = n;
+
+				iu++;
+			}
+				
+			instantiator.facet_address = new Instantiator.FacetAddressType[facet_address_list.Length];
+			for (int i = 0; i < facet_address_list.Length; i++) 
+			{
+				instantiator.facet_address [i] = new Instantiator.FacetAddressType ();
+				instantiator.facet_address [i].facet_instanceSpecified = true;
+				instantiator.facet_address [i].facet_instance = instantiator.facet_address [i].facet = facet_address_list[i].Item1;
+				instantiator.facet_address [i].facetSpecified = true;
+				instantiator.facet_address [i].facet = instantiator.facet_address [i].facet_instance;
+
+				Uri uri = new Uri (facet_address_list [i].Item2);
+
+				instantiator.facet_address [i].address = uri.Host;
+				instantiator.facet_address [i].portSpecified = true;
+				instantiator.facet_address [i].port = uri.Port;
+			}
+
+
+			string instantiator_string = LoaderApp.serializeInstantiator (instantiator);
+
+			return instantiator_string;
 		}
 
 		/* - component_ref is the name of the component in the architectural code
@@ -107,9 +230,38 @@ namespace PlatformService
 		*    which is indexed by component_ref. In fact, it executes the procedure of instantiating an inner component
 		*    of the <app_name>.System component instance (including connection and initialization.
 		*/
-		private void instantiateSolutionComponentOrBinding(string component_ref, int facet_instance, Tuple<int,string>[] facet_address_list)
+		private void instantiateSolutionComponent(string component_ref)
 		{
-			BackEnd.instantiateSolutionComponentOrBinding (component_ref, facet_instance, facet_address_list);
+			int count = BackEnd.instantiateSolutionComponent (component_ref);
+			Trace.WriteLine ("instantiateSolutionComponent COUNTER=" + count);
+			status += (count + ":" + component_ref + "/");
+		}
+
+		private static string status = "";
+
+		[WebMethod]
+		public string getStatus()
+		{
+			return status;
+		}
+
+		[WebMethod]
+		public void run()
+		{
+			gov.cca.Services frwServices = session.Services;
+
+			// CONNECT THE GO PORT OF THE APPLICATION TO THE SESSION DRIVER.
+			Trace.WriteLine("Connecting to the GoPort of the application");
+			gov.cca.ComponentID host_cid = frwServices.getComponentID();
+			gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
+			bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
+			gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
+
+			status += " * GO!!! BEGIN";
+
+			go_port.go ();
+
+			status += " * GO!!! END";
 		}
 
 	}

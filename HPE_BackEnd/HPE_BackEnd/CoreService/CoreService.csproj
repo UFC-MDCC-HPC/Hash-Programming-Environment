@@ -53,13 +53,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DGAC\DGAC.csproj">
-      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
-      <Name>DGAC</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServiceUtils\ServiceUtils.csproj">
       <Project>{5559A401-927A-4B4D-B845-DE88130BD0D2}</Project>
       <Name>ServiceUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const int CREATE_INSTANCE = 0;
     }
 
-	public enum EnvironmentPortType { user, provider};
+	public enum EnvironmentPortType { user, provider, platform_user, platform_provider};
 
     public class Constants
     {
@@ -34,7 +34,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         }
 
 		private static int base_binding_facet_port = -1;
-		private static int BASE_BINDING_FACET_PORT { 
+		public static int BASE_BINDING_FACET_PORT { 
 			get 
 			{  
 				if (base_binding_facet_port == -1) 
@@ -111,10 +111,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 			get 
 			{
 				string path_hosts_file = Environment.GetEnvironmentVariable ("PATH_HOSTS_FILE");
-				Trace.WriteLine ("PATH_HOSTS_FILE is null ? " + (path_hosts_file == null));
+				Console.WriteLine ("PATH_HOSTS_FILE is null ? " + (path_hosts_file == null));
 				if (path_hosts_file == null)
 					path_hosts_file = FileUtil.readConstant("hosts_file", Path.Combine(HOME_PATH, "hpe_nodes"));
-				Trace.WriteLine ("PATH_HOSTS_FILE is " + path_hosts_file);
+				Console.WriteLine ("PATH_HOSTS_FILE is " + path_hosts_file);
 				return path_hosts_file;
 			}
 		}
@@ -204,7 +204,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 		public static IDictionary<EnvironmentPortType, string> envUnitName = new Dictionary<EnvironmentPortType, string>()
 		{
 			{EnvironmentPortType.user,"client"},
-			{EnvironmentPortType.provider, "server"}
+			{EnvironmentPortType.provider, "server"},
+			{EnvironmentPortType.platform_user, "node"},
+			{EnvironmentPortType.platform_provider, "node"}
 		};
 
 		public static string tskUnitName = "peer";
@@ -212,7 +214,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 		public static IDictionary<EnvironmentPortType, string> envInterfaceName = new Dictionary<EnvironmentPortType, string>()
 		{
 			{EnvironmentPortType.user,"IClient"},
-			{EnvironmentPortType.provider, "IServer"}
+			{EnvironmentPortType.provider, "IServer"},
+			{EnvironmentPortType.platform_provider, "IProcessingNode"},
+			{EnvironmentPortType.platform_user, "IProcessingNode"}
 		};
 
         public static Dictionary<string, int> kindMapping = new Dictionary<string, int>()

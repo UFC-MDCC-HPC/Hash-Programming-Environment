@@ -34,8 +34,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 													 gov.cca.ports.ServiceRegistry
     {
 		    private PortUsageManager port_manager = new PortUsageManager();
-		
-            public ManagerObject() 
+
+		    private static ManagerObject single_manager_object = null;
+
+			public static ManagerObject SingleManagerObject
+			{ 
+			    get { 
+					if (single_manager_object == null)
+						single_manager_object = new ManagerObject ();
+					return single_manager_object;
+				}
+		    }	
+
+            private ManagerObject() 
             {
                 Trace.WriteLine("Manager Object UP !");
 				instantiateWorkers();
@@ -1953,6 +1964,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 					nodeList = new List<string>();
 					portList = new List<int>();
+
+					Console.Error.WriteLine ("HOST FILE : " + Constants.HOSTS_FILE);
+
 					using (TextReader tr = new StreamReader(Constants.HOSTS_FILE))
 					{
 						string one_line;
@@ -1989,7 +2003,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 public void instantiateWorkers()
                 {
-					Trace.WriteLine("Starting worker clients !");                  
+					Console.WriteLine("Starting worker clients !");                  
 
 					string node_master = null;
 					IList<string> node = null;
@@ -2003,7 +2017,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 						readNodesFile(out node_master, out port_master, out node, out port);
 
-						Trace.WriteLine("READ NODE FILES - " + node.Count + "," + port.Count + "," + node_master + "," + port_master); 
+						Console.WriteLine("READ NODE FILES - " + node.Count + "," + port.Count + "," + node_master + "," + port_master); 
 
 						worker_framework = new Dictionary<int, gov.cca.AbstractFramework>();
 
@@ -2012,13 +2026,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						try
 						{   
 					        worker_framework[-1] = BackEnd.getFrameworkWorkerInstanceWCF(node_master, port_master, 0);
-							Trace.WriteLine("CONNECTED TO MASTER in " + node_master + ":" + port_master);
+							Console.Error.WriteLine("CONNECTED TO MASTER in " + node_master + ":" + port_master);
 						}
 						catch (Exception e)
 						{
-							Trace.WriteLine("ERROR CONNECTING TO MASTER in " + node_master + ":" + port_master);
-							Trace.WriteLine("EXCEPTION: " + e.Message);
-							Trace.WriteLine("INNER EXCEPTION: " + e.InnerException.Message);
+							Console.Error.WriteLine("ERROR CONNECTING TO MASTER in " + node_master + ":" + port_master);
+							Console.Error.WriteLine("EXCEPTION: " + e.Message);
+							Console.Error.WriteLine("INNER EXCEPTION: " + e.InnerException.Message);
 							failsCount++;
 						} 
 						finally
@@ -2035,11 +2049,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             {   
                                 worker_framework[i] = BackEnd.getFrameworkWorkerInstanceWCF(n, port[i], i+1);
 						
-                                Trace.WriteLine("CONNECTED TO WORKER #" + i + " in " + n + ":" + port[i]);
+								Console.WriteLine("CONNECTED TO WORKER #" + i + " in " + n + ":" + port[i]);
                             }
                             catch (RemotingException e)
                             {
-								Trace.WriteLine("ERROR CONNECTING TO WORKER #" + i + " in " + n + ":" + port[i]);
+								Console.WriteLine("ERROR CONNECTING TO WORKER #" + i + " in " + n + ":" + port[i]);
 								//Trace.WriteLine(e.InnerException.Message);
                                 failsCount++;
                             } 
@@ -2060,19 +2074,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 						foreach (Thread t in threads) t.Start();
 						foreach (Thread t in threads) t.Join();
-
-
-
                     }
                     catch (Exception e)
                     {
-                        Trace.WriteLine("EXCEPTION: " + e.Message);
-                        Trace.WriteLine("INNER EXCEPTION: " + e.InnerException.Message);
-                        Trace.WriteLine("STACK TRACE: " + e.StackTrace);
+						Console.Error.WriteLine("EXCEPTION: " + e.Message);
+						Console.Error.WriteLine("INNER EXCEPTION: " + e.InnerException.Message);
+						Console.Error.WriteLine("STACK TRACE: " + e.StackTrace);
                     }
 
-                    Trace.WriteLine(WorkerFramework.Count + " Worker clients started !");
-
+					Console.Error.WriteLine(WorkerFramework.Count + " Worker clients started !");
                 }
 
  

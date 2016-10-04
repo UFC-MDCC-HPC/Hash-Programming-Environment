@@ -317,6 +317,7 @@ namespace br.ufc.pargo.hpe.basic
 				string unit_id = unit_mapping_item.unit_id;
 				int size = unit_mapping_item.node.Length;
 				IDictionary<string,int> dict;
+				Trace.WriteLine ("configure_facet_topology --- facet_instance="+facet_instance + " / unit_id="+unit_id + " / size=" + size);
 				if (!UnitSizeInFacet.TryGetValue(facet_instance, out dict))
 				{   dict = new Dictionary<string, int> ();
 					UnitSizeInFacet [facet_instance] = dict; 

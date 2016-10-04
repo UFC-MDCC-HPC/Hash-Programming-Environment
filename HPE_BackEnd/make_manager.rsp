@@ -1,7 +1,7 @@
 -r:System.Runtime.Remoting.dll
 -r:System.ServiceProcess.dll
 
--lib:"/usr/lib/mono/DGAC"
+-lib:"/opt/mono-4.2.2/lib/mono/DGAC"
 -pkg:dotnet
 -out:./bin/ManagerService.exe
 

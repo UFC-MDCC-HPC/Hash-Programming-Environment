@@ -758,25 +758,25 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			Trace.WriteLine(my_global_rank + ": begin connect " + user_port_name + " to " + provider_port_name);
 
-		//	Trace.WriteLine(my_global_rank + ": connect 1");			
+			Trace.WriteLine(my_global_rank + ": connect 1");			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
-		//	Trace.WriteLine(my_global_rank + ": connect 2 " + (connection.ToString()));
+			Trace.WriteLine(my_global_rank + ": connect 2 " + (connection.ToString()));
             connectionList.Add(connection.ToString(), connection);
-		//	Trace.WriteLine(my_global_rank + ": connect 3");
+			Trace.WriteLine(my_global_rank + ": connect 3");
             bool first_connection = addConnByProviderPort(provider_port_name, connection);
-		//	Trace.WriteLine(my_global_rank + ": connect 4");
+			Trace.WriteLine (my_global_rank + ": connect 4 " + connByUserPort.ContainsKey (user_port_name));
             connByUserPort.Add(user_port_name, connection);			
-		//	Trace.WriteLine(my_global_rank + ": connect 5");
+			Trace.WriteLine(my_global_rank + ": connect 5");
 			port_manager.resetPort(user_port_name);
-		//	Trace.WriteLine(my_global_rank + ": connect 6");
+			Trace.WriteLine(my_global_rank + ": connect 6");
             this.tryAwakeConnectingUserPort(user_port_name);
-		//	Trace.WriteLine(my_global_rank + ": connect 7");
+			Trace.WriteLine(my_global_rank + ": connect 7");
 
             IUnit user_unit, provider_unit;
             this.unitInstances.TryGetValue(user.getInstanceName(), out user_unit);
-		//	Trace.WriteLine(my_global_rank + ": connect 8");
+			Trace.WriteLine(my_global_rank + ": connect 8");
             this.unitInstances.TryGetValue(provider.getInstanceName(), out provider_unit);
-		//	Trace.WriteLine(my_global_rank + ": connect 9");
+			Trace.WriteLine(my_global_rank + ": connect 9");
 
             if (user_unit != null)
 				user_unit.addSlice(provider_unit,usingPortName);
@@ -1537,7 +1537,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		private IDictionary<string, ComponentID> componentIDs = new Dictionary<string, ComponentID>();
 		private IDictionary<ComponentID, TypeMap> unitProperties = new Dictionary<ComponentID, TypeMap>();
 
-		public RemoteWorkerObject (System.ServiceModel.Channels.Binding binding, EndpointAddress address) : base (binding, address) { }
+		public RemoteWorkerObject (System.ServiceModel.Channels.Binding binding, EndpointAddress address) : base (binding, address) 
+		{ 
+			this.InnerChannel.OperationTimeout = new TimeSpan(23,0,0); 
+		}
 
 		public TypeMap createTypeMap() 
 		{
@@ -1664,7 +1667,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		}
 
 		public int perform_go(int id)
-		{
+		{			
 			return Channel.perform_go (id);
 		}
 

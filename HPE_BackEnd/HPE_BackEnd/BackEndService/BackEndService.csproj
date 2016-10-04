@@ -20,17 +20,16 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <Externalconsole>true</Externalconsole>
     <EnvironmentVariables>
       <EnvironmentVariables>
         <Variable name="HPE_NEXT_FREE_WORKER_PORT" value="4865" />
         <Variable name="HPE_NEXT_FREE_PLATFORM_SERVICE_PORT" value="8082" />
-        <Variable name="HPE_PLATFORM_ACCESS" value="localhost" />
-        <Variable name="HPE_PATH_WORKER" value="Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd" />
-        <Variable name="HPE_PATH_PLATFORM_SERVICE" value="Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/PlatformService" />
+        <Variable name="HPE_PLATFORM_ACCESS" value="127.0.0.1" />
+        <Variable name="HPE_PATH_WORKER" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd" />
+        <Variable name="HPE_PATH_PLATFORM_SERVICE" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/PlatformService" />
       </EnvironmentVariables>
     </EnvironmentVariables>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -55,17 +54,17 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="..\DGAC\DGAC.csproj">
-      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
-      <Name>DGAC</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="BackEnd.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackEnd.asmx.cs">
       <DependentUpon>BackEnd.asmx</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

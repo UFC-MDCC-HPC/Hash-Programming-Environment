@@ -31,16 +31,16 @@ namespace br.ufc.pargo.hpe.backend
 		public static Tuple<Tuple<ComponentType,ComponentType>,   // application component (abstract + concrete)
 							Tuple<ComponentType,ComponentType>,   // workflow component (abstract + concrete)
 							Tuple<ComponentType,ComponentType>>   // system component (abstract + concrete)
-				   createSystemComponent(string app_name, 
-										 string arch_ref,
+				   createSystemComponent(string app_name,
 										 string application_component_name,
 										 string workflow_component_name,
 										 IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
-										 IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping, 
+										 IDictionary<string, Instantiator.UnitMappingType[]> unit_mapping, 
                                          IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application,
 			                             IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow, 
 										 IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system,
-										 IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task) 
+										 IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task,
+										 IList<string> platforms) 
 		{
 			try {
 					
@@ -58,7 +58,7 @@ namespace br.ufc.pargo.hpe.backend
 							{ProxyComponentAttribute.UNIT_NAME_CONCRETE,"application_unit"},
 							{ProxyComponentAttribute.INNER_COMPONENT_NAME, application_component_name}
 						  };
-				Tuple<ComponentType, ComponentType> app_component = createProxyComponent (app_name, arch_ref, bindings_application, new List<Tuple<string, Tuple<string, string,int>[]>>(), application_attributes, contracts);
+				Tuple<ComponentType, ComponentType> app_component = createProxyComponent (app_name, bindings_application, new List<Tuple<string, Tuple<string, string,int>[]>>(), application_attributes, contracts, platforms);
 
 				IDictionary<ProxyComponentAttribute, string> worklow_attributes 
 						= new Dictionary<ProxyComponentAttribute, string> () 
@@ -71,10 +71,10 @@ namespace br.ufc.pargo.hpe.backend
 							{ProxyComponentAttribute.UNIT_NAME_CONCRETE,"workflow_unit"},
 					        {ProxyComponentAttribute.INNER_COMPONENT_NAME, workflow_component_name}
 						  };
-				Tuple<ComponentType, ComponentType> wrf_component = createProxyComponent (app_name, arch_ref, bindings_workflow, bindings_task, worklow_attributes, contracts);
+				Tuple<ComponentType, ComponentType> wrf_component = createProxyComponent (app_name, bindings_workflow, bindings_task, worklow_attributes, contracts, platforms);
 
-				ComponentType system_abstract = createSystemAbstract (app_name, arch_ref, application_attributes, worklow_attributes, contracts, unit_mapping, bindings_application, bindings_workflow, bindings_system, bindings_task);
-				ComponentType system_concrete = createSystemConcrete (app_name, arch_ref, system_abstract, contracts);
+				ComponentType system_abstract = createSystemAbstract (app_name, application_attributes, worklow_attributes, contracts, unit_mapping, bindings_application, bindings_workflow, bindings_system, bindings_task, platforms);
+				ComponentType system_concrete = createSystemConcrete (app_name, system_abstract, contracts);
 
 				Tuple<ComponentType, ComponentType> system_component = new Tuple<ComponentType, ComponentType> (system_abstract, system_concrete);
 
@@ -98,8 +98,7 @@ namespace br.ufc.pargo.hpe.backend
 			return null;
 		}
 
-		static ComponentType createSystemAbstract (string app_name, 
-												   string arch_ref,
+		static ComponentType createSystemAbstract (string app_name,
 		                                           IDictionary<ProxyComponentAttribute, string> application_attributes, 
 		                                           IDictionary<ProxyComponentAttribute, string> worklow_attributes, 
 												   IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts, 
@@ -107,7 +106,8 @@ namespace br.ufc.pargo.hpe.backend
 		                                           IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, 
 		                                           IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow,
 												   IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system,
-			                                       IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task)
+			                                       IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task, 
+												   IList<string> platforms)
 		{
 			ComponentType c = new ComponentType ();
 
@@ -123,19 +123,25 @@ namespace br.ufc.pargo.hpe.backend
 			IList<object> body_items = new List<object> ();
 
 			// ADD INNER COMPONENTS (many, one for each environment bindind)
-			createSystemComponentAbstractInner (app_name, arch_ref, body_items, contracts, application_attributes, worklow_attributes, bindings_application, bindings_workflow, bindings_task);
+			createSystemComponentAbstractInner (app_name, body_items, contracts, application_attributes, worklow_attributes, bindings_application, bindings_workflow, bindings_system, bindings_task, platforms);
 
 			// NO PARAMETERS
 			// NO SUPPLY PARAMTERS
-			fuseProxyBindings (body_items, application_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME],bindings_application, contracts);
-			fuseProxyBindings (body_items, worklow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME], bindings_workflow, contracts);
-			fuseBindings (body_items, bindings_system);
-			fuseBindings (body_items, bindings_task);
+			fuseProxyBindings (body_items, application_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME],bindings_application, contracts, platforms);
+			fuseProxyBindings (body_items, worklow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME], bindings_workflow, contracts, platforms);
+			fuseBindings (body_items, bindings_system, platforms);
+			fuseBindings (body_items, bindings_task, platforms);
+
+			FusionType platform_SAFe_fusion = new FusionType ();
+			platform_SAFe_fusion.cRefs = new string[] { "workflow", "application" };
+			platform_SAFe_fusion.pRef = "platform_SAFe";
+			body_items.Add (platform_SAFe_fusion);
+
 			// NO SPLIT
 			// NO RECURSIVE ENTRY
 
 			// ADD UNIT (single)
-			createSystemComponentAbstractUnit (app_name, body_items, arch_ref, contracts, unit_mapping, application_attributes, worklow_attributes, bindings_application, bindings_workflow, bindings_system);
+			createSystemComponentAbstractUnit (app_name, body_items, contracts, unit_mapping, application_attributes, worklow_attributes, bindings_application, bindings_workflow, bindings_system, bindings_task, platforms);
 
 			// ADD INTERFACE
 			// createSystemComponentAbstractInterface (body_items, bindings_application);
@@ -151,55 +157,106 @@ namespace br.ufc.pargo.hpe.backend
 		}
 
 
-		static void fuseBindings (IList<object> body_items, IList<Tuple<string, Tuple<string, string,int>[]>> bindings)
+		static void fuseBindings (IList<object> body_items, IList<Tuple<string, Tuple<string, string,int>[]>> bindings, IList<string> platforms)
 		{
-			foreach (Tuple<string, Tuple<string, string,int>[]> binding in bindings) 
-			{
-				IDictionary<string,InnerRenamingType> b = new Dictionary<string, InnerRenamingType> ();
-				string bRef = binding.Item1;
-				foreach (Tuple<string, string, int> port in binding.Item2) 
-				{
-					IList<string> renaming_peer_list = new List<string> ();
+			IDictionary<string, IList<string>> platform_fusions = new Dictionary<string, IList<string>> ();
 
-					string cRef = port.Item1;
-					string pRef = port.Item2;
-					int facet = port.Item3;
-					if (!b.ContainsKey (cRef)) 
+			foreach (Tuple<string,Tuple<string,string,int>[]> binding in bindings) 
+			{
+				// ignorar bindings para platformas
+				if (!platforms.Contains (binding.Item2 [1].Item1)) 
+				{					
+					IList<string> b = new List<string> ();
+					string bRef = binding.Item1;
+					foreach (Tuple<string, string, int> port in binding.Item2) 
+					{
+						string cRef = port.Item1;
+						string pRef = port.Item2;
+						int facet = port.Item3;
+						if (!b.Contains (cRef)) {
+							string cOldName = pRef, cNewName = bRef;
+							b.Add (cRef);
+							if (!pRef.Equals (bRef)) 
+							{
+								InnerRenamingType renaming_peer = new InnerRenamingType ();
+								body_items.Add (renaming_peer);
+								renaming_peer.cRef = cRef;
+								renaming_peer.cOldName = cOldName;
+								renaming_peer.cNewName = cNewName;
+							}
+						}
+					}
+
+					if (b.Count > 1) {
+						string[] cRefs = new string[b.Count];
+						b.CopyTo (cRefs, 0);
+
+						FusionType fusion = new FusionType ();
+						body_items.Add (fusion);
+						fusion.cRefs = cRefs;
+						fusion.pRef = bRef;
+					}
+				} 
+				else 
+				{
+					string cRef = binding.Item2 [0].Item1;
+					string cOldName = binding.Item2 [0].Item2;
+					string cNewName = binding.Item2 [1].Item1;
+					if (!cOldName.Equals (cNewName)) 
 					{
 						InnerRenamingType renaming_peer = new InnerRenamingType ();
 						body_items.Add (renaming_peer);
 						renaming_peer.cRef = cRef;
-						renaming_peer.cOldName = pRef;
-						renaming_peer.cNewName = bRef;
-						renaming_peer_list.Add (cRef);
-						b.Add (cRef, renaming_peer);
+						renaming_peer.cOldName = cOldName;
+						renaming_peer.cNewName = cNewName;
 					}
+
+					IList<string> to_fuse = null;
+					if (!platform_fusions.TryGetValue (cNewName, out to_fuse)) 
+					{
+						to_fuse = new List<string> ();
+						platform_fusions.Add (cNewName, to_fuse);
+					}
+					to_fuse.Add (cRef);
 				}
+			}
 
-				string[] cRefs = new string[b.Count];
-				b.Keys.CopyTo (cRefs, 0);
-
-				FusionType fusion = new FusionType();
-				body_items.Add (fusion);
-				fusion.cRefs = cRefs;
-				fusion.pRef = bRef;
+			foreach (KeyValuePair<string,IList<string>> f in platform_fusions) 
+			{			
+				if (platform_fusions.Count > 1)
+				{
+					FusionType fusion = new FusionType ();
+					body_items.Add (fusion);
+					fusion.pRef = f.Key;
+					fusion.cRefs = new string[f.Value.Count];
+					f.Value.CopyTo (fusion.cRefs, 0);
+				}
 			}
 		}
 
-		static void fuseProxyBindings (IList<object> body_items, string inner_name, IList<Tuple<string, string, EnvironmentPortType, string>> bindings, IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts)
+		static void fuseProxyBindings (IList<object> body_items, string inner_name, IList<Tuple<string, string, EnvironmentPortType, string>> bindings, IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts, IList<string> platforms)
 		{
 			foreach (Tuple<string, string, EnvironmentPortType, string> binding in bindings) 
 			{
+				string instance_ref = binding.Item1; // contracts [binding.Item1].component_ref;
+
+				if (platforms.Contains (instance_ref)) continue;
+	
 				string port_name = binding.Item4;
-				string instance_ref = null; //TODO contracts [binding.Item1].instance_ref;
 
-				InnerRenamingType renaming = new InnerRenamingType ();
-				body_items.Add (renaming);
-				renaming.cRef = instance_ref;
-				renaming.cOldName = binding.Item2;
-				renaming.cNewName = port_name;
+				string cOldName = binding.Item2;
+				string cNewName = port_name;
 
-				FusionType fusion = new FusionType();
+				if (!cOldName.Equals (cNewName)) 
+				{
+					InnerRenamingType renaming = new InnerRenamingType ();
+					body_items.Add (renaming);
+					renaming.cRef = instance_ref;
+					renaming.cOldName = cOldName;
+					renaming.cNewName = cNewName;
+				}
+
+				FusionType fusion = new FusionType ();
 				body_items.Add (fusion);
 				fusion.cRefs = new string[2];
 				fusion.cRefs [0] = instance_ref;
@@ -208,15 +265,57 @@ namespace br.ufc.pargo.hpe.backend
 			}
 		}
 
+		static InnerComponentType[] addProxyPortPlatform(IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system)
+		{
+			IList<InnerComponentType> cs = new List<InnerComponentType> ();
+
+			InnerComponentType ci = new InnerComponentType ();
+
+			ci.exposedSpecified = true;
+			ci.exposed = true;
+			ci.localRef = "platform_SAFe";
+			ci.location = "br.ufc.mdcc.hpcshelf.platform.Platform/Platform.hpe";
+			ci.multipleSpecified = true;
+			ci.multiple = false;
+			ci.name = "Platform";
+			ci.package = "br.ufc.mdcc.hpcshelf.platform";
+			ci.parameter = new ParameterRenaming[1];
+			ci.parameter [0] = new ParameterRenaming ();
+			ci.parameter[0].formFieldId = "maintainer";
+			ci.parameter[0].varName = "MSAFe";
+			ci.unitBounds = new UnitBoundsType[1];
+			ci.unitBounds [0] = new UnitBoundsType ();
+			ci.unitBounds [0].parallelSpecified = true;
+			ci.unitBounds [0].parallel = true;
+			ci.unitBounds [0].uRef = "node";
+			ci.visualDescription = new VisualElementAttributes();
+			ci.visualDescription.x = 500;
+			ci.visualDescription.y = 500;
+			ci.visualDescription.w = 200;
+			ci.visualDescription.h = 150;
+			ci.visualDescription.color = new ColorComplexType ();
+			ci.visualDescription.color.b = 20;
+			ci.visualDescription.color.g = 20;
+			ci.visualDescription.color.r = 20;
+
+			cs.Add (ci);
+
+			InnerComponentType[] cs_array = new InnerComponentType[cs.Count];
+			cs.CopyTo (cs_array, 0);
+
+			return cs_array;
+		}
+
 		static void createSystemComponentAbstractInner (string app_name,
-			                                            string arch_ref,
 		                                                IList<object> body_items, 
 			                                            IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
 		                                                IDictionary<ProxyComponentAttribute, string> application_attributes,
 														IDictionary<ProxyComponentAttribute, string> workflow_attributes, 
 														IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, 
 														IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow,
-														IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task)
+														IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system,
+														IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task, 
+														IList<string> platforms)
 		{
 			IList<ParameterSupplyType> supply_list = new List<ParameterSupplyType> ();
 
@@ -230,6 +329,11 @@ namespace br.ufc.pargo.hpe.backend
 			ci_app.exposedSpecified = true;
 			ci_app.exposed = false;
 
+			ci_app.parameter = new ParameterRenaming[1];
+			ci_app.parameter [0] = new ParameterRenaming ();
+			ci_app.parameter [0].formFieldId = "maintainer";
+			ci_app.parameter [0].varName = "M_SAFe";
+
 			ci_app.visualDescription = new VisualElementAttributes();
 			ci_app.visualDescription.x = 10;
 			ci_app.visualDescription.y = 10;
@@ -240,7 +344,11 @@ namespace br.ufc.pargo.hpe.backend
 			ci_app.visualDescription.color.g = 217;
 			ci_app.visualDescription.color.r = 217;
 
-			ci_app.port = traverseEnvironmentBindings(bindings_application, false);
+			InnerComponentType[] is1a = traverseEnvironmentBindings (contracts, bindings_application, false, platforms);
+			InnerComponentType[] is2a = new InnerComponentType[0]; // addProxyPortPlatform(bindings_system);
+			ci_app.port = new InnerComponentType[is1a.Length + is2a.Length];
+			is1a.CopyTo (ci_app.port, 0);
+			is2a.CopyTo (ci_app.port, is1a.Length);
 
 			ci_app.unitBounds = new UnitBoundsType[1];
 			ci_app.unitBounds [0] = new UnitBoundsType ();
@@ -269,11 +377,21 @@ namespace br.ufc.pargo.hpe.backend
 			ci_wkf.exposedSpecified = true;
 			ci_wkf.exposed = false;
 
-			InnerComponentType[] is1 = traverseEnvironmentBindings (bindings_workflow, false);
-			InnerComponentType[] is2 = traverseTaskBindings(workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME], contracts, bindings_task, false);
-			ci_wkf.port = new InnerComponentType[is1.Length + is2.Length];
+			ci_wkf.parameter = new ParameterRenaming[1];
+			ci_wkf.parameter [0] = new ParameterRenaming ();
+			ci_wkf.parameter [0].formFieldId = "maintainer";
+			ci_wkf.parameter [0].varName = "M_SAFe";
+
+			InnerComponentType[] is1 = traverseEnvironmentBindings (contracts, bindings_workflow, false, platforms);
+			Tuple<InnerComponentType[],InnerRenamingType[]> is2 = traverseTaskBindings(workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME], contracts, bindings_task, false);
+			InnerComponentType[] is3 = new InnerComponentType[0]; // addProxyPortPlatform(bindings_system);
+			ci_wkf.port = new InnerComponentType[is1.Length + is2.Item1.Length + is3.Length];
 			is1.CopyTo (ci_wkf.port, 0);
-			is2.CopyTo (ci_wkf.port, is1.Length);
+			is2.Item1.CopyTo (ci_wkf.port, is1.Length);
+			is3.CopyTo (ci_wkf.port, is1.Length + is2.Item1.Length);
+
+			foreach (InnerRenamingType task_port_renaming in is2.Item2)
+				body_items.Add (task_port_renaming);
 
 			ci_wkf.unitBounds = new UnitBoundsType[1];
 			ci_wkf.unitBounds [0] = new UnitBoundsType ();
@@ -302,9 +420,29 @@ namespace br.ufc.pargo.hpe.backend
 
 			body_items.Add (ci_wkf);
 
+			InnerComponentType ci_maintainer_SAFe = new InnerComponentType ();
+			body_items.Add (ci_maintainer_SAFe);
+			ci_maintainer_SAFe.localRef = "maintainer_SAFe";
+			ci_maintainer_SAFe.location = "br.ufc.mdcc.hpcshelf.platform.maintainer.SAFeHost/SAFeHost.hpe";
+			ci_maintainer_SAFe.multipleSpecified = true;
+			ci_maintainer_SAFe.multiple = false;
+			ci_maintainer_SAFe.name = "SAFeHost";
+			ci_maintainer_SAFe.package = "br.ufc.mdcc.hpcshelf.platform.maintainer";
+			ci_maintainer_SAFe.exposedSpecified = true;
+			ci_maintainer_SAFe.exposed = false;
+
+			ParameterSupplyType supply_maintainer = new ParameterSupplyType ();
+			body_items.Add (supply_maintainer);
+			supply_maintainer.cRef = "maintainer_SAFe";
+			supply_maintainer.direct = true;
+			supply_maintainer.varName ="M_SAFe";
+
 			// REGULAR COMPONENTS
 			foreach (KeyValuePair<string, Instantiator.ComponentFunctorApplicationType> binding in contracts) 
 			{
+				if (platforms.Contains (binding.Key))
+					continue;					
+
 				string port_name = binding.Key;
 				string componentRef = binding.Value.component_ref;
 
@@ -383,6 +521,8 @@ namespace br.ufc.pargo.hpe.backend
 			int id_abstract = acf.Id_abstract;
 
 			IList<InnerComponent> ics = BackEnd.icdao.list (id_abstract);
+
+			int i = 0;
 			foreach (InnerComponent ic in ics)
 				if (ic.IsPublic) 
 				{
@@ -391,8 +531,9 @@ namespace br.ufc.pargo.hpe.backend
 					fetchPackageAndName (acf_port.Library_path, ref package, ref name);
 
 					InnerComponentType port = new InnerComponentType ();
+					result_list.Add (port);
+
 					port.localRef = ic.Id_inner;
-					// port.location = ;
 					port.multipleSpecified = true;
 					port.multiple = ic.Multiple;
 					port.name = name;
@@ -400,7 +541,16 @@ namespace br.ufc.pargo.hpe.backend
 					port.exposedSpecified = true;
 					port.exposed = false;
 
-					result_list.Add (port);
+					port.visualDescription = new VisualElementAttributes ();
+					port.visualDescription.x = (uint) (10 + (i++)*120);
+					port.visualDescription.y = 50;
+					port.visualDescription.w = 100;
+					port.visualDescription.h = 80;
+					port.visualDescription.color = new ColorComplexType ();
+					port.visualDescription.color.b = 243;
+					port.visualDescription.color.g = 217;
+					port.visualDescription.color.r = 217;
+
 				}
 			
 			InnerComponentType[] result = new InnerComponentType[result_list.Count];
@@ -478,14 +628,16 @@ namespace br.ufc.pargo.hpe.backend
 			return parameter_return_array;
 		}
 
-		static void createSystemComponentAbstractUnit (string app_name, IList<object> body_items, string arch_ref,
+		static void createSystemComponentAbstractUnit (string app_name, IList<object> body_items,
 													   IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts, 
 													   IDictionary<string,Instantiator.UnitMappingType[]> c_unit_mapping, 
 		                                               IDictionary<ProxyComponentAttribute, string> application_attributes, 
 		                                               IDictionary<ProxyComponentAttribute, string> workflow_attributes, 
 		                                               IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, 
 		                                               IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow,
-													   IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system)
+													   IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system,
+													   IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task, 
+											           IList<string> platforms)
 		{
 
 			IDictionary<int,SliceList> unit_mapping = new Dictionary<int, SliceList> ();
@@ -494,6 +646,7 @@ namespace br.ufc.pargo.hpe.backend
 			{
 				Instantiator.ComponentFunctorApplicationType c = kv1.Value;
 				string cRef = kv1.Key;
+				if (platforms.Contains (cRef)) continue;
 				AbstractComponentFunctor acf = backend.DGAC.BackEnd.acfdao.retrieve_libraryPath(c.component_ref);
 				if (c_unit_mapping.ContainsKey(kv1.Key))
 					foreach (Instantiator.UnitMappingType u in c_unit_mapping[kv1.Key]) 					
@@ -508,23 +661,150 @@ namespace br.ufc.pargo.hpe.backend
 							bool hasNode = unit_mapping.ContainsKey (n);
 							SliceList units_at_node =  hasNode ? unit_mapping[n] : new SliceList ();
 
-							units_at_node.Value.Add(new Tuple<string, string, string>(cRef,uRef,iRef));
-							if (!hasNode) 
-								unit_mapping.Add(n,units_at_node);
+							units_at_node.Value.Add (new Tuple<string, string, string> (cRef, uRef, iRef));
+							if (!hasNode)
+								unit_mapping.Add (n, units_at_node);
 						}
 				}
 			}
 
 			IDictionary<SliceList, IList<int>> slice_mapping = new Dictionary<SliceList, IList<int>> ();
 
+			SliceList slice_list_root = null; 
+
 			foreach (KeyValuePair<int,SliceList> r in unit_mapping)
 			{
-				bool hasSlice = slice_mapping.ContainsKey (r.Value);
- 				IList<int> node_list = hasSlice ? slice_mapping [r.Value] : new List<int> ();
-				node_list.Add (r.Key);
-				if (!hasSlice) 
-					slice_mapping.Add (r.Value, node_list);
+				/* The SAFe facet (0) is treated separately. */
+				if (r.Key != 0) 
+				{
+					bool hasSlice = slice_mapping.ContainsKey (r.Value);
+					IList<int> node_list = hasSlice ? slice_mapping [r.Value] : new List<int> ();
+					node_list.Add (r.Key);
+					if (!hasSlice)
+						slice_mapping.Add (r.Value, node_list);
+				} 
+				else 
+				{
+					slice_list_root = r.Value;
+				}
 			}
+
+			slice_list_root = slice_list_root == null ? new SliceList () : slice_list_root;
+
+			slice_list_root.Value.Add (new Tuple<string,string,string> (workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME],
+				                                                        workflow_attributes[ProxyComponentAttribute.UNIT_NAME_ABSTRACT], 
+																	    workflow_attributes[ProxyComponentAttribute.INTERFACE_NAME_ABSTRACT]));
+			
+			slice_list_root.Value.Add (new Tuple<string,string,string> (application_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME],
+																		application_attributes[ProxyComponentAttribute.UNIT_NAME_ABSTRACT], 
+																		application_attributes[ProxyComponentAttribute.INTERFACE_NAME_ABSTRACT]));
+
+
+			IDictionary<string, IList<Tuple<string,string,string>>> binding_system_by_port = new Dictionary<string, IList<Tuple<string,string,string>>> ();
+
+			foreach (Tuple<string, Tuple<string, string, int>[]> b in bindings_system) 
+			{
+				string binding_prov_cref = b.Item2 [1].Item1; //if (platforms.Contains(binding_prov_cref)) continue;
+				string binding_prov_port = b.Item2 [1].Item2;
+				int binding_prov_facet = b.Item2 [1].Item3;
+				string binding_prov_unit = unit_of_facet (contracts, binding_prov_cref, binding_prov_facet);
+
+				string binding_user_cref = b.Item2 [0].Item1;
+				string binding_user_port = b.Item2 [0].Item2;
+				int binding_user_facet = b.Item2 [0].Item3;
+				string binding_user_unit = unit_of_facet (contracts, binding_user_cref, binding_user_facet);
+
+				string binding_name = b.Item1;
+
+				string key_user = binding_user_cref + ":" + binding_user_unit;
+				string key_prov = binding_prov_cref + ":" + binding_prov_unit;
+
+				if (!platforms.Contains(binding_prov_cref))
+				{
+					IList<Tuple<string,string,string>> s_user;
+					if (!binding_system_by_port.TryGetValue (key_user, out s_user)) {
+						s_user = new List<Tuple<string,string,string>> ();
+						binding_system_by_port.Add (key_user, s_user);
+					}
+					s_user.Add (new Tuple<string,string,string> (binding_name, "client", binding_user_port));
+					
+					IList<Tuple<string,string,string>> s_prov;
+					if (!binding_system_by_port.TryGetValue (key_prov, out s_prov)) 
+					{
+						s_prov = new List<Tuple<string,string,string>> ();
+						binding_system_by_port.Add (key_prov, s_prov);
+					}
+					s_prov.Add (new Tuple<string,string,string> (binding_name, "server", binding_prov_port));
+				}
+				else
+				{
+					IList<Tuple<string,string,string>> s_node = new List<Tuple<string,string,string>> ();
+					s_node.Add (new Tuple<string,string,string> (binding_prov_cref, "node", binding_prov_port));
+					binding_system_by_port.Add (key_user, s_node);
+				}
+			}
+
+			foreach (Tuple<string, Tuple<string, string, int>[]> b in bindings_task) 
+			{
+				string binding_name = b.Item1;
+
+				foreach (Tuple<string, string, int> bindings_peer in b.Item2)
+				{
+					string binding_peer_cref = bindings_peer.Item1;
+					string binding_peer_port = bindings_peer.Item2;
+					int binding_peer_facet = bindings_peer.Item3;
+
+					string binding_peer_unit = binding_peer_cref.Equals (workflow_attributes [ProxyComponentAttribute.INNER_COMPONENT_NAME]) 
+													? workflow_attributes [ProxyComponentAttribute.UNIT_NAME_ABSTRACT] : 
+													  unit_of_facet (contracts, binding_peer_cref, binding_peer_facet);
+
+					string key_peer = binding_peer_cref + ":" + binding_peer_unit;
+
+					IList<Tuple<string,string,string>> s_peer;
+
+					if (!binding_system_by_port.TryGetValue (key_peer, out s_peer)) {
+						s_peer = new List<Tuple<string,string,string>> ();
+						binding_system_by_port.Add (key_peer, s_peer);
+					}
+					s_peer.Add (new Tuple<string,string,string> (binding_name, "peer",binding_peer_port));
+				}
+			}
+
+			foreach (Tuple<string, string, EnvironmentPortType, string> slice in bindings_application) 
+			{
+				string cref = application_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
+				string port = application_attributes[ProxyComponentAttribute.UNIT_NAME_ABSTRACT];
+
+				string key_peer = cref + ":" + port;
+
+				IList<Tuple<string,string,string>> s_peer;
+
+				if (!binding_system_by_port.TryGetValue (key_peer, out s_peer)) {
+					s_peer = new List<Tuple<string,string,string>> ();
+					binding_system_by_port.Add (key_peer, s_peer);
+				}
+
+				s_peer.Add (new Tuple<string,string,string> (slice.Item1, slice.Item3 == EnvironmentPortType.platform_user ? "node" : (slice.Item3 == EnvironmentPortType.user ? "client" : "server"), slice.Item4));
+			}
+
+			foreach (Tuple<string, string, EnvironmentPortType, string> slice in bindings_workflow) 
+			{
+				string cref = workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
+				string port = workflow_attributes[ProxyComponentAttribute.UNIT_NAME_ABSTRACT];
+
+				string key_peer = cref + ":" + port;
+
+				IList<Tuple<string,string,string>> s_peer;
+
+				if (!binding_system_by_port.TryGetValue (key_peer, out s_peer)) {
+					s_peer = new List<Tuple<string,string,string>> ();
+					binding_system_by_port.Add (key_peer, s_peer);
+				}
+				s_peer.Add (new Tuple<string,string,string> (slice.Item1, slice.Item3 == EnvironmentPortType.platform_user ? "node" : (slice.Item3 == EnvironmentPortType.user ? "client" : "server"), slice.Item4));
+
+			}
+
+			//int facet_counter = 1;
 
 			// PEER UNITS
 			int unit_counter = 0;
@@ -536,7 +816,7 @@ namespace br.ufc.pargo.hpe.backend
 				UnitType cu = new UnitType ();
 				body_items.Add (cu);
 
-				cu.facet = 0;
+				//cu.facet = facet_counter++;
 				cu.iRef = iname;
 				cu.multipleSpecified = true;
 				cu.multiple = true;
@@ -579,9 +859,17 @@ namespace br.ufc.pargo.hpe.backend
 
 				IList<UnitSliceType> uslices_list = new List<UnitSliceType> ();
 				IList<InterfaceSliceType> islices_list = new List<InterfaceSliceType> ();
+				IList<InterfacePortType> iports_list = new List<InterfacePortType> ();
+
+				IDictionary<string,UnitSliceType> check_local_bindings = new Dictionary<string, UnitSliceType> ();
+				IDictionary<string,int> count_platform_refs = new Dictionary<string, int> ();
+
+				IDictionary<string, IList<PortSliceType>> ports = new Dictionary<string, IList<PortSliceType>>();
 
 				foreach (Tuple<string,string,string> slice in r.Key.Value) 
 				{
+					IList<string> slice_port_list = new List<string> ();
+
 					string cRef = slice.Item1;
 
 					bool hasSlice = slice_counter.ContainsKey (slice);
@@ -609,23 +897,115 @@ namespace br.ufc.pargo.hpe.backend
 
 					uslices_list.Add (us);
 
-					InterfaceSliceType fs = new InterfaceSliceType ();
-					fs.isRef = cRef;
-					fs.originRef = new InterfaceRefType ();
-					fs.originRef.cRef = cRef;
-					fs.originRef.iRef = slice.Item3;
 
-					fs.visualDescription = new VisualElementAttributes();
-					fs.visualDescription.x = 10;
-					fs.visualDescription.y = 10;
-					fs.visualDescription.w = 15;
-					fs.visualDescription.h = 10;
-					fs.visualDescription.color = new ColorComplexType ();
-					fs.visualDescription.color.b = 20;
-					fs.visualDescription.color.g = 20;
-					fs.visualDescription.color.r = 20;
+					IList<Tuple<string,string,string>> bs = null;
+					if (binding_system_by_port.TryGetValue(slice.Item1 + ":" + slice.Item2, out bs))
+					{
+						foreach (Tuple<string,string,string> b in bs) 
+						{
+							string uRef = b.Item2;
+							UnitSliceType uss = null;
 
-					islices_list.Add (fs);
+							if (check_local_bindings.TryGetValue (b.Item1, out uss)) 
+								if (uRef.Equals("client") || uRef.Equals("server"))
+								{
+									uss.uRef = uRef = "client_server";
+								    uss.inner_replica = 1;
+								}							 
+
+							int n = 0;
+							if (platforms.Contains (b.Item1)) 
+							{
+								if (count_platform_refs.TryGetValue (b.Item1, out n)) 
+									count_platform_refs.Remove (b.Item1);
+								count_platform_refs[b.Item1] = n+1;
+							}
+
+							uss = new UnitSliceType ();
+							uslices_list.Add (uss);
+
+							uss.cRef = b.Item1;
+							uss.uRef = uRef; 
+							uss.sliceName = b.Item1;
+							uss.slice_replica = 0;
+							uss.inner_replica = n;
+							uss.transitiveSpecified = true;
+							uss.transitive = true;
+
+							uss.visualDescription = new VisualElementAttributes ();
+							uss.visualDescription.x = 10;
+							uss.visualDescription.y = 10;
+							uss.visualDescription.w = 15;
+							uss.visualDescription.h = 10;
+							uss.visualDescription.color = new ColorComplexType ();
+							uss.visualDescription.color.b = 20;
+							uss.visualDescription.color.g = 20;
+							uss.visualDescription.color.r = 20;
+						
+							// PLACE THE UNIT IN THE CORRECT FACET (1,... N). Notice that facet 0 is where the root facet (SAFe) is ...
+							if (platforms.Contains (cRef))
+								cu.facet = platforms.IndexOf (cRef);
+
+							IList<PortSliceType> ctp_plist = null;
+							if (!ports.TryGetValue (b.Item1, out ctp_plist)) {
+								ctp_plist = new List<PortSliceType> ();
+								ports.Add (b.Item1, ctp_plist);
+							}
+							PortSliceType ctp_port = new PortSliceType ();
+
+							ctp_port.pRef = b.Item3;
+							ctp_port.sRef = slice.Item1;
+							ctp_plist.Add (ctp_port);
+
+							if (!check_local_bindings.ContainsKey (b.Item1)) 
+								check_local_bindings [b.Item1] = uss;
+
+							if (!slice_port_list.Contains(b.Item1))
+								slice_port_list.Add (b.Item1);
+						}
+					}
+
+					us.port = new string[slice_port_list.Count];
+					slice_port_list.CopyTo (us.port, 0);
+
+					if (!platforms.Contains (cRef)) 
+					{
+						InterfaceSliceType fs = new InterfaceSliceType ();
+						islices_list.Add (fs);
+
+						fs.isRef = cRef;
+						fs.originRef = new InterfaceRefType ();
+						fs.originRef.cRef = cRef;
+						fs.originRef.iRef = slice.Item3;
+
+						fs.visualDescription = new VisualElementAttributes ();
+						fs.visualDescription.x = 10;
+						fs.visualDescription.y = 10;
+						fs.visualDescription.w = 15;
+						fs.visualDescription.h = 10;
+						fs.visualDescription.color = new ColorComplexType ();
+						fs.visualDescription.color.b = 20;
+						fs.visualDescription.color.g = 20;
+						fs.visualDescription.color.r = 20;
+					}
+				}
+
+				foreach (KeyValuePair<string, IList<PortSliceType>> port_item in ports) 
+				{
+					InterfacePortType ctp = new InterfacePortType ();
+					iports_list.Add (ctp);
+					ctp.name = port_item.Key;
+					ctp.slice = new PortSliceType[port_item.Value.Count];
+					port_item.Value.CopyTo (ctp.slice, 0);
+					ctp.visualDescription = new VisualElementAttributes ();
+					ctp.visualDescription.x = 10;
+					ctp.visualDescription.y = 10;
+					ctp.visualDescription.w = 15;
+					ctp.visualDescription.h = 10;
+					ctp.visualDescription.color = new ColorComplexType ();
+					ctp.visualDescription.color.b = 20;
+					ctp.visualDescription.color.g = 20;
+					ctp.visualDescription.color.r = 20;
 				}
 
 				cu.slices = new UnitSliceType[uslices_list.Count];
@@ -633,6 +1013,9 @@ namespace br.ufc.pargo.hpe.backend
 
 				ct.slice = new InterfaceSliceType[islices_list.Count];
 				islices_list.CopyTo (ct.slice, 0);
+
+				ct.port = new InterfacePortType[iports_list.Count];
+				iports_list.CopyTo (ct.port, 0);
 			}
 
 			IList<UnitSliceType> uslices_root_list = new List<UnitSliceType> ();
@@ -642,7 +1025,7 @@ namespace br.ufc.pargo.hpe.backend
 			UnitType ru = new UnitType ();
 			body_items.Add (ru);
 
-			ru.facet = 0;
+			ru.facet = 0; // platforms.IndexOf ("platform_SAFe");
 			ru.iRef = "IRoot";
 			ru.multipleSpecified = true;
 			ru.multiple = false;
@@ -663,48 +1046,6 @@ namespace br.ufc.pargo.hpe.backend
 			ru.visualDescription.color.g = 204;
 			ru.visualDescription.color.r = 50;
 
-			// APPLICATION UNIT SLICE OF THE ROOT UNIT
-			UnitSliceType u_slice_app = new UnitSliceType ();
-			u_slice_app.cRef = application_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
-			u_slice_app.uRef = application_attributes[ProxyComponentAttribute.UNIT_NAME_ABSTRACT]; 
-			u_slice_app.sliceName = u_slice_app.cRef;
-			u_slice_app.slice_replica = 0;
-			u_slice_app.transitiveSpecified = true;
-			u_slice_app.transitive = false;
-
-			u_slice_app.visualDescription = new VisualElementAttributes();
-			u_slice_app.visualDescription.x = 10;
-			u_slice_app.visualDescription.y = 10;
-			u_slice_app.visualDescription.w = 35;
-			u_slice_app.visualDescription.h = 30;
-			u_slice_app.visualDescription.color = new ColorComplexType ();
-			u_slice_app.visualDescription.color.b = 20;
-			u_slice_app.visualDescription.color.g = 20;
-			u_slice_app.visualDescription.color.r = 20;
-
-			uslices_root_list.Add (u_slice_app);
-
-			// WORKFLOW UNIT SLICE OF THE ROOT UNIT
-			UnitSliceType u_slice_wrf = new UnitSliceType ();
-			u_slice_wrf.cRef = workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
-			u_slice_wrf.uRef = workflow_attributes[ProxyComponentAttribute.UNIT_NAME_ABSTRACT]; 
-			u_slice_wrf.sliceName = u_slice_wrf.cRef;
-			u_slice_wrf.slice_replica = 0;
-			u_slice_wrf.transitiveSpecified = true;
-			u_slice_wrf.transitive = false;
-
-			u_slice_wrf.visualDescription = new VisualElementAttributes();
-			u_slice_wrf.visualDescription.x = 10;
-			u_slice_wrf.visualDescription.y = 10;
-			u_slice_wrf.visualDescription.w = 35;
-			u_slice_wrf.visualDescription.h = 30;
-			u_slice_wrf.visualDescription.color = new ColorComplexType ();
-			u_slice_wrf.visualDescription.color.b = 20;
-			u_slice_wrf.visualDescription.color.g = 20;
-			u_slice_wrf.visualDescription.color.r = 20;
-
-			uslices_root_list.Add (u_slice_wrf);
-
 			// ROOT UNIT INTERFACE
 			InterfaceType rt = new InterfaceType ();
 			body_items.Add (rt);
@@ -724,136 +1065,160 @@ namespace br.ufc.pargo.hpe.backend
 			rt.visualDescription.color.g = 204;
 			rt.visualDescription.color.r = 153;
 
-			// APPLICATION INTERFACE SLICE OF THE ROOT UNIT
-			InterfaceSliceType i_slice_app = new InterfaceSliceType ();
-			i_slice_app.isRef = u_slice_app.cRef;
-			i_slice_app.originRef = new InterfaceRefType ();
-			i_slice_app.originRef.cRef = u_slice_app.cRef;
-			i_slice_app.originRef.iRef = application_attributes[ProxyComponentAttribute.INTERFACE_NAME_ABSTRACT];
-
-			i_slice_app.visualDescription = new VisualElementAttributes();
-			i_slice_app.visualDescription.x = 10;
-			i_slice_app.visualDescription.y = 10;
-			i_slice_app.visualDescription.w = 35;
-			i_slice_app.visualDescription.h = 30;
-			i_slice_app.visualDescription.color = new ColorComplexType ();
-			i_slice_app.visualDescription.color.b = 20;
-			i_slice_app.visualDescription.color.g = 20;
-			i_slice_app.visualDescription.color.r = 20;
-
-			islices_root_list.Add (i_slice_app);
-
-			// WORKFLOW INTERFACE SLICE OF THE ROOT UNIT
-			InterfaceSliceType i_slice_wrf = new InterfaceSliceType ();
-			i_slice_wrf.isRef = u_slice_wrf.cRef;
-			i_slice_wrf.originRef = new InterfaceRefType ();
-			i_slice_wrf.originRef.cRef = u_slice_wrf.cRef;
-			i_slice_wrf.originRef.iRef = workflow_attributes[ProxyComponentAttribute.INTERFACE_NAME_ABSTRACT];
-
-			i_slice_wrf.visualDescription = new VisualElementAttributes();
-			i_slice_wrf.visualDescription.x = 10;
-			i_slice_wrf.visualDescription.y = 10;
-			i_slice_wrf.visualDescription.w = 35;
-			i_slice_wrf.visualDescription.h = 30;
-			i_slice_wrf.visualDescription.color = new ColorComplexType ();
-			i_slice_wrf.visualDescription.color.b = 20;
-			i_slice_wrf.visualDescription.color.g = 20;
-			i_slice_wrf.visualDescription.color.r = 20;
-
-			islices_root_list.Add (i_slice_wrf);
-
 			IList<InterfacePortType> iports_root_list = new List<InterfacePortType> ();
+			IDictionary<string,int> count_platform_refs_root = new Dictionary<string, int> ();
 
-			// TRANSITIVE SLICES (environment ports) OF THE APPLICATION SLICE
-			foreach (Tuple<string, string, EnvironmentPortType, string> slice in bindings_application) 
+			IDictionary<string, IList<PortSliceType>> ports_root = new Dictionary<string, IList<PortSliceType>>();
+
+			foreach (Tuple<string,string,string> slice_root in slice_list_root.Value)
 			{
-				string port_name = slice.Item4;
+				IList<string> slice_port_list_root = new List<string> ();
 
-				// UNIT SLICES
-				UnitSliceType us = new UnitSliceType ();
-				us.cRef = port_name;
-				us.uRef = Constants.envUnitName[slice.Item3]; 
-				us.sliceName = port_name;
-				us.slice_replica = 0;
-				us.transitiveSpecified = true;
-				us.transitive = true;
+				string cRef_root = slice_root.Item1;
 
-				us.visualDescription = new VisualElementAttributes();
-				us.visualDescription.x = 10;
-				us.visualDescription.y = 10;
-				us.visualDescription.w = 35;
-				us.visualDescription.h = 30;
-				us.visualDescription.color = new ColorComplexType ();
-			    us.visualDescription.color.b = 20;
-				us.visualDescription.color.g = 20;
-				us.visualDescription.color.r = 20;
+				int slice_replica_root = 0;
 
-				uslices_root_list.Add (us);
+				UnitSliceType u_slice_root = new UnitSliceType ();
+				uslices_root_list.Add (u_slice_root);
 
-				// INTERFACE PORTS (TRANSITIVE SLICES)
-				InterfacePortType fs = new InterfacePortType ();
-				fs.name = port_name;
-				fs.slice = new PortSliceType[1];
-				fs.slice[0].pRef = application_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
-				fs.slice[0].sRef = port_name;
-				fs.visualDescription = new VisualElementAttributes();
+				u_slice_root.cRef = cRef_root;
+				u_slice_root.uRef = slice_root.Item2; 
+				u_slice_root.sliceName = cRef_root;
+				u_slice_root.slice_replica = 0;
+				u_slice_root.transitiveSpecified = true;
+				u_slice_root.transitive = false;
 
-				fs.visualDescription.x = 10;
-				fs.visualDescription.y = 10;
-				fs.visualDescription.w = 30;
-				fs.visualDescription.h = 25;
-				fs.visualDescription.color = new ColorComplexType ();
-				fs.visualDescription.color.b = 20;
-				fs.visualDescription.color.g = 20;
-				fs.visualDescription.color.r = 20;
+				u_slice_root.visualDescription = new VisualElementAttributes();
+				u_slice_root.visualDescription.x = 10;
+				u_slice_root.visualDescription.y = 10;
+				u_slice_root.visualDescription.w = 15;
+				u_slice_root.visualDescription.h = 10;
+				u_slice_root.visualDescription.color = new ColorComplexType ();
+				u_slice_root.visualDescription.color.b = 20;
+				u_slice_root.visualDescription.color.g = 20;
+				u_slice_root.visualDescription.color.r = 20;
 
-				iports_root_list.Add (fs);
+				IList<Tuple<string,string,string>> bs = null;
+				if (binding_system_by_port.TryGetValue(slice_root.Item1 + ":" + slice_root.Item2, out bs))
+				{
+					foreach (Tuple<string,string,string> b in bs) 
+					{
+						string uRef = b.Item2;
+						UnitSliceType uss = null;
+
+						int n = 0;
+						if (platforms.Contains (b.Item1)) 
+						{
+							if (count_platform_refs_root.TryGetValue (b.Item1, out n)) 
+								count_platform_refs_root.Remove (b.Item1);
+							count_platform_refs_root[b.Item1] = n+1;
+						}
+
+						uss = new UnitSliceType ();
+						uss.cRef = b.Item1;
+						uss.uRef = uRef; 
+						uss.sliceName = b.Item1;
+						uss.slice_replica = 0;
+						uss.inner_replica = n;
+						uss.transitiveSpecified = true;
+						uss.transitive = true;
+
+						uss.visualDescription = new VisualElementAttributes ();
+						uss.visualDescription.x = 10;
+						uss.visualDescription.y = 10;
+						uss.visualDescription.w = 15;
+						uss.visualDescription.h = 10;
+						uss.visualDescription.color = new ColorComplexType ();
+						uss.visualDescription.color.b = 20;
+						uss.visualDescription.color.g = 20;
+						uss.visualDescription.color.r = 20;
+					
+						IList<PortSliceType> ctp_plist = null;
+						if (!ports_root.TryGetValue (b.Item1, out ctp_plist)) {
+							ctp_plist = new List<PortSliceType> ();
+							ports_root.Add (b.Item1, ctp_plist);
+						}
+						PortSliceType ctp_port = new PortSliceType ();
+
+						ctp_port.pRef = b.Item3;
+						ctp_port.sRef = slice_root.Item1;
+						ctp_plist.Add (ctp_port);
+
+						if (!slice_port_list_root.Contains(b.Item1))
+							slice_port_list_root.Add (b.Item1);
+
+						uslices_root_list.Add (uss);
+					}
+				}
+
+
+					
+				u_slice_root.port = new string[slice_port_list_root.Count];
+				slice_port_list_root.CopyTo (u_slice_root.port, 0);
+
+				// INTERFACE SLICE
+				if (!platforms.Contains (cRef_root)) 
+				{
+					InterfaceSliceType i_slice_root = new InterfaceSliceType ();
+					islices_root_list.Add (i_slice_root);
+
+					i_slice_root.isRef = cRef_root;
+					i_slice_root.originRef = new InterfaceRefType ();
+					i_slice_root.originRef.cRef = cRef_root;
+					i_slice_root.originRef.iRef = slice_root.Item3;
+
+					i_slice_root.visualDescription = new VisualElementAttributes();
+					i_slice_root.visualDescription.x = 10;
+					i_slice_root.visualDescription.y = 10;
+					i_slice_root.visualDescription.w = 15;
+					i_slice_root.visualDescription.h = 10;
+					i_slice_root.visualDescription.color = new ColorComplexType ();
+					i_slice_root.visualDescription.color.b = 20;
+					i_slice_root.visualDescription.color.g = 20;
+					i_slice_root.visualDescription.color.r = 20;
+				}
+				else
+				{
+					InterfacePortType fs = new InterfacePortType ();
+					iports_root_list.Add (fs);
+
+					fs.name = cRef_root;
+					fs.slice = new PortSliceType[2];
+					fs.slice[0] = new PortSliceType ();
+					fs.slice[0].pRef = application_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
+					fs.slice[0].sRef = cRef_root;
+					fs.slice[1] = new PortSliceType ();
+					fs.slice[1].pRef = workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
+					fs.slice[1].sRef = cRef_root;
+					fs.visualDescription = new VisualElementAttributes();
+
+					fs.visualDescription.x = 14;
+					fs.visualDescription.y = 14;
+					fs.visualDescription.w = 30;
+					fs.visualDescription.h = 25;
+					fs.visualDescription.color = new ColorComplexType ();
+					fs.visualDescription.color.b = 20;
+					fs.visualDescription.color.g = 20;
+					fs.visualDescription.color.r = 20;
+				}
 			}
 
-			// TRANSITIVE SLICES (environment ports) OF THE WORKFLOW SLICE
-			foreach (Tuple<string, string, EnvironmentPortType, string> slice in bindings_workflow) 
+			foreach (KeyValuePair<string, IList<PortSliceType>> port_item in ports_root) 
 			{
-				string port_name = slice.Item4;
-
-				// UNIT SLICES
-				UnitSliceType us = new UnitSliceType ();
-				us.cRef = port_name;
-				us.uRef = Constants.envUnitName[slice.Item3]; 
-				us.sliceName = port_name;
-				us.slice_replica = 0;
-				us.transitiveSpecified = true;
-				us.transitive = true;
-
-				us.visualDescription = new VisualElementAttributes();
-				us.visualDescription.x = 10;
-				us.visualDescription.y = 10;
-				us.visualDescription.w = 35;
-				us.visualDescription.h = 30;
-				us.visualDescription.color = new ColorComplexType ();
-				us.visualDescription.color.b = 20;
-				us.visualDescription.color.g = 20;
-				us.visualDescription.color.r = 20;
-
-				uslices_root_list.Add (us);
-
-				// INTERFACE PORTS (TRANSITIVE SLICES)
-				InterfacePortType fs = new InterfacePortType ();
-				fs.name = port_name;
-				fs.slice = new PortSliceType[1];
-				fs.slice[0].pRef = workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
-				fs.slice[0].sRef = port_name;
-
-				fs.visualDescription = new VisualElementAttributes();
-				fs.visualDescription.x = 10;
-				fs.visualDescription.y = 10;
-				fs.visualDescription.w = 20;
-				fs.visualDescription.h = 20;
-				fs.visualDescription.color = new ColorComplexType ();
-				fs.visualDescription.color.b = 20;
-				fs.visualDescription.color.g = 20;
-				fs.visualDescription.color.r = 20;
-
-				iports_root_list.Add (fs);
+				InterfacePortType ctp = new InterfacePortType ();
+				iports_root_list.Add (ctp);
+				ctp.name = port_item.Key;
+				ctp.slice = new PortSliceType[port_item.Value.Count];
+				port_item.Value.CopyTo (ctp.slice, 0);
+				ctp.visualDescription = new VisualElementAttributes ();
+				ctp.visualDescription.x = 10;
+				ctp.visualDescription.y = 10;
+				ctp.visualDescription.w = 15;
+				ctp.visualDescription.h = 10;
+				ctp.visualDescription.color = new ColorComplexType ();
+				ctp.visualDescription.color.b = 20;
+				ctp.visualDescription.color.g = 20;
+				ctp.visualDescription.color.r = 20;
 			}
 
 			ru.slices = new UnitSliceType[uslices_root_list.Count];
@@ -865,6 +1230,19 @@ namespace br.ufc.pargo.hpe.backend
 			rt.port = new InterfacePortType[iports_root_list.Count];
 			iports_root_list.CopyTo (rt.port, 0);
 		}
+
+		private static string unit_of_facet(IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts, string cref, int facet)
+		{
+			AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath (contracts [cref].component_ref);
+			IList<Interface> i_list = BackEnd.idao.list (acf.Id_abstract);
+
+			foreach (Interface i in i_list) 
+				if (i.Facet == facet)
+					return i.Id_interface;
+
+			return null;
+		}
+
 
 		internal class SliceList
 		{
@@ -976,7 +1354,7 @@ namespace br.ufc.pargo.hpe.backend
 		}
 
 
-		static ComponentType createSystemConcrete (string app_name, string arch_ref, ComponentType system_abstract, 
+		static ComponentType createSystemConcrete (string app_name, ComponentType system_abstract, 
 			                                       IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts)
 		{
 			ComponentType system_concrete = new ComponentType ();
@@ -1144,6 +1522,7 @@ namespace br.ufc.pargo.hpe.backend
 			CodeNamespace globalNamespace = new CodeNamespace();		
 			compileUnit.Namespaces.Add(globalNamespace);
 
+			globalNamespace.Imports.Add (new CodeNamespaceImport ("System"));
 			globalNamespace.Imports.Add (new CodeNamespaceImport ("System.Threading"));
 			globalNamespace.Imports.Add (new CodeNamespaceImport ("br.ufc.pargo.hpe.kinds"));
 			foreach (InterfaceSliceType slice in slice_list) 
@@ -1152,6 +1531,13 @@ namespace br.ufc.pargo.hpe.backend
 					globalNamespace.Imports.Add (new CodeNamespaceImport (contracts [slice.originRef.cRef].component_ref));
 				}
 			globalNamespace.Imports.Add(new CodeNamespaceImport (app_name + ".System"));
+
+			if (interface_name.Equals ("IRoot")) 
+			{
+				globalNamespace.Imports.Add (new CodeNamespaceImport (app_name + ".Workflow"));
+				globalNamespace.Imports.Add (new CodeNamespaceImport (app_name + ".Application"));
+			}
+
 
 			CodeNamespace ns = new CodeNamespace(app_name + ".impl.SystemImpl");
 			compileUnit.Namespaces.Add(ns);
@@ -1222,7 +1608,7 @@ namespace br.ufc.pargo.hpe.backend
 			go_method.Name = "Go";
 			go_method.Attributes = MemberAttributes.Private;
 
-			CodeParameterDeclarationExpression parameter_go = new CodeParameterDeclarationExpression ("object", "o");
+			CodeParameterDeclarationExpression parameter_go = new CodeParameterDeclarationExpression (new CodeTypeReference("Object"), "o");
 			go_method.Parameters.Add(parameter_go);
 
 			var go_statements = go_method.Statements;
@@ -1279,7 +1665,7 @@ namespace br.ufc.pargo.hpe.backend
 				// go_mapper.Start(mapper);
 				CodeVariableReferenceExpression target_object3 = new CodeVariableReferenceExpression("go_" + slice.isRef);
 				CodeExpression[] parameters3 = new CodeExpression[1];
-				parameters1 [0] = new CodePrimitiveExpression (slice.isRef);
+				parameters1 [0] = new CodeVariableReferenceExpression (slice.isRef);
 				CodeMethodInvokeExpression invokeExpression3 = new CodeMethodInvokeExpression(target_object3, "Start", parameters1); ;
 				main_statements.Add (invokeExpression3);
 			}
@@ -1371,6 +1757,7 @@ namespace br.ufc.pargo.hpe.backend
 				string interface_parameter = i_par.Class_name;
 				string unit_parameter = ip.Id_unit_parameter;
 				CodeTypeReference argument = setArgumentsOfInterface (interface_parameter, unit_parameter, arg);
+			
 				type_arguments_list.Add (ip.ParOrder, argument);
 			}
 
@@ -1381,7 +1768,7 @@ namespace br.ufc.pargo.hpe.backend
 			CodeTypeReference r = new CodeTypeReference (i_ref, type_arguments_1);
 			return r;
 		}
-
+		/*
 		public static void deploySystemComponent(SAFeSWL.Architecture workflow_architecture, IDictionary<string,Instantiator.UnitMappingType[]> all_unit_mapping) 
 		{
 			string app_name = null;
@@ -1443,7 +1830,7 @@ namespace br.ufc.pargo.hpe.backend
 				br.ufc.pargo.hpe.backend.DGAC.database.Connector.closeConnection();
 			}
 		}
-
+*/
 		public static IDictionary<string,int[]> componentsInPlatform (SAFeSWL.Architecture arch_desc, string platform_ref)
 		{
 			IDictionary<string,int[]> result = new Dictionary<string, int[]>();
@@ -1474,8 +1861,8 @@ namespace br.ufc.pargo.hpe.backend
 		public static IDictionary<string,Tuple<int,string>[]> placementOfComponents (SAFeSWL.Architecture arch_desc)
 		{
 			IDictionary<string, Tuple<int,string>[]> result_1 = placementOfComputationsAndConnectors (arch_desc);
-			result_1.Add (arch_desc.application.name, new Tuple<int,string>[1]{new Tuple<int, string>(0, "SAFe_place:")});
-			result_1.Add (arch_desc.workflow.name, new Tuple<int,string>[1]{new Tuple<int, string>(0, "SAFe_place:")});
+			result_1.Add (arch_desc.application.name, new Tuple<int,string>[1]{new Tuple<int, string>(0, "platform_SAFe")});
+			result_1.Add (arch_desc.workflow.name, new Tuple<int,string>[1]{new Tuple<int, string>(0, "platform_SAFe")});
 			IDictionary<string, Tuple<int,string>[]> result_2 = placementOfEnvironmentBindings (arch_desc, result_1);
 			IDictionary<string, Tuple<int,string>[]> result_3 = placementOfTaskBindings (arch_desc, result_1);
 
@@ -1694,7 +2081,6 @@ namespace br.ufc.pargo.hpe.backend
 
 		public static void readArchitecture
 								 (SAFeSWL.Architecture workflow_architecture,
-								  string platform_ref,
 							      IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts,
 								  IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping,
 		                          ref string app_name,
@@ -1705,7 +2091,8 @@ namespace br.ufc.pargo.hpe.backend
 								  ref IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system,
 			                      ref IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task,
 			                      ref IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts_in_platform,
-			                      ref IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping_in_platform)
+			                      ref IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping_in_platform,
+			                      ref IList<string> platform_list)
 		{
 			app_name = workflow_architecture.application_name;
 			workflow_component_name = workflow_architecture.workflow.name;
@@ -1715,6 +2102,8 @@ namespace br.ufc.pargo.hpe.backend
 			bindings_workflow = new List<Tuple<string, string, EnvironmentPortType, string>> ();
 			bindings_system = new List<Tuple<string, Tuple<string, string,int>[]>> ();
 			contracts_in_platform = new Dictionary<string,Instantiator.ComponentFunctorApplicationType> ();
+			platform_list = new List<string> ();
+			//platform_list.Add ("platform_SAFe");
 
 			SAFeSWL.Component application_component = workflow_architecture.application;
 			SAFeSWL.Component workflow_component = workflow_architecture.workflow;
@@ -1729,6 +2118,9 @@ namespace br.ufc.pargo.hpe.backend
 			{
 				string cRef = c.name;
 
+				if (c is SAFeSWL.Platform)
+					platform_list.Add (cRef);
+						
 				SAFeSWL.PortEnvironmentUses[] uses_port_list = c.uses_port;
 				SAFeSWL.PortEnvironmentProvides[] prov_port_list = c.provides_port; 
 				SAFeSWL.PortTask[] task_port_list = c is SAFeSWL.Worker ? ((SAFeSWL.Worker)c).task_port : null; 
@@ -1750,34 +2142,34 @@ namespace br.ufc.pargo.hpe.backend
 			foreach (SAFeSWL.BindingEnvironment e in env_bindings)
 			{
 				EnvironmentPortType role;
-				if (e.uses_port.id == application_component.id) 
+				if (e.uses_port.id_component == application_component.id) 
 				{
-					role = EnvironmentPortType.user;
-					string cRef = uses_port_ownership [e.provides_port.id];
+					role = platform_list.Contains(prov_port_ownership [e.provides_port.id]) ? EnvironmentPortType.platform_user : EnvironmentPortType.user;
+					string cRef = prov_port_ownership [e.provides_port.id];
 					string pRef = e.provides_port.name;    
 					string pRefApp = e.uses_port.name; 
 					bindings_application.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
 				} 
-				else if (e.provides_port.id == application_component.id) 
-				{
+				else if (e.provides_port.id_component == application_component.id) 
+				{					
 					role = EnvironmentPortType.provider;
-					string cRef = prov_port_ownership [e.uses_port.id];
+					string cRef = uses_port_ownership [e.uses_port.id];
 					string pRef = e.uses_port.name;    
 					string pRefApp = e.provides_port.name;
 					bindings_application.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
 				} 
-				else if (e.uses_port.id == workflow_component.id) 
+				else if (e.uses_port.id_component == workflow_component.id) 
 				{
-					role = EnvironmentPortType.user;
-					string cRef = uses_port_ownership [e.provides_port.id];
+					role = platform_list.Contains(prov_port_ownership [e.provides_port.id]) ? EnvironmentPortType.platform_user : EnvironmentPortType.user;
+					string cRef = prov_port_ownership [e.provides_port.id];
 					string pRef = e.provides_port.name;    
 					string pRefApp = e.uses_port.name; 
 					bindings_workflow.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
 				} 
-				else if (e.provides_port.id == workflow_component.id) 
+				else if (e.provides_port.id_component == workflow_component.id) 
 				{
 					role = EnvironmentPortType.provider;
-					string cRef = prov_port_ownership [e.uses_port.id];
+					string cRef = uses_port_ownership [e.uses_port.id];
 					string pRef = e.uses_port.name;
 					string pRefApp = e.provides_port.name; 
 					bindings_workflow.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
@@ -2028,23 +2420,24 @@ namespace br.ufc.pargo.hpe.backend
 
 		static Tuple<ComponentType,ComponentType> createProxyComponent 
 		                 (string app_name,
-						  string arch_ref,
-			              IList<Tuple<string, string, EnvironmentPortType, string>> bindings, 
+						  IList<Tuple<string, string, EnvironmentPortType, string>> bindings_environment, 
 			              IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task,
 						  IDictionary<ProxyComponentAttribute,string> attributes,
-			              IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts)
+						  IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts, 
+						  IList<string> platforms)
 		{
-			ComponentType cAbs = createProxyComponentAbstract (app_name, arch_ref, bindings, bindings_task, attributes, contracts);
-			ComponentType cCon = createProxyComponentConcrete (app_name, arch_ref, bindings, attributes);
+			ComponentType cAbs = createProxyComponentAbstract (app_name, bindings_environment, bindings_task, attributes, contracts, platforms);
+			ComponentType cCon = createProxyComponentConcrete (app_name, bindings_environment, attributes, contracts, platforms);
 			return new Tuple<ComponentType,ComponentType> (cAbs, cCon);
 		}
 
-		static ComponentType createProxyComponentAbstract (string app_name, 
-			                                               string arch_ref,
-			                                               IList<Tuple<string, string, EnvironmentPortType, string>> bindings, 
+		static ComponentType createProxyComponentAbstract (string app_name,
+														   IList<Tuple<string, string, EnvironmentPortType, string>> bindings_environment, 
 			                                               IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task, 
 			                                               IDictionary<ProxyComponentAttribute,string> attributes, 
-			                                               IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts)
+			                                               IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
+															IList<string> platforms)
+		
 		{
 			string proxy_name = attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME];
 
@@ -2062,9 +2455,30 @@ namespace br.ufc.pargo.hpe.backend
 			IList<object> body_items = new List<object> ();
 
 			// ADD INNER COMPONENTS (many, one for each environment bindind)
-			createProxyComponentAbstractInner (proxy_name, body_items, bindings, bindings_task, contracts);
+			createProxyComponentAbstractInner (proxy_name, body_items, bindings_environment, bindings_task, contracts, platforms);
 
-			// NO PARAMETERS
+			// PARAMETER maintainer
+			InnerComponentType inner_maintainer = new InnerComponentType ();
+			body_items.Add (inner_maintainer);
+
+			inner_maintainer.localRef = "maintainer";
+			inner_maintainer.location = "br.ufc.mdcc.hpcshelf.platform.maintainer.SAFeHost/SAFeHost.hpe";
+			inner_maintainer.multipleSpecified = true;
+			inner_maintainer.multiple = false;
+			inner_maintainer.name = "SAFeHost";
+			inner_maintainer.package = "br.ufc.mdcc.hpcshelf.platform.maintainer";
+			inner_maintainer.parameter_id = "maintainer";
+			inner_maintainer.exposedSpecified = true;
+			inner_maintainer.exposed = false;
+
+			ParameterType par = new ParameterType();
+			body_items.Add (par);
+
+			par.componentRef = "maintainer";
+			par.formFieldId = "maintainer";
+			par.varName = "M";
+
+
 			// NO SUPPLY PARAMTERS
 			// NO INNER RENAMING
 			// NO FUSION
@@ -2072,10 +2486,10 @@ namespace br.ufc.pargo.hpe.backend
 			// NO RECURSIVE ENTRY
 
 			// ADD UNIT (single)
-			createProxyComponentAbstractUnit (body_items, bindings, bindings_task, attributes);
+			createProxyComponentAbstractUnit (body_items, bindings_environment, bindings_task, attributes);
 
 			// ADD INTERFACE
-			createProxyComponentAbstractInterface (app_name, arch_ref, body_items, bindings, attributes);
+			createProxyComponentAbstractInterface (app_name, body_items, bindings_environment, attributes);
 
 			// NO FUSION OF REPLICATORS
 
@@ -2091,19 +2505,27 @@ namespace br.ufc.pargo.hpe.backend
 			                                           IList<object> body_items, 
 			                                           IList<Tuple<string, string, EnvironmentPortType, string>> bindings_env, 
 													   IList<Tuple<string, Tuple<string, string,int>[]>> bindings_tsk, 
-			                                           IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts)
+			                                           IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
+													   IList<string> platforms)
+		
 		{
-			InnerComponentType[] ci_list_env = traverseEnvironmentBindings (bindings_env, true);
+			InnerComponentType[] ci_list_env = traverseEnvironmentBindings (contracts, bindings_env, true, platforms);
 			foreach (InnerComponentType ci in ci_list_env)
 				body_items.Add (ci);
 			
-			InnerComponentType[] ci_list_tsk = traverseTaskBindings (proxy_name, contracts, bindings_tsk, true);
-			foreach (InnerComponentType ci in ci_list_tsk)
+			Tuple<InnerComponentType[],InnerRenamingType[]> ci_list_tsk = traverseTaskBindings (proxy_name, contracts, bindings_tsk, true);
+			foreach (InnerComponentType ci in ci_list_tsk.Item1)
 				body_items.Add (ci);
+			foreach (InnerRenamingType ri in ci_list_tsk.Item2)
+				body_items.Add (ri);
 		}
 
 
-		private static InnerComponentType[] traverseEnvironmentBindings (IList<Tuple<string, string, EnvironmentPortType, string>> bindings, bool exposed)
+		private static InnerComponentType[] traverseEnvironmentBindings (
+								IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
+			                    IList<Tuple<string, string, EnvironmentPortType, string>> bindings, 
+								bool exposed, 
+			                    IList<string> platforms)
 		{
 			IList<InnerComponentType> result_list = new List<InnerComponentType> ();
 
@@ -2113,24 +2535,30 @@ namespace br.ufc.pargo.hpe.backend
 				string port_name = binding.Item2;
 				string port_name_app = binding.Item4;
 
-				// search for the type of the component connected to the application through the environment port
-				AbstractComponentFunctor acf = backend.DGAC.BackEnd.acfdao.retrieve_libraryPath (componentRef);
+				Instantiator.ComponentFunctorApplicationType cc = contracts [componentRef];
 
-				// search for the type of the environment port in the inner component.
-				InnerComponent ic = backend.DGAC.BackEnd.icdao.retrieve (acf.Id_abstract, port_name);
-				AbstractComponentFunctor acf_inner = backend.DGAC.BackEnd.acfdao.retrieve (ic.Id_abstract_inner);
-				String library_path = acf_inner.Library_path;
+				// search for the type of the component connected to the application through the environment port
+				AbstractComponentFunctor acf = backend.DGAC.BackEnd.acfdao.retrieve_libraryPath (cc.component_ref);
+
+				if (!platforms.Contains (componentRef)) 
+				{
+					// look for the type of the environment port in the inner component.
+					InnerComponent ic = backend.DGAC.BackEnd.icdao.retrieve (acf.Id_abstract, port_name);
+					acf = backend.DGAC.BackEnd.acfdao.retrieve (ic.Id_abstract_inner);
+				}
+
+				String library_path = acf.Library_path;
 
 				InnerComponentType ci = new InnerComponentType ();
-				ci.package = acf_inner.Package;
-				ci.name = acf_inner.Name;
+				ci.package = acf.Package;
+				ci.name = acf.Name;
 				ci.localRef = port_name_app;
 				ci.multipleSpecified = true;
 				ci.multiple = false;
 				ci.exposedSpecified = true;
 				ci.exposed = exposed;
-				ci.port = traversePorts (componentRef);
-				ci.unitBounds = traverseUnits (componentRef);
+				ci.port = traversePorts (cc.component_ref);
+				ci.unitBounds = traverseUnits (cc.component_ref);
 
 				ci.visualDescription = new VisualElementAttributes();
 				ci.visualDescription.x = 500;
@@ -2151,18 +2579,20 @@ namespace br.ufc.pargo.hpe.backend
 			return result;
 		}
 
-		private static InnerComponentType[] traverseTaskBindings (string proxy_name,
+		private static Tuple<InnerComponentType[],InnerRenamingType[]> 
+		                  traverseTaskBindings (string proxy_name,
 												IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts, 
 												IList<Tuple<string, Tuple<string, string, int>[]>> bindings_task,
 												bool exposed)
 		{
-			IList<InnerComponentType> result_list = new List<InnerComponentType> ();
+			IList<InnerComponentType> result_list_ports = new List<InnerComponentType> ();
+			IList<InnerRenamingType> result_list_renamings = new List<InnerRenamingType> ();
 
 			foreach (Tuple<string, Tuple<string, string,int>[]> binding in bindings_task) 
 			{
 				IDictionary <string,string> w = new Dictionary<string, string> ();
 				string binding_name = binding.Item1;
-				foreach (Tuple<string,string,int> peer in binding.Item2) 
+				foreach (Tuple<string,string,int> peer in binding.Item2)
 				{
 					string cRef = peer.Item1;
 					if (!cRef.Equals (proxy_name)) 
@@ -2175,8 +2605,8 @@ namespace br.ufc.pargo.hpe.backend
 							Instantiator.ComponentFunctorApplicationType cc = contracts [cRef];
 
 							AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath (cc.component_ref);
-							InnerComponent ic = BackEnd.icdao.retrieve (acf.Id_abstract, pRef);
-							InnerComponentExposed ic_port = BackEnd.icedao.listExposedInnerOfOwner (acf.Id_abstract, pRef) [0];
+							InnerComponent ic = BackEnd.icdao.retrieve (acf.Id_abstract, binding_name);
+							InnerComponentExposed ic_port = BackEnd.icedao.listExposedInnerOfOwner (acf.Id_abstract, binding_name) [0];
 							AbstractComponentFunctor acf_ic_port = BackEnd.acfdao.retrieve (ic.Id_abstract_inner);
 
 							string package = null;
@@ -2206,48 +2636,35 @@ namespace br.ufc.pargo.hpe.backend
 							ci.unitBounds = traverseUnits (acf_ic_port.Library_path);
 							ci.port = traversePorts (acf_ic_port.Library_path);
 
-/*							ci.port = new InnerComponentType[1];
-							ci.port [0] = new InnerComponentType ();
-							ci.port [0].exposedSpecified = true;
-							ci.port [0].exposed = false;
-							ci.port [0].localRef = ic_port.Id_inner;
-							ci.port [0].multipleSpecified = true;
-							ci.port [0].multiple = false; 
-*/
-							// ci.port [0].name; // TODO
-							// ci.port [0].package; // TODO
-							// ci.port [0].unitBounds; // TODO
+							InnerRenamingType task_port_renaming = new InnerRenamingType ();
+							task_port_renaming.cRef = ci.localRef;
+							task_port_renaming.cOldName = ci.port [0].localRef;
+							task_port_renaming.cNewName = pRef;
 
-							ci.port [0].visualDescription = new VisualElementAttributes ();
-							ci.port [0].visualDescription.x = 10;
-							ci.port [0].visualDescription.y = 10;
-							ci.port [0].visualDescription.w = 40;
-							ci.port [0].visualDescription.h = 20;
-							ci.port [0].visualDescription.color = new ColorComplexType ();
-							ci.port [0].visualDescription.color.b = 243;
-							ci.port [0].visualDescription.color.g = 217;
-							ci.port [0].visualDescription.color.r = 217;
-												
-							result_list.Add (ci);
+							result_list_renamings.Add (task_port_renaming);
+							result_list_ports.Add (ci);
 						}
 					}
 				}
 			}
 
-			InnerComponentType[] result = new InnerComponentType[result_list.Count];
-			result_list.CopyTo (result, 0);
+			InnerComponentType[] result_ports = new InnerComponentType[result_list_ports.Count];
+			result_list_ports.CopyTo (result_ports, 0);
 
-			return result;
+			InnerRenamingType[] result_renamings = new InnerRenamingType[result_list_renamings.Count];
+			result_list_renamings.CopyTo (result_renamings, 0);
+
+			return new Tuple<InnerComponentType[],InnerRenamingType[]> (result_ports, result_renamings);
 		}
 
-		static void createProxyComponentAbstractInterface (string app_name, string arch_ref, IList<object> body_items, IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, IDictionary<ProxyComponentAttribute,string> attributes)
+		static void createProxyComponentAbstractInterface (string app_name, IList<object> body_items, IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, IDictionary<ProxyComponentAttribute,string> attributes)
 		{
 			InterfaceType ct = new InterfaceType ();
 
 			ct.iRef = attributes[ProxyComponentAttribute.INTERFACE_NAME_ABSTRACT];
 			ct.nArgsSpecified = true;
 			ct.nArgs = 0;
-			ct.sources = createProxyAbstractSourceCode(app_name, arch_ref, attributes); 
+			ct.sources = createProxyAbstractSourceCode(app_name, attributes); 
 
 			ct.visualDescription = new VisualElementAttributes();
 			ct.visualDescription.x = 10;
@@ -2266,7 +2683,7 @@ namespace br.ufc.pargo.hpe.backend
 			body_items.Add (ct);
 		}
 
-		static SourceType[] createProxyAbstractSourceCode (string app_name, string arch_ref, IDictionary<ProxyComponentAttribute, string> attributes)
+		static SourceType[] createProxyAbstractSourceCode (string app_name, IDictionary<ProxyComponentAttribute, string> attributes)
 		{
 			string source_code_name;
 			SourceType[] source_code = new SourceType[1];
@@ -2277,13 +2694,13 @@ namespace br.ufc.pargo.hpe.backend
 			source_code [0].file [0] = new SourceFileType ();
 			source_code [0].file [0].name = source_code_name = attributes[ProxyComponentAttribute.INTERFACE_NAME_ABSTRACT] + ".cs";
 			source_code [0].file [0].srcType = "user";
-			source_code [0].file [0].contents = generate_proxy_abstract_code(app_name, arch_ref, source_code_name, attributes);
+			source_code [0].file [0].contents = generate_proxy_abstract_code(app_name, source_code_name, attributes);
 			//source_code [0].file [0].externalDependency;
 
 			return source_code;
 		}
 
-		static string generate_proxy_abstract_code (string app_name, string arch_ref, string source_file_name, IDictionary<ProxyComponentAttribute, string> attributes)
+		static string generate_proxy_abstract_code (string app_name, string source_file_name, IDictionary<ProxyComponentAttribute, string> attributes)
 		{
 			CodeCompileUnit compileUnit = new CodeCompileUnit();
 
@@ -2465,7 +2882,12 @@ namespace br.ufc.pargo.hpe.backend
 			return slices_list;
 		}
 
-		static ComponentType createProxyComponentConcrete (string app_name, string arch_ref,  IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, IDictionary<ProxyComponentAttribute,string> attributes)
+		static ComponentType createProxyComponentConcrete (
+			string app_name,  
+			IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, 
+			IDictionary<ProxyComponentAttribute,string> attributes, 
+			IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
+			IList<string> platforms)
 		{
 			ComponentType c = new ComponentType ();
 
@@ -2502,6 +2924,28 @@ namespace br.ufc.pargo.hpe.backend
 
 			IList<object> body_items = new List<object> ();
 
+			// PARAMETER maintainer
+			InnerComponentType inner_maintainer = new InnerComponentType ();
+			body_items.Add (inner_maintainer);
+
+			inner_maintainer.localRef = "maintainer";
+			inner_maintainer.location = "br.ufc.mdcc.hpcshelf.platform.maintainer.SAFeHost/SAFeHost.hpe";
+			inner_maintainer.multipleSpecified = true;
+			inner_maintainer.multiple = false;
+			inner_maintainer.name = "SAFeHost";
+			inner_maintainer.package = "br.ufc.mdcc.hpcshelf.platform.maintainer";
+			inner_maintainer.parameter_id = "maintainer";
+			inner_maintainer.exposedSpecified = true;
+			inner_maintainer.exposed = false;
+
+			ParameterSupplyType supply_host = new ParameterSupplyType ();
+			body_items.Add (supply_host);
+
+			supply_host.cRef = "maintainer";
+			supply_host.direct = true;
+			supply_host.varName = "M";
+		
+
 			// ADD INNER COMPONENTS (many, one for each environment bindind)
 			// NO INNER COMPONENTS
 
@@ -2516,7 +2960,7 @@ namespace br.ufc.pargo.hpe.backend
 			createProxyComponentConcreteUnit (body_items, attributes);
 
 			// ADD INTERFACE
-			createProxyComponentConcreteInterface (app_name, arch_ref, bindings_application, body_items, attributes);
+			createProxyComponentConcreteInterface (app_name, bindings_application, body_items, attributes, contracts, platforms);
 
 			// NO FUSION OF REPLICATORS
 
@@ -2528,14 +2972,19 @@ namespace br.ufc.pargo.hpe.backend
 			return c;
 		}
 
-		static void createProxyComponentConcreteInterface (string app_name, string arch_ref,  IList<Tuple<string, string, EnvironmentPortType, string>> bindings, IList<object> body_items, IDictionary<ProxyComponentAttribute,string> attributes)
+		static void createProxyComponentConcreteInterface (
+									string app_name,  
+									IList<Tuple<string, string, EnvironmentPortType, string>> bindings, 
+									IList<object> body_items, IDictionary<ProxyComponentAttribute,string> attributes,
+								    IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
+								    IList<string> platforms)
 		{
 			InterfaceType ct = new InterfaceType ();
 
 			ct.iRef = attributes[ProxyComponentAttribute.INTERFACE_NAME_CONCRETE];
 			ct.nArgsSpecified = true;
 			ct.nArgs = 0;
-			ct.sources = createProxyConcreteSourceCode(app_name, arch_ref, bindings, attributes); //?
+			ct.sources = createProxyConcreteSourceCode(app_name, bindings, attributes, contracts, platforms); //?
 
 			ct.visualDescription = new VisualElementAttributes();
 			ct.visualDescription.x = 10;
@@ -2550,7 +2999,12 @@ namespace br.ufc.pargo.hpe.backend
 			body_items.Add (ct);
 		}
 
-		static SourceType[] createProxyConcreteSourceCode (string app_name, string arch_ref, IList<Tuple<string, string, EnvironmentPortType, string>> bindings, IDictionary<ProxyComponentAttribute, string> attributes)
+		static SourceType[] createProxyConcreteSourceCode (
+								string app_name, 
+								IList<Tuple<string, string, EnvironmentPortType, string>> bindings, 
+								IDictionary<ProxyComponentAttribute, string> attributes,
+								IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
+								IList<string> platforms)
 		{
 			string source_file_name;
 			SourceType[] source_code = new SourceType[1];
@@ -2560,14 +3014,20 @@ namespace br.ufc.pargo.hpe.backend
 			source_code [0].file = new SourceFileType[1];
 			source_code [0].file [0] = new SourceFileType ();
 			source_code [0].file [0].name = source_file_name = attributes[ProxyComponentAttribute.INTERFACE_NAME_CONCRETE] + ".cs";
-			source_code [0].file [0].contents = generate_proxy_concrete_code (app_name, arch_ref, bindings, source_file_name, attributes);
+			source_code [0].file [0].contents = generate_proxy_concrete_code (app_name, bindings, source_file_name, attributes, contracts, platforms);
 			source_code [0].file [0].srcType = "user";
 			//source_code [0].file [0].externalDependency;
 
 			return source_code;
 		}
 
-		static string generate_proxy_concrete_code (string app_name, string arch_ref, IList<Tuple<string, string, EnvironmentPortType, string>> bindings, string source_file_name, IDictionary<ProxyComponentAttribute, string> attributes)
+		static string generate_proxy_concrete_code (
+			           string app_name, 
+			           IList<Tuple<string, string, EnvironmentPortType, string>> bindings, 
+			           string source_file_name, IDictionary<ProxyComponentAttribute, string> attributes,
+					   IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts,
+					   IList<string> platforms)
+					
 		{
 			CodeCompileUnit compileUnit = new CodeCompileUnit();
 
@@ -2575,7 +3035,7 @@ namespace br.ufc.pargo.hpe.backend
 			CodeNamespace globalNamespace = new CodeNamespace();		
 			compileUnit.Namespaces.Add(globalNamespace);
 
-			CodeNamespace ns = new CodeNamespace(app_name + /*"." + arch_ref +*/ "." + attributes [ProxyComponentAttribute.COMPONENT_NAME_CONCRETE]);
+			CodeNamespace ns = new CodeNamespace(app_name + /*"." + arch_ref +*/ ".impl." + attributes [ProxyComponentAttribute.COMPONENT_NAME_CONCRETE]);
 			compileUnit.Namespaces.Add(ns);
 
 			// ** CLASS
@@ -2594,13 +3054,14 @@ namespace br.ufc.pargo.hpe.backend
 			IDictionary<string, Tuple<string,string,string>> client_port_dict = new Dictionary<string, Tuple<string, string,string>> ();
 			foreach (Tuple<string, string, EnvironmentPortType, string> binding in bindings) 
 			{
-				string componentRef = binding.Item1;
+				string componentRef = contracts[binding.Item1].component_ref;
 				string port_name_inner = binding.Item2;
 				string port_name_app = binding.Item4;
 				EnvironmentPortType port_role = binding.Item3;
 
 				// look for the type of the component connected to the application through the environment port
 				AbstractComponentFunctor acf = backend.DGAC.BackEnd.acfdao.retrieve_libraryPath (componentRef);
+				if (platforms.Contains (binding.Item1)) continue;
 
 				// look for the type of the environment port in the inner component.
 				InnerComponent ic = backend.DGAC.BackEnd.icdao.retrieve (acf.Id_abstract, port_name_inner);

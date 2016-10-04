@@ -9,6 +9,7 @@ using br.ufc.pargo.hpe.backend.DGAC;
 using System.Xml.Serialization;
 using System.Xml;
 using br.ufc.pargo.hpe.backend;
+using System.Threading;
 
 namespace br.ufc.mdcc.hpe.CoreService
 {
@@ -125,23 +126,38 @@ namespace br.ufc.mdcc.hpe.CoreService
 
 
 
-		public static string invokeBackEndDeploy (string backend_address, string[] config)
+		public static Tuple<string,int> invokeBackEndDeploy (string arch_ref, string backend_address, string[] config)
 		{
 			ServiceUtils.BackEndService.BackEnd backend_access = new ServiceUtils.BackEndService.BackEnd (backend_address);
+			backend_access.Timeout = int.MaxValue;
 			string platform_address = backend_access.deploy (config);
 
-			return platform_address;
+			Thread.Sleep (5000);
+
+			ServiceUtils.PlatformService.Platform platform_access = new ServiceUtils.PlatformService.Platform (platform_address);
+			platform_access.Timeout = int.MaxValue;
+			int base_binding_address = platform_access.getBaseBindingPort();
+			platform_access.setPlatformRef (arch_ref);
+
+			return new Tuple<string,int> (platform_address, base_binding_address);
 		}
 
-		public static void invokeDeployPlatform (SAFeSWL.Architecture arch_desc, 
-			                                     IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
-												 IDictionary<string,string> choices, 
-												 IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping, 
+
+		public static int invokeDeployPlatform (SAFeSWL.Architecture arch_desc, 
 												 string arch_ref, 
-												 string platform_address)
+			                                     IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
+												 IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping, 
+												 string platform_address, 
+												 ComponentType appplication_abstract,
+												 ComponentType application_concrete,
+												 ComponentType workflow_abstract,
+												 ComponentType workflow_concrete,
+												 ComponentType system_abstract,
+												 ComponentType system_concrete)
 		{
 			//invokeDeployContracts (arch_desc, arch_ref, contracts, platform_address);
-			invokeDeploySystem (arch_desc, arch_ref, contracts, unit_mapping, platform_address);
+
+			return invokeDeploySystem (arch_desc, arch_ref, contracts, unit_mapping, platform_address, appplication_abstract, application_concrete, workflow_abstract, workflow_concrete, system_abstract, system_concrete);
 		}
 
 		public static void invokeDeployContracts (SAFeSWL.Architecture arch_desc, string arch_ref, IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, string platform_address)
@@ -163,6 +179,7 @@ namespace br.ufc.mdcc.hpe.CoreService
 						string config_contents = File.ReadAllText (config_filename);
 
 						ServiceUtils.PlatformService.Platform platform_access = new ServiceUtils.PlatformService.Platform (platform_address);
+						platform_access.Timeout = int.MaxValue;
 						platform_access.deploy (config_contents);
 					}
 				}
@@ -204,66 +221,88 @@ namespace br.ufc.mdcc.hpe.CoreService
 				dependency_list.Add (acfRef.Id_abstract, acfRef.Library_path);
 		}
 
+		public static 
+		        Tuple<Tuple<ComponentType,ComponentType>,   // application component (abstract + concrete)
+				      Tuple<ComponentType,ComponentType>,   // workflow component (abstract + concrete)
+				      Tuple<ComponentType,ComponentType>>
+					createSystem(SAFeSWL.Architecture arch_desc, 
+							 	 IDictionary<string,Instantiator.ComponentFunctorApplicationType> all_contracts, 
+								 IDictionary<string,Instantiator.UnitMappingType[]> all_unit_mapping,
+								 ref IList<string> platforms)
+		{
+			
+			string app_name = null;
+			string application_component_name = null;
+			string workflow_component_name = null;;
+			IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application = null; 
+			IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow = null; 
+			IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system = null; 
+			IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task = null; 
+			IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts = null;
+			IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping = null;
 
+			LoaderSystem.readArchitecture (arch_desc, 
+				all_contracts, 
+				all_unit_mapping,
+				ref app_name, 
+				ref application_component_name, 
+				ref workflow_component_name, 
+				ref bindings_application, 
+				ref bindings_workflow, 
+				ref bindings_system, 
+				ref bindings_task, 
+				ref contracts,
+				ref unit_mapping,
+				ref platforms);
 
-		public static void invokeDeploySystem (SAFeSWL.Architecture arch_desc, 
+			// Take the configuration files of components of the system.
+			var system = LoaderSystem.createSystemComponent (app_name, application_component_name, workflow_component_name, contracts, unit_mapping, bindings_application, bindings_workflow, bindings_system, bindings_task, platforms);
+
+			return system;
+		}
+			
+		public static int invokeDeploySystem (SAFeSWL.Architecture arch_desc, 
 			                                   string arch_ref, 
 			                                   IDictionary<string,Instantiator.ComponentFunctorApplicationType> all_contracts, 
 											   IDictionary<string,Instantiator.UnitMappingType[]> all_unit_mapping, 
-			                                   string platform_address)
+			                                   string platform_address, 
+											   ComponentType c_appplication_abstract,
+											   ComponentType c_application_concrete,
+											   ComponentType c_workflow_abstract,
+											   ComponentType c_workflow_concrete,
+											   ComponentType c_system_abstract,
+											   ComponentType c_system_concrete)
 		{
-			try{
-				string app_name = null;
-				string application_component_name = null;
-				string workflow_component_name = null;;
-				IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application = null; 
-				IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow = null; 
-				IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system = null; 
-				IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task = null; 
-				IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts = null;
-				IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping = null;
-
-				LoaderSystem.readArchitecture (arch_desc, 
-						                       arch_ref, 
-						                       all_contracts, 
-											   all_unit_mapping,
-						                       ref app_name, 
-						                       ref application_component_name, 
-						                       ref workflow_component_name, 
-						                       ref bindings_application, 
-						                       ref bindings_workflow, 
-						                       ref bindings_system, 
-						                       ref bindings_task, 
-						                       ref contracts,
-						                       ref unit_mapping);
-
-				// Take the configuration files of components of the system.
-				var system = LoaderSystem.createSystemComponent (app_name,arch_ref, application_component_name, workflow_component_name, contracts, unit_mapping, bindings_application, bindings_workflow, bindings_system, bindings_task); 
-				string application_abstract = LoaderApp.serialize<ComponentType>(system.Item1.Item1);
-				string application_concrete = LoaderApp.serialize<ComponentType>(system.Item1.Item2);
-				string workflow_abstract = LoaderApp.serialize<ComponentType>(system.Item2.Item1);
-				string workflow_concrete = LoaderApp.serialize<ComponentType>(system.Item2.Item2);
-				string system_abstract = LoaderApp.serialize<ComponentType>(system.Item3.Item1);
-				string system_concrete = LoaderApp.serialize<ComponentType>(system.Item3.Item2);
-
-				File.WriteAllText ("/home/heron/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"Application/Application.hpe", application_abstract);
-				File.WriteAllText ("/home/heron/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"Workflow/Workflow.hpe", workflow_abstract);
-				File.WriteAllText ("/home/heron/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"System/System.hpe", system_abstract);
-
-				File.WriteAllText ("/home/heron/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.ApplicationImpl/ApplicationImpl.hpe", application_concrete);
-				File.WriteAllText ("/home/heron/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.WorkflowImpl/WorkflowImpl.hpe", workflow_concrete);
-				File.WriteAllText ("/home/heron/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.SystemImpl/SystemImpl.hpe", system_concrete);
-
+			try
+			{				
 				// Deploy the components of the system.
 				ServiceUtils.PlatformService.Platform platform_access = new ServiceUtils.PlatformService.Platform (platform_address);
-				Console.WriteLine(platform_access.deploy (application_abstract));
-				Console.WriteLine(platform_access.deploy (workflow_abstract));
-				Console.WriteLine(platform_access.deploy (system_abstract));
+				platform_access.Timeout = int.MaxValue;
 
- 				Console.WriteLine(platform_access.deploy (application_concrete));
-				Console.WriteLine(platform_access.deploy (workflow_concrete));
-				Console.WriteLine(platform_access.deploy (system_concrete));
+				string application_abstract = LoaderApp.serialize<ComponentType>(c_appplication_abstract);
+				string application_concrete = LoaderApp.serialize<ComponentType>(c_application_concrete);
+				string workflow_abstract = LoaderApp.serialize<ComponentType>(c_workflow_abstract);
+				string workflow_concrete = LoaderApp.serialize<ComponentType>(c_workflow_concrete);
+				string system_abstract = LoaderApp.serialize<ComponentType>(c_system_abstract);
+				string system_concrete = LoaderApp.serialize<ComponentType>(c_system_concrete);
 
+				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"Application/Application.hpe", application_abstract);
+				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"Workflow/Workflow.hpe", workflow_abstract);
+				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"System/System.hpe", system_abstract);
+
+				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.ApplicationImpl/ApplicationImpl.hpe", application_concrete);
+				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.WorkflowImpl/WorkflowImpl.hpe", workflow_concrete);
+				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.SystemImpl/SystemImpl.hpe", system_concrete);
+
+			//	Console.WriteLine(platform_access.deploy (application_abstract));
+			//	Console.WriteLine(platform_access.deploy (workflow_abstract));
+			//	Console.WriteLine(platform_access.deploy (system_abstract));
+
+ 			//	Console.WriteLine(platform_access.deploy (application_concrete));
+			//	Console.WriteLine(platform_access.deploy (workflow_concrete));
+			//	Console.WriteLine(platform_access.deploy (system_concrete));
+
+				return platform_access.getNumberOfNodes();
 			}
 			catch(Exception e) 
 			{
@@ -274,29 +313,18 @@ namespace br.ufc.mdcc.hpe.CoreService
 					Console.Error.WriteLine (e.InnerException.StackTrace);				
 				}
 			}
-		}
 
-		public static void invokeInstantiatePlatform (string system_ref, string platform_address)
-		{
-			// Instantiate the system component
-			ServiceUtils.PlatformService.Platform platform_access = new ServiceUtils.PlatformService.Platform (platform_address);
-			platform_access.instantiate (system_ref, 0 , null, null);
+			return 0;
 		}
-	
+				
 
 		public static void invokeDeployComponent (string platform_address, string component)
 		{
 			ServiceUtils.PlatformService.Platform platform_access = new ServiceUtils.PlatformService.Platform (platform_address);
+			platform_access.Timeout = int.MaxValue;
 			platform_access.deploy (component);
 		}
-
-		/* Instancia o componente identificado por component_ref na arquitetura do sistema computacional */
-		public static void invokeInstantiateComponent (string platform_address, string component_ref, int facet_instance, int[] facet, string[] facet_address )
-		{
-			ServiceUtils.PlatformService.Platform platform_access = new ServiceUtils.PlatformService.Platform (platform_address);
-			platform_access.instantiate(component_ref, facet_instance, facet, facet_address);
-		}
-
+			
 
 		#endregion
 

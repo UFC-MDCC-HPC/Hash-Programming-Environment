@@ -45,13 +45,15 @@ namespace BackEndService
 			return howManyRunningPlatforms ();
 		}
 
+		private int first_base_binding_port = 12000;
+
 		[WebMethod]
 		public string deploy(string[] platform_config)
 		{
 			Console.WriteLine (platform_config[0]);
 			Console.WriteLine (platform_config[1]);
 
-			int nodes = int.Parse(platform_config [1]);
+			int nodes = int.Parse(platform_config [1]) + 1;
 
 			// The next free communication port of a worker (it begins with 4865).
 			int port_worker_base = int.Parse(Environment.GetEnvironmentVariable ("HPE_NEXT_FREE_WORKER_PORT")); 
@@ -82,18 +84,20 @@ namespace BackEndService
 			string nodesfile_name = Path.GetTempFileName ();
 			File.WriteAllLines (nodesfile_name, contents_nodesfile);
 			environment_p [0] = new Tuple<string, string> ("PATH_HOSTS_FILE", nodesfile_name);
-			environment_p [1] = new Tuple<string, string> ("BASE_BINDING_FACET_PORT", "5000");
+			environment_p [1] = new Tuple<string, string> ("BASE_BINDING_FACET_PORT", (first_base_binding_port + 3000*proc_p.Count).ToString());
 
 			Thread tw = new Thread (launchWorker);
 			Thread tp = new Thread (launchPlatformService);
 
 			tw.Start (new Tuple<string,string,Tuple<string,string>[]> (path_worker, configfile_name, environment_w));
 			tp.Start (new Tuple<string,int,Tuple<string,string>[]> (path_platform_service, port_platform, environment_p));
-
+		
 			Environment.SetEnvironmentVariable ("HPE_NEXT_FREE_WORKER_PORT", (port_worker_base + nodes).ToString());
 			Environment.SetEnvironmentVariable ("HPE_NEXT_FREE_PLATFORM_SERVICE_PORT", (port_platform + 1).ToString());
 
-			return "http://" + platform_address + ":" + port_platform + "/Platform.asmx";
+			string virtual_platform_address =  "http://" + platform_address + ":" + port_platform + "/Platform.asmx";
+
+			return virtual_platform_address;
 		}
 
 		private static IList<System.Diagnostics.Process> proc_w = new List<System.Diagnostics.Process> ();
@@ -129,7 +133,7 @@ namespace BackEndService
 			string path_platform_service = config.Item1;
 			int port_platform = config.Item2;
 			Tuple<string,string>[] environment = config.Item3;
-			var proc = CommandLineUtil.runCommandStart ("/usr/bin/xsp4", "--nonstop --port " + port_platform, path_platform_service, environment);
+			var proc = CommandLineUtil.runCommandStart ("sudo", "-E /opt/mono-4.2.2/bin/xsp4 --nonstop --port " + port_platform, path_platform_service, environment);
 			proc_p.Add (proc);
 
 			try

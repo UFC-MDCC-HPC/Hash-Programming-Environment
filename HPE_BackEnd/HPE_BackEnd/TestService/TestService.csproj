@@ -40,9 +40,6 @@
     <Compile Include="Web References\BackEndService\Reference.cs">
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="Web References\Platform\Reference.cs">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="Web References\CoreService\Reference.cs">
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
@@ -57,11 +54,6 @@
       <RelPath>Web References\BackEndService</RelPath>
       <UpdateFromURL>http://127.0.0.1:8081/BackEnd.asmx?wsdl</UpdateFromURL>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://127.0.0.1:8082/Platform.asmx?wsdl">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\Platform</RelPath>
-      <UpdateFromURL>http://127.0.0.1:8082/Platform.asmx?wsdl</UpdateFromURL>
-    </WebReferenceUrl>
     <WebReferenceUrl Include="http://127.0.0.1:8080/Core.asmx?wsdl">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\CoreService</RelPath>
@@ -74,12 +66,6 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\Platform\Platform.wsdl" />
-    <None Include="Web References\Platform\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\CoreService\Core.wsdl" />
     <None Include="Web References\CoreService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

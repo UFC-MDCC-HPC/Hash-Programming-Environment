@@ -1,12 +1,12 @@
 ./run_app/Program.cs
 ./run_app/CommandLine.cs
 
--lib:"/usr/lib/mono/DGAC"
+-lib:"/opt/mono-4.2.2/lib/mono/DGAC"
 -r:System.Runtime.Remoting
 -r:System.Data 
 -r:System.Xml
 -r:System
--r:Mono.Web
+
 
 -r:DGAC
 

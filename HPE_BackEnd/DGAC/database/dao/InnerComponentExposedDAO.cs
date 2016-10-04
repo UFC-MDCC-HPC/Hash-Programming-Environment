@@ -70,6 +70,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "id_inner_rename like '" + id_inner_rename + "'";
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
+			Trace.WriteLine ("listOwnerOfExposedInner: " + sql);
             while (reader.Read())
             {
                 InnerComponentExposed ic = new InnerComponentExposed();

@@ -217,7 +217,7 @@ public class CommandLineUtil {
 
 			if (ExitCode > 0)
 			{
-					string message = "Error executing command: " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments + "\n" + output_str;
+				string message = "Error executing command: " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments + "\n" + output_str;
 				throw new Exception(message);
 			}
 		}
@@ -257,16 +257,16 @@ public class CommandLineUtil {
 
 			System.Diagnostics.Process proc = new System.Diagnostics.Process();
 			proc.EnableRaisingEvents = false;
-			proc.StartInfo.CreateNoWindow = true;
-			proc.StartInfo.UseShellExecute = false;
+			proc.StartInfo.CreateNoWindow = false; //true
+			proc.StartInfo.UseShellExecute = false; 
 			foreach (Tuple<string,string> env in environment)
 				proc.StartInfo.EnvironmentVariables.Add (env.Item1,env.Item2);
 			proc.StartInfo.FileName = cmd;
 			proc.StartInfo.Arguments = args;
-			proc.StartInfo.RedirectStandardError = true;
-			proc.StartInfo.RedirectStandardOutput = true;
-			proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
-			proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+			proc.StartInfo.RedirectStandardError = false; //true;
+			proc.StartInfo.RedirectStandardOutput = false; // true;
+			//proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+			//proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
 			if (userName != null) proc.StartInfo.UserName = userName;
 			if (password != null) proc.StartInfo.Password = password;
 			if (curDir != null)
@@ -286,8 +286,8 @@ public class CommandLineUtil {
 
 			proc.Start();
 
-			proc.BeginErrorReadLine();
-			proc.BeginOutputReadLine();
+			//proc.BeginErrorReadLine();
+			//proc.BeginOutputReadLine();
 
 			return proc;
 
@@ -348,8 +348,7 @@ public class CommandLineUtil {
 
     private static string output_str = null;
 
-    private static void OutputHandler(object sendingProcess,
-    DataReceivedEventArgs outLine)
+    private static void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
     {
         //This event handler is not called until process is finished.
         //When process is finished it gets called once for each line

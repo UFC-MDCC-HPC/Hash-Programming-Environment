@@ -1,4 +1,8 @@
-DEPLOY ERROR: Unresolved Dependency for base component (inner component) : Application ---   at HPE_DGAC_LoadDB.LoaderAbstractComponent.loadInnerComponents (br.ufc.pargo.hpe.backend.DGAC.database.AbstractComponentFunctor absC) <0x4205ba50 + 0x0093f> in <filename unknown>:0 
-  at HPE_DGAC_LoadDB.LoaderAbstractComponent.loadComponent (ComponentType c, IList`1& externalLibrary) <0x42058740 + 0x00097> in <filename unknown>:0 
-  at br.ufc.pargo.hpe.backend.DGAC.BackEnd.registerAbstractComponent (ComponentType ct, System.String userName, System.String password, System.String curDir) <0x42057000 + 0x0011b> in <filename unknown>:0 
-  at br.ufc.pargo.hpe.backend.DGAC.BackEnd.registerAbstractComponentTransaction (ComponentType ct, System.String userName, System.String password, System.String curDir) <0x42028a20 + 0x0005f> in <filename unknown>:0 
+Object reference not set to an instance of an object ---   at br.ufc.pargo.hpe.backend.DGAC.ManagerObject.instantiateWorkers () [0x0038b] in /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs:2081 
+  at (wrapper synchronized) br.ufc.pargo.hpe.backend.DGAC.ManagerObject:instantiateWorkers ()
+  at br.ufc.pargo.hpe.backend.DGAC.ManagerObject..ctor () [0x000fe] in /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs:52 
+  at (wrapper remoting-invoke-with-check) br.ufc.pargo.hpe.backend.DGAC.ManagerObject:.ctor ()
+  at br.ufc.pargo.hpe.backend.DGAC.ManagerObject.get_SingleManagerObject () [0x0000b] in /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs:44 
+  at br.ufc.pargo.hpe.backend.DGAC.BackEnd.getFrameworkInstance () [0x0000b] in /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/DGAC.cs:252 
+  at br.ufc.pargo.hpe.backend.DGAC.BackEnd.registerAbstractComponent (ComponentType ct, System.String userName, System.String password, System.String curDir) [0x00135] in /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/DGAC.cs:444 
+  at br.ufc.pargo.hpe.backend.DGAC.BackEnd.registerAbstractComponentTransaction (ComponentType ct, System.String userName, System.String password, System.String curDir) [0x00012] in /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/DGAC.cs:466 

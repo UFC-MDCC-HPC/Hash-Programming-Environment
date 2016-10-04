@@ -46,12 +46,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\DGAC\DGAC.csproj">
-      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
-      <Name>DGAC</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References" />
   </ItemGroup>
   <ItemGroup>
@@ -66,10 +60,10 @@
       <RelPath>Web References\BackEndService</RelPath>
       <UpdateFromURL>http://127.0.0.1:8081/BackEnd.asmx?wsdl</UpdateFromURL>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://127.0.0.1:8083/Platform.asmx?wsdl">
+    <WebReferenceUrl Include="http://127.0.0.1:8082/Platform.asmx?wsdl">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\PlatformService</RelPath>
-      <UpdateFromURL>http://127.0.0.1:8083/Platform.asmx?wsdl</UpdateFromURL>
+      <UpdateFromURL>http://127.0.0.1:8082/Platform.asmx?wsdl</UpdateFromURL>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
@@ -78,10 +72,15 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\PlatformService\Platform.wsdl" />
     <None Include="Web References\PlatformService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

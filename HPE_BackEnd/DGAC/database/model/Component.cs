@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -81,12 +82,12 @@ public class Component : HashComponent {
     {
         get
         {
-				Console.Error.WriteLine("get_Parameter enter");
+				Trace.WriteLine("get_Parameter enter");
             IDictionary<string, AbstractComponentFunctorApplication> pars = new Dictionary<string, AbstractComponentFunctorApplication>();
             IList<SupplyParameter> sps = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(this.Id_functor_app);
             foreach (SupplyParameter sp in sps)
             {
-				Console.Error.WriteLine("get_Parameter loop");
+				Trace.WriteLine("get_Parameter loop");
 				if (sp is SupplyParameterComponent)
 				{
                 	SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;					

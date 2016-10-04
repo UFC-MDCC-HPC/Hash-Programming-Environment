@@ -45,7 +45,7 @@ public class AbstractComponentFunctor : HashComponent {
 	{
 		get {
 				int pos = library_path.LastIndexOf (".");
-				return library_path.Substring(pos+1);
+				return library_path.Substring(0,pos);
 			}
 	}
 

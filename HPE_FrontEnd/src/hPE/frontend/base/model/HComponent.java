@@ -2440,7 +2440,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public void supplyParameter(String varName, HComponent model) 
 	{		
 		try 
-		{			
+		{						
 			Map<String, Pair<HComponent,Boolean>> toSupply = new HashMap<String,Pair<HComponent,Boolean>>();
 			Pair<HComponent,Boolean> pair_model = new Pair<HComponent,Boolean>(model,false);
 			toSupply.put(varName, pair_model);
@@ -2497,6 +2497,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			String varName = supply_item.getKey(); 
 			HComponent model = supply_item.getValue().fst();
 			boolean transitive = supply_item.getValue().snd();
+			
+			if (this.supplyMemory.containsKey(varName) && !this.supplyTransitive.get(varName) && transitive)
+				continue;
 			
 			if (!model.isConnected()) {
 				model.setHiddenInnerComponent(true);
@@ -3305,11 +3308,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	        if (pars2.containsKey(par_id))
 	        { 
 	        	HComponent cvar_2 = pars2.get(par_id).get(0);
-	        	HComponent cvar_2_enclosing = (HComponent) cvar_2.getInnerTopConfigurations().get(0);
 	
 		        if (cvar_1.isSubTypeOf(cvar_2) && !cvar_1.isEquivalentTo(cvar_2))
 		        {   
-		        	cvar_2_enclosing.supplyParameter(cvar_2.getVariableName(cvar_2_enclosing), cvar_1);
+		        	List<HComponent> cs =  cvar_2.getInnerTopConfigurations();
+		        	if (!cs.isEmpty()) 
+		        	{
+			        	HComponent cvar_2_enclosing = (HComponent) cs.get(0);
+			        	cvar_2_enclosing.supplyParameter(cvar_2.getVariableName(cvar_2_enclosing), cvar_1);
+		        	}
 		        }
 	        }
 	    }
@@ -3321,11 +3328,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	        if (pars1.containsKey(par_id))
 	        { 
 		        HComponent cvar_1 = pars1.get(par_id).get(0);
-	        	HComponent cvar_1_enclosing = (HComponent) cvar_1.getInnerTopConfigurations().get(0);
-	
 		        if (cvar_2.isSubTypeOf(cvar_1) /*&& !cvar_2.isEquivalentTo(cvar_1)*/) 
 		        {
-		        	cvar_1_enclosing.supplyParameter(cvar_1.getVariableName(cvar_1_enclosing), cvar_2);
+		        	List<HComponent> cs =  cvar_1.getInnerTopConfigurations();
+		        	if (!cs.isEmpty()) 
+		        	{
+		        		HComponent cvar_1_enclosing = (HComponent) cs.get(0);
+		        		cvar_1_enclosing.supplyParameter(cvar_1.getVariableName(cvar_1_enclosing), cvar_2);
+		        	}
 		        }
 	        }
 	    }
@@ -3476,7 +3486,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return true;
 	}
 
-	public List<HComponent> getInnerTopConfigurations() {
+	public List<HComponent> getInnerTopConfigurations() 
+	{
 		List<HComponent> l = new ArrayList<HComponent>(); // this.getAllParentConfigurations();
 
 		HComponent topC = (HComponent) this.getTopConfiguration();
@@ -3557,6 +3568,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public void rememberSupply(String varName, HComponent c, boolean transitive) {
 		if (supplyMemory == null)
 			supplyMemory = new HashMap<String, HComponent>();
+		
 		supplyMemory.put(varName, c);
 		supplyOrder.put(counter_supply++, varName);
 		supplyTransitive.put(varName, transitive);

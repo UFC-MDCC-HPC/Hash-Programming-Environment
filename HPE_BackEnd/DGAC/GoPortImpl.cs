@@ -64,8 +64,9 @@ namespace br.ufc.hpe.backend.DGAC
 
             public void Run()
             {
-				Trace.WriteLine("GO !!!! ");
+				Trace.WriteLine("GO BEFORE !!!! ");
 				worker_go_port.go();				
+				Trace.WriteLine("GO AFTER !!!! ");
             }
 
         }

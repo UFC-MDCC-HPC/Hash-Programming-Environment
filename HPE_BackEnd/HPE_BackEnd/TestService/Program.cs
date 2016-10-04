@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC.database;
+using System.Collections.Generic;
 
 namespace TestService
 {
@@ -8,152 +9,137 @@ namespace TestService
 	{
 		public static void Main (string[] args)
 		{
-			//string[] platform_config = new string[2];
-		//	platform_config [0] = "http://127.0.0.1:8081";
-			//platform_config [1] = "4";
-
-			//BackEndService.BackEnd backend_service = new BackEndService.BackEnd ();
-			//backend_service.deploy (platform_config);
-
-		//	Platform.Platform platform_service = new Platform.Platform ("http://127.0.0.1:8082/Platform.asmx");
-		//	platform_service.deploy ("system");
+			string arch_desc_xml = File.ReadAllText("../../shelf_mapreduce.xml");
+			string[] p_ids = new string[5] {
+				"platform_SAFe",
+				"platform_data_source",
+				"platform_data_sink",
+				"platform_map",
+				"platform_reduce"
+			};
+			string[] c_ids = new string[6] {
+				"data_source",
+				"data_sink",
+				"mapper",
+				"reducer",
+				"splitter",
+				"shuffler"
+			};
+			string[] p_contracts = new string[5] {
+				"PlatformSAFe.cc",
+				"PlatformDataSource.cc",
+				"PlatformDataSink.cc",
+				"PlatformMap.cc",
+				"PlatformReduce.cc"
+			};
+			string[] c_contracts = new string[6] {
+				"DataSource.cc",
+				"DataSink.cc",
+				"Mapper.cc",
+				"Reducer.cc",
+				"Splitter.cc",
+				"Shuffler.cc"
+			};
+			string[] p_unit_mappings = new string[5] {
+				"PlatformSAFe.um",
+				"PlatformDataSource.um",
+				"PlatformDataSink.um",
+				"PlatformMap.um",
+				"PlatformReduce.um"
+			};
+			string[] c_unit_mappings = new string[6] {
+				"DataSource.um",
+				"DataSink.um",
+				"Mapper.um",
+				"Reducer.um",
+				"Splitter.um",
+				"Shuffler.um"
+			};
+			string[] b_ids = new string[12] {
+				"task_reduce",
+				"intermediate_pairs_global",
+				"intermediate_pairs_local",
+				"task_map",
+				"output_pairs",
+				"input_pairs",
+				"task_binding_split_first",
+				"task_binding_split_next",
+				"task_binding_data",
+				"task_binding_shuffle",
+				"input_data",
+				"output_data"
+			};
 
 			CoreService.Core core_service = new CoreService.Core ("http://127.0.0.1:8080/Core.asmx");
-
-			// resolve contract Mapper
-			string contract_platform_data = File.ReadAllText("PlatformData.cc");
-			string[] resolution_result_platform_data = core_service.resolve (contract_platform_data);
-
-			// resolve contract Mapper
-			string contract_platform_map = File.ReadAllText("PlatformMap.cc");
-			string[] resolution_result_platform_map = core_service.resolve (contract_platform_map);
-
-			// resolve contract Mapper
-			string contract_platform_reduce = File.ReadAllText("PlatformReduce.cc");
-			string[] resolution_result_platform_reduce = core_service.resolve (contract_platform_map);
-
-			// resolve contract Data Source
-			string contract_data_source = File.ReadAllText("DataSource.cc");
-			string[] resolution_result_data_source = core_service.resolve (contract_data_source);
-
-			// resolve contract Data Sink
-			string contract_data_sink = File.ReadAllText("DataSink.cc");
-			string[] resolution_result_data_sink = core_service.resolve (contract_data_sink);
-
-			// resolve contract Mapper
-			string contract_mapper = File.ReadAllText("Mapper.cc");
-			string[] resolution_result_mapper = core_service.resolve (contract_mapper);
-
-			// resolve contract Reducer
-			string contract_reducer = File.ReadAllText("Reducer.cc");
-			string[] resolution_result_reducer = core_service.resolve (contract_reducer);
-
-			// resolve contract Splitter
-			string contract_splitter = File.ReadAllText("Splitter.cc");
-			string[] resolution_result_splitter = core_service.resolve (contract_splitter);
-
-			// resolve contract Shuffler
-			string contract_shuffler = File.ReadAllText("Shuffler.cc");
-			string[] resolution_result_shuffler = core_service.resolve (contract_shuffler);
-
-			string arch_desc_xml = File.ReadAllText("../../shelf_mapreduce.xml");
-			//string arch_ref = null;
-			//string component_ref = null;
-			string[] c_ids = new string[9]{"platform_data", "platform_map", "platform_reduce","data_source","data_sink", "mapper", "reducer", "splitter", "shuffler"};
-			string[] c_contracts = new string[9] 
-			{
-				contract_platform_data, 
-				contract_platform_map, 
-				contract_platform_reduce, 
-				contract_data_source,
-				contract_data_sink,
-				contract_mapper, 
-				contract_reducer, 
-				contract_splitter, 
-				contract_shuffler
-			};
-
-			string unitmapping_platform_data = File.ReadAllText("PlatformData.um");
-			string unitmapping_platform_map = File.ReadAllText("PlatformMap.um");
-			string unitmapping_platform_reduce = File.ReadAllText("PlatformReduce.um");
-			string unitmapping_data_source = File.ReadAllText("DataSource.um");
-			string unitmapping_data_sink = File.ReadAllText("DataSink.um");
-			string unitmapping_mapper = File.ReadAllText("Mapper.um");
-			string unitmapping_reducer = File.ReadAllText("Reducer.um");
-			string unitmapping_splitter = File.ReadAllText("Splitter.um");
-			string unitmapping_shuffler = File.ReadAllText("Shuffler.um");
-
-			string[] c_unit_mapping = new string[9] 
-			{
-				unitmapping_platform_data,
-				unitmapping_platform_map,
-				unitmapping_platform_reduce,
-				unitmapping_data_source,
-				unitmapping_data_sink,
-				unitmapping_mapper, 
-				unitmapping_reducer, 
-				unitmapping_splitter, 
-				unitmapping_shuffler
-			};
-
-			string[] c_choices = new string[9] 
-			{ 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_platform_data[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_platform_map[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_platform_reduce[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_data_source[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_data_sink[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_mapper[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_reducer[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_splitter[0]).component_ref, 
-				LoaderApp.deserialize<ComponentReference.ComponentReference> (resolution_result_shuffler[0]).component_ref
-			};
-			
-			string platform_address_SAFe = null;
-
 			core_service.Timeout = int.MaxValue;
 
-			// DEPLOY MAP PLATFORM
-			core_service.deploy (arch_desc_xml, "platform_data", c_ids, c_contracts, c_choices, c_unit_mapping, platform_address_SAFe);
+			int workflow_handle = core_service.openWorkflowSession (arch_desc_xml, "");
 
-			// DEPLOY MAP PLATFORM
-			core_service.deploy (arch_desc_xml, "platform_map", c_ids, c_contracts, c_choices, c_unit_mapping, platform_address_SAFe);
+			try 
+			{
+				// REGISTER
 
-			// DEPLOY REDUCE PLATFORM
-			core_service.deploy (arch_desc_xml, "platform_reduce", c_ids, c_contracts, c_choices, c_unit_mapping, platform_address_SAFe);
+				for (int i = 0; i < p_ids.Length; i++) 
+				{
+					string contract_content = File.ReadAllText(p_contracts [i]);
+					string unit_mapping_content = File.ReadAllText(p_unit_mappings [i]);
+					core_service.registerContract (workflow_handle, p_ids [i], contract_content, unit_mapping_content);
+				}
 
-			// DEPLOY MAPPER
-			core_service.deploy (arch_desc_xml, "mapper", null, null, null, null, platform_address_SAFe);
+				for (int i = 0; i < c_ids.Length; i++) 
+				{
+					string contract_content = File.ReadAllText(c_contracts [i]);
+					string unit_mapping_content = File.ReadAllText(c_unit_mappings [i]);
+					core_service.registerContract (workflow_handle, c_ids [i], contract_content, unit_mapping_content);
+				}
 
-			// DEPLOY REDUCER
-			core_service.deploy (arch_desc_xml, "reducer", null, null, null, null, platform_address_SAFe);
+				// RESOLVE
 
-			// DEPLOY SPLITTER
-			core_service.deploy (arch_desc_xml, "splitter", null, null, null, null, platform_address_SAFe);
+				foreach (string p_id in p_ids) 
+					core_service.resolve (workflow_handle, p_id);
 
-			// DEPLOY SHUFFLER
-			core_service.deploy (arch_desc_xml, "shuffler", null, null, null, null, platform_address_SAFe);
+				foreach (string c_id in c_ids) 
+					core_service.resolve (workflow_handle, c_id);
 
+				// DEPLOY
 
+				foreach (string p_id in p_ids) 
+					core_service.deploy (workflow_handle, p_id);
 
-			// INSTANTIATE MAP PLATFORM
-			core_service.instantiate (arch_desc_xml, "platform_map", platform_address_SAFe);
+				foreach (string c_id in c_ids) 
+					core_service.deploy (workflow_handle, c_id);
 
-			// INSTANTIATE REDUCE PLATFORM
-			core_service.instantiate (arch_desc_xml, "platform_reduce", platform_address_SAFe);
+				// INSTANTIATE
 
-			// INSTANTIATE MAPPER
-			core_service.instantiate (arch_desc_xml, "mapper", platform_address_SAFe);
+				foreach (string p_id in p_ids)
+					core_service.instantiate (workflow_handle, p_id);
 
-			// INSTANTIATE REDUCER
-			core_service.instantiate (arch_desc_xml, "reducer", platform_address_SAFe);
+				foreach (string b_id in b_ids)
+					core_service.instantiate (workflow_handle, b_id);
 
-			// INSTANTIATE SPLITTER
-			core_service.instantiate (arch_desc_xml, "splitter", platform_address_SAFe);
+				foreach (string c_id in c_ids)
+					core_service.instantiate (workflow_handle, c_id);
+				
+				core_service.instantiate(workflow_handle,"workflow");
+				core_service.instantiate(workflow_handle,"application");
 
-			// INSTANTIATE SHUFFLER
-			core_service.instantiate (arch_desc_xml, "shuffler", platform_address_SAFe);
+				core_service.run(workflow_handle);
 
+			}
+			catch (Exception e) 
+			{
+				Console.Error.WriteLine (e.Message);
+				Console.Error.WriteLine (e.StackTrace);
+				if (e.InnerException != null) 
+				{
+					Console.Error.WriteLine (e.InnerException.Message);
+					Console.Error.WriteLine (e.InnerException.StackTrace);
+				}					
+			}
+			finally 
+			{
+				core_service.closeWorkflowSession (workflow_handle);
+			}
 
 		}
 	}

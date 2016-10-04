@@ -156,7 +156,7 @@ public class AbstractComponentFunctorDAO{
 		return retrieve_libraryPath (package + "." + name);
 	}
 
-    internal AbstractComponentFunctor retrieve_libraryPath(string library_path)
+    public AbstractComponentFunctor retrieve_libraryPath(string library_path)
     {
         AbstractComponentFunctor acf = null;
         IDbConnection dbcon = Connector.DBcon;
@@ -226,8 +226,11 @@ public class AbstractComponentFunctorDAO{
 		string sql =
 			"SELECT id_abstract, id_functor_app_supertype, library_path, hash_component_UID, kind " +
 			"FROM abstractcomponentfunctor " +
-			"WHERE kind=" + kind;
+			"WHERE kind like '" + kind + "'";
 		dbcmd.CommandText = sql;
+
+		Console.WriteLine ("listByKind ****** : " + sql);
+
 		IDataReader reader = dbcmd.ExecuteReader();
 		while (reader.Read())
 		{
