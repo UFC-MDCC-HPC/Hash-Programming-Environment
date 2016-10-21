@@ -13,6 +13,7 @@ using System.Runtime.Remoting.Channels.Ipc;
 using CommandLine.Utility;
 using System.Diagnostics;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
@@ -74,9 +75,27 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 				var binding = new BasicHttpBinding ();
 				var address = new Uri (uri_str);
-				var host = new ServiceHost(typeof(WorkerObject));
-				host.AddServiceEndpoint (typeof(IWorkerObject), binding, address);
-				host.Open ();
+				var serviceHost = new ServiceHost(typeof(WorkerObject));
+
+				ServiceThrottlingBehavior throttleBehavior = serviceHost.Description.Behaviors.Find<ServiceThrottlingBehavior>();
+
+				if (throttleBehavior == null)
+				{
+					throttleBehavior = new ServiceThrottlingBehavior();
+					throttleBehavior.MaxConcurrentCalls = 1024;
+					throttleBehavior.MaxConcurrentSessions = 256;
+					throttleBehavior.MaxConcurrentInstances = 512;
+
+					serviceHost.Description.Behaviors.Add(throttleBehavior);
+					Trace.WriteLine("THROTTLING --- " + throttleBehavior.MaxConcurrentCalls + "/" + throttleBehavior.MaxConcurrentSessions + "/" + throttleBehavior.MaxConcurrentInstances);
+				} 
+				else
+				{
+					Trace.WriteLine("NO THROTTLING");
+				}
+
+				serviceHost.AddServiceEndpoint (typeof(IWorkerObject), binding, address);
+				serviceHost.Open ();
 	
 				Trace.WriteLine("Worker #" + my_rank + " running !");
 

@@ -7,7 +7,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace BackEndService
+namespace br.ufc.mdcc.hpcshelf.backend
 {
 	/* In the BackEnd server, the maintainer must do:
 	 * 1) set the environment variable HPE_NEXT_FREE_WORKER_PORT
@@ -17,7 +17,12 @@ namespace BackEndService
 	 * 5) copy the platform service to $HOME/hpe_work/worker 
 	 */
 
-	public class BackEnd : System.Web.Services.WebService
+	public interface IBackendServices 
+	{
+		string deploy (string[] platform_config);
+	}
+
+	public class BackendServices : System.Web.Services.WebService, IBackendServices
 	{
 		[WebMethod]
 		public int howManyRunningPlatforms()
@@ -47,6 +52,10 @@ namespace BackEndService
 
 		private int first_base_binding_port = 12000;
 
+		private static int count_p = 0;
+		private static int count_w = 1;
+			
+
 		[WebMethod]
 		public string deploy(string[] platform_config)
 		{
@@ -69,7 +78,7 @@ namespace BackEndService
 
 			string[] contents_configfile = new string[nodes];
 			for (int i = 0; i < contents_configfile.Length; i++) 
-				contents_configfile[i] = "-n 1 /usr/bin/mono-service -l:Worker" + (port_worker_base + i) + ".lock bin/WorkerService.exe --port " + (port_worker_base + i) + " --debug --no-deamon";
+				contents_configfile[i] = "-n 1 /opt/mono-4.2.2/bin/mono-service -l:Worker" + (port_worker_base + i) + ".lock bin/WorkerService.exe --port " + (port_worker_base + i) + " --debug --no-deamon";
 
 			string configfile_name = Path.GetTempFileName ();
 			File.WriteAllLines (configfile_name, contents_configfile);
@@ -84,7 +93,9 @@ namespace BackEndService
 			string nodesfile_name = Path.GetTempFileName ();
 			File.WriteAllLines (nodesfile_name, contents_nodesfile);
 			environment_p [0] = new Tuple<string, string> ("PATH_HOSTS_FILE", nodesfile_name);
-			environment_p [1] = new Tuple<string, string> ("BASE_BINDING_FACET_PORT", (first_base_binding_port + 3000*proc_p.Count).ToString());
+			environment_p [1] = new Tuple<string, string> ("BASE_BINDING_FACET_PORT", (first_base_binding_port + 3000*count_p).ToString());
+
+			count_p++;
 
 			Thread tw = new Thread (launchWorker);
 			Thread tp = new Thread (launchPlatformService);
@@ -95,7 +106,7 @@ namespace BackEndService
 			Environment.SetEnvironmentVariable ("HPE_NEXT_FREE_WORKER_PORT", (port_worker_base + nodes).ToString());
 			Environment.SetEnvironmentVariable ("HPE_NEXT_FREE_PLATFORM_SERVICE_PORT", (port_platform + 1).ToString());
 
-			string virtual_platform_address =  "http://" + platform_address + ":" + port_platform + "/Platform.asmx";
+			string virtual_platform_address =  "http://" + platform_address + ":" + port_platform + "/PlatformServices.asmx";
 
 			return virtual_platform_address;
 		}

@@ -70,10 +70,10 @@ namespace TestService
 				"output_data"
 			};
 
-			CoreService.Core core_service = new CoreService.Core ("http://127.0.0.1:8080/Core.asmx");
+			WorkflowCoreServices.WorkflowCoreServices core_service = new WorkflowCoreServices.WorkflowCoreServices ();
 			core_service.Timeout = int.MaxValue;
 
-			int workflow_handle = core_service.openWorkflowSession (arch_desc_xml, "");
+			int workflow_handle = core_service.openWorkflowSession (arch_desc_xml);
 
 			try 
 			{
@@ -123,7 +123,13 @@ namespace TestService
 				core_service.instantiate(workflow_handle,"workflow");
 				core_service.instantiate(workflow_handle,"application");
 
-				core_service.run(workflow_handle);
+				foreach (string c_id in c_ids)
+					core_service.run (workflow_handle, c_id);
+					
+				core_service.run(workflow_handle,"workflow");
+				core_service.run(workflow_handle,"application");
+
+				core_service.wait(workflow_handle);
 
 			}
 			catch (Exception e) 

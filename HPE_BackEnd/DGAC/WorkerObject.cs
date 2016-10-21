@@ -28,7 +28,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 { 
 
 	[ServiceContract(SessionMode = SessionMode.Allowed)]
-	[ServiceKnownType(typeof(TypeMapImpl))]
+	//[ServiceKnownType(typeof(TypeMapImpl))]
 	public interface IWorkerObject : gov.cca.Services, gov.cca.Component, gov.cca.ports.BuilderService, gov.cca.AbstractFramework
 	{
 		[OperationContract]
@@ -39,6 +39,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		[OperationContract]
 		int perform_go(int id);
+
+		//[OperationContract]
+		//int PerformGo(int id);
+
+		[OperationContractAttribute(AsyncPattern=true)]
+		IAsyncResult BeginPerformGo(int id, AsyncCallback callback, object asyncState);
+
+		// Note: There is no OperationContractAttribute for the end method.
+		int EndPerformGo(IAsyncResult result);
 
 		[OperationContract]
 		RemoteInitializePort getRemoteInitializePort(string portName);
@@ -95,9 +104,35 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		void setServicesByKey(int services);
 	}
 
-	 [DataContract]
-	// [ServiceKnownType(typeof(InitializePortWrapper))]
-	 [ServiceBehavior(InstanceContextMode=InstanceContextMode.Single)]
+	// Simple async result implementation.
+	class GoAsyncResult : IAsyncResult
+	{
+		int r;
+
+		public GoAsyncResult(int r)
+		{ this.r = r; }
+
+		public int Data
+		{ get { return r; } }
+
+		#region IAsyncResult Members
+		public object AsyncState
+		{ get { return (object)r; } }
+
+		public WaitHandle AsyncWaitHandle
+		{ get { throw new Exception("The method or operation is not implemented."); } }
+
+		public bool CompletedSynchronously
+		{ get { return true; } }
+
+		public bool IsCompleted
+		{ get { return true; } }
+		#endregion
+	}
+
+//		 [DataContract]
+	[ServiceBehavior(InstanceContextMode=InstanceContextMode.Single,
+		              ConcurrencyMode=ConcurrencyMode.Multiple)]
 	 public class WorkerObject : gov.cca.AbstractFramework, 
                                  gov.cca.ports.BuilderService,
                                  gov.cca.Services,
@@ -240,6 +275,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             my_global_rank = this.global_communicator.Rank;
 
 			Trace.WriteLine ("WORKER OBJECT - MY RANK is " + my_global_rank + ", size = " + MPI.Communicator.world.Size + ", id=" + this.GetHashCode());
+
+			if (!ThreadPool.SetMinThreads (16, 16))
+				Console.WriteLine ("SET MIN THREADS FAIL !");
+			
+			if (!ThreadPool.SetMaxThreads (800, 800))
+				Console.WriteLine ("SET MAX THREAD FAIL !");
+
+			int workerThreadsMin, completionPortThreadsMin;
+			ThreadPool.GetMinThreads (out workerThreadsMin, out completionPortThreadsMin);
+
+			int workerThreadsMax, completionPortThreadsMax;
+			ThreadPool.GetMaxThreads (out workerThreadsMax, out completionPortThreadsMax);
+
+			Console.WriteLine ("MIN THREADS = " + workerThreadsMin + "/" + completionPortThreadsMin);
+			Console.WriteLine ("MAX THREADS = " + workerThreadsMax + "/" + completionPortThreadsMax);
         }
 		
 		#endregion
@@ -1083,7 +1133,29 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public int perform_go(int id)
 		{
+			Console.WriteLine ("BEGIN PERFORM GO - WORKER OBJECT " + this.GetHashCode());
 			return ((GoPort)remote_ports_dict[id]).go();
+			Console.WriteLine ("END PERFORM GO -  WORKER OBJECT " + this.GetHashCode());
+		}
+	
+		public IAsyncResult BeginPerformGo(int id, AsyncCallback callback, object asyncState)
+		{
+			int a1,a2;
+			ThreadPool.GetAvailableThreads (out a1,out a2);
+
+			Console.WriteLine ("BEGIN PERFORM GO ASYNC - WORKER OBJECT " + this.GetHashCode() + " --- AVAILABLE THREADS for " + this.GetHashCode() + ":" + a1 + "/" + a2);
+			Thread t = new Thread (new ThreadStart (delegate() {
+				int res = ((GoPort)remote_ports_dict[id]).go();
+			}));
+			t.Start ();
+			Console.WriteLine ("END PERFORM GO ASYNC -  WORKER OBJECT " + this.GetHashCode());
+			return new GoAsyncResult (t.GetHashCode());
+		}
+
+		public int EndPerformGo(IAsyncResult r)
+		{
+			GoAsyncResult result = r as GoAsyncResult;
+			return result.Data;
 		}
 			
 		public RemoteInitializePort getRemoteInitializePort(string portName)
@@ -1173,13 +1245,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
-			Trace.WriteLine("registering port 0" + portName );
+			Trace.WriteLine("registering port 0 " + portName );
 			
 			if (usesPortNamesInv.ContainsKey(portName))
 			{
 				Trace.WriteLine("throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);");
 				throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);
 			}
+
+			Trace.WriteLine("registering port 1 " + portName );
 
 			HPETypeMap hpe_properties = (HPETypeMap) properties;
 
@@ -1188,6 +1262,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			string instanceName; 
             string id_inner;
             readPortName(portName, out instanceName, out id_inner);
+
+			Trace.WriteLine("registering port 2 " + portName + " --- " + instanceName + "/" + id_inner);
 
 			ComponentID cid;
             if (componentIDs.ContainsKey(instanceName))
@@ -1203,9 +1279,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				throw new CCAExceptionImpl("Bad Instance Name: " + instanceName);
             }
 				
+			Trace.WriteLine("registering port 3 " + portName );
+
 			this.registerUsesPortInfo(cid, portName, type, properties);
-            
+
+			Trace.WriteLine("registering port 4 " + portName );
+
 			Connector.closeConnection();            
+			Trace.WriteLine("registering port 5 " + portName);
 		}
 
         private void readPortName(string portName, out string instanceName, out string innerName)
@@ -1668,7 +1749,32 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public int perform_go(int id)
 		{			
-			return Channel.perform_go (id);
+			//int res = 0;
+			//Console.WriteLine ("BEGIN PERFORM GO - REMOTE WORKER OBJECT $$$ " + this.GetHashCode());
+			//res = Channel.perform_go (id);
+			//Console.WriteLine("END PERFORM GO - REMOTE WORKER OBJECT $$$ " + this.GetHashCode());
+			//return res;
+
+			Console.WriteLine ("BEGIN PERFORM GO 1 - REMOTE WORKER OBJECT ### " + this.GetHashCode());
+			IAsyncResult res = Channel.BeginPerformGo (id, null, null);
+			Console.WriteLine ("BEGIN PERFORM GO 2 - REMOTE WORKER OBJECT ### " + this.GetHashCode());
+			res.AsyncWaitHandle.WaitOne ();
+			Console.WriteLine("END PERFORM GO - REMOTE WORKER OBJECT ###" + this.GetHashCode());
+			return Channel.EndPerformGo (res);
+		}
+			
+		public IAsyncResult BeginPerformGo(int id, AsyncCallback callback, object asyncState)
+		{
+			Console.WriteLine ("BEGIN PERFORM GO ASYNC - REMOTE WORKER OBJECT ###" + this.GetHashCode());
+			int res = perform_go (id);
+			Console.WriteLine ("END PERFORM GO ASYNC -  REMOTE WORKER OBJECT ###" + this.GetHashCode());
+			return new GoAsyncResult (res);
+		}
+
+		public int EndPerformGo(IAsyncResult r)
+		{
+			GoAsyncResult result = r as GoAsyncResult;
+			return result.Data;
 		}
 
 		public RemoteInitializePort getRemoteInitializePort(string portName)

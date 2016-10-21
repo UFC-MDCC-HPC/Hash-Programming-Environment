@@ -626,11 +626,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			        for (int i=0; i<nodes.Length; i++)
 					{
-					   gov.cca.ports.BuilderService wb = WorkerBuilder[nodes[i]];
-					   WorkerComponentID pcid = (WorkerComponentID) mcid_provider.getWorkerComponentID(nodes[i]);
-				       WorkerComponentID ucid = (WorkerComponentID) mcid_user.getWorkerComponentID(nodes[i]);
+					    gov.cca.ports.BuilderService wb = WorkerBuilder[nodes[i]];
+					    WorkerComponentID pcid = (WorkerComponentID) mcid_provider.getWorkerComponentID(nodes[i]);
+				        WorkerComponentID ucid = (WorkerComponentID) mcid_user.getWorkerComponentID(nodes[i]);
 						Trace.WriteLine("BEGIN 4 connect_h2c LOOP " + i + ", " + (ucid==null) + ", " + (pcid==null) + "," + mcid_user.getInstanceName() + ", " + mcid_provider.getInstanceName());
-					   worker_connection[i] = (WorkerConnectionID) wb.connect(ucid, usingPortName, pcid, providingPortName);							   
+					    worker_connection[i] = (WorkerConnectionID) wb.connect(ucid, usingPortName, pcid, providingPortName);							   
 						Trace.WriteLine("END connect_h2c LOOP " + i);
 					}
 					connection = new ManagerConnectionIDImpl(provider, providingPortName, user, usingPortName, nodes, worker_connection);
@@ -949,8 +949,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					    return getPortProceed(conn, portName);
 					} 
 					else
-					{
-					    
+					{					    
 						Trace.WriteLine("Wait for port " + portName);
 					
 		                AutoResetEvent wait_handle = new AutoResetEvent(false);
@@ -1005,15 +1004,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				 * for connecting to applications, where an application may provide
 				 * arbitrary ports for the host and vice-versa
 				 */
-				if (user_port_name.EndsWith(":" + Constants.GO_PORT_NAME))
+				if (user_port_name.EndsWith(Constants.GO_PORT_NAME))
 				{
 					port = new GoPortImpl(ms, ports);
 			    } 
-				else if (user_port_name.EndsWith(":" + Constants.INITIALIZE_PORT_NAME))
+				else if (user_port_name.EndsWith(Constants.INITIALIZE_PORT_NAME))
 				{
 					port = new InitializePortImpl(ms, ports);
 				}
-				else if (user_port_name.EndsWith(":" + Constants.RECONFIGURE_PORT_NAME))
+				else if (user_port_name.EndsWith(Constants.RECONFIGURE_PORT_NAME))
 				{
 					port = new ReconfigurationAdvicePortImpl(ms, ports);
 				}

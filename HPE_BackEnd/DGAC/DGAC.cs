@@ -28,6 +28,7 @@ using Instantiator;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Runtime.Serialization;
+using br.ufc.pargo.hpe.kinds;
 
 
 namespace br.ufc.pargo.hpe.backend
@@ -1000,9 +1001,6 @@ namespace br.ufc.pargo.hpe.backend
 					// Builder Service Port
 					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
 
-					// Go Port
-					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
-
 					open_sessions.Add(session_id, new Session(session_id, (ManagerObject)frw, frwServices));
 
 					return open_sessions[session_id];
@@ -1037,7 +1035,7 @@ namespace br.ufc.pargo.hpe.backend
 				{
 					gov.cca.Services frwServices = open_sessions[session_id].Services;
 		
-					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
+					//frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
 					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
 
 					open_sessions.Remove(session_id);
@@ -1964,8 +1962,7 @@ namespace br.ufc.pargo.hpe.backend
 
 					Trace.WriteLine("createDelayedInstantiationTriggersOfSolutionComponents - CREATE THREADS ");
 					// Create the threads of delayed instantiation of solution components and bindings. 
-					thread_create_component =
-							createDelayedInstantiationTriggersOfSolutionComponents
+					createDelayedInstantiationTriggersOfSolutionComponents
 						                                 (session_id_string, 
 								                          new List<ManagerComponentID>(), 
 								                          null,
@@ -1978,7 +1975,7 @@ namespace br.ufc.pargo.hpe.backend
 						                                 );
 
 
-					Thread t = null;
+//					Thread t = null;
 				//	if (thread_create_component.TryGetValue("data_source",out t)) { t.Start(); t.Join(); }
 				//	if (thread_create_component.TryGetValue("input_data",out t)) { t.Start(); t.Join(); }
 				//	if (thread_create_component.TryGetValue("platform_data_source",out t)) { t.Start(); t.Join(); }
@@ -2027,7 +2024,9 @@ namespace br.ufc.pargo.hpe.backend
 	            }	
 	        }
 							
-			private static IDictionary<string,Thread> thread_create_component = null;
+			private static IDictionary<string,Thread> thread_create_component = new Dictionary<string, Thread>();
+			private static IDictionary<string,ComponentID> inner_create_cid = new Dictionary<string, ComponentID> ();
+
 
 			// Instantiate a the solution component required ...
 			public static int instantiateSolutionComponent(string cRef)
@@ -2036,6 +2035,35 @@ namespace br.ufc.pargo.hpe.backend
 				thread_create_component [cRef].Join ();
 				thread_create_component.Remove (cRef);
 				return thread_create_component.Count;
+			}
+				
+			public static void runSolutionComponent(gov.cca.Services frwServices, string cRef)
+			{
+				try
+				{
+					ComponentID s_cid = inner_create_cid[cRef];
+					string go_port_name = cRef + "_" + Constants.GO_PORT_NAME;
+
+					// CONNECT THE GO PORT OF THE APPLICATION TO THE SESSION DRIVER.
+					gov.cca.ComponentID host_cid = frwServices.getComponentID();
+					frwServices.registerUsesPort(go_port_name, Constants.GO_PORT_TYPE, new TypeMapImpl());
+					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
+					bsPort.connect(host_cid, go_port_name, s_cid, Constants.GO_PORT_NAME);
+					Console.WriteLine("BEGORE GO PORT " + cRef + " --- " + frwServices.GetHashCode());
+					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (go_port_name);
+					Console.WriteLine("AFTER GO PORT " + cRef + " --- " + frwServices.GetHashCode());
+
+					go_port.go ();
+				}
+				catch (Exception e) 
+				{
+					Console.Error.WriteLine (e.Message);
+					Console.Error.WriteLine (e.StackTrace);
+					if (e.InnerException != null) {
+						Console.Error.WriteLine (e.InnerException.Message);
+						Console.Error.WriteLine (e.InnerException.StackTrace);
+					}
+				}
 			}
 
 	        public static void setUpParameters(int id_functor_app, IDictionary<string, int> arguments)
@@ -2514,7 +2542,7 @@ namespace br.ufc.pargo.hpe.backend
 			 * indexed by the their names. 
 			 */
 
-			public static IDictionary<string,Thread> createDelayedInstantiationTriggersOfSolutionComponents 
+			public static void createDelayedInstantiationTriggersOfSolutionComponents 
 			                                         (
 														string session_id_string,
 														IList<ManagerComponentID> cid_chain, 
@@ -2546,7 +2574,7 @@ namespace br.ufc.pargo.hpe.backend
 
 				IList<InnerComponent> icList = BackEnd.icdao.list(id_abstract);
 
-				IDictionary<string,Thread> thread_create_ic = new Dictionary<string, Thread> ();
+//				IDictionary<string,Thread> thread_create_ic = new Dictionary<string, Thread> ();
 
 				Tuple<int,string>[] facet_address = facet_info.Item2;
 				int facet_instance = facet_info.Item1;
@@ -2574,7 +2602,8 @@ namespace br.ufc.pargo.hpe.backend
 						throw new Exception("createInnerComponent-1: This inner component " + ic.Id_abstract_owner + " / " +  ic.Id_inner + " does not have slices in the units of the enclosing component.");
 					}
 
-					thread_create_ic [ic.Id_inner] = new Thread ((ParameterizedThreadStart)delegate(object facet_info_obj) 
+					thread_create_component [ic.Id_inner] = 
+						new Thread ((ParameterizedThreadStart)delegate(object facet_info_obj) 
 					{
 						Connector.openConnection();
 
@@ -2612,7 +2641,7 @@ namespace br.ufc.pargo.hpe.backend
 														  inner_facet_topology,
 														  binding_sequentials, 
 					                                      id_functor_app_inner);
-
+						
 						int id_functor_app_inner_actual = inner_cid.Id_functor_app; // ic.Id_functor_app;
 
 						IDictionary<string, int> arguments_new;
@@ -2653,11 +2682,13 @@ namespace br.ufc.pargo.hpe.backend
 						Trace.WriteLine("END INITIALIZE COMPONENT " + inner_cid.InstanceName);
 
 						Connector.closeConnection();
+
+						inner_create_cid[ic.Id_inner] = inner_cid;
 					});
 				} 					
 
 				Trace.WriteLine("END CREATING INNER COMPONENTS OF " + cid.getInstanceName() + "-" + cid.Id_functor_app);
-			    return thread_create_ic;
+			   // return thread_create_ic;
 			}
 
 

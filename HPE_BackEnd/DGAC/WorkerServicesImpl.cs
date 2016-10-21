@@ -23,7 +23,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
     }
 
 	[DataContract]
-    public class WorkerServicesImpl : WorkerServices
+	[ServiceBehavior(InstanceContextMode=InstanceContextMode.Single,
+		ConcurrencyMode=ConcurrencyMode.Multiple)]
+	public class WorkerServicesImpl : WorkerServices
     {
 		[DataMember]
         private IWorkerObject framework;
@@ -204,9 +206,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public void registerUsesPort(string portName, string type, TypeMap properties)
 		{
-			Trace.WriteLine ("WorkerServicesImpl - registerUserPort 1 - " + portName);
+			Trace.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 1 - " + portName);
 			framework.registerUsesPort(mkPortName(portName), type, properties);
-			Trace.WriteLine ("WorkerServicesImpl - registerUserPort 2 - " + portName);
+			Trace.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 2 - " + portName);
 		}
 
 		public void unregisterUsesPort(string portName)
@@ -262,12 +264,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public RemoteGoPort() {}
 
-		private RemoteWorkerObject framework;
-		public RemoteWorkerObject Framework {set { this.framework = value; } }
+		private IWorkerObject framework;
+		public IWorkerObject Framework {set { this.framework = value; } }
 
 		public int go()
 		{
 			return framework.perform_go (id);
+			//IAsyncResult res = framework.BeginPerformGo (id, null, null);
+			//res.AsyncWaitHandle.WaitOne ();
+			//return framework.EndPerformGo (res);
 		}
 	}
 

@@ -22,17 +22,22 @@ using System.ServiceModel;
 namespace br.ufc.pargo.hpe.basic
 {
 	[ServiceContract]
+	[ServiceBehavior(InstanceContextMode=InstanceContextMode.Single,
+		ConcurrencyMode=ConcurrencyMode.Multiple)]
+	[CallbackBehavior(UseSynchronizationContext = false)] 
 	public class GoPortWrapper : gov.cca.ports.GoPort
 	{
 		public delegate int Go_app();
 
 		[DataMember]
 		private Go_app go_app;
+		System.Type t = null;
 		
 		
-		public GoPortWrapper(Go_app go_app)
+		public GoPortWrapper(Go_app go_app, System.Type t)
 		{
 			this.go_app = go_app;
+			this.t = t;
 		}
 		
 		
@@ -40,9 +45,9 @@ namespace br.ufc.pargo.hpe.basic
 		public int go ()
 		{
 			int r;
-			Trace.WriteLine ("BEFORE CALLING GO " + this.go_app);
-			r = go_app();
-			Trace.WriteLine ("AFTER CALLING GO " + this.go_app);
+			Trace.WriteLine ("BEFORE CALLING GO " + t.FullName);
+			r = go_app();	
+			Trace.WriteLine ("AFTER CALLING GO " + t.FullName);
 			return r;
 		}
 		#endregion
@@ -146,9 +151,9 @@ namespace br.ufc.pargo.hpe.basic
 			ReconfigurationAdvicePort reconfiguration_port_wrapper = new ReconfigurationAdvicePortWrapper(((ReconfigurationAdvicePort)this).changePort);                        
             services.addProvidesPort(reconfiguration_port_wrapper, Constants.RECONFIGURE_PORT_NAME, Constants.RECONFIGURE_PORT_TYPE, new TypeMapImpl());
 			
-			if (Kind == Constants.KIND_APPLICATION) 
+			if (Kind == Constants.KIND_COMPUTATION || Kind == Constants.KIND_SYNCHRONIZER) 
 			{	
-				gov.cca.ports.GoPort app_port_wrapper = new GoPortWrapper(((gov.cca.ports.GoPort) this).go);
+				gov.cca.ports.GoPort app_port_wrapper = new GoPortWrapper(((gov.cca.ports.GoPort) this).go, this.GetType());
 			    services.addProvidesPort(app_port_wrapper, Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
 			}
 		}

@@ -10,9 +10,21 @@ using System.Diagnostics;
 using gov.cca;
 using System.Threading;
 
-namespace PlatformService
+namespace br.ufc.mdcc.hpcshelf.backend.platform
 {
-	public class Platform : System.Web.Services.WebService
+	public interface IPlatformServices 
+	{
+		int    getNumberOfNodes   ();
+		int    getBaseBindingPort ();
+		string deploy             (string config_contents);
+		void   setPlatformRef     (string arch_ref);
+		string getPlatformRef     ();
+		string instantiate        (string app_name, string component_ref, int facet_instance, int[] facet, string[] facet_address, int[] nodes);
+		void   run                (string component_ref);
+		string getStatus          ();
+	}
+
+	public class PlatformServices : System.Web.Services.WebService, IPlatformServices
 	{
 		/* config_contents is the contents of the .hpe file */
 
@@ -138,25 +150,12 @@ namespace PlatformService
 
 				string session_id_string = "system";
 				session = BackEnd.startSession(session_id_string);
-				gov.cca.Services frwServices = session.Services;
+				//gov.cca.Services frwServices = session.Services;
 
 				// INSTANTIATE THE APPLICATION
 				Trace.WriteLine("Creating an instance of the application");
 				app_cid = (ManagerComponentID) BackEnd.createSystemComponentInstance ("app", instantiator_string, session_id_string);
 
-/*				// CONNECT THE GO PORT OF THE APPLICATION TO THE SESSION DRIVER.
-				Trace.WriteLine("Connecting to the GoPort of the application");
-				gov.cca.ComponentID host_cid = frwServices.getComponentID();
-				gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
-				bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
-				gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
-
-				system_go = new Thread(delegate() {
-					go_port.go(); 
-				});
-*/
-				//t.Start();						
-				// The system becomes ready for workflow synchronization.
 			} 
 			catch (Exception e) 
 			{
@@ -236,7 +235,7 @@ namespace PlatformService
 			Trace.WriteLine ("instantiateSolutionComponent COUNTER=" + count);
 			status += (count + ":" + component_ref + "/");
 		}
-
+			
 		private static string status = "";
 
 		[WebMethod]
@@ -246,24 +245,15 @@ namespace PlatformService
 		}
 
 		[WebMethod]
-		public void run()
+		public void run (string component_ref)
 		{
-			gov.cca.Services frwServices = session.Services;
+			status += platform_ref + ": * GO!!! BEGIN " + component_ref + "\n";
 
-			// CONNECT THE GO PORT OF THE APPLICATION TO THE SESSION DRIVER.
-			Trace.WriteLine("Connecting to the GoPort of the application");
-			gov.cca.ComponentID host_cid = frwServices.getComponentID();
-			gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
-			bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
-			gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
+			BackEnd.runSolutionComponent (session.Services, component_ref);
 
-			status += " * GO!!! BEGIN";
-
-			go_port.go ();
-
-			status += " * GO!!! END";
+			status += platform_ref + ": * GO!!! STARTED " + component_ref + "\n";
 		}
-
+			
 	}
 }
 

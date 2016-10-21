@@ -17,13 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.ufc.pargo.hpe.ConnectorI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWrapperGenerator", "TestWrapperGenerator\TestWrapperGenerator.csproj", "{BEF63F8B-8C1B-40FA-A5B3-254ACECD66D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreService", "CoreService\CoreService.csproj", "{60DECBB2-D981-4DF5-B139-F17F834246DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowCoreServices", "CoreService\WorkflowCoreServices.csproj", "{60DECBB2-D981-4DF5-B139-F17F834246DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEndService", "BackEndService\BackEndService.csproj", "{62880B39-0E05-493A-A4AF-B94870FB3E99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendServices", "BackEndService\BackendServices.csproj", "{62880B39-0E05-493A-A4AF-B94870FB3E99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformService", "PlatformService\PlatformService.csproj", "{5A5A445F-D229-445B-A8BA-1F0ECC52EF9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformServices", "PlatformService\PlatformServices.csproj", "{5A5A445F-D229-445B-A8BA-1F0ECC52EF9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceUtils", "ServiceUtils\ServiceUtils.csproj", "{5559A401-927A-4B4D-B845-DE88130BD0D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreServicesUtil", "ServiceUtils\CoreServicesUtil.csproj", "{5559A401-927A-4B4D-B845-DE88130BD0D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPE.BackEnd", "HPE.BackEnd\HPE.BackEnd.csproj", "{9AC0969C-133D-4B4B-A9DF-927AE9D3A90F}"
 EndProject

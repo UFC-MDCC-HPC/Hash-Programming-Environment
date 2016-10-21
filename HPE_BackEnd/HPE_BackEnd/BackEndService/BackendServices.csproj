@@ -6,10 +6,10 @@
     <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5A5A445F-D229-445B-A8BA-1F0ECC52EF9C}</ProjectGuid>
+    <ProjectGuid>{62880B39-0E05-493A-A4AF-B94870FB3E99}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>PlatformService</RootNamespace>
-    <AssemblyName>PlatformService</AssemblyName>
+    <RootNamespace>BackEndService</RootNamespace>
+    <AssemblyName>BackEndService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,13 +20,16 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
     <EnvironmentVariables>
       <EnvironmentVariables>
-        <Variable name="PATH_HOSTS_FILE" value="/tmp/tmp2673b59a.tmp" />
-        <Variable name="BASE_BINDING_FACET_PORT" value="9000" />
+        <Variable name="HPE_NEXT_FREE_WORKER_PORT" value="4865" />
+        <Variable name="HPE_NEXT_FREE_PLATFORM_SERVICE_PORT" value="8082" />
+        <Variable name="HPE_PLATFORM_ACCESS" value="127.0.0.1" />
+        <Variable name="HPE_PATH_WORKER" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd" />
+        <Variable name="HPE_PATH_PLATFORM_SERVICE" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/PlatformService" />
       </EnvironmentVariables>
     </EnvironmentVariables>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -46,16 +49,16 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <XspParameters Port="8082" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8081" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Content Include="Platform.asmx" />
+    <Content Include="BackendServices.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Platform.asmx.cs">
-      <DependentUpon>Platform.asmx</DependentUpon>
+    <Compile Include="BackendServices.asmx.cs">
+      <DependentUpon>BackendServices.asmx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

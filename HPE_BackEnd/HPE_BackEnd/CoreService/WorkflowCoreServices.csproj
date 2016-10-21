@@ -6,10 +6,10 @@
     <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{62880B39-0E05-493A-A4AF-B94870FB3E99}</ProjectGuid>
+    <ProjectGuid>{60DECBB2-D981-4DF5-B139-F17F834246DF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>BackEndService</RootNamespace>
-    <AssemblyName>BackEndService</AssemblyName>
+    <RootNamespace>br.ufc.mdcc.hpcshelf.core</RootNamespace>
+    <AssemblyName>CoreService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,15 +20,6 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <EnvironmentVariables>
-      <EnvironmentVariables>
-        <Variable name="HPE_NEXT_FREE_WORKER_PORT" value="4865" />
-        <Variable name="HPE_NEXT_FREE_PLATFORM_SERVICE_PORT" value="8082" />
-        <Variable name="HPE_PLATFORM_ACCESS" value="127.0.0.1" />
-        <Variable name="HPE_PATH_WORKER" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd" />
-        <Variable name="HPE_PATH_PLATFORM_SERVICE" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/PlatformService" />
-      </EnvironmentVariables>
-    </EnvironmentVariables>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -49,22 +40,26 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <XspParameters Port="8081" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Content Include="BackEnd.asmx" />
+    <Content Include="WorkflowCoreServices.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackEnd.asmx.cs">
-      <DependentUpon>BackEnd.asmx</DependentUpon>
+    <Compile Include="WorkflowCoreServices.asmx.cs">
+      <DependentUpon>WorkflowCoreServices.asmx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DGAC\DGAC.csproj">
       <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
       <Name>DGAC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceUtils\CoreServicesUtil.csproj">
+      <Project>{5559A401-927A-4B4D-B845-DE88130BD0D2}</Project>
+      <Name>CoreServicesUtil</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

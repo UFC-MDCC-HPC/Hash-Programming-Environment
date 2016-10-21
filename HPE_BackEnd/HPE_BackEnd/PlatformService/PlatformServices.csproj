@@ -6,10 +6,10 @@
     <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{60DECBB2-D981-4DF5-B139-F17F834246DF}</ProjectGuid>
+    <ProjectGuid>{5A5A445F-D229-445B-A8BA-1F0ECC52EF9C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CoreService</RootNamespace>
-    <AssemblyName>CoreService</AssemblyName>
+    <RootNamespace>br.ufc.mdcc.hpcshelf.backend.platform</RootNamespace>
+    <AssemblyName>PlatformService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -21,6 +21,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <EnvironmentVariables>
+      <EnvironmentVariables>
+        <Variable name="PATH_HOSTS_FILE" value="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/nodes.platform" />
+        <Variable name="BASE_BINDING_FACET_PORT" value="21000" />
+      </EnvironmentVariables>
+    </EnvironmentVariables>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -40,23 +46,19 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8085" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Content Include="Core.asmx" />
+    <Content Include="PlatformServices.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core.asmx.cs">
-      <DependentUpon>Core.asmx</DependentUpon>
+    <Compile Include="PlatformServices.asmx.cs">
+      <DependentUpon>PlatformServices.asmx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ServiceUtils\ServiceUtils.csproj">
-      <Project>{5559A401-927A-4B4D-B845-DE88130BD0D2}</Project>
-      <Name>ServiceUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DGAC\DGAC.csproj">
       <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
       <Name>DGAC</Name>

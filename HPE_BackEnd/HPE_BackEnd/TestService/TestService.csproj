@@ -37,44 +37,31 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web References\BackEndService\Reference.cs">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
-    <Compile Include="Web References\CoreService\Reference.cs">
+    <Compile Include="Web References\WorkflowCoreServices\Reference.cs">
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <WebReferences Include="Web References" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://127.0.0.1:8081/BackEnd.asmx?wsdl">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\BackEndService</RelPath>
-      <UpdateFromURL>http://127.0.0.1:8081/BackEnd.asmx?wsdl</UpdateFromURL>
-    </WebReferenceUrl>
-    <WebReferenceUrl Include="http://127.0.0.1:8080/Core.asmx?wsdl">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\CoreService</RelPath>
-      <UpdateFromURL>http://127.0.0.1:8080/Core.asmx?wsdl</UpdateFromURL>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Web References\BackEndService\BackEnd.wsdl" />
-    <None Include="Web References\BackEndService\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\CoreService\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DGAC\DGAC.csproj">
       <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
       <Name>DGAC</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://127.0.0.1:8080/WorkflowCoreServices.asmx?wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WorkflowCoreServices</RelPath>
+      <UpdateFromURL>http://127.0.0.1:8080/WorkflowCoreServices.asmx?wsdl</UpdateFromURL>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\WorkflowCoreServices\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>
