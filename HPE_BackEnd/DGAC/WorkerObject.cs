@@ -713,38 +713,23 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string[] getUsedPortNames(ComponentID cid)
         {
-			Trace.WriteLine ("getUsedPortNames !! #0" + (cid==null));
-			Trace.WriteLine ("getUsedPortNames !! #1 - " + (cid==null) + " - " + cid.getInstanceName());
-			foreach (string k in componentIDs.Keys)
-				Trace.WriteLine("--- KEY = " + k);
 			if (componentIDs.ContainsKey(cid.getInstanceName()))
 			{
 			    IList<string> portList;
-				Trace.WriteLine ("getUsedPortNames !! #2");
 				if (usesPortNames.ContainsKey(cid.getInstanceName())) 
 				{
-					Trace.WriteLine ("getUsedPortNames !! #3");
 					usesPortNames.TryGetValue(cid.getInstanceName(), out portList);			
-					Trace.WriteLine ("getUsedPortNames !! #5");
 					string[] ports = new string[portList.Count];
-					Trace.WriteLine ("getUsedPortNames !! #6");
 					portList.CopyTo(ports,0);
-					Trace.WriteLine ("getUsedPortNames !! #7");
 		            return ports;
 				} 
 				else
 				{
-					Trace.WriteLine ("getUsedPortNames !! #4");
 					return new string[] {};
 				}
 			}
 			else
-			{	
-				Trace.WriteLine ("getUsedPortNames !! #8");
-
-				foreach (string k in usesPortNames.Keys)
-					Trace.WriteLine("KEY = " + k);
-				
+			{					
 				throw new CCAExceptionImpl("Undefined Component (id=" + cid.getInstanceName() + ")");
 			}
 			
@@ -790,43 +775,43 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			if (!usesPortNamesInv.ContainsKey(user_port_name))
             {				
-				foreach (string p in usesPortNamesInv.Keys)
-				{
-					Trace.WriteLine("U KEY = " + p);
-				}
+				//foreach (string p in usesPortNamesInv.Keys)
+				//{
+				//	Trace.WriteLine("U KEY = " + p);
+				//}
 			   throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);	
 			}
 			
 			if (!providesPortNamesInv.ContainsKey(provider_port_name))
 			{
-				foreach (string p in providesPortNamesInv.Keys)
-				{
-					Trace.WriteLine("P KEY = " + p);
-				}
+				//foreach (string p in providesPortNamesInv.Keys)
+				//{
+				//	Trace.WriteLine("P KEY = " + p);
+				//}
 				throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);	
 			}						
 			
 			Trace.WriteLine(my_global_rank + ": begin connect " + user_port_name + " to " + provider_port_name);
 
-			Trace.WriteLine(my_global_rank + ": connect 1");			
+//			Trace.WriteLine(my_global_rank + ": connect 1");			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
-			Trace.WriteLine(my_global_rank + ": connect 2 " + (connection.ToString()));
+//			Trace.WriteLine(my_global_rank + ": connect 2 " + (connection.ToString()));
             connectionList.Add(connection.ToString(), connection);
-			Trace.WriteLine(my_global_rank + ": connect 3");
+//			Trace.WriteLine(my_global_rank + ": connect 3");
             bool first_connection = addConnByProviderPort(provider_port_name, connection);
-			Trace.WriteLine (my_global_rank + ": connect 4 " + connByUserPort.ContainsKey (user_port_name));
+//			Trace.WriteLine (my_global_rank + ": connect 4 " + connByUserPort.ContainsKey (user_port_name));
             connByUserPort.Add(user_port_name, connection);			
-			Trace.WriteLine(my_global_rank + ": connect 5");
+//			Trace.WriteLine(my_global_rank + ": connect 5");
 			port_manager.resetPort(user_port_name);
-			Trace.WriteLine(my_global_rank + ": connect 6");
+//			Trace.WriteLine(my_global_rank + ": connect 6");
             this.tryAwakeConnectingUserPort(user_port_name);
-			Trace.WriteLine(my_global_rank + ": connect 7");
+//			Trace.WriteLine(my_global_rank + ": connect 7");
 
             IUnit user_unit, provider_unit;
             this.unitInstances.TryGetValue(user.getInstanceName(), out user_unit);
-			Trace.WriteLine(my_global_rank + ": connect 8");
+//			Trace.WriteLine(my_global_rank + ": connect 8");
             this.unitInstances.TryGetValue(provider.getInstanceName(), out provider_unit);
-			Trace.WriteLine(my_global_rank + ": connect 9");
+//			Trace.WriteLine(my_global_rank + ": connect 9");
 
             if (user_unit != null)
 				user_unit.addSlice(provider_unit,usingPortName);
@@ -1054,9 +1039,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
 				Trace.WriteLine("PORT NOT FOUND is " + portName);
 				foreach (string p in usesPortNamesInv.Keys)
-				{
-					Trace.WriteLine("KEY = " + p);
-				}
+				//{
+				//	Trace.WriteLine("KEY = " + p);
+				//}
 				
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
@@ -1066,10 +1051,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 // WAIT UNTIL THE PORT IS AVAILABLE.
 				
 				Trace.WriteLine("Waiting for " + portName);
-				foreach (string p in connByUserPort.Keys)
-				{
-					Trace.WriteLine("KEY = " + p);
-				}
+				//foreach (string p in connByUserPort.Keys)
+				//{
+				//	Trace.WriteLine("KEY = " + p);
+				//}
                 AutoResetEvent wait_handle = new AutoResetEvent(false);
                 waitingUserPorts.Add(portName, wait_handle);
                 wait_handle.WaitOne();
@@ -1134,8 +1119,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		public int perform_go(int id)
 		{
 			Console.WriteLine ("BEGIN PERFORM GO - WORKER OBJECT " + this.GetHashCode());
-			return ((GoPort)remote_ports_dict[id]).go();
+			Thread t = new Thread (new ThreadStart (delegate() {
+				int res = ((GoPort)remote_ports_dict[id]).go();
+			}));
+			t.Start ();
 			Console.WriteLine ("END PERFORM GO -  WORKER OBJECT " + this.GetHashCode());
+			return 0;
 		}
 	
 		public IAsyncResult BeginPerformGo(int id, AsyncCallback callback, object asyncState)
@@ -1225,7 +1214,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             if (!usesPortNamesInv.ContainsKey(portName))
             {
 				Trace.WriteLine(my_global_rank + ": RELEASE PORT " + portName + " FAIL. Port cannot be released.");
-				foreach (string key in usesPortNamesInv.Keys) Trace.WriteLine ("key = " + key);
+				//foreach (string key in usesPortNamesInv.Keys) Trace.WriteLine ("key = " + key);
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
 
@@ -1235,7 +1224,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             port_manager.addPortRelease(portName);
 			Trace.WriteLine (my_global_rank + ": RELEASE PORT " + portName + " SUCCESS");
-			foreach (string key in usesPortNamesInv.Keys) Trace.WriteLine ("key = " + key);
+			//foreach (string key in usesPortNamesInv.Keys) Trace.WriteLine ("key = " + key);
         }
 
 

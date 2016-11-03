@@ -80,12 +80,16 @@ namespace br.ufc.pargo.hpe.basic
 		#region AutomaticSlicesPort implementation
 		public void on_initialize ()
 		{
+			Console.WriteLine ("BEGIN ON_INITIALIZE");
 			this.initialize_mth();
+			Console.WriteLine ("END ON_INITIALIZE");
 		}
 
 		public void after_initialize ()
 		{
+			Console.WriteLine ("BEGIN AFTER_INITIALIZE");
 			this.after_initialize_mth();
+			Console.WriteLine ("END AFTER_INITIALIZE");
 		}
 		#endregion
 

@@ -154,7 +154,7 @@ namespace br.ufc.mdcc.hpcshelf.backend
 			catch(Exception e)
 			{
 				Trace.WriteLine ("EXCEPTION: " + e.Message);
-				Trace.WriteLine ("INNER EXCEPTION: " + e.InnerException.Message);
+//				Trace.WriteLine ("INNER EXCEPTION: " + e.InnerException.Message);
 			}
 			finally 
 			{

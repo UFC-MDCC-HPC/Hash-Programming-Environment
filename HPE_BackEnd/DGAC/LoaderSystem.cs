@@ -383,15 +383,15 @@ namespace br.ufc.pargo.hpe.backend
 			ci_wkf.parameter [0].varName = "M_SAFe";
 
 			InnerComponentType[] is1 = traverseEnvironmentBindings (contracts, bindings_workflow, false, platforms);
-			Tuple<InnerComponentType[],InnerRenamingType[]> is2 = traverseTaskBindings(workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME], contracts, bindings_task, false);
+			Tuple<InnerComponentType[],ParameterSupplyType[]> is2 = traverseTaskBindings(workflow_attributes[ProxyComponentAttribute.INNER_COMPONENT_NAME], contracts, bindings_task, false);
 			InnerComponentType[] is3 = new InnerComponentType[0]; // addProxyPortPlatform(bindings_system);
 			ci_wkf.port = new InnerComponentType[is1.Length + is2.Item1.Length + is3.Length];
 			is1.CopyTo (ci_wkf.port, 0);
 			is2.Item1.CopyTo (ci_wkf.port, is1.Length);
 			is3.CopyTo (ci_wkf.port, is1.Length + is2.Item1.Length);
 
-			foreach (InnerRenamingType task_port_renaming in is2.Item2)
-				body_items.Add (task_port_renaming);
+			foreach (ParameterSupplyType task_port_supply in is2.Item2)
+				body_items.Add (task_port_supply);
 
 			ci_wkf.unitBounds = new UnitBoundsType[1];
 			ci_wkf.unitBounds [0] = new UnitBoundsType ();
@@ -2513,10 +2513,10 @@ namespace br.ufc.pargo.hpe.backend
 			foreach (InnerComponentType ci in ci_list_env)
 				body_items.Add (ci);
 			
-			Tuple<InnerComponentType[],InnerRenamingType[]> ci_list_tsk = traverseTaskBindings (proxy_name, contracts, bindings_tsk, true);
+			Tuple<InnerComponentType[], ParameterSupplyType[]>  ci_list_tsk = traverseTaskBindings (proxy_name, contracts, bindings_tsk, true);
 			foreach (InnerComponentType ci in ci_list_tsk.Item1)
 				body_items.Add (ci);
-			foreach (InnerRenamingType ri in ci_list_tsk.Item2)
+			foreach (ParameterSupplyType ri in ci_list_tsk.Item2)
 				body_items.Add (ri);
 		}
 
@@ -2579,14 +2579,14 @@ namespace br.ufc.pargo.hpe.backend
 			return result;
 		}
 
-		private static Tuple<InnerComponentType[],InnerRenamingType[]> 
+		private static Tuple<InnerComponentType[], ParameterSupplyType[]> 
 		                  traverseTaskBindings (string proxy_name,
 												IDictionary<string, Instantiator.ComponentFunctorApplicationType> contracts, 
 												IList<Tuple<string, Tuple<string, string, int>[]>> bindings_task,
 												bool exposed)
 		{
 			IList<InnerComponentType> result_list_ports = new List<InnerComponentType> ();
-			IList<InnerRenamingType> result_list_renamings = new List<InnerRenamingType> ();
+			IList<ParameterSupplyType> result_list_parameter_supplies = new List<ParameterSupplyType>();
 
 			foreach (Tuple<string, Tuple<string, string,int>[]> binding in bindings_task) 
 			{
@@ -2606,7 +2606,7 @@ namespace br.ufc.pargo.hpe.backend
 
 							AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath (cc.component_ref);
 							InnerComponent ic = BackEnd.icdao.retrieve (acf.Id_abstract, binding_name);
-							InnerComponentExposed ic_port = BackEnd.icedao.listExposedInnerOfOwner (acf.Id_abstract, binding_name) [0];
+							//InnerComponentExposed ic_port = BackEnd.icedao.listExposedInnerOfOwner (acf.Id_abstract, binding_name) [0];
 							AbstractComponentFunctor acf_ic_port = BackEnd.acfdao.retrieve (ic.Id_abstract_inner);
 
 							string package = null;
@@ -2634,14 +2634,15 @@ namespace br.ufc.pargo.hpe.backend
 							ci.visualDescription.color.r = 217;
 
 							ci.unitBounds = traverseUnits (acf_ic_port.Library_path);
-							ci.port = traversePorts (acf_ic_port.Library_path);
 
-							InnerRenamingType task_port_renaming = new InnerRenamingType ();
-							task_port_renaming.cRef = ci.localRef;
-							task_port_renaming.cOldName = ci.port [0].localRef;
-							task_port_renaming.cNewName = pRef;
+							string varName = null;
+							ci.parameter = new ParameterRenaming[1];
+							ci.parameter [0] = new ParameterRenaming ();
+							ci.parameter [0].formFieldId = "task_port_type";
+							ci.parameter [0].varName = varName = "T_" + pRef;
 
-							result_list_renamings.Add (task_port_renaming);
+							traverseTaskBindingPortType (acf.Id_abstract, pRef, varName, result_list_parameter_supplies, result_list_ports);
+
 							result_list_ports.Add (ci);
 						}
 					}
@@ -2651,10 +2652,51 @@ namespace br.ufc.pargo.hpe.backend
 			InnerComponentType[] result_ports = new InnerComponentType[result_list_ports.Count];
 			result_list_ports.CopyTo (result_ports, 0);
 
-			InnerRenamingType[] result_renamings = new InnerRenamingType[result_list_renamings.Count];
-			result_list_renamings.CopyTo (result_renamings, 0);
+			ParameterSupplyType[] result_parameter_supplies = new ParameterSupplyType[result_list_parameter_supplies.Count];
+			result_list_parameter_supplies.CopyTo (result_parameter_supplies, 0);
 
-			return new Tuple<InnerComponentType[],InnerRenamingType[]> (result_ports, result_renamings);
+			return new Tuple<InnerComponentType[], ParameterSupplyType[]> (result_ports, result_parameter_supplies);
+		}
+
+		static void traverseTaskBindingPortType(int id_abstract, string pRef, string varName, IList<ParameterSupplyType> parameter_supplies, IList<InnerComponentType> component_supplies)
+		{
+			InnerComponent ic = BackEnd.icdao.retrieve (id_abstract, pRef);
+			SupplyParameterComponent spc = BackEnd.spcdao.retrieve ("task_port_type", ic.Id_functor_app);
+			AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve (spc.Id_functor_app_actual);
+			AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(acfa.Id_abstract);
+
+			InnerComponentType ci = new InnerComponentType ();
+
+			string package = null;
+			string name = null;
+			fetchPackageAndName (acf.Library_path, ref package, ref name);
+
+			ci.package = package;
+			ci.name = name;
+			ci.localRef = varName.ToLower();
+			ci.multipleSpecified = true;
+			ci.multiple = false;
+			ci.exposedSpecified = true;
+			ci.exposed = false;
+
+			ci.visualDescription = new VisualElementAttributes ();
+			ci.visualDescription.x = 10;
+			ci.visualDescription.y = 10;
+			ci.visualDescription.w = 40;
+			ci.visualDescription.h = 30;
+			ci.visualDescription.color = new ColorComplexType ();
+			ci.visualDescription.color.b = 23;
+			ci.visualDescription.color.g = 200;
+			ci.visualDescription.color.r = 117;
+
+			component_supplies.Add (ci);
+
+			ParameterSupplyType ci_supply = new ParameterSupplyType ();
+			ci_supply.cRef = varName.ToLower();
+			ci_supply.varName = varName;
+			ci_supply.direct = true;
+
+			parameter_supplies.Add (ci_supply);
 		}
 
 		static void createProxyComponentAbstractInterface (string app_name, IList<object> body_items, IList<Tuple<string, string, EnvironmentPortType, string>> bindings_application, IDictionary<ProxyComponentAttribute,string> attributes)

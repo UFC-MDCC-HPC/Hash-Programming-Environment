@@ -123,6 +123,8 @@ namespace TestService
 				core_service.instantiate(workflow_handle,"workflow");
 				core_service.instantiate(workflow_handle,"application");
 
+				/// RUN
+
 				foreach (string c_id in c_ids)
 					core_service.run (workflow_handle, c_id);
 					
