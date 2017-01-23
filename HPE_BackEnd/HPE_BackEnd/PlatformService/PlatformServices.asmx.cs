@@ -40,7 +40,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 
 			Console.WriteLine ("getNumberOfNodes was called and returned {0}", size);
 
-			return size;
+			return size - 1;
 		}
 
 		[WebMethod]
