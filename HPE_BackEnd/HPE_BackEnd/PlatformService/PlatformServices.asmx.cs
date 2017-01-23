@@ -28,12 +28,19 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 	{
 		/* config_contents is the contents of the .hpe file */
 
-		private int number_of_nodes = 0;
-
 		[WebMethod]
 		public int getNumberOfNodes()
 		{
-			return number_of_nodes;
+			string path_hosts_file = System.Environment.GetEnvironmentVariable ("PATH_HOSTS_FILE");
+			if (path_hosts_file == null || path_hosts_file.Equals(""))
+				path_hosts_file = System.Environment.GetEnvironmentVariable("HOME") + Path.PathSeparator + "hpe_nodes";
+
+			string[] contents = File.ReadAllLines (path_hosts_file);
+			int size = contents.Length;
+
+			Console.WriteLine ("getNumberOfNodes was called and returned {0}", size);
+
+			return size;
 		}
 
 		[WebMethod]
