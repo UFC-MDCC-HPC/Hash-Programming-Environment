@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPE.BackEnd", "HPE.BackEnd\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestService", "TestService\TestService.csproj", "{F9D81CB1-0145-474C-85F8-020A89EC6CDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teste", "Teste\Teste.csproj", "{6053C9E7-41BC-445A-8466-EE780E938E71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{5A5A445F-D229-445B-A8BA-1F0ECC52EF9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A5A445F-D229-445B-A8BA-1F0ECC52EF9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A5A445F-D229-445B-A8BA-1F0ECC52EF9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6053C9E7-41BC-445A-8466-EE780E938E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6053C9E7-41BC-445A-8466-EE780E938E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6053C9E7-41BC-445A-8466-EE780E938E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6053C9E7-41BC-445A-8466-EE780E938E71}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60DECBB2-D981-4DF5-B139-F17F834246DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60DECBB2-D981-4DF5-B139-F17F834246DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60DECBB2-D981-4DF5-B139-F17F834246DF}.Release|Any CPU.ActiveCfg = Release|Any CPU

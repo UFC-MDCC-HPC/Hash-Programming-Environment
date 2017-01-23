@@ -419,7 +419,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 			string backend_address = config[0];
 
 			// criar a plataforma
-			Tuple<string,int> platform_address = CoreServicesUtil.invokeBackEndDeploy (arch_ref, backend_address, config);   
+			Tuple<string,int,int> platform_address = CoreServicesUtil.invokeBackEndDeploy (arch_ref, backend_address, config);   
 
 			Tuple<Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>> system = null;
 			if (!workflow_system.TryGetValue (workflow_handle, out system)) 
@@ -429,9 +429,9 @@ namespace br.ufc.mdcc.hpcshelf.core
 			}
 
 			// Deploy component contracts and system component.
-			int nodes = CoreServicesUtil.invokeDeployPlatform (arch_desc, arch_ref, contracts, unit_mapping, platform_address.Item1, system.Item1.Item1, system.Item1.Item2, system.Item2.Item1, system.Item2.Item2, system.Item3.Item1, system.Item3.Item2);
+			CoreServicesUtil.invokeDeployPlatform (arch_desc, arch_ref, contracts, unit_mapping, platform_address.Item1, system.Item1.Item1, system.Item1.Item2, system.Item2.Item1, system.Item2.Item2, system.Item3.Item1, system.Item3.Item2);
 
-			return new Tuple<string,int,int> (platform_address.Item1, int.Parse(config[1]), platform_address.Item2);
+			return new Tuple<string,int,int> (platform_address.Item1, platform_address.Item3, platform_address.Item2);
 		}
 
 		private static IList<string> platforms = null;

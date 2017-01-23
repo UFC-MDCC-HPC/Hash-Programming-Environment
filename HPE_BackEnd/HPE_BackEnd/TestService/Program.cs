@@ -135,7 +135,7 @@ namespace TestService
 
 			}
 			catch (Exception e) 
-			{
+				{
 				Console.Error.WriteLine (e.Message);
 				Console.Error.WriteLine (e.StackTrace);
 				if (e.InnerException != null) 

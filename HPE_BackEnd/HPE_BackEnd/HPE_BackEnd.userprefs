@@ -1,14 +1,22 @@
 ﻿<Properties StartupItem="ManagerService/ManagerService.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PlatformService/PlatformServices.asmx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Teste/Program.cs">
     <Files>
-      <File FileName="PlatformService/PlatformServices.asmx.cs" Line="234" Column="35" />
+      <File FileName="Teste/Program.cs" Line="9" Column="131" />
+      <File FileName="ServiceUtils/Web References/LIABackendServices/Reference.cs" Line="1" Column="1" />
+      <File FileName="ServiceUtils/CoreServicesUtil.cs" Line="1" Column="1" />
+      <File FileName="../ws/BackEndWS.asmx.cs" Line="1" Column="1" />
+      <File FileName="CoreService/WorkflowCoreServices.asmx.cs" Line="1" Column="1" />
+      <File FileName="TestService/Program.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/DGAC.cs" line="2061" column="18" />
       <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs" line="956" column="33" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" line="22" column="27" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" line="19" column="22" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" line="12" column="40" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
