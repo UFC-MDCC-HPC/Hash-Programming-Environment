@@ -667,7 +667,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 					Trace.WriteLine("connect_c2c -2.1 " + (usingPortNameQ) + " , " + (user_nodes==null) + ", used_ports.Count=" + used_ports.Count);
 					foreach (string k in used_ports.Keys)
-						Console.WriteLine ("-------------------- " + k);
+						Trace.WriteLine ("-------------------- " + k);
 				
 				    IDictionary<int,int> user_nodes_inv = new Dictionary<int,int> ();
 					for (int i=0; i<user_nodes.Length; i++)
@@ -1308,7 +1308,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			IPAddress ipAddress = IPAddress.Parse (server_address);	
 			IPEndPoint localEndPoint = new IPEndPoint (ipAddress, server_port);
 
-			Console.WriteLine ("binding_exchange_port N - CREATE SERVER - ipHostInfo: " + ipAddress + ":" + server_port);
+			Trace.WriteLine ("binding_exchange_port N - CREATE SERVER - ipHostInfo: " + ipAddress + ":" + server_port);
 
 			listener = new Socket (AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
 
@@ -1323,7 +1323,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			IPAddress ipAddressClient = IPAddress.Parse (client_address);
 			IPEndPoint remoteEP = new IPEndPoint (ipAddressClient, client_port);
 
-			Console.WriteLine ("binding_exchange_port N - LINK CLIENT - ipHostInfo: " + ipAddressClient + ":" + client_port);
+			Trace.WriteLine ("binding_exchange_port N - LINK CLIENT - ipHostInfo: " + ipAddressClient + ":" + client_port);
 
 			// Create a TCP/IP  socket.
 			sender = new Socket (AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
@@ -1347,17 +1347,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			if (!isConnected)
 				throw new Exception("binding-exchange-port N --- It was not possible to talk to the other side");
 
-			Console.WriteLine("binding_exchange_port N - CONNECTED.");
+			Trace.WriteLine("binding_exchange_port N - CONNECTED.");
 		}
 
 		void send_to_the_next (Socket sender, string current_address, int current_port)
 		{
-			Console.WriteLine ("binding_exchange_ports N --- this FACET will send " + current_address + ":" + current_port + " to the other FACET -- " + sender.Connected);
+			Trace.WriteLine ("binding_exchange_ports N --- this FACET will send " + current_address + ":" + current_port + " to the other FACET -- " + sender.Connected);
 
 			byte[] msgSent = Encoding.ASCII.GetBytes (current_address + ":" + current_port + "#");
 			int bytesSent = sender.Send (msgSent);
 
-			Console.WriteLine ("binding_exchange_ports N --- this FACET sent " + current_address + ":" + current_port + " to the other FACET");
+			Trace.WriteLine ("binding_exchange_ports N --- this FACET sent " + current_address + ":" + current_port + " to the other FACET");
 
 		}
 
@@ -2002,7 +2002,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 public void instantiateWorkers()
                 {
-					Console.WriteLine("Starting worker clients !");                  
+					Trace.WriteLine("Starting worker clients !");                  
 
 					string node_master = null;
 					IList<string> node = null;
@@ -2016,7 +2016,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 						readNodesFile(out node_master, out port_master, out node, out port);
 
-						Console.WriteLine("READ NODE FILES - " + node.Count + "," + port.Count + "," + node_master + "," + port_master); 
+						Trace.WriteLine("READ NODE FILES - " + node.Count + "," + port.Count + "," + node_master + "," + port_master); 
 
 						worker_framework = new Dictionary<int, gov.cca.AbstractFramework>();
 
@@ -2048,7 +2048,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             {   
                                 worker_framework[i] = BackEnd.getFrameworkWorkerInstanceWCF(n, port[i], i+1);
 						
-								Console.WriteLine("CONNECTED TO WORKER #" + i + " in " + n + ":" + port[i]);
+								Trace.WriteLine("CONNECTED TO WORKER #" + i + " in " + n + ":" + port[i]);
                             }
                             catch (RemotingException e)
                             {

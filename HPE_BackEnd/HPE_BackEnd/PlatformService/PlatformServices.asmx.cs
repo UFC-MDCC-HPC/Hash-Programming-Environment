@@ -38,7 +38,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 			string[] contents = File.ReadAllLines (path_hosts_file);
 			int size = contents.Length;
 
-			Console.WriteLine ("getNumberOfNodes was called and returned {0}", size);
+			Trace.WriteLine ("getNumberOfNodes was called and returned {0}", size);
 
 			return size - 1;
 		}
@@ -125,7 +125,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 				for (int i = 0; i < facet_address.Length; i++)
 					facet_address_list [i] = new Tuple<int, string> (facet [i], facet_address [i]);	
 
-				Console.WriteLine("INSTANTIATE -- " + platform_ref + " / " + component_ref + " / " + facet_address[facet_instance]);
+				Trace.WriteLine("INSTANTIATE -- " + platform_ref + " / " + component_ref + " / " + facet_address[facet_instance]);
 
 				if (platform_ref.Equals(component_ref))
 					instantiateSystemComponent (app_name, facet_instance, facet_address_list, nodes);
@@ -153,7 +153,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 		{
 			try{
 				string instantiator_string = buildInstantiatorStringOfSystem (app_name + ".System", facet_instance, facet_address_list, nodes);
-				Console.WriteLine (instantiator_string);
+				Trace.WriteLine (instantiator_string);
 
 				string session_id_string = "system";
 				session = BackEnd.startSession(session_id_string);

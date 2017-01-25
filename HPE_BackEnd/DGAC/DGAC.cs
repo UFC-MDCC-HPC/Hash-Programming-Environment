@@ -313,7 +313,7 @@ namespace br.ufc.pargo.hpe.backend
 				string service_name = Constants.WORKER_SERVICE_NAME + "-" + rank;
 				string uri_str = "http://" + node + ":" + port + "/" + service_name;
 
-				Console.WriteLine ("getFrameworkWorkerInstanceWCF - uri_str = " + uri_str);
+				Trace.WriteLine ("getFrameworkWorkerInstanceWCF - uri_str = " + uri_str);
 
 				var binding = new BasicHttpBinding ();
 				var address = new EndpointAddress (uri_str);
@@ -1001,6 +1001,9 @@ namespace br.ufc.pargo.hpe.backend
 					// Builder Service Port
 					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
 
+					// GoPort Service Port
+					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, properties);
+
 					open_sessions.Add(session_id, new Session(session_id, (ManagerObject)frw, frwServices));
 
 					return open_sessions[session_id];
@@ -1076,6 +1079,7 @@ namespace br.ufc.pargo.hpe.backend
 					Trace.WriteLine("Connecting to the GoPort of the application");
 					gov.cca.ComponentID host_cid = frwServices.getComponentID();
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
+
 					ConnectionID conn_go = bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
 					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
 
@@ -1916,7 +1920,7 @@ namespace br.ufc.pargo.hpe.backend
 								facet_of_instance[fa.facet_instance] = fa.facet;
 
 								facet_info.Item2[fa.facet_instance] = new Tuple<int, string>(fa.facet, fa.address + ":" + fa.port);
-								Console.WriteLine("FACET_INFO: " + fa.facet_instance + " / " + fa.facet + " / " + fa.address + " / " + fa.port);
+								Trace.WriteLine("FACET_INFO: " + fa.facet_instance + " / " + fa.facet + " / " + fa.address + " / " + fa.port);
 							}
 							else
 							{
@@ -2049,9 +2053,9 @@ namespace br.ufc.pargo.hpe.backend
 					frwServices.registerUsesPort(go_port_name, Constants.GO_PORT_TYPE, new TypeMapImpl());
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 					bsPort.connect(host_cid, go_port_name, s_cid, Constants.GO_PORT_NAME);
-					Console.WriteLine("BEGORE GO PORT " + cRef + " --- " + frwServices.GetHashCode());
+					Trace.WriteLine("BEGORE GO PORT " + cRef + " --- " + frwServices.GetHashCode());
 					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (go_port_name);
-					Console.WriteLine("AFTER GO PORT " + cRef + " --- " + frwServices.GetHashCode());
+					Trace.WriteLine("AFTER GO PORT " + cRef + " --- " + frwServices.GetHashCode());
 
 					go_port.go ();
 				}
@@ -2146,7 +2150,7 @@ namespace br.ufc.pargo.hpe.backend
 													 		Thread t,
 															Tuple<ManagerComponentID,string> inner_info)
 			{
-				Console.WriteLine ("LATER CONNECTION INSERT " + key);
+				Trace.WriteLine ("LATER CONNECTION INSERT " + key);
 				Console.Beep ();
 
 				IList<Tuple<Thread, Tuple<ManagerComponentID, string>>> lc = null;
@@ -2163,7 +2167,7 @@ namespace br.ufc.pargo.hpe.backend
 				IList<Tuple<Thread,Tuple<ManagerComponentID,string>>> connection_info_list = null;
 				if (later_connections.TryGetValue (key, out connection_info_list)) 
 				{
-					Console.WriteLine ("LATER CONNECTION RUN:" + key);
+					Trace.WriteLine ("LATER CONNECTION RUN:" + key);
 					foreach (Tuple<Thread,Tuple<ManagerComponentID,string>> connection_info in connection_info_list)
 					{
 						connection_info.Item1.Start (connection_info.Item2);
@@ -2309,7 +2313,7 @@ namespace br.ufc.pargo.hpe.backend
 								inner_cid = pair.Item1;
 								has_public_owner = pair.Item2;
 
-								Console.WriteLine ("findInnerComponentInSomeInnerComponent was null and has_public_owner is " + has_public_owner);
+								Trace.WriteLine ("findInnerComponentInSomeInnerComponent was null and has_public_owner is " + has_public_owner);
 
 								if (inner_cid == null && has_public_owner)
 								{
@@ -2324,13 +2328,13 @@ namespace br.ufc.pargo.hpe.backend
 
 									IList<InnerComponentExposed> ice_list = BackEnd.icedao.listOwnerOfExposedInner (ic.Id_abstract_owner, ic.Id_inner);		
 
-									Console.WriteLine ("################## ice_list.Count=" + ice_list.Count + " --- " + ic.Id_abstract_owner + " - " + ic.Id_inner);
+									Trace.WriteLine ("################## ice_list.Count=" + ice_list.Count + " --- " + ic.Id_abstract_owner + " - " + ic.Id_inner);
 
 									foreach (InnerComponentExposed ice in ice_list) 
 									{
 										InnerComponent ic_owner = BackEnd.icdao.retrieve (ic.Id_abstract_owner, ice.Id_inner_owner);
 
-										Console.WriteLine ("##################### " + ic_owner.IsPublic);
+										Trace.WriteLine ("##################### " + ic_owner.IsPublic);
 
 										if (ic_owner.IsPublic)
 										{
@@ -2338,12 +2342,12 @@ namespace br.ufc.pargo.hpe.backend
 											foreach (ManagerComponentID cid_owner in cid_chain) 
 											{
 												InnerComponentExposed ice2 = icedao.retrieveContainer(id_abstract_owner[ii], id_inner_at_owner[ii], ic_owner.Id_inner);
-												Console.WriteLine ("**************************" + ic_owner.Id_inner + " --- " + (ice2==null));
+												Trace.WriteLine ("**************************" + ic_owner.Id_inner + " --- " + (ice2==null));
 
 												if (ice2 != null)
 												{
 													string key = cid_owner.InstanceName + "-" + ice2.Id_inner_rename + "-" +  ice.Id_inner;
-													Console.WriteLine ("LOOKING FOR  ------------- " + key);
+													Trace.WriteLine ("LOOKING FOR  ------------- " + key);
 													registerForLaterConnection (key, t, new Tuple<ManagerComponentID,string> (cid_owner_of_cid, id_owner_port));
 												}
 												ii++;

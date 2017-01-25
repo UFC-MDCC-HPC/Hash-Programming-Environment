@@ -80,16 +80,16 @@ namespace br.ufc.pargo.hpe.basic
 		#region AutomaticSlicesPort implementation
 		public void on_initialize ()
 		{
-			Console.WriteLine ("BEGIN ON_INITIALIZE");
+			Trace.WriteLine ("BEGIN ON_INITIALIZE");
 			this.initialize_mth();
-			Console.WriteLine ("END ON_INITIALIZE");
+			Trace.WriteLine ("END ON_INITIALIZE");
 		}
 
 		public void after_initialize ()
 		{
-			Console.WriteLine ("BEGIN AFTER_INITIALIZE");
+			Trace.WriteLine ("BEGIN AFTER_INITIALIZE");
 			this.after_initialize_mth();
-			Console.WriteLine ("END AFTER_INITIALIZE");
+			Trace.WriteLine ("END AFTER_INITIALIZE");
 		}
 		#endregion
 
@@ -240,7 +240,7 @@ namespace br.ufc.pargo.hpe.basic
 
 			Trace.WriteLine (this.Rank + " ALL GATHER :");
 			foreach (string unit_id in rank_units) Trace.Write (unit_id + ",");
-			Console.WriteLine (".");
+			Trace.WriteLine (".");
 			
 			IDictionary<string, IList<int>> unit_rank_list = new Dictionary<string, IList<int>>();
 

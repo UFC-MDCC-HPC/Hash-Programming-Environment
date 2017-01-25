@@ -34,7 +34,7 @@ namespace Back_End_WS
 			}
 
 			BackEnd.startManager();
-			Console.WriteLine ("Manager STARTED !!");
+			Trace.WriteLine ("Manager STARTED !!");
 		}
 
 //		~BackEnd_WS()
@@ -98,8 +98,8 @@ namespace Back_End_WS
          */
         public string deployHashConfiguration(byte[] data, byte[] hcl_data, string userName, string password, string curDir)
         {
-			Console.WriteLine ("deployHashConfiguration");
-			Console.WriteLine("hcl_data is null ? {0} ! {1}", hcl_data == null, data == null);
+			Trace.WriteLine ("deployHashConfiguration");
+			Trace.WriteLine("hcl_data is null ? {0} ! {1}", hcl_data == null, data == null);
 
             try
             {
@@ -123,7 +123,7 @@ namespace Back_End_WS
         [WebMethod]
         public byte[] readEnvironment()
         {
-            Console.WriteLine("Reading Environment");
+			Trace.WriteLine("Reading Environment");
 
             EnvironmentType env = br.ufc.pargo.hpe.backend.DGAC.BackEnd.readEnvironment();
 
@@ -135,7 +135,7 @@ namespace Back_End_WS
  		[WebMethod]
         public string readCatalog()
         {
-            Console.WriteLine("Reading Component Catalog");
+			Trace.WriteLine("Reading Component Catalog");
 
             CatalogType env = br.ufc.pargo.hpe.backend.DGAC.BackEnd.readCatalog();
 
@@ -166,7 +166,7 @@ namespace Back_End_WS
 			BackEnd.startSession(session_id);
 
 			foreach (string sid in BackEnd.getSessions())
-				Console.WriteLine (sid);
+				Trace.WriteLine (sid);
 
 			return session_id;
 		}
@@ -184,7 +184,7 @@ namespace Back_End_WS
 			BackEnd.finishSession (session_id);
 
 			foreach (string sid in BackEnd.getSessions())
-				Console.WriteLine (sid);
+				Trace.WriteLine (sid);
 		}
 
 		// criar instância de componente

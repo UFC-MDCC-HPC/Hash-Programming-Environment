@@ -319,7 +319,7 @@ public class CommandLineUtil {
     {
 		System.Diagnostics.Process proc = runCommandStart(cmd, args, userName, password_, curDir, environment);			
 		runCommandComplete (proc);
-		Console.WriteLine (output_str);
+		Trace.WriteLine (output_str);
 		return proc;
     }
 

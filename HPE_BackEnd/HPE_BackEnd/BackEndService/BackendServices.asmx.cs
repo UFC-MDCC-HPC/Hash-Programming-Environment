@@ -59,8 +59,8 @@ namespace br.ufc.mdcc.hpcshelf.backend
 		[WebMethod]
 		public string deploy(string[] platform_config)
 		{
-			Console.WriteLine (platform_config[0]);
-			Console.WriteLine (platform_config[1]);
+			Trace.WriteLine (platform_config[0]);
+			Trace.WriteLine (platform_config[2]);
 
 			int nodes = int.Parse(platform_config [1]) + 1;
 

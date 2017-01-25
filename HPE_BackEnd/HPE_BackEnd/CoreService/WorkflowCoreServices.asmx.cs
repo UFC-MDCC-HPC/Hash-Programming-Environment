@@ -95,7 +95,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 			string arch_ref        // referência do componente no código arquitetural.
 		)   
 		{
-			Console.WriteLine ("DEPLOYING " + workflow_handle);
+			Trace.WriteLine ("DEPLOYING " + workflow_handle);
 
 			SAFeSWL.Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
 			string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();

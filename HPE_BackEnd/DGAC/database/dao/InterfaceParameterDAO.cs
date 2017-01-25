@@ -116,7 +116,7 @@ public class InterfaceParameterDAO{
            "id_abstract=" + id_abstract + 
 		   " ORDER BY par_order";
         dbcmd.CommandText = sql;
-			Console.WriteLine (sql);
+		Trace.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {

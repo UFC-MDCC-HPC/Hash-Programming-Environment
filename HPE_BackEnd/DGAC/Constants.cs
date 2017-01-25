@@ -111,10 +111,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 			get 
 			{
 				string path_hosts_file = Environment.GetEnvironmentVariable ("PATH_HOSTS_FILE");
-				Console.WriteLine ("PATH_HOSTS_FILE is null ? " + (path_hosts_file == null));
+				Trace.WriteLine ("PATH_HOSTS_FILE is null ? " + (path_hosts_file == null));
 				if (path_hosts_file == null)
 					path_hosts_file = FileUtil.readConstant("hosts_file", Path.Combine(HOME_PATH, "hpe_nodes"));
-				Console.WriteLine ("PATH_HOSTS_FILE is " + path_hosts_file);
+				Trace.WriteLine ("PATH_HOSTS_FILE is " + path_hosts_file);
 				return path_hosts_file;
 			}
 		}
