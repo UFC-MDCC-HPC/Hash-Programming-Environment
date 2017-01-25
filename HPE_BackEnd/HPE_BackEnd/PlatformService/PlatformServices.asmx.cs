@@ -38,7 +38,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 			string[] contents = File.ReadAllLines (path_hosts_file);
 			int size = contents.Length;
 
-			Trace.WriteLine ("getNumberOfNodes was called and returned {0}", size);
+			Trace.WriteLine ("getNumberOfNodes was called and returned " + size);
 
 			return size - 1;
 		}

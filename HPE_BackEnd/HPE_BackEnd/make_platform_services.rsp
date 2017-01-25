@@ -1,0 +1,9 @@
+./PlatformService/PlatformServices.asmx.cs
+-r:System.Web.Services.dll
+-r:System.Runtime.Remoting.dll
+-r:System.Data.dll
+-r:/opt/mono-4.2.2/lib/mono/DGAC/DGAC.dll
+
+-target:library
+-define:DEBUG;TRACE
+-out:./PlatformService/bin/PlatformService.dll
