@@ -92,7 +92,7 @@ namespace gov
                     //return new WorkerConnectionIDImpl(wProvider, providesPortName, wUser, usesPortName);
 				if (i >= worker_connections.Length)
 					return null;
-				Trace.WriteLine ("getWorkerConnectionID " + i + " *** " + worker_connections.Length);	
+				Console.WriteLine ("getWorkerConnectionID " + i + " *** " + worker_connections.Length);	
 				return worker_connections[i];
             }
         }

@@ -39,7 +39,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine(e.StackTrace);
+				Console.WriteLine(e.StackTrace);
 			}
 			finally
 			{
@@ -59,7 +59,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             FileStream fs = null;
             try
             {
-                Trace.WriteLine("Reading with XmlReader " + filename);
+                Console.WriteLine("Reading with XmlReader " + filename);
 
                 // Create an instance of the XmlSerializer specifying type and namespace.
                 XmlSerializer serializer = new XmlSerializer(typeof(ComponentType));
@@ -75,7 +75,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             }
             catch (Exception e)
             {
-                Trace.WriteLine(e.StackTrace);
+                Console.WriteLine(e.StackTrace);
             }
             finally
             {
@@ -97,7 +97,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			FileStream fs = null;
 			try
 			{
-				Trace.WriteLine("Reading with XmlReader " + filename);
+				Console.WriteLine("Reading with XmlReader " + filename);
 
 				// Create an instance of the XmlSerializer specifying type and namespace.
 				XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -113,7 +113,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine(e.StackTrace);
+				Console.WriteLine(e.StackTrace);
 			}
 			finally
 			{
@@ -132,7 +132,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             FileStream fs = null;
             try
             {
-                Trace.WriteLine("Reading with XmlReader");
+                Console.WriteLine("Reading with XmlReader");
 
                 // Create an instance of the XmlSerializer specifying type and namespace.
                 XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.InstanceType));
@@ -147,7 +147,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             }
             catch (Exception e)
             {
-                Trace.WriteLine(e.StackTrace);
+                Console.WriteLine(e.StackTrace);
             }
             finally
             {
@@ -317,7 +317,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static Component resolveImpl(AbstractComponentFunctorApplication acfaRef, IDictionary<string, int> actualParameters, IDictionary<string, int> actualParametersTop)
         {
-			//Trace.WriteLine("RESOLVE IMPL - id_functor_app=" + acfaRef.Id_functor_app + " - id_abstract=" + acfaRef.Id_abstract);
+			//Console.WriteLine("RESOLVE IMPL - id_functor_app=" + acfaRef.Id_functor_app + " - id_abstract=" + acfaRef.Id_abstract);
 
             // get inner component application
             if (acfaRef != null)
@@ -341,18 +341,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             //    HAVE BEEN DISCOVERED. Now, it is necessary to apply the procedure findHashComponent
             //    descrito no artigo.				
 
-			Trace.WriteLine("resolveImpl ENTER findHashComponent ! " + acfaRef.Id_functor_app);
+			Console.WriteLine("resolveImpl ENTER findHashComponent ! " + acfaRef.Id_functor_app);
 
             Component componentRef = Resolution.findHashComponent(actualParametersTop, acfaRef);
 
             if (componentRef == null)
             {
-				Trace.WriteLine("componentRef NULL ! id_functor_app = " + acfaRef.Id_functor_app + ", id_abstract = " + acfaRef.Id_abstract);
+				Console.WriteLine("componentRef NULL ! id_functor_app = " + acfaRef.Id_functor_app + ", id_abstract = " + acfaRef.Id_abstract);
                 return null;
             }
             else
             {
-				Trace.WriteLine("resolveImpl OK ! " + componentRef.Library_path);
+				Console.WriteLine("resolveImpl OK ! " + componentRef.Library_path);
                 return componentRef;
             }
 
@@ -376,13 +376,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
   
                 IDictionary<string, AbstractComponentFunctorApplication> pars = component.Arguments;
 				
-				Trace.WriteLine ("BEGIN TAKING REFERENCES OF " + (unit.Id_abstract) + ", " + id_concrete);
+				Console.WriteLine ("BEGIN TAKING REFERENCES OF " + (unit.Id_abstract) + ", " + id_concrete);
                 foreach (string reference in interfaceUnit.fetchReferences(pars))
                 {
-					Trace.WriteLine(reference);
+					Console.WriteLine(reference);
 					referencesArrayAll_list.Add(reference);
                 }
-				Trace.WriteLine ("END TAKING REFERENCES OF " + (unit.Id_abstract));
+				Console.WriteLine ("END TAKING REFERENCES OF " + (unit.Id_abstract));
 
                 string file_name_Interface = buildDllName(acf.Library_path, interfaceUnit.Assembly_string);
 				if (!referencesArrayAll_list.Contains(file_name_Interface))
@@ -443,7 +443,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 				foreach (string reference in i.References)
                 {
-					Trace.WriteLine("REFERENCE: " + id_abstract + " - " + i.Class_name + " -- " + reference);
+					Console.WriteLine("REFERENCE: " + id_abstract + " - " + i.Class_name + " -- " + reference);
 					referencesArrayAll_list.Add (reference);
                 }
 

@@ -21,7 +21,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "INSERT INTO innercomponentexposed (id_abstract, id_inner_rename, id_inner_owner, id_inner)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_inner_rename + "','" + ac.Id_inner_owner + "','" + ac.Id_inner + "')";
 
-		    Trace.WriteLine("InnerComponentExposedDAO.cs: TRY INSERT PUBLIC INNER COMPONENT :" + sql);
+		    Console.WriteLine("InnerComponentExposedDAO.cs: TRY INSERT PUBLIC INNER COMPONENT :" + sql);
 			
             Connector.performSQLUpdate(sql);
         }
@@ -70,7 +70,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "id_inner_rename like '" + id_inner_rename + "'";
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
-			Trace.WriteLine ("listOwnerOfExposedInner: " + sql);
+			Console.WriteLine ("listOwnerOfExposedInner: " + sql);
             while (reader.Read())
             {
                 InnerComponentExposed ic = new InnerComponentExposed();
@@ -165,7 +165,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                "WHERE id_abstract=" + id_abstract + " AND " +
 	                      "id_inner like '" + id_inner + "' AND " +
 	                      "id_inner_owner like '" + id_inner_owner + "'";
-				Trace.WriteLine ("retrieveContainer: " + sql);
+				Console.WriteLine ("retrieveContainer: " + sql);
 	            dbcmd.CommandText = sql;
 	            IDataReader reader = dbcmd.ExecuteReader();
 	            if (reader.Read())

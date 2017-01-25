@@ -143,10 +143,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         acfaSon = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app_actual);
                         if (acfaSon.Id_abstract != nodeSon.Functor_app.Id_abstract)
                         {
-                            // Trace.WriteLine("FAIL 1! ");
+                            // Console.WriteLine("FAIL 1! ");
                             return false;
                         }
-                        //Trace.WriteLine("MATCH! ");
+                        //Console.WriteLine("MATCH! ");
                     }
                 }
 
@@ -188,7 +188,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 						if (ddd.Contains(parameter))
 						{
 							foreach (TreeNode ttt in ddd)
-								Trace.WriteLine("CYCLE PATH: argument=" + ttt.Parameter_id + "; value=" + ttt.Functor_app.Id_functor_app);
+								Console.WriteLine("CYCLE PATH: argument=" + ttt.Parameter_id + "; value=" + ttt.Functor_app.Id_functor_app);
 
 							throw new Exception("CYCLE DETECTED " + parameter.Parameter_id + ", " + parameter.Functor_app.Id_functor_app);
 						}
@@ -214,7 +214,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static Component findHashComponent(IDictionary<string, int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)
         {
-			Trace.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
+			Console.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
 				
             Component c;
 
@@ -239,11 +239,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 			writeTreeNode (root);
 
-			Trace.WriteLine ("AFTER Resolution.sort(root)");
+			Console.WriteLine ("AFTER Resolution.sort(root)");
 
             c = Resolution.tryGeneralize(root, root);
 
-			Trace.WriteLine ("AFTER Resolution.tryGeneralize(root, root)");
+			Console.WriteLine ("AFTER Resolution.tryGeneralize(root, root)");
 
             if (acfaRef.ParametersList.Count == 0)
             {
@@ -251,9 +251,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             }
 			
 			//if (c!=null)
-			//	Trace.WriteLine("HASH COMPONENT FOUND: " + c.Id_concrete);
+			//	Console.WriteLine("HASH COMPONENT FOUND: " + c.Id_concrete);
 			//else
-			//	Trace.WriteLine("HASH COMPONENT NOT FOUND: " + acfaRef.Id_functor_app);
+			//	Console.WriteLine("HASH COMPONENT NOT FOUND: " + acfaRef.Id_functor_app);
 			
             return c; // if c is null, there is not an implementation ....			
         }
@@ -265,7 +265,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				
 			Connector.openConnection();
 
-			Trace.WriteLine("FIND HASH COMPONENT ALL: " + acfaRef.Id_functor_app);
+			Console.WriteLine("FIND HASH COMPONENT ALL: " + acfaRef.Id_functor_app);
 
 			Component[] cAll;
 
@@ -282,11 +282,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 			writeTreeNode (root);
 
-			Trace.WriteLine ("AFTER Resolution.sort(root) - ALL");
+			Console.WriteLine ("AFTER Resolution.sort(root) - ALL");
 
 			cAll = Resolution.tryGeneralizeAll(root, root);
 
-			Trace.WriteLine ("AFTER Resolution.tryGeneralize(root, root) - ALL");
+			Console.WriteLine ("AFTER Resolution.tryGeneralize(root, root) - ALL");
 
 			return cAll; // if c is null, there is not an implementation ....
 			}

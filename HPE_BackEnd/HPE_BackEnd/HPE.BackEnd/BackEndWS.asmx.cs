@@ -34,13 +34,13 @@ namespace Back_End_WS
 			}
 
 			BackEnd.startManager();
-			Trace.WriteLine ("Manager STARTED !!");
+			Console.WriteLine ("Manager STARTED !!");
 		}
 
 //		~BackEnd_WS()
 //		{
 //		BackEnd.stopManager();
-//			Console.WriteLine ("Manager STOPED !!");
+//			Console.Error.WriteLine ("Manager STOPED !!");
 //		}
 
 		[WebMethod]
@@ -83,7 +83,7 @@ namespace Back_End_WS
             } 
 			catch (Exception e) 
 			{
-                Console.WriteLine(e.Message);
+                Console.Error.WriteLine(e.Message);
                 return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
             }
 
@@ -98,8 +98,8 @@ namespace Back_End_WS
          */
         public string deployHashConfiguration(byte[] data, byte[] hcl_data, string userName, string password, string curDir)
         {
-			Trace.WriteLine ("deployHashConfiguration");
-			Trace.WriteLine("hcl_data is null ? {0} ! {1}", hcl_data == null, data == null);
+			Console.WriteLine ("deployHashConfiguration");
+			Console.WriteLine("hcl_data is null ? {0} ! {1}", hcl_data == null, data == null);
 
             try
             {
@@ -113,7 +113,7 @@ namespace Back_End_WS
 					BackEnd.updateConfiguration(id_abstract, hcl_data);
                 }
             } catch (Exception e) {
-                Console.WriteLine(e.Message);
+                Console.Error.WriteLine(e.Message);
                 return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
             }
 
@@ -123,7 +123,7 @@ namespace Back_End_WS
         [WebMethod]
         public byte[] readEnvironment()
         {
-			Trace.WriteLine("Reading Environment");
+			Console.WriteLine("Reading Environment");
 
             EnvironmentType env = br.ufc.pargo.hpe.backend.DGAC.BackEnd.readEnvironment();
 
@@ -135,7 +135,7 @@ namespace Back_End_WS
  		[WebMethod]
         public string readCatalog()
         {
-			Trace.WriteLine("Reading Component Catalog");
+			Console.WriteLine("Reading Component Catalog");
 
             CatalogType env = br.ufc.pargo.hpe.backend.DGAC.BackEnd.readCatalog();
 
@@ -166,7 +166,7 @@ namespace Back_End_WS
 			BackEnd.startSession(session_id);
 
 			foreach (string sid in BackEnd.getSessions())
-				Trace.WriteLine (sid);
+				Console.WriteLine (sid);
 
 			return session_id;
 		}
@@ -184,7 +184,7 @@ namespace Back_End_WS
 			BackEnd.finishSession (session_id);
 
 			foreach (string sid in BackEnd.getSessions())
-				Trace.WriteLine (sid);
+				Console.WriteLine (sid);
 		}
 
 		// criar instância de componente

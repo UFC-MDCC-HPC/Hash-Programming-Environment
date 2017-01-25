@@ -26,7 +26,7 @@ namespace TestWrapperGenerator
 		        hcl_string = sr.ReadToEnd();                
 		    }
 		
-			Trace.WriteLine(hcl_string);	
+			Console.WriteLine(hcl_string);	
 				
 			configurationManager.LoadComponent(path);				
 			

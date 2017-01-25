@@ -52,7 +52,7 @@ namespace br.ufc.pargo.hpe.connector.run
             
 				//o MetaAction pode ser nulo quando for uma trasição lambda. Controle de fluxo.
 				if (action.MetaAction != null) {
-					//System.Diagnostics.Trace.WriteLine("[BrachInterpreter.Go] state- {0} transition- {1}", state, transition);
+					//System.Diagnostics.Console.WriteLine("[BrachInterpreter.Go] state- {0} transition- {1}", state, transition);
 					action.MetaAction.Run ();
 				}
 				

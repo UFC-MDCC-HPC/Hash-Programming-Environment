@@ -69,7 +69,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 		
         public void generalize() 
 		{
-			//Trace.WriteLine ("ENTER generalize " + onTop);
+			//Console.WriteLine ("ENTER generalize " + onTop);
 			if (!onTop) {
 				
 					if (this.current_id_functor_app >= this.functor_app.Count - 1) 
@@ -78,9 +78,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 					} 
 					else 
 					{
-						//Trace.WriteLine ("ENTER generalize ELSE " + (this.Functor_app != null ? this.Functor_app.Id_functor_app : -1));
+						//Console.WriteLine ("ENTER generalize ELSE " + (this.Functor_app != null ? this.Functor_app.Id_functor_app : -1));
 						this.current_id_functor_app++;
-						//Trace.WriteLine ("ENTER generalize ELSE " + (this.Functor_app != null ? this.Functor_app.Id_functor_app : -1));
+						//Console.WriteLine ("ENTER generalize ELSE " + (this.Functor_app != null ? this.Functor_app.Id_functor_app : -1));
 					}
 			}
 		}

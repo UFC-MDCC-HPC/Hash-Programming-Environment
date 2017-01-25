@@ -44,7 +44,7 @@ namespace br.ufc.hpe.backend.DGAC
                 } 
                 catch (Exception e)
                 {
-                   Trace.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                   Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
                 }
             }			
             Console.Error.WriteLine("Joined Threads : " + session_id_string);

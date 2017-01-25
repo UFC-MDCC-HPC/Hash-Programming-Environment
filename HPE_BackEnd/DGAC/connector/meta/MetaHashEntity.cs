@@ -50,7 +50,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 
 		protected void Clone(MetaHashEntity entity)
 		{
-			//Trace.WriteLine ("[MetaHashEntity.Clone] Base MetaHashEntity...");
+			//Console.WriteLine ("[MetaHashEntity.Clone] Base MetaHashEntity...");
 			//entity.Id = id;
 			entity.Name = name;
 			//entity.Entity = this.entity;

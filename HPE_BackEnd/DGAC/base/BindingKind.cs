@@ -111,7 +111,7 @@ namespace br.ufc.pargo.hpe.kinds
 
 		public override void after_initialize()
 		{
-			Trace.WriteLine (this.Rank + ": BINDING ROOT AFTER INITIALIZE ");
+			Console.WriteLine (this.Rank + ": BINDING ROOT AFTER INITIALIZE ");
 			server_thread = new Thread (server);
 			client_thread = new Thread (client);
 			server_thread.Start();

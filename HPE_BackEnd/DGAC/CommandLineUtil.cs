@@ -67,7 +67,7 @@ public class CommandLineUtil {
               foreach (string reference in references)
                   mounted_references += " -r:\"" + reference + (reference.EndsWith(".dll") ? "" : ".dll") + "\"";
               
-          Trace.WriteLine(mounted_references);
+          Console.WriteLine(mounted_references);
 
           // CREATE THE FILE <moduleName>.cs in the temporary directory with <contents> as the contents:
 
@@ -116,7 +116,7 @@ public class CommandLineUtil {
   public static bool compile_source(Tuple<string,string>[] sourceContents, string moduleName, string[] references, 
 		                            string userName, string password, String curDir)
 	{
-			Trace.WriteLine ("Module NAME is " + moduleName);
+			Console.WriteLine ("Module NAME is " + moduleName);
 
           
           //references
@@ -127,7 +127,7 @@ public class CommandLineUtil {
               {
                   mounted_references += " -r:\"" + reference + (reference.EndsWith(".dll") ? "" : ".dll") + "\"";
               }
-          Trace.WriteLine(mounted_references);
+          Console.WriteLine(mounted_references);
 
           // CREATE THE FILE <moduleName>.cs in the temporary directory with <contents> as the contents:
 
@@ -176,7 +176,7 @@ public class CommandLineUtil {
       string fileTarget = pathTarget + Path.DirectorySeparatorChar + assembly + ".dll";
       if (!Directory.Exists(pathTarget))
       {
-	  	  Trace.WriteLine("From " + fileSource + " to " + fileTarget);
+	  	  Console.WriteLine("From " + fileSource + " to " + fileTarget);
           Directory.CreateDirectory(pathTarget);
       }
       File.Copy(fileSource, fileTarget, true);
@@ -223,13 +223,13 @@ public class CommandLineUtil {
 		}
 		catch (System.ComponentModel.Win32Exception w)
 		{
-			Trace.WriteLine("Message: " + w.Message);
-			Trace.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
-			Trace.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
-			Trace.WriteLine("StackTrace: " + w.StackTrace);
-			Trace.WriteLine("Source: " + w.Source);
+			Console.WriteLine("Message: " + w.Message);
+			Console.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
+			Console.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
+			Console.WriteLine("StackTrace: " + w.StackTrace);
+			Console.WriteLine("Source: " + w.Source);
 			Exception e = w.GetBaseException();
-			Trace.WriteLine("Base Exception Message: " + e.Message);
+			Console.WriteLine("Base Exception Message: " + e.Message);
 
 			throw w;
 		}
@@ -282,7 +282,7 @@ public class CommandLineUtil {
 				}
 			}
 
-			Trace.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
+			Console.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
 
 			proc.Start();
 
@@ -319,7 +319,7 @@ public class CommandLineUtil {
     {
 		System.Diagnostics.Process proc = runCommandStart(cmd, args, userName, password_, curDir, environment);			
 		runCommandComplete (proc);
-		Trace.WriteLine (output_str);
+		Console.WriteLine (output_str);
 		return proc;
     }
 

@@ -38,7 +38,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 			string[] contents = File.ReadAllLines (path_hosts_file);
 			int size = contents.Length;
 
-			Trace.WriteLine ("getNumberOfNodes was called and returned " + size);
+			Console.WriteLine ("getNumberOfNodes was called and returned " + size);
 
 			return size - 1;
 		}
@@ -89,7 +89,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 			} 
 			catch (Exception e) 
 			{
-				Console.WriteLine(e.Message);
+				Console.Error.WriteLine(e.Message);
 				return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
 			}
 
@@ -125,7 +125,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 				for (int i = 0; i < facet_address.Length; i++)
 					facet_address_list [i] = new Tuple<int, string> (facet [i], facet_address [i]);	
 
-				Trace.WriteLine("INSTANTIATE -- " + platform_ref + " / " + component_ref + " / " + facet_address[facet_instance]);
+				Console.WriteLine("INSTANTIATE -- " + platform_ref + " / " + component_ref + " / " + facet_address[facet_instance]);
 
 				if (platform_ref.Equals(component_ref))
 					instantiateSystemComponent (app_name, facet_instance, facet_address_list, nodes);
@@ -153,14 +153,14 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 		{
 			try{
 				string instantiator_string = buildInstantiatorStringOfSystem (app_name + ".System", facet_instance, facet_address_list, nodes);
-				Trace.WriteLine (instantiator_string);
+				Console.WriteLine (instantiator_string);
 
 				string session_id_string = "system";
 				session = BackEnd.startSession(session_id_string);
 				//gov.cca.Services frwServices = session.Services;
 
 				// INSTANTIATE THE APPLICATION
-				Trace.WriteLine("Creating an instance of the application");
+				Console.WriteLine("Creating an instance of the application");
 				app_cid = (ManagerComponentID) BackEnd.createSystemComponentInstance ("app", instantiator_string, session_id_string);
 
 			} 
@@ -239,7 +239,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 		private void instantiateSolutionComponent(string component_ref)
 		{
 			int count = BackEnd.instantiateSolutionComponent (component_ref);
-			Trace.WriteLine ("instantiateSolutionComponent COUNTER=" + count);
+			Console.WriteLine ("instantiateSolutionComponent COUNTER=" + count);
 			status += (count + ":" + component_ref + "/");
 		}
 			

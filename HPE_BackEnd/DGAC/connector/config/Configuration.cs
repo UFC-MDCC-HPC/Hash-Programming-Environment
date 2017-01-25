@@ -194,7 +194,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			foreach (Transition t in transToAdd) {
             
 				if (t.Type == Transition.TransitionType.SIMPLE) {
-					//System.Diagnostics.Trace.WriteLine (t);
+					//System.Diagnostics.Console.WriteLine (t);
 					if (t.getExecutionAction () != LAMBDA_TRANSITION) {
 						actions.Add (t.getExecutionAction ());
 					}
@@ -205,7 +205,7 @@ namespace br.ufc.pargo.hpe.connector.config
 				}
 			}
 
-			System.Diagnostics.Trace.WriteLine ("");
+			Console.WriteLine ("");
          
 			int index;
 			//formando a matrix e o arriving
@@ -220,7 +220,7 @@ namespace br.ufc.pargo.hpe.connector.config
 					if (tran.IsElse) {
 						//Caso seja uma transição ELSE, deverá ocupar a última posição.
 						index = (numTransations [tran.InitialState] - 1);
-						//Trace.WriteLine ("numTransitions: " + numTransations [tran.InitialState] + " | ");
+						//Console.WriteLine ("numTransitions: " + numTransations [tran.InitialState] + " | ");
                   
 					} else {
 						index = (matrix [tran.InitialState].Values.Count / Configuration.BASE);
@@ -249,8 +249,8 @@ namespace br.ufc.pargo.hpe.connector.config
 			//TODO remover! exibir a matrix
 			
 			if (ConfigurationManager.N) {
-				Trace.WriteLine ("---");
-				Trace.WriteLine ("Exibindo a matrix");
+				Console.WriteLine ("---");
+				Console.WriteLine ("Exibindo a matrix");
 				string content;
 				for (int b = 0; b < matrix.Count; b++) {
 					content = "linha null";
@@ -263,12 +263,12 @@ namespace br.ufc.pargo.hpe.connector.config
 							Trace.Write (content + ", ");
 						}
 					}
-					Trace.WriteLine ("");
+					Console.WriteLine ("");
 				}
 			
-				Trace.WriteLine ("Actions");
+				Console.WriteLine ("Actions");
 				foreach (ExecutionAction rj in actions) {
-				//	Trace.WriteLine ("action {0} - {1} ({2})", rj.Id, (rj.MetaAction == null ? "null" : rj.MetaAction.Father.Name), (rj.MetaAction == null ? 0 : rj.MetaAction.Id));
+				//	Console.WriteLine ("action {0} - {1} ({2})", rj.Id, (rj.MetaAction == null ? "null" : rj.MetaAction.Father.Name), (rj.MetaAction == null ? 0 : rj.MetaAction.Id));
 				}
 			}
 			
@@ -285,7 +285,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		{
 			//foreach (int j in arriving.Keys)
 			//{
-			//	Trace.WriteLine("j={0}, i={1}", j, i);	
+			//	Console.WriteLine("j={0}, i={1}", j, i);	
 			//}
 			
 			if (i != INITIAL_STATE)
@@ -301,7 +301,7 @@ namespace br.ufc.pargo.hpe.connector.config
 				foreach (int s in states) {
 					//TODO cambi pontual.
 					if (s == 4 && !_resetEvents.ContainsKey (s)) {
-						Trace.WriteLine ("[Configuration.stopStates] Suspendendo a execução do estado " + s + "...");
+						Console.WriteLine ("[Configuration.stopStates] Suspendendo a execução do estado " + s + "...");
 						_resetEvents [s] = new System.Threading.ManualResetEvent (false);
 					}
 				}
@@ -326,11 +326,11 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			lock (thisLock) {            
 				foreach (int s in states) {
-					Trace.WriteLine ("[Configuration.runStates] Reiniciando a execução do estado " + s + "...");
+					Console.WriteLine ("[Configuration.runStates] Reiniciando a execução do estado " + s + "...");
 					if (_resetEvents.ContainsKey (s)) {
 						_resetEvents [s].Set ();
 						_resetEvents.Remove (s);
-						//Trace.WriteLine("[Configuration.runStates] Estado {0} reiniciado!", s);
+						//Console.WriteLine("[Configuration.runStates] Estado {0} reiniciado!", s);
 					}
 				}
 			}

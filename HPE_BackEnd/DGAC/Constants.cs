@@ -22,14 +22,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         {
 			Trace.Write("LOADING PROPERTIES FILE: ---- " + HOME_PATH);
             string properties_file_path = getArgVal("--properties");
-            Trace.WriteLine(properties_file_path);
+            Console.WriteLine(properties_file_path);
             if (properties_file_path == null)
             {
                properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
                if (properties_file_path == null)
                     properties_file_path = Path.Combine(HOME_PATH, "hpe.backend.properties");
             }
-			Trace.WriteLine(properties_file_path);
+			Console.WriteLine(properties_file_path);
             return properties_file_path;
         }
 
@@ -111,10 +111,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 			get 
 			{
 				string path_hosts_file = Environment.GetEnvironmentVariable ("PATH_HOSTS_FILE");
-				Trace.WriteLine ("PATH_HOSTS_FILE is null ? " + (path_hosts_file == null));
+				Console.WriteLine ("PATH_HOSTS_FILE is null ? " + (path_hosts_file == null));
 				if (path_hosts_file == null)
 					path_hosts_file = FileUtil.readConstant("hosts_file", Path.Combine(HOME_PATH, "hpe_nodes"));
-				Trace.WriteLine ("PATH_HOSTS_FILE is " + path_hosts_file);
+				Console.WriteLine ("PATH_HOSTS_FILE is " + path_hosts_file);
 				return path_hosts_file;
 			}
 		}

@@ -56,7 +56,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private string mkPortName(string portName)
         {
-			Trace.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
+			Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
             return this.instanceName + ":" + portName.Trim();
         }
 
@@ -66,13 +66,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
         public Port getPort(string portName)
         {
-			Trace.WriteLine ("WorkerServicesImpl 1 - getPort(" + portName + ")");
+			Console.WriteLine ("WorkerServicesImpl 1 - getPort(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Trace.WriteLine ("WorkerServicesImpl 2 - getPort(" + portName + ")");
+			Console.WriteLine ("WorkerServicesImpl 2 - getPort(" + portName + ")");
 			if (port == null) 
 			{
 				port = framework.getPort (mkPortName(portName));
-				Trace.WriteLine ("WorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
+				Console.WriteLine ("WorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
 			}
 			return port;
         }
@@ -80,15 +80,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
         public Port getPortNonblocking(string portName)
         {
-			Trace.WriteLine ("WorkerServicesImpl 1 - getPortNonBlocking(" + portName + ")");
+			Console.WriteLine ("WorkerServicesImpl 1 - getPortNonBlocking(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Trace.WriteLine ("WorkerServicesImpl 2 - getPortNonBlocking(" + portName + ")");
+			Console.WriteLine ("WorkerServicesImpl 2 - getPortNonBlocking(" + portName + ")");
 			if (port==null) 
 			{
-				Trace.WriteLine ("WorkerServicesImpl 3 - getPortNonBlocking(" + portName + ")");
+				Console.WriteLine ("WorkerServicesImpl 3 - getPortNonBlocking(" + portName + ")");
 				port = framework.getPortNonblocking (mkPortName (portName));
 			}
-			Trace.WriteLine ("WorkerServicesImpl 4 - getPortNonBlocking(" + portName + ") " + port.GetType());
+			Console.WriteLine ("WorkerServicesImpl 4 - getPortNonBlocking(" + portName + ") " + port.GetType());
 			return port;
         }
 
@@ -104,9 +104,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
-			Trace.WriteLine ("WorkerServicesImpl - registerUserPort 1 - " + portName);
+			Console.WriteLine ("WorkerServicesImpl - registerUserPort 1 - " + portName);
             framework.registerUsesPort(mkPortName(portName), type, properties);
-			Trace.WriteLine ("WorkerServicesImpl - registerUserPort 2 - " + portName);
+			Console.WriteLine ("WorkerServicesImpl - registerUserPort 2 - " + portName);
         }
 
         public void unregisterUsesPort(string portName)
@@ -167,13 +167,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
 		public Port getPort(string portName)
 		{
-			Trace.WriteLine ("RemoteWorkerServicesImpl 1 - getPort(" + portName + ")");
+			Console.WriteLine ("RemoteWorkerServicesImpl 1 - getPort(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Trace.WriteLine ("RemoteWorkerServicesImpl 2 - getPort(" + portName + ")");
+			Console.WriteLine ("RemoteWorkerServicesImpl 2 - getPort(" + portName + ")");
 			if (port == null) 
 			{
 				port = framework.getPort (mkPortName(portName));
-				Trace.WriteLine ("RemoteWorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
+				Console.WriteLine ("RemoteWorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
 			}
 			return port;
 		}
@@ -181,15 +181,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
 		public Port getPortNonblocking(string portName)
 		{
-			Trace.WriteLine ("RemoteWorkerServicesImpl 1 - getPortNonBlocking(" + portName + ")");
+			Console.WriteLine ("RemoteWorkerServicesImpl 1 - getPortNonBlocking(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Trace.WriteLine ("RemoteWorkerServicesImpl 2 - getPortNonBlocking(" + portName + ")");
+			Console.WriteLine ("RemoteWorkerServicesImpl 2 - getPortNonBlocking(" + portName + ")");
 			if (port==null) 
 			{
-				Trace.WriteLine ("RemoteWorkerServicesImpl 3 - getPortNonBlocking(" + portName + ")");
+				Console.WriteLine ("RemoteWorkerServicesImpl 3 - getPortNonBlocking(" + portName + ")");
 				port = framework.getPortNonblocking (mkPortName (portName));
 			}
-			Trace.WriteLine ("RemoteWorkerServicesImpl 4 - getPortNonBlocking(" + portName + ") " + port.GetType());
+			Console.WriteLine ("RemoteWorkerServicesImpl 4 - getPortNonBlocking(" + portName + ") " + port.GetType());
 			return port;
 		}
 
@@ -206,9 +206,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public void registerUsesPort(string portName, string type, TypeMap properties)
 		{
-			Trace.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 1 - " + portName);
+			Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 1 - " + portName);
 			framework.registerUsesPort(mkPortName(portName), type, properties);
-			Trace.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 2 - " + portName);
+			Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 2 - " + portName);
 		}
 
 		public void unregisterUsesPort(string portName)
@@ -246,7 +246,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		private string mkPortName(string portName)
 		{
-			Trace.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
+			Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
 			return this.instanceName + ":" + portName.Trim();
 		}
 	}

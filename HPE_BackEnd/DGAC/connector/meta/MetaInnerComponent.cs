@@ -34,7 +34,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 
 		public MetaInnerComponent Clone ()
 		{
-			//Trace.WriteLine ("[MetaInnerComponent.Clone] clonando o InnerComponent {0}...", identifier);
+			//Console.WriteLine ("[MetaInnerComponent.Clone] clonando o InnerComponent {0}...", identifier);
 			MetaInnerComponent c = new MetaInnerComponent();
 			Clone (c);
 

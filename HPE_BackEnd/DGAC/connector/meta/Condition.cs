@@ -90,11 +90,11 @@ namespace br.ufc.pargo.hpe.connector.meta
 				
 			} else if (oper == Operator.NULL) {
 				
-				System.Diagnostics.Trace.WriteLine("conditions.Count = " + conditions.Count);
+				Console.WriteLine("conditions.Count = " + conditions.Count);
 				if (conditions.Count > 0) 
 				{
 					Condition c = conditions[0];
-					System.Diagnostics.Trace.WriteLine("Condition is "+ c.Slice + "/" + c.Name);
+					Console.WriteLine("Condition is "+ c.Slice + "/" + c.Name);
 				}
 				result = conditions[0].Evaluate();
 
@@ -127,7 +127,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		}
 		
 		public Condition Clone() {
-			//Trace.WriteLine ("[Condition.Clone] clonando o condition {0}...", cond);
+			//Console.WriteLine ("[Condition.Clone] clonando o condition {0}...", cond);
 			Condition clone = new Condition();
 			
 			Clone (clone);
@@ -137,7 +137,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		
 		public void Clone(Condition clone) {
 			
-			//Trace.WriteLine ("[Condition.Clone] Base Condition...");
+			//Console.WriteLine ("[Condition.Clone] Base Condition...");
 			clone.slice = slice;
 			clone.cond = cond;
 			clone.oper = oper;

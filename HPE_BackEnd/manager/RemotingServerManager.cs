@@ -38,7 +38,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private void startManagerServer()
         {
-            Trace.WriteLine("Starting Manager ");
+            Console.WriteLine("Starting Manager ");
 
             System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
             System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
@@ -52,16 +52,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			RemotingConfiguration.ApplicationName = /*"ManagerHost"; */ Constants.MANAGER_PORT_NAME + (session_id == null ? "" : "-" + session_id);
             RemotingConfiguration.RegisterActivatedServiceType(typeof(ManagerObject));
 
-			Trace.WriteLine("Manager Service " + RemotingConfiguration.ApplicationName +  " running ...");
+			Console.WriteLine("Manager Service " + RemotingConfiguration.ApplicationName +  " running ...");
 
 		}
 
         private void stopManagerServer() 
         {
-            Trace.WriteLine("Manager is stopping !");
+            Console.WriteLine("Manager is stopping !");
             channelManagerServer.StopListening(null);
             ChannelServices.UnregisterChannel(channelManagerServer);
-            Trace.WriteLine("Manager Service Finished ");
+            Console.WriteLine("Manager Service Finished ");
         }
 
         protected override void OnStart(string[] args)
@@ -69,7 +69,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			Trace.Write("OnStart called...");
             startManagerServer();
 			BackEnd.startWorkers (session_id, null, null, System.Environment.CurrentDirectory);
-			Trace.WriteLine("OK !");
+			Console.WriteLine("OK !");
         }
 
         protected override void OnStop()
@@ -77,7 +77,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			Trace.Write("OnStop called...");
             BackEnd.stopWorkers(session_id);
             stopManagerServer();
-			Trace.WriteLine("OK !");
+			Console.WriteLine("OK !");
        }
 
         private void InitializeComponent()
@@ -101,13 +101,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					Console.Error.WriteLine("'-port <integer>' is expected");
 					System.Environment.Exit(0);
 				}
-				Trace.WriteLine("--port " + port);
+				Console.WriteLine("--port " + port);
 			}
 
 			if(CommandLine["session"] != null) 
 			{
 				session_id = CommandLine["session"];
-				Trace.WriteLine("--session " + session_id);
+				Console.WriteLine("--session " + session_id);
 			}
 
 		}

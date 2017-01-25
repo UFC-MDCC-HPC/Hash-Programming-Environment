@@ -106,7 +106,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			}
 			else
 			{
-				//System.Diagnostics.Trace.WriteLine("[MetaUnit.AddAction] {0} is already in actions ...", name);
+				//System.Diagnostics.Console.WriteLine("[MetaUnit.AddAction] {0} is already in actions ...", name);
 			}
 			
 		}
@@ -123,7 +123,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		public void linkEntities ()
 		{
          
-			//System.Diagnostics.Trace.WriteLine ("[MetaUnit.linkEntities] UNIT: " + Name + "-" + Entity.ToString ());
+			//System.Diagnostics.Console.WriteLine ("[MetaUnit.linkEntities] UNIT: " + Name + "-" + Entity.ToString ());
          
 			if (slices != null) {
 				IUnit unit = (IUnit)entity;
@@ -168,7 +168,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		}
 	
 		public MetaUnit Clone() {
-			//Trace.WriteLine ("[MetaUnit.Clone] Clonando unit {0}...", this.Name);
+			//Console.WriteLine ("[MetaUnit.Clone] Clonando unit {0}...", this.Name);
 			
 			MetaUnit unit = new MetaUnit();
 		
@@ -179,7 +179,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		
 		public void Clone(MetaUnit unit) {
 		
-			//Trace.WriteLine ("[MetaUnit.Clone] Base MetaUnit...");
+			//Console.WriteLine ("[MetaUnit.Clone] Base MetaUnit...");
 			base.Clone ((MetaHashEntity) unit);
 			
 			unit.index = index;

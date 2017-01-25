@@ -43,8 +43,8 @@ namespace Back_End_Test
                 int i = 0;
                 foreach (string o in output) 
                 {
-                    Trace.WriteLine("--- Process " + (i++) + " ----------- ");
-                    Trace.WriteLine(o);
+                    Console.WriteLine("--- Process " + (i++) + " ----------- ");
+                    Console.WriteLine(o);
                 }
 
 
@@ -89,7 +89,7 @@ namespace Back_End_Test
 			if(CommandLine["instantiator_file"] != null) 
 			{
                instantiator_string_file = CommandLine["instantiator_file"];
-			   Trace.WriteLine("--instantiator_file = " + instantiator_string_file);
+			   Console.WriteLine("--instantiator_file = " + instantiator_string_file);
 			}
             else 
 			{
@@ -100,25 +100,25 @@ namespace Back_End_Test
 			if(CommandLine["user"] != null) 
 			{
                user = CommandLine["user"];
-			   Trace.WriteLine("--user = " + user);
+			   Console.WriteLine("--user = " + user);
 			}
 			
 			if(CommandLine["password"] != null) 
 			{
                password = CommandLine["password"];
-			   Trace.WriteLine("--password = " + password);
+			   Console.WriteLine("--password = " + password);
 			}
 			
 			if(CommandLine["current_dir"] != null) 
 			{
                curDir = CommandLine["current_dir"];
-			   Trace.WriteLine("--current_dir = " + curDir);
+			   Console.WriteLine("--current_dir = " + curDir);
 			}
 			
 /*			if(CommandLine["enumerator_id"] != null) 
 			{
                eId = CommandLine["enumerator_id"];
-			   Trace.WriteLine("--enumerator_id = " + eId);
+			   Console.WriteLine("--enumerator_id = " + eId);
 			}
 			else 
 			{
@@ -129,7 +129,7 @@ namespace Back_End_Test
 			if(CommandLine["enumerator_value"] != null) 
 			{
                eVl = Int32.Parse(CommandLine["enumerator_value"]);
-			   Trace.WriteLine("--enumerator_value = " + eVl);
+			   Console.WriteLine("--enumerator_value = " + eVl);
 			}
 			else 
 			{
@@ -144,13 +144,13 @@ namespace Back_End_Test
 				   Console.Error.WriteLine("'-rounds <integer>' is expected");
 				   Environment.Exit(0);
 			   }
-			   Trace.WriteLine("--rounds = " + rounds);
+			   Console.WriteLine("--rounds = " + rounds);
 			}
 
 			if(CommandLine["prefix"] != null) 
 			{
                prefix = CommandLine["prefix"];
-			   Trace.WriteLine("--prefix = " + prefix);
+			   Console.WriteLine("--prefix = " + prefix);
 			}
 			
 		}

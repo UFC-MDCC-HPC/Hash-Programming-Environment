@@ -59,8 +59,8 @@ namespace br.ufc.mdcc.hpcshelf.backend
 		[WebMethod]
 		public string deploy(string[] platform_config)
 		{
-			Trace.WriteLine (platform_config[0]);
-			Trace.WriteLine (platform_config[2]);
+			Console.WriteLine (platform_config[0]);
+			Console.WriteLine (platform_config[2]);
 
 			int nodes = int.Parse(platform_config [1]) + 1;
 
@@ -129,8 +129,8 @@ namespace br.ufc.mdcc.hpcshelf.backend
 			}
 			catch(Exception e)
 			{
-				Trace.WriteLine ("EXCEPTION: " + e.Message);
-				Trace.WriteLine ("INNER EXCEPTION: " + e.InnerException.Message);
+				Console.WriteLine ("EXCEPTION: " + e.Message);
+				Console.WriteLine ("INNER EXCEPTION: " + e.InnerException.Message);
 			}
 			finally 
 			{
@@ -153,8 +153,8 @@ namespace br.ufc.mdcc.hpcshelf.backend
 			}
 			catch(Exception e)
 			{
-				Trace.WriteLine ("EXCEPTION: " + e.Message);
-//				Trace.WriteLine ("INNER EXCEPTION: " + e.InnerException.Message);
+				Console.WriteLine ("EXCEPTION: " + e.Message);
+//				Console.WriteLine ("INNER EXCEPTION: " + e.InnerException.Message);
 			}
 			finally 
 			{

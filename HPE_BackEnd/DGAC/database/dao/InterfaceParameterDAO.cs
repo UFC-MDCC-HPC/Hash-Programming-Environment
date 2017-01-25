@@ -20,7 +20,7 @@ public class InterfaceParameterDAO{
             "INSERT INTO interfaceparameters (id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order)" +
             " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.VarId + "','" + ac.ParId + "','" + ac.Id_interface_parameter + "','" + ac.Id_unit_parameter + "'," + ac.ParOrder + ")";
 
-   		Trace.WriteLine("InterfaceParameter.cs: TRY INSERT: " + sql);
+   		Console.WriteLine("InterfaceParameter.cs: TRY INSERT: " + sql);
 
 
         Connector.performSQLUpdate(sql);
@@ -116,7 +116,7 @@ public class InterfaceParameterDAO{
            "id_abstract=" + id_abstract + 
 		   " ORDER BY par_order";
         dbcmd.CommandText = sql;
-		Trace.WriteLine (sql);
+		Console.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {

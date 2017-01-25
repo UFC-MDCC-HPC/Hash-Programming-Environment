@@ -25,7 +25,7 @@ public class ComponentDAO{
             "INSERT INTO component (id_concrete, id_concrete_supertype, id_functor_app, id_abstract, library_path, hash_component_UID)" +
             " VALUES (" + nextKey + "," + ac.Id_concrete_supertype + "," + ac.Id_functor_app + "," + ac.Id_abstract + ",'"+ ac.Library_path + "','"+ ac.Hash_component_UID +  "')";
 
-   		Trace.WriteLine("Component.cs: TRY INSERT: " + sql);
+   		Console.WriteLine("Component.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
 

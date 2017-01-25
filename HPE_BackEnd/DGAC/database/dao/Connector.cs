@@ -12,7 +12,7 @@ public class Connector {
  	 
 	 public static IDbConnection getConnection(){
 	 	string connectionString = Constants.connectionString;
-        // Trace.WriteLine(connectionString); 
+        // Console.WriteLine(connectionString); 
          IDbConnection dbcon;
        dbcon = new MySqlConnection(connectionString);
        return dbcon;
@@ -134,7 +134,7 @@ public class Connector {
        	    int id_unit = (int)reader["id_unit"];
        	    int id_concrete = (int)reader["id_concrete"];
        	    string name = (string)reader["name"];
-            Trace.WriteLine("id_unit: " + id_unit + " id_concrete: " + id_concrete + " name: " + name);
+            Console.WriteLine("id_unit: " + id_unit + " id_concrete: " + id_concrete + " name: " + name);
        }
        // clean up
        reader.Close();

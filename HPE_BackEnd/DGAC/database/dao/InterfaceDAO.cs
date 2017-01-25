@@ -38,7 +38,7 @@ public class InterfaceDAO{
 					     + (ac.Is_parallel ? "1" : "0") + "," 
 					     + ac.Order + ")";
 
-   		Trace.WriteLine("Interface.cs: TRY INSERT: " + sql);
+   		Console.WriteLine("Interface.cs: TRY INSERT: " + sql);
 
 
 
@@ -59,7 +59,7 @@ public class InterfaceDAO{
 				"id_abstract=" + id_abstract;
 			
        dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			      IDataReader reader = dbcmd.ExecuteReader();
        if (reader.Read())
        {
@@ -115,9 +115,9 @@ public class InterfaceDAO{
             "SELECT id_interface, facet, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " ORDER BY `order`";
-			Trace.WriteLine ("InterfaceDAO - list :" + sql);
+			Console.WriteLine ("InterfaceDAO - list :" + sql);
         dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
 
 
@@ -171,7 +171,7 @@ public class InterfaceDAO{
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " and id_interface ='" + id_interface + "' ORDER BY `order`";
         dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {
@@ -216,7 +216,7 @@ public class InterfaceDAO{
             "UPDATE interface SET id_interface_super_top = '" + id_interface_super_top + "' " +
             " WHERE id_abstract=" + id_abstract + " AND id_interface like '" + id_interface + "'";
 
-			Trace.WriteLine ("setInterfaceSuperTop: " + sql);
+			Console.WriteLine ("setInterfaceSuperTop: " + sql);
  
         Connector.performSQLUpdate(sql);
     }
@@ -303,7 +303,7 @@ public class InterfaceDAO{
             "FROM interface " +
             "WHERE class_name like '" + library_path + "'";
         dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
         if (reader.Read())
         {
@@ -348,7 +348,7 @@ public class InterfaceDAO{
         IList<Interface> iList = BackEnd.idao.list(id_abstract);
         foreach (Interface i in iList)
         {
-			Trace.WriteLine ("i.Id_interface_top = " + i.Id_interface_super_top + " = " + id_interface + " ?");
+			Console.WriteLine ("i.Id_interface_top = " + i.Id_interface_super_top + " = " + id_interface + " ?");
 			string[] interface_ids_tops = Interface.splitIDs(i.Id_interface_super_top);
 
 			foreach (string interface_id_top in interface_ids_tops) 
@@ -366,12 +366,12 @@ public class InterfaceDAO{
     internal Interface retrieveSuper(int id_abstract, string id_interface)
     {
 
-			Trace.WriteLine ("retrieveSuper - BEGIN 1 " + id_abstract + "/" + id_interface);
+			Console.WriteLine ("retrieveSuper - BEGIN 1 " + id_abstract + "/" + id_interface);
         bool loop;
         AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract);
 
         IList<Interface> iList = BackEnd.idao.list(id_abstract);
-			Trace.WriteLine ("retrieveSuper - BEGIN 2 " + iList.Count);
+			Console.WriteLine ("retrieveSuper - BEGIN 2 " + iList.Count);
         foreach (Interface i in iList)
         {
 			IList<Tuple<AbstractComponentFunctor, Interface>> queue = new List<Tuple<AbstractComponentFunctor, Interface>> ();
@@ -381,10 +381,10 @@ public class InterfaceDAO{
 				AbstractComponentFunctor acfCurr = queue[0].Item1;
 				Interface iCurr = queue[0].Item2;
 				queue.RemoveAt(0);
-					Trace.WriteLine ("retrieveSuper - DEQUEUE - id_abstract=" + acfCurr.Id_abstract + " / id_interface=" + iCurr.Id_interface);
+					Console.WriteLine ("retrieveSuper - DEQUEUE - id_abstract=" + acfCurr.Id_abstract + " / id_interface=" + iCurr.Id_interface);
                 if (iCurr.Id_interface.Equals(id_interface))
                 {
-					Trace.WriteLine ("retrieveSuper: found id_abstract=" + acfCurr.Id_abstract + " / id_interface=" + iCurr.Id_interface);
+					Console.WriteLine ("retrieveSuper: found id_abstract=" + acfCurr.Id_abstract + " / id_interface=" + iCurr.Id_interface);
 		            return i;
                 }
                 else if (loop = acfCurr.Id_functor_app_supertype > 0)
@@ -394,7 +394,7 @@ public class InterfaceDAO{
 					string[] id_interface_super_list = Interface.splitIDs(iCurr.Id_interface_super);
 					foreach (string id_interface_super in id_interface_super_list) 
 					{
-						Trace.WriteLine ("retrieveSuper: id_abstract=" + acfCurr.Id_abstract + " / id_interface=" +iCurr.Id_interface);
+						Console.WriteLine ("retrieveSuper: id_abstract=" + acfCurr.Id_abstract + " / id_interface=" +iCurr.Id_interface);
 						iCurr = DGAC.BackEnd.idao.retrieve (acfaSuper.Id_abstract, id_interface_super);
 						queue.Add (new Tuple<AbstractComponentFunctor, Interface> (acfCurr,iCurr));
 					}
@@ -402,7 +402,7 @@ public class InterfaceDAO{
             }
         }
 
-			Trace.WriteLine ("retrieveSuper - END NULL");
+			Console.WriteLine ("retrieveSuper - END NULL");
         return null;
     }
 

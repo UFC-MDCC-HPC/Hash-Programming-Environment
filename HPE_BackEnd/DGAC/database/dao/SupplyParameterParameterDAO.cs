@@ -19,7 +19,7 @@ public class SupplyParameterParameterDAO{
             "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
             " VALUES ('" + ac.Id_parameter + "'," + ac.Id_functor_app + ",'" + ac.Id_argument + "'," + ac.FreeVariable + ")";
 
-   		Trace.WriteLine("SupplyParameterParameter.cs: TRY INSERT: " + sql);
+   		Console.WriteLine("SupplyParameterParameter.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
     }
@@ -52,7 +52,7 @@ public class SupplyParameterParameterDAO{
 			
 	   if (spc==null) 
 	   {
-	  	  Trace.WriteLine("SupplyParameterParameterDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
+	  	  Console.WriteLine("SupplyParameterParameterDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
 	   }
 			
        return spc;

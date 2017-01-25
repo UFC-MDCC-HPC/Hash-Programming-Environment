@@ -383,7 +383,7 @@ namespace br.ufc.pargo.hpe.connector.load
 			List<Transition> transitions = new List<Transition> ();
 			Queue<Transition> treat = new Queue<Transition> ();
          
-			//Trace.WriteLine("Initial {0} | Final {1} | numStates {2} | numTrans {3}", initial, final, numStates, numTransations);
+			//Console.WriteLine("Initial {0} | Final {1} | numStates {2} | numTrans {3}", initial, final, numStates, numTransations);
 			treat.Enqueue (new Transition (initial, final, node, numTransations++));
          
 			Transition t;
@@ -417,7 +417,7 @@ namespace br.ufc.pargo.hpe.connector.load
 				guardNode = pivotNode.SelectSingleNode ("guard");
 				condition = null;
 				
-				//Trace.WriteLine("[XmlLoaderUtil.getTransitions] Ação a avaliar... {0}", pivotNode.Name);
+				//Console.WriteLine("[XmlLoaderUtil.getTransitions] Ação a avaliar... {0}", pivotNode.Name);
 				if (pivotNode.Name.Equals ("seq") || pivotNode.Name.Equals ("par")) {
 					if (guardNode != null) {
 						condition = getCondition (guardNode);
@@ -506,21 +506,21 @@ namespace br.ufc.pargo.hpe.connector.load
 						}
 					}
 					attr = (XmlAttribute)child.Attributes.GetNamedItem ("slice_id");
-					//Trace.WriteLine("[XmlLoaderUtil.getTransitions] Avaliando ação sobre a fatia {0}", attr.Value);
+					//Console.WriteLine("[XmlLoaderUtil.getTransitions] Avaliando ação sobre a fatia {0}", attr.Value);
 					string sliceName = "";
 					if (attr != null) {
 						sliceName = attr.Value;
 					}
 
 					string methodName = child.Attributes.GetNamedItem ("action_id").Value;
-					//Trace.WriteLine("[XmlLoaderUtil.getTransitions] Avaliando ação {0}", methodName);
+					//Console.WriteLine("[XmlLoaderUtil.getTransitions] Avaliando ação {0}", methodName);
 					MetaAction selectedAction = null;
                
 					if (sliceName.Equals ("")) {
-						//Trace.WriteLine("[XmlLoaderUtil.getTransitions] unit {0} | action {1}", unit.Name, methodName);
+						//Console.WriteLine("[XmlLoaderUtil.getTransitions] unit {0} | action {1}", unit.Name, methodName);
 						unit.Actions.TryGetValue(methodName, out selectedAction);
 						
-						//Trace.WriteLine("[XmlLoaderUtil.getTransitions] Action {0} encontrada? {1}",methodName, selectedAction != null);
+						//Console.WriteLine("[XmlLoaderUtil.getTransitions] Action {0} encontrada? {1}",methodName, selectedAction != null);
 						
 						if (selectedAction == null) {
 							selectedAction = new MetaAction ();
@@ -531,7 +531,7 @@ namespace br.ufc.pargo.hpe.connector.load
 						}
 					} else {
 						MetaSlice slice = null;
-						//Trace.WriteLine("[XmlLoaderUtil.getTransitions] slice {0}", sliceName);
+						//Console.WriteLine("[XmlLoaderUtil.getTransitions] slice {0}", sliceName);
 						
 						unit.Slices.TryGetValue(sliceName, out slice);
 						
@@ -540,7 +540,7 @@ namespace br.ufc.pargo.hpe.connector.load
 						}
 
 						if (slice != null) {
-                     		//Trace.WriteLine("[XmlLoaderUtil.getTransitions] slice {0} encontrada", sliceName);
+                     		//Console.WriteLine("[XmlLoaderUtil.getTransitions] slice {0} encontrada", sliceName);
 							
 							if (slice.Unit.Actions != null) {
 								foreach (MetaAction mact in slice.Unit.Actions.Values) {
@@ -589,7 +589,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		{
 
 			//se for uma transiçao else, retorna null.
-			//Trace.WriteLine("[XmlLoader.GetCondition] iniciando...");
+			//Console.WriteLine("[XmlLoader.GetCondition] iniciando...");
 			if (node.FirstChild.Name.Equals ("condition")) {
 				if (node.FirstChild.Attributes.GetNamedItem ("cond_id").Equals ("else")) {
 					return null;
@@ -607,11 +607,11 @@ namespace br.ufc.pargo.hpe.connector.load
 			Condition.Operator oper;
 
 			sliceName = condName = null;
-			//Trace.WriteLine("[XmlLoader.GetCondition] avaliando os atributos...");
+			//Console.WriteLine("[XmlLoader.GetCondition] avaliando os atributos...");
 			XmlAttribute attr = (XmlAttribute)node.Attributes.GetNamedItem ("not");
 
 			if (attr != null) {
-				//Trace.WriteLine("[XmlLoader.GetCondition] tem not:{0}...", attr.Value);
+				//Console.WriteLine("[XmlLoader.GetCondition] tem not:{0}...", attr.Value);
 				not = attr.Value.Equals ("true");
 			}
 
@@ -620,14 +620,14 @@ namespace br.ufc.pargo.hpe.connector.load
 
 			toTreat.Enqueue (new KeyValuePair<Condition, XmlNodeList> (result, children)); 
      
-			//Trace.WriteLine("[XmlLoader.GetCondition] tratamento dos item...");
+			//Console.WriteLine("[XmlLoader.GetCondition] tratamento dos item...");
 			while (toTreat.Count > 0) {
 
 				pivot = toTreat.Dequeue ();
 				cenum = pivot.Value.GetEnumerator ();
 
 				while (cenum.MoveNext()) {
-					//Trace.WriteLine("[XmlLoader.GetCondition] trandando item...");
+					//Console.WriteLine("[XmlLoader.GetCondition] trandando item...");
 					child = (XmlNode)cenum.Current;
 					not = false;
 

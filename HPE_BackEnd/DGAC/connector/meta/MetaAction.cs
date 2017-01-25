@@ -52,7 +52,7 @@ namespace br.ufc.pargo.hpe.connector.meta {
 				if(runnable == null)
 					runnable = (MetaAction.DAction)Delegate.CreateDelegate (typeof(MetaAction.DAction), Father.Entity, Name);
 				
-			//Trace.WriteLine("[MetaAction.Run] RUNNING {0}.{1}", this.Father.Name, this.Name);
+			//Console.WriteLine("[MetaAction.Run] RUNNING {0}.{1}", this.Father.Name, this.Name);
             runnable(); //chamada da função via delegate.
          } else {
             ((IConnectorImpl) father.Entity).perform_action(Name);
@@ -64,7 +64,7 @@ namespace br.ufc.pargo.hpe.connector.meta {
 		
 		public MetaAction Clone() {
 			MetaAction action = new MetaAction();
-			//Trace.WriteLine ("[MetaAction.Clone] clonando a MetaAction {0}...", Name);
+			//Console.WriteLine ("[MetaAction.Clone] clonando a MetaAction {0}...", Name);
 			Clone (action);
 			
 			return action;
@@ -72,7 +72,7 @@ namespace br.ufc.pargo.hpe.connector.meta {
 		
 		public void Clone(MetaAction action) {
 			
-			//Trace.WriteLine ("[MetaAction.Clone] Base MetaAction... {0}", action == null);
+			//Console.WriteLine ("[MetaAction.Clone] Base MetaAction... {0}", action == null);
 			//base.Clone(action);
 			
 			if(references != null) {
@@ -85,7 +85,7 @@ namespace br.ufc.pargo.hpe.connector.meta {
 				
 			action.Name = Name;
 			action.Protocol = Protocol;
-			//Trace.WriteLine ("[MetaAction.Clone] Fim Base MetaAction...");
+			//Console.WriteLine ("[MetaAction.Clone] Fim Base MetaAction...");
 		}
    }   
 }

@@ -21,7 +21,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "INSERT INTO abstractcomponentfunctorparameter (id_parameter, id_abstract, bounds_of, variance)" +
                 " VALUES ('" + ac.Id_parameter + "'," + ac.Id_abstract + "," + ac.Bounds_of + ",'" + ac.Variance + "')";
 
-     		Trace.WriteLine("AbstractComponentFunctorParameter.cs: TRY INSERT: " + sql);
+     		Console.WriteLine("AbstractComponentFunctorParameter.cs: TRY INSERT: " + sql);
 
             Connector.performSQLUpdate(sql);
 
@@ -108,7 +108,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			
 	   if (acfp==null) 
 	   {
-	  	  Trace.WriteLine("AbstractComponentFunctorParameterDAO.cs: PARAMETER NOT FOUND "+ id_abstract + "," + id_parameter);
+	  	  Console.WriteLine("AbstractComponentFunctorParameterDAO.cs: PARAMETER NOT FOUND "+ id_abstract + "," + id_parameter);
 	   }
 			
         return acfp;

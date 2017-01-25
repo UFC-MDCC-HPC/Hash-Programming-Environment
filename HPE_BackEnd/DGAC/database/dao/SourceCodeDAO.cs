@@ -95,7 +95,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         internal void update(SourceCode ss)
         {
 			String contents = ss.Contents.Replace ("'", "\\'");
-			Trace.WriteLine (contents);
+			Console.WriteLine (contents);
 
            String sql =
                 "UPDATE sourcecode SET contents='" + contents + "' WHERE type_owner like '" + ss.Type_owner + "'"

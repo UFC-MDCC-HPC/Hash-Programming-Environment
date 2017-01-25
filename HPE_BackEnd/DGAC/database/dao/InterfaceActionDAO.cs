@@ -31,7 +31,7 @@ public class InterfaceActionDAO
 					     + ac.Protocol + "'," 
 					     + (ac.IsCondition ? "1" : "0") + ")";
 
-   		Trace.WriteLine("InterfaceAction.cs: TRY INSERT: " + sql);
+   		Console.WriteLine("InterfaceAction.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
     }

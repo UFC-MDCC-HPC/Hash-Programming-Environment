@@ -82,12 +82,12 @@ public class Component : HashComponent {
     {
         get
         {
-				Trace.WriteLine("get_Parameter enter");
+				Console.WriteLine("get_Parameter enter");
             IDictionary<string, AbstractComponentFunctorApplication> pars = new Dictionary<string, AbstractComponentFunctorApplication>();
             IList<SupplyParameter> sps = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(this.Id_functor_app);
             foreach (SupplyParameter sp in sps)
             {
-				Trace.WriteLine("get_Parameter loop");
+				Console.WriteLine("get_Parameter loop");
 				if (sp is SupplyParameterComponent)
 				{
                 	SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;					

@@ -14,7 +14,7 @@ public class SupplyParameterDAO{
 
     public void insert(SupplyParameter ac)
     {
-			Trace.WriteLine("SupplyParameter.cs: TRY INSERT 1: " + (ac==null));
+			Console.WriteLine("SupplyParameter.cs: TRY INSERT 1: " + (ac==null));
 
         String sql1 =
             "INSERT INTO supplyparameter (id_parameter, id_functor_app, id_abstract)" +
@@ -25,7 +25,7 @@ public class SupplyParameterDAO{
 
         if (ac is SupplyParameterComponent)
         {
-   			Trace.WriteLine("SupplyParameter.cs: TRY INSERT 2: ");
+   			Console.WriteLine("SupplyParameter.cs: TRY INSERT 2: ");
             SupplyParameterComponent acc = (SupplyParameterComponent)ac;
             sql2 =
             "INSERT INTO supplyparametercomponent (id_parameter, id_functor_app, id_functor_app_actual)" +
@@ -33,15 +33,15 @@ public class SupplyParameterDAO{
         }
         else if (ac is SupplyParameterParameter)
         {
-   			Trace.WriteLine("SupplyParameter.cs: TRY INSERT 3: ");
+   			Console.WriteLine("SupplyParameter.cs: TRY INSERT 3: ");
             SupplyParameterParameter acp = (SupplyParameterParameter) ac;
             sql2 =
             "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
             " VALUES ('" + acp.Id_parameter + "'," + acp.Id_functor_app + ",'" + acp.Id_argument + "'," + (acp.FreeVariable ? 1 : 0) + ")";
         }
 
-   		Trace.WriteLine("SupplyParameter.cs: TRY INSERT 4: " + sql1);
-   		Trace.WriteLine("SupplyParameter.cs: TRY INSERT 5: " + sql2);
+   		Console.WriteLine("SupplyParameter.cs: TRY INSERT 4: " + sql1);
+   		Console.WriteLine("SupplyParameter.cs: TRY INSERT 5: " + sql2);
 
         Connector.performSQLUpdate(sql1);
         Connector.performSQLUpdate(sql2);
@@ -130,7 +130,7 @@ public class SupplyParameterDAO{
 			
 	   if (spc==null) 
 	   {
-	  	  Trace.WriteLine("SupplyParameterDAO.cs: PARAMETER NOT FOUND "+ id_parameter + "," + id_functor_app);
+	  	  Console.WriteLine("SupplyParameterDAO.cs: PARAMETER NOT FOUND "+ id_parameter + "," + id_functor_app);
 	   }
 			
        return spc;
@@ -141,11 +141,11 @@ public class SupplyParameterDAO{
 
     public IList<SupplyParameter> list(int id_functor_app){
 
-			Trace.WriteLine ("SupplyParameterDAO: list ENTER " + id_functor_app);
+			Console.WriteLine ("SupplyParameterDAO: list ENTER " + id_functor_app);
 
 			IList<SupplyParameter> list = null;
 	//		if (cache_c_pars.TryGetValue (id_functor_app, out list)) {
-	//			Trace.WriteLine ("SupplyParameterDAO: list RETURN count=" + list.Count);
+	//			Console.WriteLine ("SupplyParameterDAO: list RETURN count=" + list.Count);
 	//			return list;
 	//		}
         list = new List<SupplyParameter>();
@@ -160,12 +160,12 @@ public class SupplyParameterDAO{
            "FROM supplyparameter " +
            "WHERE id_functor_app=" + id_functor_app;
        dbcmd.CommandText = sql;
-			Trace.WriteLine ("SupplyParameterDAO: SQL = " + sql);
+			Console.WriteLine ("SupplyParameterDAO: SQL = " + sql);
 
        IDataReader reader = dbcmd.ExecuteReader();
        while(reader.Read()) {
            string id_parameter = (string)reader["id_parameter"];;
-		   Trace.WriteLine ("SupplyParameterDAO: reading parameter " + id_parameter);
+		   Console.WriteLine ("SupplyParameterDAO: reading parameter " + id_parameter);
            parameters.Add(id_parameter);
        }//while
        // clean up
@@ -176,12 +176,12 @@ public class SupplyParameterDAO{
 
        foreach (string id_parameter in parameters)
        {
-		   Trace.WriteLine ("SupplyParameterDAO: fetching parameter " + id_parameter + " / " + id_functor_app);
+		   Console.WriteLine ("SupplyParameterDAO: fetching parameter " + id_parameter + " / " + id_functor_app);
            SupplyParameter sp = retrieve(id_parameter, id_functor_app);
            list.Add(sp);
        }
 
-			Trace.WriteLine ("SupplyParameterDAO: list EXIT count=" + list.Count);
+			Console.WriteLine ("SupplyParameterDAO: list EXIT count=" + list.Count);
 
        return list;
        

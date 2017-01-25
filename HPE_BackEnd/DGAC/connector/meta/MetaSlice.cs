@@ -30,7 +30,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		
 		public MetaSlice Clone() {
 			
-			//Trace.WriteLine ("[MetaSlice.Clone] clonando slice {0}...", inner);
+			//Console.WriteLine ("[MetaSlice.Clone] clonando slice {0}...", inner);
 			MetaSlice slice = new MetaSlice(unit.Clone());
 			slice.inner = inner;
 

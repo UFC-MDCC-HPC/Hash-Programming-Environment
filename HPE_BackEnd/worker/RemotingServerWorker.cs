@@ -36,13 +36,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
  
         public void StartMPI(string[] args)
         {
-            Trace.WriteLine("Starting MPI ... ");
+            Console.WriteLine("Starting MPI ... ");
             mpi = new MPI.Environment(ref args, Threading.Multiple);
             Trace.Write("ok !");
             this.global_communicator = MPI.Communicator.world;
             number_of_workers = this.global_communicator.Size;
             my_rank = this.global_communicator.Rank;
-            Trace.WriteLine("Rank #" + my_rank + " at processor " + MPI.Environment.ProcessorName + " - threading is " + MPI.Environment.Threading);
+            Console.WriteLine("Rank #" + my_rank + " at processor " + MPI.Environment.ProcessorName + " - threading is " + MPI.Environment.Threading);
         }
 
 
@@ -51,7 +51,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			TextWriterTraceListener writer = new TextWriterTraceListener(System.Console.Out);
 			Trace.Listeners.Add(writer);
 
-            Trace.WriteLine("Initializing Worker");
+            Console.WriteLine("Initializing Worker");
             System.ServiceProcess.ServiceBase[] ServicesToRun;
             ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService(args) };
             System.ServiceProcess.ServiceBase.Run(ServicesToRun);
@@ -70,8 +70,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
  
 				string uri_str = "http://" + "localhost" + ":" + port + "/" + service_name;
 
-				Trace.WriteLine("Starting " + service_name + " listening on port ... " + port);
-				Trace.WriteLine("uri_str = " + uri_str);
+				Console.WriteLine("Starting " + service_name + " listening on port ... " + port);
+				Console.WriteLine("uri_str = " + uri_str);
 
 				var binding = new BasicHttpBinding ();
 				var address = new Uri (uri_str);
@@ -87,24 +87,24 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					throttleBehavior.MaxConcurrentInstances = 512;
 
 					serviceHost.Description.Behaviors.Add(throttleBehavior);
-					Trace.WriteLine("THROTTLING --- " + throttleBehavior.MaxConcurrentCalls + "/" + throttleBehavior.MaxConcurrentSessions + "/" + throttleBehavior.MaxConcurrentInstances);
+					Console.WriteLine("THROTTLING --- " + throttleBehavior.MaxConcurrentCalls + "/" + throttleBehavior.MaxConcurrentSessions + "/" + throttleBehavior.MaxConcurrentInstances);
 				} 
 				else
 				{
-					Trace.WriteLine("NO THROTTLING");
+					Console.WriteLine("NO THROTTLING");
 				}
 
 				serviceHost.AddServiceEndpoint (typeof(IWorkerObject), binding, address);
 				serviceHost.Open ();
 	
-				Trace.WriteLine("Worker #" + my_rank + " running !");
+				Console.WriteLine("Worker #" + my_rank + " running !");
 
 				//	host.Close ();
 
           }
           catch (Exception e)
           {
-            Trace.WriteLine(e.Message);
+            Console.WriteLine(e.Message);
           }
         }
 
@@ -113,10 +113,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private void stopWorkerServer()
         {
-            Trace.WriteLine("Worker is stopping !");
+            Console.WriteLine("Worker is stopping !");
             ch.StopListening(null);
             ChannelServices.UnregisterChannel(ch);
-            Trace.WriteLine("Worker Service Finished ");
+            Console.WriteLine("Worker Service Finished ");
         }
 
         protected override void OnStart(string[] args)
@@ -157,13 +157,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				   Console.Error.WriteLine("'-port <integer>' is expected");
 				   System.Environment.Exit(0);
 			   }
-			   Trace.WriteLine("--port " + port);
+			   Console.WriteLine("--port " + port);
 			}
 
 			if(CommandLine["session"] != null) 
 			{
                session_id = CommandLine["session"];
-			   Trace.WriteLine("--session " + session_id);
+			   Console.WriteLine("--session " + session_id);
 			}
 			
 		}

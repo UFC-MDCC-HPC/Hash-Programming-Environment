@@ -108,7 +108,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		protected void Clone (MetaHashComponent c)
 		{
 
-			//Trace.WriteLine ("[MetaHashComponent.Clone] Base MetaHashComponent...");
+			//Console.WriteLine ("[MetaHashComponent.Clone] Base MetaHashComponent...");
 			base.Clone ((MetaHashEntity) c);
 			
 			c.Package = package;

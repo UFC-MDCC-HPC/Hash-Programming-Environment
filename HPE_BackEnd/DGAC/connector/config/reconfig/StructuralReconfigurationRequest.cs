@@ -39,7 +39,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 					foreach (MetaParameter innerParam in inner.Parameters) {
 						foreach (MetaParameter changedParam in changedParameters) {
 							if (innerParam.Identifier.Equals (changedParam.Identifier)) {
-								Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Componente '" + inner.Identifier + "' impactado pelo parametro '" + innerParam.Identifier + "': ");	
+								Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Componente '" + inner.Identifier + "' impactado pelo parametro '" + innerParam.Identifier + "': ");	
 								if (!changedInners.TryGetValue (inner.Identifier, out pair)) {
 									pair = new PairInnerComponent (inner, inner.Clone ());
 								
@@ -54,19 +54,19 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 				}
 			}
 
-			Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Finalizada a avaliação dos InnerComponents!");
-			Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Avaliando unidades impactadas...");
+			Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Finalizada a avaliação dos InnerComponents!");
+			Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Avaliando unidades impactadas...");
 			foreach (PairInnerComponent innerPair in changedInners.Values) {
 			
 				if(innerPair.Old.Units != null) {
 					foreach (MetaUnit metaUnit in innerPair.Old.Units.Values) {
-					//	Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Unidade será '{0}.{1}' impactada.", ((MetaInnerComponent) metaUnit.Father).Identifier, metaUnit.Name);
+					//	Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Unidade será '{0}.{1}' impactada.", ((MetaInnerComponent) metaUnit.Father).Identifier, metaUnit.Name);
 		
 						changes.Add (new StructuralChange (metaUnit, innerPair.New.Units [metaUnit.Name]));
-						//Trace.WriteLine("OK {0} ", metaUnit.Name);
+						//Console.WriteLine("OK {0} ", metaUnit.Name);
 					}
 				} else {
-					//Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] InnerComponent {0} não possui Units");		
+					//Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] InnerComponent {0} não possui Units");		
 				}
 			}
 		}

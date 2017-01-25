@@ -41,13 +41,13 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 			bool find;
          
 			foreach (MetaAction action in unit.Actions.Values) {
-				Trace.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando a ação: " + action.Father.Name + "." + action.Name);
+				Console.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando a ação: " + action.Father.Name + "." + action.Name);
 				criticalActions = new List<int> ();
 				statesToStop = new List<int> ();
             
 				protocol = action.Protocol;
 				if (protocol == null) {
-				    Trace.WriteLine ("[SecurityAnalyzer.Evaluate] Protocolo nulo");
+				    Console.WriteLine ("[SecurityAnalyzer.Evaluate] Protocolo nulo");
 					continue;
 				}
 				find = false;
@@ -56,7 +56,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 					foreach (StructuralChange change in request.StructuralRequest.Changes) {
 						
 						oldUnit = change.Old;
-						//Trace.WriteLine ("[SecurityAnalyzer.Evaluate] Mudança estrutural: " + oldUnit.Name);
+						//Console.WriteLine ("[SecurityAnalyzer.Evaluate] Mudança estrutural: " + oldUnit.Name);
 						if (isChangeConcrete (change)) {
 						
 							/*Verifica:
@@ -65,7 +65,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
                		*/
 							for (int i=0; i< protocol.Actions.Count; i++) {
 								usingAction = protocol.Actions [i].MetaAction;
-								//Trace.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando a ação de indice {0}", i);
+								//Console.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando a ação de indice {0}", i);
 								
 								if (usingAction != null && usingAction.Father != null) {
 									usingSlices.Enqueue ((MetaUnit)usingAction.Father);
@@ -78,7 +78,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 										} else {
 											if (usingUnit.Slices != null && usingUnit.Slices.Count > 0) {
 												foreach (MetaSlice ms in usingUnit.Slices.Values) {
-													//Trace.WriteLine ("Using Slice {0}", ms.Unit.Name);
+													//Console.WriteLine ("Using Slice {0}", ms.Unit.Name);
 													usingSlices.Enqueue (ms.Unit);
 												}
 											}
@@ -113,7 +113,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 				BehavioralReconfigurationRequest behavioralRequest = request.BehavioralRequest;
 				
 				if (behavioralRequest != null && behavioralRequest.Changes != null) {
-					Trace.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando as reconfigurações comportamentais...");
+					Console.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando as reconfigurações comportamentais...");
 					foreach (BehavioralChange change in behavioralRequest.Changes) {
                   
 						if (unit.Name.Equals (change.Unit) && action.Name.Equals (change.Action)) {
@@ -130,7 +130,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 					}
 				}
             
-				Trace.WriteLine ("[SecurityAnalyzer.Evaluate] Definindo os estados críticos...");
+				Console.WriteLine ("[SecurityAnalyzer.Evaluate] Definindo os estados críticos...");
 				if (statesToStop.Count > 0) {
 					result.Add (new ExecutionStateEvaluation (action.Name, criticalActions, statesToStop, intervals));
 				}
@@ -164,7 +164,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 			if (change.Old.Name.Equals ("solve")) {
 				return true;
 			} else {
-				Trace.WriteLine ("[SecurityAnalyzer.IsChangeConcrete] Parametros" +
+				Console.WriteLine ("[SecurityAnalyzer.IsChangeConcrete] Parametros" +
 				                          " não definem novo componente concreto para '{0}'!",
 				                          ((MetaInnerComponent)change.Old.Father).Identifier);
 				return false;

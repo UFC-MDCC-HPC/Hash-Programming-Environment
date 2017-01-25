@@ -141,9 +141,9 @@ namespace gov
 			
             public override WorkerComponentID getWorkerComponentID(int node)
             {
-				Trace.WriteLine ("getWorkerComponentID - SIZE=" + wcids.Count + " --- node=" + node);
+				Console.WriteLine ("getWorkerComponentID - SIZE=" + wcids.Count + " --- node=" + node);
 				foreach (KeyValuePair<int,WorkerComponentID> t in wcids)
-					Trace.WriteLine ("getWorkerComponentID - KEY=" + t.Key + ", VALUE=" + t.Value.getInstanceName());
+					Console.WriteLine ("getWorkerComponentID - KEY=" + t.Key + ", VALUE=" + t.Value.getInstanceName());
 
 				return wcids [node];
             }

@@ -26,7 +26,7 @@ public class AbstractComponentFunctorDAO{
             + (ac.Library_path == null ? "null" : ("'" + ac.Library_path + "'")) + ","
             + (ac.Hash_component_UID == null ? "null" : ("'" + ac.Hash_component_UID + "'")) + ",'" + ac.Kind + "')";
 
-     	Trace.WriteLine("AbstractComponentFunctor.cs: TRY INSERT: " + sql);
+     	Console.WriteLine("AbstractComponentFunctor.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
 
@@ -94,7 +94,7 @@ public class AbstractComponentFunctorDAO{
              "WHERE hash_component_UID like '" + hash_component_UID + "'";
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
-			Trace.WriteLine ("RETRIEVE BY UID 3" + hash_component_UID);
+			Console.WriteLine ("RETRIEVE BY UID 3" + hash_component_UID);
         if (reader.Read())
         {
             acf = new AbstractComponentFunctor();
@@ -109,7 +109,7 @@ public class AbstractComponentFunctorDAO{
         {
             // NOT FOUND !
         }
-			Trace.WriteLine ("RETRIEVE BY UID 4" + hash_component_UID);
+			Console.WriteLine ("RETRIEVE BY UID 4" + hash_component_UID);
         if (reader.Read())
         {
             throw new Exception("More than one line FOUND for field hash_component_UID (AbastractComponentFunctorDAO)");
@@ -229,7 +229,7 @@ public class AbstractComponentFunctorDAO{
 			"WHERE kind like '" + kind + "'";
 		dbcmd.CommandText = sql;
 
-			Trace.WriteLine ("listByKind ****** : " + sql);
+			Console.WriteLine ("listByKind ****** : " + sql);
 
 		IDataReader reader = dbcmd.ExecuteReader();
 		while (reader.Read())

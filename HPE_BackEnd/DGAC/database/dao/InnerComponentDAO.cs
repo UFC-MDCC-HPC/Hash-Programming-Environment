@@ -20,7 +20,7 @@ public class InnerComponentDAO{
             "INSERT INTO innercomponent (id_abstract_owner, id_functor_app, id_inner, id_abstract_inner, parameter_top, transitive, public, multiple)" +
 					" VALUES (" + ac.Id_abstract_owner + "," + ac.Id_functor_app + ",'" + ac.Id_inner + "'," + ac.Id_abstract_inner + ",'"+ ac.Parameter_top + "'," + (ac.Transitive ? -1 : 0) + "," + (ac.IsPublic ? -1 : 0) + "," + (ac.Multiple ? -1 : 0) + ")";
 
-		Trace.WriteLine("InnerComponentDAO.cs: TRY INSERT INNER COMPONENT :" + sql);
+		Console.WriteLine("InnerComponentDAO.cs: TRY INSERT INNER COMPONENT :" + sql);
 			
         Connector.performSQLUpdate(sql);
 			
@@ -65,7 +65,7 @@ public class InnerComponentDAO{
 			if (ic==null) 
 			{				
                 AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
-                //Trace.WriteLine("acf is null ? " + (acf==null) + ", " + id_abstract);					
+                //Console.WriteLine("acf is null ? " + (acf==null) + ", " + id_abstract);					
 				if (acf == null)
 						throw new Exception("ERROR: InnerComponentDAO.cs (retrieve) : id_abstract = " + id_abstract + "NOT FOUND when loonking for supertype ..." );
 
@@ -77,7 +77,7 @@ public class InnerComponentDAO{
 				}
 				else 
 				   id_abstract = -1;
-				Trace.WriteLine("InnerComponentDAO.cs - GOING TO SUPERTYPE " + id_abstract + " - ACF was null ?" + (acf == null));
+				Console.WriteLine("InnerComponentDAO.cs - GOING TO SUPERTYPE " + id_abstract + " - ACF was null ?" + (acf == null));
 			} else
 				   id_abstract = -1;
 			
@@ -85,7 +85,7 @@ public class InnerComponentDAO{
 			
 			if (ic==null) 
 			{
-				Trace.WriteLine("InnerComponentDAO.cs: INNER NOT FOUND " + id_abstract_start + "," + id_inner);
+				Console.WriteLine("InnerComponentDAO.cs: INNER NOT FOUND " + id_abstract_start + "," + id_inner);
 			}
 			
         return ic;

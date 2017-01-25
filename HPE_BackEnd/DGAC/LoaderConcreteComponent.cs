@@ -137,21 +137,21 @@ namespace HPE_DGAC_LoadDB
 
                 units.Add(uu.Id_unit, uu);
 				
-				//Trace.WriteLine("ui.sources={0}",ui.sources);
-				//Trace.WriteLine("ui.protocol={0}",ui.protocol);
-				//Trace.WriteLine("{0}={1}", c.Kind, Constants.KIND_COMPUTATION_NAME);
+				//Console.WriteLine("ui.sources={0}",ui.sources);
+				//Console.WriteLine("ui.protocol={0}",ui.protocol);
+				//Console.WriteLine("{0}={1}", c.Kind, Constants.KIND_COMPUTATION_NAME);
 				
 				if (ui.sources == null && (c.Kind.Equals(Constants.KIND_COMPUTATION_NAME) 
 				                                               || c.Kind.Equals(Constants.KIND_SYNCHRONIZER_NAME)))
 				{
-					Trace.WriteLine("ENTER WRAPPER GENERATOR " + c.Library_path);
+					Console.WriteLine("ENTER WRAPPER GENERATOR " + c.Library_path);
 					
 					 IWrapperGenerator wg = new WrapperGenerator();
 					 string[] dependencies = null;
 					 CodeCompileUnit compile_unit = wg.create_wrapper(c.Library_path, ui.iRef, uu.Id_abstract, uu.Id_interface, out dependencies); 
 					 string source_code = wg.generate_source_code(ui.iRef, compile_unit);
 					
-					 Trace.WriteLine(source_code);
+					 Console.WriteLine(source_code);
 					
 				     SourceCode ss = new SourceCode();
                      ss.Type_owner = 'u';
@@ -170,7 +170,7 @@ namespace HPE_DGAC_LoadDB
 					{
 						if (sft.srcType.Equals ("user") || sft.srcType.Equals ("base")) 
 						{							
-							Trace.WriteLine ("loadUnits - 1 " + sft.name);
+							Console.WriteLine ("loadUnits - 1 " + sft.name);
 							SourceCode ss = new SourceCode ();
 							ss.Type_owner = 'u';
 							ss.Id_owner_container = uu.Id_concrete;
@@ -180,15 +180,15 @@ namespace HPE_DGAC_LoadDB
 							ss.File_name = sft.name;
 							ss.Order = order++;
 							br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.insert (ss);
-							Trace.WriteLine ("loadUnits - 2");
+							Console.WriteLine ("loadUnits - 2");
 	
 							int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
 							           (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
 
-							Trace.WriteLine ("loadUnits - 3");
+							Console.WriteLine ("loadUnits - 3");
 
 							if (size > 0) {
-								Trace.WriteLine ("loadUnits - 4");
+								Console.WriteLine ("loadUnits - 4");
 								string[] allRefs = new string[size];
 								if (ui.externalReferences != null)
 									ui.externalReferences.CopyTo (allRefs, 0);
@@ -196,11 +196,11 @@ namespace HPE_DGAC_LoadDB
 								if (sft.externalDependency != null)
 									sft.externalDependency.CopyTo (allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
 	
-								Trace.WriteLine ("loadUnits - 5");
+								Console.WriteLine ("loadUnits - 5");
 
 								foreach (string extRef in allRefs) 
 								{
-									Trace.WriteLine ("loadUnits - 6 - " + extRef);
+									Console.WriteLine ("loadUnits - 6 - " + extRef);
 									SourceCodeReference ssr = new SourceCodeReference ();
 									ssr.Type_owner = ss.Type_owner;
 									ssr.Id_owner_container = ss.Id_owner_container;
@@ -211,7 +211,7 @@ namespace HPE_DGAC_LoadDB
 									{
 										br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.insert (ssr);
 									}
-									Trace.WriteLine ("loadUnits - 7 - " + extRef);
+									Console.WriteLine ("loadUnits - 7 - " + extRef);
 								}
 							}	
 						} 

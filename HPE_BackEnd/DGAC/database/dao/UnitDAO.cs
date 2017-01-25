@@ -19,7 +19,7 @@ public class UnitDAO{
             "INSERT INTO unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, class_name, class_nargs, uri_source, `order`)" +
             " VALUES ('" + ac.Id_unit  + "',"+ ac.Id_abstract + ",'" + ac.Id_interface + "'," + ac.Id_concrete + ",'" + ac.Assembly_string +"','"+ ac.Id_unit_super + "','" + ac.Class_name + "',"+ac.Class_nargs+ ",'" + ac.URI_Source +"'," + ac.Order + ")";
 
-   		Trace.WriteLine("Unit.cs: TRY INSERT 1: " + sql);
+   		Console.WriteLine("Unit.cs: TRY INSERT 1: " + sql);
 
         Connector.performSQLUpdate(sql);
     }
@@ -39,7 +39,7 @@ public class UnitDAO{
 //           "FROM unit "+
 //           "WHERE id_concrete="+id_concrete;
        dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			      IDataReader reader = dbcmd.ExecuteReader();
        while(reader.Read()) {
        	   Unit u = new Unit();
@@ -77,7 +77,7 @@ public class UnitDAO{
             "id_unit like '" + id_unit + "'" ;
 			
         dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			      IDataReader reader = dbcmd.ExecuteReader();
         if (reader.Read())
         {
@@ -120,7 +120,7 @@ public class UnitDAO{
             "WHERE id_concrete=" + id_concrete + " AND " +
             "id_unit like '" + id_unit +"'";
         dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			      IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {
@@ -196,7 +196,7 @@ public class UnitDAO{
             "`order` = " + order ;
 			
         dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
         IDataReader reader = dbcmd.ExecuteReader();
         if (reader.Read())
         {

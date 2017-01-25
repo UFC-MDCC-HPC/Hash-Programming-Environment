@@ -126,7 +126,7 @@ namespace HPE_DGAC_LoadDB
 
                 AbstractComponentFunctorApplication aAppNew = new AbstractComponentFunctorApplication();
                 aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
-			  //  Trace.WriteLine("+++++++++++++++ " +  aAppNew.Id_functor_app);
+			  //  Console.WriteLine("+++++++++++++++ " +  aAppNew.Id_functor_app);
                 aAppNew.Id_abstract = a.Id_abstract;
 
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
@@ -192,7 +192,7 @@ namespace HPE_DGAC_LoadDB
                 {
                     String formFieldId = p.formFieldId;
                     String varName = p.varName;
-					Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters -1 " + varName + "," + formFieldId);
+					Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters -1 " + varName + "," + formFieldId);
 
                     SupplyParameter p_ = null;
 
@@ -201,7 +201,7 @@ namespace HPE_DGAC_LoadDB
                     
                     if (topParameter != null)
                     {
-						Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters 0 " + topParameter.formFieldId + ", " + varName);
+						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 0 " + topParameter.formFieldId + ", " + varName);
                         p_ = new SupplyParameterParameter();
                         ((SupplyParameterParameter)p_).Id_argument = topParameter.formFieldId;
                         ((SupplyParameterParameter)p_).FreeVariable = false;
@@ -209,7 +209,7 @@ namespace HPE_DGAC_LoadDB
                     }
                     else if (s != null)
                     {
-						Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters 1 " + s.cRef + ", " + varName);
+						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 1 " + s.cRef + ", " + varName);
                         String cRef = s.cRef;
 
                         p_ = new SupplyParameterComponent();
@@ -225,7 +225,7 @@ namespace HPE_DGAC_LoadDB
                     }
                     else
                     {
-						Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters 2 " + varName);
+						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 2 " + varName);
                         p_ = new SupplyParameterParameter();
                         ((SupplyParameterParameter)p_).Id_argument = null;
                         ((SupplyParameterParameter)p_).FreeVariable = true;
@@ -254,13 +254,13 @@ namespace HPE_DGAC_LoadDB
 			int id_functor_app_supertype;
 			if (aNew_context.Id_abstract != aNew.Id_abstract)				 
 			{
-				Trace.WriteLine ("id_abstract_context != aNew.Id_abstract : " + aNew_context.Id_abstract  + " " + aNew.Id_abstract);
+				Console.WriteLine ("id_abstract_context != aNew.Id_abstract : " + aNew_context.Id_abstract  + " " + aNew.Id_abstract);
 				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve (aNew_context.Id_abstract);
 				id_functor_app_supertype = acf.Id_functor_app_supertype;
 			} 
 			else 
 			{
-				Trace.WriteLine ("id_abstract_context == aNew.Id_abstract : " + aNew_context.Id_abstract  + " " + aNew.Id_abstract);
+				Console.WriteLine ("id_abstract_context == aNew.Id_abstract : " + aNew_context.Id_abstract  + " " + aNew.Id_abstract);
 				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve (aNew.Id_abstract);
 				id_functor_app_supertype = acf.Id_functor_app_supertype;
 			}
@@ -332,7 +332,7 @@ namespace HPE_DGAC_LoadDB
         protected AbstractComponentFunctor lookForAbstractComponentFunctor(string package, string name)
         {
 			string library_path = package + "." + name;
-        	//Trace.WriteLine("1");
+        	//Console.WriteLine("1");
             AbstractComponentFunctorDAO acf = new AbstractComponentFunctorDAO();
 			AbstractComponentFunctor acfa = acf.retrieve_libraryPath (library_path);   // .retrieveByUID(component_UID);
             return acfa;

@@ -19,7 +19,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				"INSERT INTO slice (id_abstract, id_interface, id_interface_slice, id_inner, transitive, property_name)" +
 				" VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
 			
-			Trace.WriteLine("SliceDAO.cs: TRY INSERT SLICE : " + sql);
+			Console.WriteLine("SliceDAO.cs: TRY INSERT SLICE : " + sql);
 			
             Connector.performSQLUpdate(sql);
 		
@@ -45,7 +45,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "id_interface_slice like '" + id_interface_slice + "' AND " +
 				"id_interface like '" + id_interface + "'";
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
             IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
             {
@@ -74,7 +74,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			
 		    if (s==null) 
 		    {
-		  	   Trace.WriteLine("SliceDAO.cs: Slice NOT FOUND " + "id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface_slice=" + id_interface_slice);
+		  	   Console.WriteLine("SliceDAO.cs: Slice NOT FOUND " + "id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface_slice=" + id_interface_slice);
 		    }
 				
             return s;
@@ -100,7 +100,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "id_interface_slice like '" + id_interface_slice + "' AND " +
                 "id_interface like '" + id_interface + "'";
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
             IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
             {
@@ -150,7 +150,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'";
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			           IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
             {
@@ -204,7 +204,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                "FROM slice " +
 					"WHERE id_abstract=" + id_abstract + " and id_interface like '" + id_interface + "'";
 	            dbcmd.CommandText = sql;
-				Trace.WriteLine (sql);
+				Console.WriteLine (sql);
 	            IDataReader reader = dbcmd.ExecuteReader();
 	            while (reader.Read())
 	            {
@@ -266,7 +266,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                  " and id_inner like '" + id_inner + "'" +
                  " and id_interface like '" + id_interface + "'";
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			           IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
             {
@@ -310,7 +310,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'" + " and id_interface_slice like '" + id_interface_slice + "'";
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			          IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
             {

@@ -45,9 +45,9 @@ namespace br.ufc.pargo.hpe.basic
 		public int go ()
 		{
 			int r;
-			Trace.WriteLine ("BEFORE CALLING GO " + t.FullName);
+			Console.WriteLine ("BEFORE CALLING GO " + t.FullName);
 			r = go_app();	
-			Trace.WriteLine ("AFTER CALLING GO " + t.FullName);
+			Console.WriteLine ("AFTER CALLING GO " + t.FullName);
 			return r;
 		}
 		#endregion
@@ -80,16 +80,16 @@ namespace br.ufc.pargo.hpe.basic
 		#region AutomaticSlicesPort implementation
 		public void on_initialize ()
 		{
-			Trace.WriteLine ("BEGIN ON_INITIALIZE");
+			Console.WriteLine ("BEGIN ON_INITIALIZE");
 			this.initialize_mth();
-			Trace.WriteLine ("END ON_INITIALIZE");
+			Console.WriteLine ("END ON_INITIALIZE");
 		}
 
 		public void after_initialize ()
 		{
-			Trace.WriteLine ("BEGIN AFTER_INITIALIZE");
+			Console.WriteLine ("BEGIN AFTER_INITIALIZE");
 			this.after_initialize_mth();
-			Trace.WriteLine ("END AFTER_INITIALIZE");
+			Console.WriteLine ("END AFTER_INITIALIZE");
 		}
 		#endregion
 
@@ -238,9 +238,9 @@ namespace br.ufc.pargo.hpe.basic
 		{
 			string[] rank_units = this.Communicator.Allgather<string>(this.Id_unit);
 
-			Trace.WriteLine (this.Rank + " ALL GATHER :");
+			Console.WriteLine (this.Rank + " ALL GATHER :");
 			foreach (string unit_id in rank_units) Trace.Write (unit_id + ",");
-			Trace.WriteLine (".");
+			Console.WriteLine (".");
 			
 			IDictionary<string, IList<int>> unit_rank_list = new Dictionary<string, IList<int>>();
 
@@ -271,10 +271,10 @@ namespace br.ufc.pargo.hpe.basic
 		}
 		public void configure_facet_topology(int[] facet_topology, Instantiator.UnitMappingType[] unit_mapping)
 		{
-			Trace.WriteLine ("configure_facet_topology 1 - " + facet_topology.Length);
+			Console.WriteLine ("configure_facet_topology 1 - " + facet_topology.Length);
 			foreach (int f in facet_topology)
 				Trace.Write (f + ",");
-			Trace.WriteLine (".");
+			Console.WriteLine (".");
 
 			IDictionary<int,IList<int>> facet_instances_list = new Dictionary<int, IList<int>> ();
 
@@ -293,7 +293,7 @@ namespace br.ufc.pargo.hpe.basic
 				}
 			}
 
-			Trace.WriteLine ("configure_facet_topology 2 - " + facet_instances_list.Count);
+			Console.WriteLine ("configure_facet_topology 2 - " + facet_instances_list.Count);
 
 			foreach (KeyValuePair<int,IList<int>> f in facet_instances_list) 
 			{
@@ -310,12 +310,12 @@ namespace br.ufc.pargo.hpe.basic
 				Trace.Write ("configure_facet_topology - facet=" + kv.Key + ": ");
 				foreach (int v in kv.Value)
 					Trace.Write (v + " ");
-				Trace.WriteLine (".");
+				Console.WriteLine (".");
 			}
 
 			foreach (KeyValuePair<int,int> kv in FacetMultiplicity) 
 			{
-				Trace.WriteLine ("configure_facet_topology - facet=" + kv.Key + " - size=" + kv.Value);
+				Console.WriteLine ("configure_facet_topology - facet=" + kv.Key + " - size=" + kv.Value);
 			}
 
 
@@ -326,7 +326,7 @@ namespace br.ufc.pargo.hpe.basic
 				string unit_id = unit_mapping_item.unit_id;
 				int size = unit_mapping_item.node.Length;
 				IDictionary<string,int> dict;
-				Trace.WriteLine ("configure_facet_topology --- facet_instance="+facet_instance + " / unit_id="+unit_id + " / size=" + size);
+				Console.WriteLine ("configure_facet_topology --- facet_instance="+facet_instance + " / unit_id="+unit_id + " / size=" + size);
 				if (!UnitSizeInFacet.TryGetValue(facet_instance, out dict))
 				{   dict = new Dictionary<string, int> ();
 					UnitSizeInFacet [facet_instance] = dict; 
@@ -336,7 +336,7 @@ namespace br.ufc.pargo.hpe.basic
 
 			foreach (KeyValuePair<int,IDictionary<string,int>> r in UnitSizeInFacet) 
 				foreach(KeyValuePair<string,int> s in r.Value)
-					Trace.WriteLine (this.GlobalRank + ": UnitSizeInFacet: facet_instance = " + r.Key + " --  unit_id = " + s.Key + " -- size = " + s.Value);
+					Console.WriteLine (this.GlobalRank + ": UnitSizeInFacet: facet_instance = " + r.Key + " --  unit_id = " + s.Key + " -- size = " + s.Value);
 		}
 			
         private ComponentID cid = null;
@@ -399,7 +399,7 @@ namespace br.ufc.pargo.hpe.basic
 		#region ReconfigurationAdvicePort implementation
 		virtual public void changePort (string portName) 
 		{ 
-			Trace.WriteLine("CHANGE PORT " + portName + " OF " + CID);
+			Console.WriteLine("CHANGE PORT " + portName + " OF " + CID);
 			Slice[portName] = (IUnit) services.getPort (portName);
 		}
 		#endregion

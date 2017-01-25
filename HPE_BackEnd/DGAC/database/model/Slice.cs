@@ -67,7 +67,7 @@ public class Slice {
     public bool isPublic()
     {
         InnerComponent ic = BackEnd.icdao.retrieve(this.Id_abstract, this.Id_inner);
-			//Trace.WriteLine("{0}.{1} is {2} !", this.Id_abstract, this.Id_inner, ic.IsPublic ? "public" : "private" );
+			//Console.WriteLine("{0}.{1} is {2} !", this.Id_abstract, this.Id_inner, ic.IsPublic ? "public" : "private" );
         return ic.IsPublic;
     }
 

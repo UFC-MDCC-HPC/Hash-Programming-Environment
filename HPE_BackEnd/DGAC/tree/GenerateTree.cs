@@ -24,14 +24,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         public static TreeNode generate(IDictionary<string,int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)
         {
 			foreach (KeyValuePair<string,int> parTop in actualParametersTop)
-				Trace.WriteLine ("actualParametersTop[" + parTop.Key + "] = " + parTop.Value);
+				Console.WriteLine ("actualParametersTop[" + parTop.Key + "] = " + parTop.Value);
 
 			foreach (KeyValuePair<string,int> parTop in acfaRef.ParametersList)
-				Trace.WriteLine ("acfaRef.ParametersList[" + parTop.Key + "] = " + parTop.Value);
+				Console.WriteLine ("acfaRef.ParametersList[" + parTop.Key + "] = " + parTop.Value);
 
 		    IDictionary<TreeNode, int> level_log = new Dictionary<TreeNode,int> ();
 
-			Trace.WriteLine("begin generate " + acfaRef.Id_functor_app);
+			Console.WriteLine("begin generate " + acfaRef.Id_functor_app);
             mmm = new Dictionary<String, String>();
 
             IDictionary<int, TreeNode> memory = new Dictionary<int, TreeNode>();
@@ -51,13 +51,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 TreeNode nodeRef = (TreeNode)queue[0];
 
 				int level = level_log[nodeRef];
-				Trace.WriteLine ("ENTERING LEVEL " + level);
+				Console.WriteLine ("ENTERING LEVEL " + level);
 
                 int id_abstract = nodeRef.Functor_app.Id_abstract;
                 int id_functor_app_actual = nodeRef.Functor_app.Id_functor_app;
                 int id_abstract_top = nodeRef.Functor_app_top.Id_abstract;
 
-				Trace.WriteLine("Dequeue LOOP " + id_functor_app_actual);
+				Console.WriteLine("Dequeue LOOP " + id_functor_app_actual);
 
                 queue.RemoveAt(0);
 
@@ -65,7 +65,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 foreach (SupplyParameter sp in parameterList)
                 {
 					bool flag_par = false;
-					Trace.WriteLine("generate LOOP " + sp.Id_parameter + "," + sp.Id_functor_app + "IN LEVEL " + level);
+					Console.WriteLine("generate LOOP " + sp.Id_parameter + "," + sp.Id_functor_app + "IN LEVEL " + level);
 					bool freeVariable = false;
 					
                     string parameter_id = sp.Id_parameter;
@@ -87,13 +87,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         acfaTop = acfp == null ? null : br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                     }
 
-					//Trace.WriteLine("acfaTop is null ? " + (acfaTop==null));
+					//Console.WriteLine("acfaTop is null ? " + (acfaTop==null));
 					
                     AbstractComponentFunctorApplication acfaActual = null;
                     if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-						Trace.WriteLine ("acfaActual 1 ??? " + spc.Id_functor_app_actual);
+						Console.WriteLine ("acfaActual 1 ??? " + spc.Id_functor_app_actual);
                         acfaActual = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);	
 						if (acfaActual == null)
 							throw new FreeVariableException ();
@@ -104,50 +104,50 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 						SupplyParameterParameter spp = (SupplyParameterParameter)sp;
                         int Id_functor_app_actual = 0;
 
-						Trace.WriteLine ("****** parameter_id#??? =" + parameter_id + "#" + sp.Id_functor_app);
+						Console.WriteLine ("****** parameter_id#??? =" + parameter_id + "#" + sp.Id_functor_app);
 						if (!(flag_par= acfaRef.ParametersList.TryGetValue(parameter_id + "#" + sp.Id_functor_app, out Id_functor_app_actual)))
 								 acfaRef.ParametersList.TryGetValue(parameter_id, out Id_functor_app_actual);
 						
-						Trace.WriteLine (" acfaRef.ParametersList.Count = " + acfaRef.ParametersList.Count);
+						Console.WriteLine (" acfaRef.ParametersList.Count = " + acfaRef.ParametersList.Count);
 						foreach (KeyValuePair<string,int> p in acfaRef.ParametersList)
-							Trace.WriteLine("acfaRef.ParametersList -- " + p.Key + " -> " + p.Value);
+							Console.WriteLine("acfaRef.ParametersList -- " + p.Key + " -> " + p.Value);
 						
                         if (Id_functor_app_actual <= 0) // LOOK AT THE TOP PARAMETERS
                         {
                             bool found = actualParametersTop.TryGetValue(spp.Id_argument, out Id_functor_app_actual);
-						    Trace.WriteLine (" actualParametersTop.Count = " + actualParametersTop.Count);
+						    Console.WriteLine (" actualParametersTop.Count = " + actualParametersTop.Count);
 						    foreach (KeyValuePair<string,int> p in actualParametersTop)
-							     Trace.WriteLine("actualParametersTop -- " + p.Key + " -> " + p.Value);
+							     Console.WriteLine("actualParametersTop -- " + p.Key + " -> " + p.Value);
 							if (!found)
 							{	
 								string key = spp.Id_argument + "#" + sp.Id_functor_app;
-								Trace.WriteLine ("key ??? " + key);
+								Console.WriteLine ("key ??? " + key);
 								acfaRef.ParametersList.TryGetValue(key, out Id_functor_app_actual);
 							}
 							
-							Trace.WriteLine ("spp.Id_parameter_actual ??? " + spp.Id_argument);
-							Trace.WriteLine ("found ??? " + found);
+							Console.WriteLine ("spp.Id_parameter_actual ??? " + spp.Id_argument);
+							Console.WriteLine ("found ??? " + found);
                         }
-						Trace.WriteLine ("acfaRef ??? " + acfaRef.Id_functor_app);
-						Trace.WriteLine ("parameter_id ??? " + parameter_id);
-						Trace.WriteLine ("acfaActual 2 ??? " + Id_functor_app_actual);
+						Console.WriteLine ("acfaRef ??? " + acfaRef.Id_functor_app);
+						Console.WriteLine ("parameter_id ??? " + parameter_id);
+						Console.WriteLine ("acfaActual 2 ??? " + Id_functor_app_actual);
 						if (Id_functor_app_actual <= 0) {
 							// FREE VARIABLE !!! USE THE BOUND !!!
 							//AbstractComponentFunctorApplication acfaParF = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spp.Id_functor_app);
 							//AbstractComponentFunctorParameter parF = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(acfaParF.Id_abstract,parameter_id);
 							//Id_functor_app_actual = parF.Bounds_of;
-							//Trace.WriteLine ("FREE VARIABLE !!! BOUND=" + Id_functor_app_actual);
+							//Console.WriteLine ("FREE VARIABLE !!! BOUND=" + Id_functor_app_actual);
 							freeVariable = true;
 						} 
                         acfaActual = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(Id_functor_app_actual);
                     }
 					
-					Trace.WriteLine ("acfaActual ??? " + acfaActual.Id_functor_app);
+					Console.WriteLine ("acfaActual ??? " + acfaActual.Id_functor_app);
 
 					if (!freeVariable) 
 					{					
 	                    // LOOK FOR ACTUAL PARAMETER IDs for THE NEXT ITERATIONS !!!
-						Trace.WriteLine ("acfaTop.Id_functor_app = " + acfaTop.Id_functor_app);
+						Console.WriteLine ("acfaTop.Id_functor_app = " + acfaTop.Id_functor_app);
 	                    IList<SupplyParameter> sss = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfaTop.Id_functor_app);
 	                    foreach (SupplyParameter sssx in sss)
 	                    {
@@ -178,32 +178,32 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 						bool node_found = memory.TryGetValue(memory_key, out node);
 
 						foreach (KeyValuePair<string, string> ppp in mmm)
-							Trace.WriteLine ("mmm[" + ppp.Key + "]=" + ppp.Value);
+							Console.WriteLine ("mmm[" + ppp.Key + "]=" + ppp.Value);
 						foreach (KeyValuePair<int, TreeNode> pair in memory)
-							Trace.WriteLine ("memory: key=" + pair.Key + ", value=" + pair.Value.Functor_app.Id_functor_app);
+							Console.WriteLine ("memory: key=" + pair.Key + ", value=" + pair.Value.Functor_app.Id_functor_app);
 
 						if (!node_found)
 	                    {
 							IList<AbstractComponentFunctorApplication> generalizeSteps = buildGeneralizationSteps(acfaActual, acfaTop);
 
 							foreach (AbstractComponentFunctorApplication yyy in generalizeSteps) 
-								Trace.WriteLine("generate - " + yyy.Id_functor_app);
+								Console.WriteLine("generate - " + yyy.Id_functor_app);
 
 	                        node = new TreeNode(generalizeSteps, nodeRef);
 							level_log.Add(node, level+1);
 	                        node.addParameterIdSyn(parameter_id_2);
 	                        node.Parameter_id = parameter_id_2;
 	                        queue.Add(node);
-							Trace.WriteLine("BEGIN " + parameter_id + "," + parameter_id_2 + "," + flag_par + " *** "  + node.Functor_app.Id_functor_app);
+							Console.WriteLine("BEGIN " + parameter_id + "," + parameter_id_2 + "," + flag_par + " *** "  + node.Functor_app.Id_functor_app);
 							if (level == 0 || flag_par) 
 								memory.Add (node.Functor_app.Id_functor_app/*parameter_id_2 + (flag_par ? sp.Id_functor_app.ToString () : "")*/, node);
 							else 
-								Trace.WriteLine ("LEVEL " + level);
-							Trace.WriteLine("END" + parameter_id + "," + parameter_id_2);
+								Console.WriteLine ("LEVEL " + level);
+							Console.WriteLine("END" + parameter_id + "," + parameter_id_2);
 	                    }
 	                    else
 	                    {
-							Trace.WriteLine ("parameter_id_2 = " + parameter_id_2 + (flag_par ? sp.Id_functor_app.ToString() : ""));
+							Console.WriteLine ("parameter_id_2 = " + parameter_id_2 + (flag_par ? sp.Id_functor_app.ToString() : ""));
 	                        node.addParameterIdSyn(parameter_id_2);
 	                    }
 						
@@ -218,7 +218,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 }
             }
 
-			Trace.WriteLine("end generate " + root.Parameter_id + "," +  root.Functor_app.Id_functor_app);
+			Console.WriteLine("end generate " + root.Parameter_id + "," +  root.Functor_app.Id_functor_app);
             return root;
         }
 

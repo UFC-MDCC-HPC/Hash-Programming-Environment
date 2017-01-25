@@ -26,7 +26,7 @@ public class AbstractComponentFunctorApplicationDAO{
 				" VALUES (" + ac.Id_abstract + "," +  ac.Id_functor_app_next + "," + facet_index + "); " + 
 				"SELECT max(id_functor_app) as id_functor_app from abstractcomponentfunctorapplication where facet_index="+facet_index;
 
-			Trace.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
+			Console.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
 
 			dbcmd.CommandText = sql;
 			IDataReader reader = dbcmd.ExecuteReader();
@@ -62,7 +62,7 @@ public class AbstractComponentFunctorApplicationDAO{
 				" VALUES (" + ac.Id_abstract + "," +  ac.Id_functor_app_next + "); " + 
 			"SELECT max(id_functor_app) as id_functor_app from abstractcomponentfunctorapplication";
 
-     Trace.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
+     Console.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
 
@@ -89,7 +89,7 @@ public class AbstractComponentFunctorApplicationDAO{
            "SELECT id_abstract, id_functor_app, id_functor_app_next " +
            "FROM abstractcomponentfunctorapplication " +
            "WHERE id_functor_app="+id_functor_app;
-			Trace.WriteLine ("AbstractComponentFunctorApplicationDAO - retrieve: " + sql);
+			Console.WriteLine ("AbstractComponentFunctorApplicationDAO - retrieve: " + sql);
        dbcmd.CommandText = sql;
        IDataReader reader = dbcmd.ExecuteReader();
        while(reader.Read()) {
@@ -107,7 +107,7 @@ public class AbstractComponentFunctorApplicationDAO{
 			
 	   if (acfa==null) 
 	   {
-	  	  Trace.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA NOT FOUND "+ id_functor_app);
+	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA NOT FOUND "+ id_functor_app);
 	   }
 			
        return acfa;
@@ -139,7 +139,7 @@ public class AbstractComponentFunctorApplicationDAO{
 			
 //	   if (acfa==null) 
 //	   {
-//	  	  Trace.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA \"NEXT\" NOT FOUND "+ id_functor_app_next);
+//	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA \"NEXT\" NOT FOUND "+ id_functor_app_next);
 //	   }
 			
        return acfa;

@@ -136,13 +136,13 @@ public class FileUtil{
               if (bankReader.LocalName.Equals(property))
               {
                   string s = bankReader.ReadString(); 
-                  Trace.WriteLine("PROPERTY .... " + s);
+                  Console.WriteLine("PROPERTY .... " + s);
                   return s;
               }
           }
       }
       bankReader.Close();
-//      Trace.WriteLine("PROPERTY NOT FOUND ....");
+//      Console.WriteLine("PROPERTY NOT FOUND ....");
       return default_value;
   }
 
@@ -158,7 +158,7 @@ public class FileUtil{
               // Create an instance of the XmlSerializer specifying type and namespace.
               XmlSerializer serializer = new XmlSerializer(typeof(ReferenceListType));
 
-      Trace.WriteLine(filename);
+      Console.WriteLine(filename);
 
               // A FileStream is needed to read the XML document.
               FileStream fs = new FileStream(filename, FileMode.Open);
@@ -172,10 +172,10 @@ public class FileUtil{
               // Use the Deserialize method to restore the object's state.
               i = (ReferenceListType)serializer.Deserialize(reader);
 
-				Trace.WriteLine("EXTERNAL REFERENCES:");
+				Console.WriteLine("EXTERNAL REFERENCES:");
               foreach (ReferenceType extRef in i.reference)
               {
-					Trace.WriteLine("KEY:" + extRef.destailedName + " VALUE:" + extRef.path);
+					Console.WriteLine("KEY:" + extRef.destailedName + " VALUE:" + extRef.path);
                   d.Add(extRef.destailedName, extRef);
               }
 
@@ -184,7 +184,7 @@ public class FileUtil{
           }
           catch (Exception e)
           {
-              Trace.WriteLine(e.Message);
+              Console.WriteLine(e.Message);
           }
 
       return d;

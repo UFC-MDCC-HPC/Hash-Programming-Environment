@@ -13,6 +13,7 @@ using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Collections.Generic;
 using br.ufc.pargo.hpe.backend;
 using System.Threading;
+using System.Diagnostics;
 
 
 namespace br.ufc.mdcc.hpcshelf.core
@@ -95,7 +96,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 			string arch_ref        // referência do componente no código arquitetural.
 		)   
 		{
-			Trace.WriteLine ("DEPLOYING " + workflow_handle);
+			Console.WriteLine ("DEPLOYING " + workflow_handle);
 
 			SAFeSWL.Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
 			string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();
@@ -313,7 +314,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 			}
 			catch (Exception e) 
 			{
-				Console.WriteLine (e.Message);
+				Console.Error.WriteLine (e.Message);
 				throw e;
 			}
 

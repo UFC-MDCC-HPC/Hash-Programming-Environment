@@ -19,7 +19,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "INSERT INTO sliceexposed (id_abstract, id_interface_slice, id_interface_slice_owner, id_inner, id_inner_owner, id_inner_original, id_interface_slice_original)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface_slice + "','" + ac.Id_interface_slice_owner + "','" + ac.Id_inner + "','" + ac.Id_inner_owner + "','" + ac.Id_inner_original + "','" + ac.Id_interface_slice_original + "')";
 
-			Trace.WriteLine("SliceExposedDAO.cs: TRY INSERT PUBLIC SLICE : " + sql);
+			Console.WriteLine("SliceExposedDAO.cs: TRY INSERT PUBLIC SLICE : " + sql);
 			
             Connector.performSQLUpdate(sql);
         }
@@ -38,7 +38,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                       "id_inner_owner like '" + id_inner_owner + "' and " +
                       "id_interface_slice_owner like '" + id_interface_slice_owner;
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			           IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
             {
@@ -74,7 +74,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                       "id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_unit + "'";
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			           IDataReader reader = dbcmd.ExecuteReader();
             string id_inner_owner = null;
             if (reader.Read())            
@@ -102,7 +102,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                       "id_interface_slice like '" + id_interface_slice + "' and " +
                       "id_abstract = " + id_abstract;
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			           IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
             {
@@ -143,7 +143,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                       "id_abstract = " + id_abstract + " and " +
                       "id_inner_owner = " + id_inner_owner;
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
 			           IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
             {
@@ -191,7 +191,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                      "id_interface_slice_owner like '" + id_interface_owner + "' and " +
 	                      "id_inner_owner like '" + id_inner_owner + "'";
 	            dbcmd.CommandText = sql;
-				Trace.WriteLine (sql);
+				Console.WriteLine (sql);
 	            IDataReader reader = dbcmd.ExecuteReader();
 	            if (reader.Read())
 	            {
@@ -245,7 +245,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                       "id_interface_slice_owner like '" + id_interface_container + "' and " +
 					  "id_inner_owner like '" + id_inner_container + "'";
             dbcmd.CommandText = sql;
-			Trace.WriteLine (sql);
+			Console.WriteLine (sql);
             IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
             {

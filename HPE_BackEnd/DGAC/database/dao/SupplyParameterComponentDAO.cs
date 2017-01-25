@@ -19,7 +19,7 @@ public class SupplyParameterComponentDAO{
         "INSERT INTO supplyparametercomponent (id_parameter, id_functor_app, id_functor_app_actual)" +
         " VALUES ('" + acc.Id_parameter + "'," + acc.Id_functor_app + "," + acc.Id_functor_app_actual + ")";
 
-   		Trace.WriteLine("SupplyParameterComponent.cs: TRY INSERT: " + sql);
+   		Console.WriteLine("SupplyParameterComponent.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
     }
@@ -52,7 +52,7 @@ public class SupplyParameterComponentDAO{
        
 	   if (spc==null) 
 	   {
-	  	  Trace.WriteLine("SupplyParameterComponentDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
+	  	  Console.WriteLine("SupplyParameterComponentDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
 	   }
 			
        return spc;

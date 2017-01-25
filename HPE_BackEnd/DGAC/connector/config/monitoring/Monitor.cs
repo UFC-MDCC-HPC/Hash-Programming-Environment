@@ -38,7 +38,7 @@ namespace br.ufc.pargo.hpe.connector.monitoring
 		public void Started (int state, int transation, int actionId)
 		{
 			
-			//Trace.WriteLine ("[Monitor.Started] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
+			//Console.WriteLine ("[Monitor.Started] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
 			
 			lock (thisLock) {
 				if (!running.ContainsKey (actionId)) {
@@ -52,7 +52,7 @@ namespace br.ufc.pargo.hpe.connector.monitoring
 		public void Finalized (int state, int transation, int actionId)
 		{
 
-			//Trace.WriteLine ("[Monitor.Finalized] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
+			//Console.WriteLine ("[Monitor.Finalized] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
          
 			lock (thisLock) {
 				if (running [actionId] > 1) {
@@ -74,12 +74,12 @@ namespace br.ufc.pargo.hpe.connector.monitoring
 				foreach (int action in actions) {
 					if (running.ContainsKey (action)) {
                   
-						//Trace.WriteLine ("Monitor.isRunning] Action {0} is running", action);	
+						//Console.WriteLine ("Monitor.isRunning] Action {0} is running", action);	
 						return true;
 					}
 				}
             
-				//Trace.WriteLine ("Monitor.isRunning] NO action is running");
+				//Console.WriteLine ("Monitor.isRunning] NO action is running");
 				return false;
 			}
 		}
@@ -90,12 +90,12 @@ namespace br.ufc.pargo.hpe.connector.monitoring
 			lock (thisLock) {
 				for (int i = events.Count-1; i > 0; i--) {
 					if (events [i].state == finalState) {
-						//Trace.WriteLine ("Monitor.isRunning] finalState {0} (return false)", finalState);
+						//Console.WriteLine ("Monitor.isRunning] finalState {0} (return false)", finalState);
 						return false;
 					}
                
 					if (events [i].state == initialState) {
-						//Trace.WriteLine ("Monitor.isRunning] initialState {0} (return true)", initialState);
+						//Console.WriteLine ("Monitor.isRunning] initialState {0} (return true)", initialState);
 						return true;
 					}
 				}
