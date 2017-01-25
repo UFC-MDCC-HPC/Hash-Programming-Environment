@@ -3,7 +3,6 @@
 -r:System.ServiceModel.dll
 
 -lib:"/usr/lib/mono/DGAC"
--pkg:dotnet
 -out:./bin/WorkerService.exe
 
 worker/RemotingServerWorker.cs 

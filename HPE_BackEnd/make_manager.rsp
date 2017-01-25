@@ -2,7 +2,6 @@
 -r:System.ServiceProcess.dll
 
 -lib:"/opt/mono-4.2.2/lib/mono/DGAC"
--pkg:dotnet
 -out:./bin/ManagerService.exe
 
 manager/RemotingServerManager.cs 
