@@ -19,7 +19,7 @@ namespace br.ufc.mdcc.hpcshelf.backend
 
 	public interface IBackendServices 
 	{
-		string deploy (string[] platform_config);
+		string deploy (string platform_config);
 	}
 
 	public class BackendServices : System.Web.Services.WebService, IBackendServices
@@ -57,12 +57,11 @@ namespace br.ufc.mdcc.hpcshelf.backend
 			
 
 		[WebMethod]
-		public string deploy(string[] platform_config)
+		public string deploy(string str_nodes)
 		{
-			Console.WriteLine (platform_config[0]);
-			Console.WriteLine (platform_config[2]);
+			Console.WriteLine (str_nodes);
 
-			int nodes = int.Parse(platform_config [1]) + 1;
+			int nodes = int.Parse(str_nodes) + 1;
 
 			// The next free communication port of a worker (it begins with 4865).
 			int port_worker_base = int.Parse(Environment.GetEnvironmentVariable ("HPE_NEXT_FREE_WORKER_PORT")); 

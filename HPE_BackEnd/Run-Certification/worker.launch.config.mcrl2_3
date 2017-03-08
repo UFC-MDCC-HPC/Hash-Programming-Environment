@@ -1,0 +1,3 @@
+-n 1 mono-service -l:Worker09.lock ../bin/WorkerService.exe --port 4871 --debug --no-daemon
+-n 1 mono-service -l:Worker10.lock ../bin/WorkerService.exe --port 4872 --debug --no-daemon
+-n 1 mono-service -l:Worker11.lock ../bin/WorkerService.exe --port 4873 --debug --no-daemon

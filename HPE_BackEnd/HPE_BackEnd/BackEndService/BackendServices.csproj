@@ -24,7 +24,7 @@
       <EnvironmentVariables>
         <Variable name="HPE_NEXT_FREE_WORKER_PORT" value="4865" />
         <Variable name="HPE_NEXT_FREE_PLATFORM_SERVICE_PORT" value="8082" />
-        <Variable name="HPE_PLATFORM_ACCESS" value="127.0.0.1" />
+        <Variable name="HPE_PLATFORM_ACCESS" value="192.168.0.102" />
         <Variable name="HPE_PATH_WORKER" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd" />
         <Variable name="HPE_PATH_PLATFORM_SERVICE" value="Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/PlatformService" />
       </EnvironmentVariables>

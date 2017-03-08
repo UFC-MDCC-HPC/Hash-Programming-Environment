@@ -2,6 +2,7 @@
 using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace TestService
 {
@@ -103,8 +104,18 @@ namespace TestService
 
 				// DEPLOY
 
+				IList<Thread> ts = new List<Thread>();
+
 				foreach (string p_id in p_ids) 
-					core_service.deploy (workflow_handle, p_id);
+					ts.Add(new Thread( new ThreadStart(delegate { string a = core_service.deploy (workflow_handle, p_id); Console.WriteLine("{0}: {1}", p_id, a); })));						
+
+				foreach (Thread t in ts) 
+				{
+					t.Start();
+					t.Join();
+				}
+
+			//	foreach (Thread t in ts)
 
 				foreach (string c_id in c_ids) 
 					core_service.deploy (workflow_handle, c_id);
