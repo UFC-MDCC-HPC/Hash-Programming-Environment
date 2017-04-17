@@ -76,6 +76,8 @@
         
         private VisualElementAttributes visualAttributesField;
         
+        private FacetConfigurationType[] facet_configurationField;
+        
         private SupportedKinds kindField;
         
         private bool kindFieldSpecified;
@@ -122,6 +124,17 @@
             }
             set {
                 this.visualAttributesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("facet_configuration", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public FacetConfigurationType[] facet_configuration {
+            get {
+                return this.facet_configurationField;
+            }
+            set {
+                this.facet_configurationField = value;
             }
         }
         
@@ -1608,19 +1621,19 @@
     public enum ItemChoiceType1 {
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("alt")]
+        [System.Xml.Serialization.XmlEnumAttribute(":alt")]
         alt,
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("par")]
+        [System.Xml.Serialization.XmlEnumAttribute(":par")]
         par,
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("perform")]
+        [System.Xml.Serialization.XmlEnumAttribute(":perform")]
         perform,
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("seq")]
+        [System.Xml.Serialization.XmlEnumAttribute(":seq")]
         seq,
     }
     
@@ -2403,20 +2416,9 @@
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
     public partial class FusionType {
         
-        private string[] cRefsField;
-        
         private string pRefField;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("cRefs", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string[] cRefs {
-            get {
-                return this.cRefsField;
-            }
-            set {
-                this.cRefsField = value;
-            }
-        }
+        private string[] cRefsField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
@@ -2426,6 +2428,17 @@
             }
             set {
                 this.pRefField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cRefs", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string[] cRefs {
+            get {
+                return this.cRefsField;
+            }
+            set {
+                this.cRefsField = value;
             }
         }
     }
@@ -2442,7 +2455,13 @@
         
         private string cOldNameField;
         
+        private int index_replicaField;
+        
         private string cNewNameField;
+        
+        public InnerRenamingType() {
+            this.index_replicaField = 0;
+        }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -2463,6 +2482,18 @@
             }
             set {
                 this.cOldNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(0)]
+        public int index_replica {
+            get {
+                return this.index_replicaField;
+            }
+            set {
+                this.index_replicaField = value;
             }
         }
         
@@ -2645,6 +2676,67 @@
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+    public partial class FacetConfigurationType {
+        
+        private int facetField;
+        
+        private bool facetFieldSpecified;
+        
+        private bool multipleField;
+        
+        private bool multipleFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int facet {
+            get {
+                return this.facetField;
+            }
+            set {
+                this.facetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool facetSpecified {
+            get {
+                return this.facetFieldSpecified;
+            }
+            set {
+                this.facetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool multiple {
+            get {
+                return this.multipleField;
+            }
+            set {
+                this.multipleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool multipleSpecified {
+            get {
+                return this.multipleFieldSpecified;
+            }
+            set {
+                this.multipleFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
     public partial class VersionType {
         
         private int field1Field;
@@ -2774,10 +2866,20 @@
         
         private uint replicaField;
         
+        private int facetField;
+        
+        private int facet_instanceField;
+        
+        private bool facet_instanceFieldSpecified;
+        
+        private int facet_instance_enclosingField;
+        
         public UnitBoundsType() {
             this.slice_replicaField = 0;
             this.unit_replicaField = 0;
             this.replicaField = ((uint)(0));
+            this.facetField = 0;
+            this.facet_instance_enclosingField = 0;
         }
         
         /// <remarks/>
@@ -2857,6 +2959,52 @@
             }
             set {
                 this.replicaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(0)]
+        public int facet {
+            get {
+                return this.facetField;
+            }
+            set {
+                this.facetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int facet_instance {
+            get {
+                return this.facet_instanceField;
+            }
+            set {
+                this.facet_instanceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool facet_instanceSpecified {
+            get {
+                return this.facet_instanceFieldSpecified;
+            }
+            set {
+                this.facet_instanceFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(0)]
+        public int facet_instance_enclosing {
+            get {
+                return this.facet_instance_enclosingField;
+            }
+            set {
+                this.facet_instance_enclosingField = value;
             }
         }
     }
@@ -2939,6 +3087,8 @@
         
         private UnitBoundsType[] unitBoundsField;
         
+        private int[] revokeMultipleFacetField;
+        
         private string packageField;
         
         private string nameField;
@@ -2956,6 +3106,12 @@
         private string locationField;
         
         private string hash_component_UIDField;
+        
+        private int index_replicaField;
+        
+        public ComponentInUseType() {
+            this.index_replicaField = 0;
+        }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
@@ -2998,6 +3154,17 @@
             }
             set {
                 this.unitBoundsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("revokeMultipleFacet", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int[] revokeMultipleFacet {
+            get {
+                return this.revokeMultipleFacetField;
+            }
+            set {
+                this.revokeMultipleFacetField = value;
             }
         }
         
@@ -3097,6 +3264,18 @@
             }
             set {
                 this.hash_component_UIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(0)]
+        public int index_replica {
+            get {
+                return this.index_replicaField;
+            }
+            set {
+                this.index_replicaField = value;
             }
         }
     }

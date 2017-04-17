@@ -195,9 +195,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	// TODO: TOP LEVEL PARAMETERS ...
-	public List<Triple<String, HInterface, String>> getParameters(
-			HComponent cThis) {
-
+	public List<Triple<String, HInterface, String>> getParameters(HComponent cThis) 
+	{
 		List<Triple<String, HInterface, String>> parameters = new ArrayList<Triple<String, HInterface, String>>();
 
 		List<HInterfaceSlice> slices = this.getSlices();
@@ -207,9 +206,10 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			HInterface is_supplier = null;
 			List<IHPrimUnit> uList = is.getCompliantUnits();
 			HComponent c = (HComponent) uList.get(0).getConfiguration();
-			HComponent old_c = c;
 			
-			  if (c.isParameter() && c.getSupplier() != null) { 
+			
+			  if (c.isParameter() && c.getSupplier() != null) 
+			  { 
 					Map<String, HComponent> pars = cThis.getParametersByDefinedVarNames(); 
 					String varName = c.getVariableName(); 
 					HComponent c_supplier = (HComponent) c.getSupplier(); 
@@ -223,11 +223,14 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 					if (!parId.equals("type ?"))
 						parameters.add(new Triple<String, HInterface, String>(varName,is_supplier, parId));
 					// }
-			  } else if (c.isParameter()) {
+			  } 
+			  else if (c.isParameter()) 
+			  {
 					HComponent cTop = (HComponent) cThis.getTopConfiguration();
 					Map<String, HComponent> pars = cThis.getParametersByDefinedVarNames();
 					String varName = c.getVariableName(cThis);
-					if (pars.containsKey(varName)) {
+					if (pars.containsKey(varName)) 
+					{
 						HComponent c_parameter = pars.get(varName);
 						is_supplier = c_parameter.getInterfaceByName(is.getPrimName());
 						c = c_parameter;
@@ -240,13 +243,16 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 					if (!parId.equals("type ?"))
 						parameters.add(new Triple<String, HInterface, String>(varName,is_supplier, parId));
 					// }
-			} else {
+			} 
+			else 
+			{
 				is_supplier = is_supplier == null ? is : is_supplier;
 			}
 
 
 			List<Triple<String, HInterface, String>> slice_parameters = is_supplier.getParameters(cThis);
-			for (Triple<String, HInterface, String> spar : slice_parameters) {
+			for (Triple<String, HInterface, String> spar : slice_parameters) 
+			{
 				String sVarName = spar.fst();
 				HInterface sis = spar.snd();
 				String sParId = spar.trd();
@@ -257,7 +263,6 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 				   parameters.add(new Triple<String, HInterface, String>(sVarName, sis, sParId));
 				//}
 			}
-
 		}
 
 		return parameters;

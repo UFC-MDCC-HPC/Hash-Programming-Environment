@@ -64,7 +64,10 @@ public class EntryEditPart<ModelType extends IHUnit,
         } else
             entry_figure.setBackgroundColor(ColorConstants.black);
         
-
+        Integer facet = entry.getFacet();
+        Integer facet_instance = entry.getFacetInstance();
+        entry_figure.setLabelText(facet.toString() + ":" + facet_instance.toString());
+        
 		Label ff = new Label(" unit " + entry.getName2() + (entry.isClone() || entry.isCloned() ? "." + entry.getSliceReplicaIndex() + " " : " "));
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font);

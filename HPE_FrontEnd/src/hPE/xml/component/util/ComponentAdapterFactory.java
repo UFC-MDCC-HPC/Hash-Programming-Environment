@@ -156,6 +156,18 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createExternalLibraryTypeAdapter();
 			}
 			@Override
+			public Adapter caseFacetConfigurationType(FacetConfigurationType object) {
+				return createFacetConfigurationTypeAdapter();
+			}
+			@Override
+			public Adapter caseFacetMultipleType(FacetMultipleType object) {
+				return createFacetMultipleTypeAdapter();
+			}
+			@Override
+			public Adapter caseFacetMultiplicityType(FacetMultiplicityType object) {
+				return createFacetMultiplicityTypeAdapter();
+			}
+			@Override
 			public Adapter caseFusionOfReplicatorsType(FusionOfReplicatorsType object) {
 				return createFusionOfReplicatorsTypeAdapter();
 			}
@@ -626,6 +638,48 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createExternalLibraryTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.FacetConfigurationType <em>Facet Configuration Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.FacetConfigurationType
+	 * @generated
+	 */
+	public Adapter createFacetConfigurationTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.FacetMultipleType <em>Facet Multiple Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.FacetMultipleType
+	 * @generated
+	 */
+	public Adapter createFacetMultipleTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.FacetMultiplicityType <em>Facet Multiplicity Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.FacetMultiplicityType
+	 * @generated
+	 */
+	public Adapter createFacetMultiplicityTypeAdapter() {
 		return null;
 	}
 

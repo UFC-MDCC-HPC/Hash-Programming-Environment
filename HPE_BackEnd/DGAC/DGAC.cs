@@ -1318,41 +1318,63 @@ namespace br.ufc.pargo.hpe.backend
 						Console.WriteLine (id_functor_app + "#" + id_functor_app_parameter + "#" + (closedT==null) + " ---- " + ipar.ParOrder + " +++ " + ipar.Id_interface);
 						Console.WriteLine ("closedT=" + closedT);
                         result[ipar.ParOrder] = closedT;
-
                     }
                 }
-                return result;
+
+				IList<System.Type> result_2 = new List<System.Type> ();
+				for (int j = 0; j < result.Length; j++)
+					if (result[j] != null)
+						result_2.Add (result [j]);
+				System.Type[] result_3 = new System.Type[result_2.Count];
+				result_2.CopyTo (result_3, 0);
+
+				Console.WriteLine ("calculateActualClassParameteres: result.Length={0}",result_3.Length);
+                return result_3;
             }
 
            
             private static void calculateActualParams_(
+				IDictionary<string,AbstractComponentFunctorApplication> arguments_concrete,
                 IDictionary<string,int> arguments,
                 AbstractComponentFunctorApplication acfaRef,
                 string id_interface,
                 out System.Type[] actualParams)
             {
+
                 IDictionary<string, int> arguments_new;
                 determineArguments(arguments, acfaRef.Id_functor_app, out arguments_new);
 
+				Console.WriteLine ("FILTERING: count={0}", arguments_concrete.Count);
+				foreach (string a in arguments_concrete.Keys)
+					Console.WriteLine ("FILTERING: {0}", a);
+				IDictionary<string,int> arguments_filter = new Dictionary<string, int>();
+				foreach (string par_id in arguments_new.Keys)
+					if (par_id.Contains("#") || arguments_concrete.ContainsKey (par_id))
+						arguments_filter.Add (par_id, arguments_new [par_id]);
+					else
+						Console.WriteLine ("calculateActualParams_: REMOVING {0}", par_id);
+
                 Interface i = BackEnd.idao.retrieveSuper(acfaRef.Id_abstract, id_interface);
-                actualParams = calculateActualClassParameteres(i, acfaRef.Id_functor_app, arguments_new);
+				actualParams = calculateActualClassParameteres(i, acfaRef.Id_functor_app, arguments_filter);
             }
 
             public static void calculateActualParams(
+				IDictionary<string,AbstractComponentFunctorApplication> arguments_concrete,
 				IDictionary<string, int> arguments,
                 AbstractComponentFunctorApplication acfaRef,
                 string id_interface,
                 out System.Type[] actualParams)
             {
-                calculateActualParams_(arguments, acfaRef, id_interface, out actualParams);
+				calculateActualParams_(arguments_concrete, arguments, acfaRef, id_interface, out actualParams);
             }
 			
-            public static void calculateActualParams(
+			public static void calculateActualParams(
+				IDictionary<string,AbstractComponentFunctorApplication> arguments_concrete,
                 AbstractComponentFunctorApplication acfaRef,
                 string id_interface,
                 out System.Type[] actualParams)
             {
-                calculateActualParams_(new Dictionary<string, int>(), acfaRef, id_interface, out actualParams);
+				calculateActualParams_(arguments_concrete, new Dictionary<string, int>(), acfaRef, id_interface, out actualParams);
             }
             
             public static void calculateGenericClassName(
@@ -1432,7 +1454,7 @@ namespace br.ufc.pargo.hpe.backend
 				return t;
 	   }
 			
-            public static void determineArguments(IDictionary<string, int> arguments, int id_functor_app, out IDictionary<string, int> arguments_new)
+			public static void determineArguments(IDictionary<string, int> arguments, int id_functor_app, out IDictionary<string, int> arguments_new)
             {
 				Console.WriteLine ("START determineArguments " + id_functor_app);
 				
@@ -1611,8 +1633,12 @@ namespace br.ufc.pargo.hpe.backend
                 return aAppNew;
             }
 				
+			public static int generateACFAforContext (int id_abstract, int id_functor_app,	int facet_index)
+			{
+				return generateACFAforContext(id_abstract, id_functor_app,new Dictionary<string,int>(), new Dictionary<string, int>(), facet_index);
+			}
 
-				public static int generateACFAforContext (int id_abstract,
+			public static int generateACFAforContext (int id_abstract,
 				                                      int id_functor_app, 
 				                                      IDictionary<string, int> arguments, 
 				                                      IDictionary<string, int> argumentsTop,
@@ -1841,7 +1867,7 @@ namespace br.ufc.pargo.hpe.backend
 					services.removeProvidesPort(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
 					services.removeProvidesPort(Constants.INITIALIZE_PORT_NAME);
 					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
-					if (app_cid.Kind == Constants.KIND_APPLICATION)
+					if (app_cid.Kind == Constants.KIND_APPLICATION || app_cid.Kind == Constants.KIND_SYNCHRONIZER || app_cid.Kind == Constants.KIND_COMPUTATION)
 						services.removeProvidesPort(Constants.GO_PORT_NAME);
 					Console.WriteLine (" ... END DESTROY provides ports ");
 					bsPort.destroyInstance (app_cid, 0);
@@ -1883,6 +1909,9 @@ namespace br.ufc.pargo.hpe.backend
 					DGAC.database.AbstractComponentFunctor acfRef = DGAC.BackEnd.acfdao.retrieve(acfaRef.Id_abstract);
 					DGAC.database.Component c = resolveUnit(acfaRef);	
 			
+					int id_functor_app = generateACFAforContext(c.Id_abstract, acfaRef.Id_functor_app, instantiator.facet_instance);
+					acfaRef = BackEnd.acfadao.retrieve(id_functor_app);
+
 	                TypeMapImpl properties = new TypeMapImpl();					
 					properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
 					properties[Constants.PORT_NAME] = null;
@@ -1977,6 +2006,15 @@ namespace br.ufc.pargo.hpe.backend
 							                              facet_info,
 											  			  binding_sequentials
 						                                 );
+
+					foreach (KeyValuePair<string, Thread> st in thread_create_component)
+					{
+						Trace.WriteLine("INSTANTIATE " + st.Key);
+						st.Value.Start();
+						st.Value.Join();
+					}
+
+
 
 
 //					Thread t = null;
@@ -2192,7 +2230,7 @@ namespace br.ufc.pargo.hpe.backend
 				                                       Tuple<int, Tuple<int,string>[]> facet_info,
 													   IList<string> binding_sequentials)
 			{	
-				Console.WriteLine("**********************************" + (cid==null));
+				Console.WriteLine("createInnerComponentsOf: " + (cid==null));
 				Console.WriteLine("BEGIN CREATING INNER COMPONENTS OF " + cid.getInstanceName() + "-" + cid.Id_functor_app);
 
 				// TAKE SESSION CONTEXT.
@@ -2559,7 +2597,7 @@ namespace br.ufc.pargo.hpe.backend
 														IList<string> binding_sequentials
 			                                          )
 			{	
-				Console.WriteLine("**********************************" + (cid==null));
+				Console.WriteLine("createDelayedInstantiationTriggersOfSolutionComponents: " + (cid==null));
 				Console.WriteLine("BEGIN CREATING INNER COMPONENTS OF " + cid.getInstanceName() + "-" + cid.Id_functor_app);
 
 				// TAKE SESSION CONTEXT.
@@ -2898,6 +2936,10 @@ namespace br.ufc.pargo.hpe.backend
 				try 
 				{
 					c = resolveUnit(acfa, arguments, argumentsTop);	
+
+					id_functor_app = generateACFAforContext(c.Id_abstract, id_functor_app, this_facet_instance);
+					//id_functor_app = generateACFAforContext(c.Id_abstract, id_functor_app_inner, arguments, argumentsTop, this_facet_instance);
+
 					kind = Constants.kindMapping [c.Kind];
 						
 					if (current_inner_cid != null && current_inner_cid.ClassName.Equals(c.Library_path))
@@ -2930,7 +2972,7 @@ namespace br.ufc.pargo.hpe.backend
 
 					// Instantiate the inner component.
 					properties = new TypeMapImpl();					
-					properties[Constants.ID_FUNCTOR_APP] = id_functor_app;
+					properties[Constants.ID_FUNCTOR_APP] =  id_functor_app;
 					properties[Constants.PORT_NAME] = ic.Id_inner;
 					properties[Constants.ENCLOSING_ARGUMENTS] = arguments;
 					properties[Constants.NODES_KEY] = unit_mapping_inner;

@@ -40,7 +40,7 @@ namespace HPE_DGAC_LoadDB
         }
 		
 
-        private IList<ParameterRenaming> parameterRenamingSupper = null;
+        private IList<ParameterRenaming> parameterRenamingSuper = null;
 
         protected override HashComponent loadComponent_(ComponentType c)
         {
@@ -62,7 +62,7 @@ namespace HPE_DGAC_LoadDB
                 {
                     baseC = c.header.baseType.component;
 
-                    parameterRenamingSupper = baseC.parameter;
+                    parameterRenamingSuper = baseC.parameter;
 
                     AbstractComponentFunctorApplication baseCapp = newAbstractComponentFunctorApplication(baseC);
 
@@ -201,7 +201,7 @@ namespace HPE_DGAC_LoadDB
                                 int id_abstract_port = app.Id_abstract;
                                 string id_inner_port = port.localRef;
 								
-                                InnerComponent ic_port = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(id_abstract_port,id_inner_port);
+								InnerComponent ic_port = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve (id_abstract_port, id_inner_port);
 								
 								Console.WriteLine("loadInnerComponent - STEP 1");
 
@@ -209,7 +209,7 @@ namespace HPE_DGAC_LoadDB
                                 {
                                     foreach (ParameterRenaming par in c.parameter)
                                     {
-										Console.WriteLine("loadInnerComponent - STEP 2 begin" + par.formFieldId + "-"+ par.varName);
+										Console.WriteLine("loadInnerComponent - STEP 2 begin" + par.formFieldId + " - "+ par.varName);
                                         if (par.formFieldId.Equals(ic_port.Parameter_top))
                                         {
                                             varName = par.varName;
@@ -347,17 +347,20 @@ namespace HPE_DGAC_LoadDB
 
                 // It is a parameter in the subtype. Check if it is supplied in the type.
                 IList<SupplyParameter> spList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
-                foreach (SupplyParameter sp in spList)
-                    parsSuper.Add(sp.Id_parameter, sp);
+				foreach (SupplyParameter sp in spList) 
+				{
+					Console.WriteLine ("Adding to parSuper - key="+sp.Id_parameter + ", value: " + sp.Id_functor_app + "/" + sp.Id_abstract + "/" + sp.Id_parameter);
+					parsSuper.Add (sp.Id_parameter, sp);
+				}
 
                 IList<InnerComponent> iss = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.list(acfa.Id_abstract);
 				Console.WriteLine ("importInnerComponentsOfSuper: " + iss.Count + " - acfa.Id_abstract=" + acfa.Id_abstract);
-				foreach (InnerComponent i in iss) if (!i.IsPublic)
+				foreach (InnerComponent i in iss) //if (!i.IsPublic)
                 {
 					Console.WriteLine ("importInnerComponentsOfSupper 1: " + i.Id_inner + " , " + i.Id_functor_app + " , " + (i.Parameter_top));
 
                     InnerComponent iNew = new InnerComponent();
-                    if (i.Parameter_top != null)
+					if (i.Parameter_top != null && i.Parameter_top != "")
                     {
                         SupplyParameter sp = null; 
                         parsSuper.TryGetValue(i.Parameter_top, out sp);
@@ -381,7 +384,6 @@ namespace HPE_DGAC_LoadDB
 								iNew.Id_inner = i.Id_inner;
 								br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.insert (iNew);
 							}
-
                         }
                         else if (sp is SupplyParameterParameter)
                         {
@@ -390,7 +392,7 @@ namespace HPE_DGAC_LoadDB
                             SupplyParameterParameter spp = (SupplyParameterParameter)sp;
 
                             String varName = null;
-                            foreach (ParameterRenaming pr in parameterRenamingSupper)
+							foreach (ParameterRenaming pr in parameterRenamingSuper)
                             {
                                 if (pr.formFieldId.Equals(i.Parameter_top))
                                 {
@@ -409,9 +411,7 @@ namespace HPE_DGAC_LoadDB
                             {
                                 InnerComponentType cReplace = lookForInnerComponent(supply.cRef);
                                 if (cReplace != null)
-                                {
                                     includeAsInner.Add(cReplace);
-                                }
                             }
                         }
 
@@ -425,11 +425,12 @@ namespace HPE_DGAC_LoadDB
                         iNew.Id_abstract_owner = absC.Id_abstract;
                         iNew.Id_functor_app = liftFunctorApp(i.Id_functor_app, parsSuper);
                         iNew.Id_inner = i.Id_inner;
+						iNew.IsPublic = i.IsPublic;
                         br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
                     }
                 }
             }
-			Console.WriteLine("importInnerComponentsOfSupper : " + "FINISH");
+			Console.WriteLine("importInnerComponentsOfSuper : FINISH");
         }
 
 
@@ -476,14 +477,16 @@ namespace HPE_DGAC_LoadDB
 	                    {
 	                        SupplyParameterComponent spcSuper = (SupplyParameterComponent)spSuper;
 	                        spNew = new SupplyParameterComponent();
-								Console.WriteLine("liftFunctorApp: 1" + (spNew==null));
+							Console.WriteLine("liftFunctorApp: 1" + (spNew==null));
 	                        SupplyParameterComponent spcNew = (SupplyParameterComponent)spNew;
 	
-	                        spcNew.Id_functor_app = acfaNew.Id_functor_app;
-	                        spcNew.Id_abstract = spSuper.Id_abstract;
+							AbstractComponentFunctorApplication acfa_spcSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve (spcSuper.Id_functor_app_actual);
+
+							spcNew.Id_functor_app = acfaNew.Id_functor_app;
+							spcNew.Id_abstract = acfa_spcSuper.Id_abstract;
 	                        spcNew.Id_parameter = spp.Id_parameter;
-	                        spcNew.Id_functor_app_actual = spSuper.Id_functor_app;
-								Console.WriteLine("liftFunctorApp: 2" + (spcNew==null));
+							spcNew.Id_functor_app_actual = spcSuper.Id_functor_app_actual;
+							Console.WriteLine("liftFunctorApp: 2" + (spcNew==null));
 	                    }
 	                    else if (spSuper is SupplyParameterParameter)
 	                    {

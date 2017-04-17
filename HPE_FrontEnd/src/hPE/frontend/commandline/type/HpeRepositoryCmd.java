@@ -226,7 +226,7 @@ private void action_obsolete(String[] args) throws CmdException, ArgException {
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true).get(0);
 		
 			String message = HPELocationEntry.markAsObsolete(c, location, version);
 			
@@ -291,7 +291,7 @@ private void action_obsolete(String[] args) throws CmdException, ArgException {
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true).get(0);
 		
 			String message = HPELocationEntry.unregisterComponent(c, location, version);
 			
@@ -357,7 +357,7 @@ private void action_obsolete(String[] args) throws CmdException, ArgException {
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true).get(0);
 		
 			String message = HPELocationEntry.registerComponent(c, location, version, free_source);
 			

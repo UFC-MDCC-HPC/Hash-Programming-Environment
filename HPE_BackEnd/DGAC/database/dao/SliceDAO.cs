@@ -133,45 +133,54 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         
         
         
-        public IList<Slice> listByInner(int id_abstract, string id_inner)
+        public IList<Slice> listByInner(int id_abstract_start, string id_inner)
         {
 
             IList<Slice> list = new List<Slice>();
             IDbConnection dbcon = Connector.getConnection();
             dbcon.Open();
-            IDbCommand dbcmd = dbcon.CreateCommand();
-            string sql =
-				"SELECT id_abstract, " +
-				       "id_inner, " +
-				       "id_interface_slice, " +
-				       "id_interface, " +
-				       "transitive, " +
-				       "property_name " +
-                "FROM slice " +
-                "WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'";
-            dbcmd.CommandText = sql;
-			Console.WriteLine (sql);
-			           IDataReader reader = dbcmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Slice s = new Slice();
-                s.Id_abstract = (int)reader["id_abstract"];
-                s.Id_inner = (string)reader["id_inner"];
-                s.Id_interface_slice = (string)reader["id_interface_slice"];
-                s.Id_interface = (string)reader["id_interface"];
-			//	s.Unit_replica_host = (int)reader["unit_replica_host"];
-            //    s.Slice_replica = (int)reader["slice_replica"];
-			//	s.Inner_replica = (int)reader["inner_replica"];
-			//	s.Unit_replica = (int)reader["unit_replica"];
-                s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
-                s.PortName = (string)reader["property_name"];
-                list.Add(s);
-            }//while
-            // clean up
-            reader.Close();
-            reader = null;
-            dbcmd.Dispose();
-            dbcmd = null;
+            IDbCommand dbcmd = dbcon.CreateCommand();            
+
+			int id_abstract = id_abstract_start; 
+			while (id_abstract > 0) 
+			{
+				string sql =
+					"SELECT id_abstract, " +
+					"id_inner, " +
+					"id_interface_slice, " +
+					"id_interface, " +
+					"transitive, " +
+					"property_name " +
+					"FROM slice " +
+					"WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'";
+				dbcmd.CommandText = sql;
+				Console.WriteLine (sql);
+				IDataReader reader = dbcmd.ExecuteReader ();
+				if (reader.Read ()) 
+				{
+					do {
+						Slice s = new Slice ();
+						s.Id_abstract = (int)reader ["id_abstract"];
+						s.Id_inner = (string)reader ["id_inner"];
+						s.Id_interface_slice = (string)reader ["id_interface_slice"];
+						s.Id_interface = (string)reader ["id_interface"];
+						s.Transitive = ((int)reader ["transitive"]) == 0 ? false : true;
+						s.PortName = (string)reader ["property_name"];
+						list.Add (s);
+					} while (reader.Read ());
+					id_abstract = 0;
+				}
+				else 
+				{
+					AbstractComponentFunctor acf = BackEnd.acfdao.retrieve (id_abstract);
+					id_abstract = acf.Id_functor_app_supertype > 0 ? BackEnd.acfadao.retrieve (acf.Id_functor_app_supertype).Id_abstract : 0;
+				}
+				// clean up
+				reader.Close ();
+				reader = null;
+			}
+			dbcmd.Dispose ();
+			dbcmd = null;
             dbcon.Close();
             dbcon = null;
             return list;

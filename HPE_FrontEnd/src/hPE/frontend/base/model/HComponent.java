@@ -3,6 +3,7 @@ package hPE.frontend.base.model;
 import hPE.HPEProperties;
 import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.commands.SplitEntryCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IComputationConfiguration;
@@ -225,10 +226,13 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	 */
 	public List<IHUnit> getUnits() 
 	{
+		boolean hidden = false;
 		List<IHUnit> r= new ArrayList<IHUnit>();
 		for (IHUnit u : units)
 		{
-		  if (u.getColocatingUnit() == null)
+		  hidden = !this.isTopConfiguration() && !this.getRef().equals("base") && u.getHidden();
+			
+		  if (!hidden && u.getColocatingUnit() == null)
 			  r.add(u);			  
 		}		
 		return r;		
@@ -299,13 +303,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public void setImplements(HComponent itImplements) 
 	{
 		this.itImplements = itImplements;
+		itImplements.setRef("base");
 
 		List<IHUnit> us = ((List<IHUnit>) ((ArrayList<IHUnit>) itImplements.getUnits()).clone());
 
 		for (IHUnit the_source : us) 
 		{
 			HComponent c = (HComponent) the_source.getConfiguration();
-			if (!the_source.getHidden()) 
+			//if (!the_source.getHidden()) 
 			{
 				IBindingTarget the_target = c.newStubFor((HUnit) the_source, false, true, (HComponent) c.getTopConfiguration());
 				new HBinding(c, the_target, the_source); // TODO: setBinding ...
@@ -1119,7 +1124,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		List<IHPrimUnit> ls = new ArrayList<IHPrimUnit>();
 		for (IHUnit u : this.getUnits()) 
 		{
-			if (!u.getHidden()) 
+			if (!u.getHidden() || this.getRef().equals("base")) 
 			{   
 				ls.addAll(u.getClones());
 			} 
@@ -2646,8 +2651,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		this.configurations.clear();
 	}
 
-	public IBindingTarget newStubFor(HUnit unit, boolean forSubTyping,
-			boolean forImplements, HComponent topConfiguration) {
+	public IBindingTarget newStubFor(HUnit unit, boolean forSubTyping, boolean forImplements, HComponent topConfiguration) {
 
 		if (!this.getDirectParentConfigurations().contains(topConfiguration)) 
 		{
@@ -3528,7 +3532,20 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		Collection<HComponent> exposedComponents = this.getExposedComponents();
 
 		for (HComponent c : exposedComponents) {
-			if (c.getName2().equals(name))
+			if (c.getName2().equals(name) /*&& c.getIndexReplica() == 0*/)
+				return c;
+		}
+
+		return null;
+
+	}
+
+	public HComponent getExposedComponentByName(String name, int index_replica) {
+
+		Collection<HComponent> exposedComponents = this.getExposedComponents();
+
+		for (HComponent c : exposedComponents) {
+			if (c.getName2().equals(name) && c.getIndexReplica() == index_replica)
 				return c;
 		}
 
@@ -4132,6 +4149,99 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	{
 		return external_library;
 	}
-	
 
+	private Map<Integer,Boolean> facet_configuration = new HashMap<Integer,Boolean>();
+	
+	public void addFacet(int facet, boolean multiple) 
+	{
+		facet_configuration.put(facet, multiple);		
+	}
+
+	private Map<Integer,Integer> facet_cardinality = new HashMap<Integer,Integer>();
+
+	public void setupMultipleFacet(int facet, int cardinality) throws Exception 
+	{
+		boolean multiple_facet = facet_configuration.get(facet);
+		if (cardinality > 1 && !multiple_facet)
+			throw new Exception("Trying to multiply by " + cardinality + " singleton facet " + facet + "in " + this.getRef());
+		facet_cardinality.put(facet, cardinality);		
+		
+		// REPLICATE UNITS !
+		List<HUnit> us = this.getUnitsInFacet(facet);
+		for (HUnit u : us)
+		{			
+			u.setFacetInstance(0);
+			for (int facet_instance=1; facet_instance < cardinality; facet_instance ++)
+			{
+				HUnit u_clone_clone = (HUnit) u.createReplica(u, u.getClones().size()-1);
+				u_clone_clone.setFacetInstance(facet_instance);
+			}
+			
+			// TODO: ...
+			for(HUnitSlice u_slice : u.getSlices())
+			{
+			   HUnit slice_unit = (HUnit) u_slice.getComponentEntry();
+			   HComponent c = (HComponent) slice_unit.getComponent();
+	           if (c.IsExposedFalsifiedContextTop())
+	           {
+	        	   // check whether it has a single and non-multiple facet.
+	        	   Map<Integer,Boolean> facet_config = c.getFacetConfiguration();
+	        	   if (facet_config.size() == 0 /* default */ || (facet_config.size() == 1 && !facet_config.get(0)))
+	        	   {
+	        		   System.out.print(c.getRef());
+	        		   HComponent c_clone = (HComponent) c.clone();
+	        		   this.addComponent(c_clone);
+	        	   }
+	           }
+			}			
+	    }			
+	}
+
+	private List<HUnit> getUnitsInFacet(int facet) 
+	{
+		List<HUnit> us = new ArrayList<HUnit>();
+		for (IHUnit u_ : this.getUnits())
+		{
+		    HUnit u = (HUnit) u_;
+		    if (u.getFacet() == facet)
+		    	us.add(u);  
+		}
+		return us;
+	}
+
+	public Map<Integer,Boolean> getFacetConfiguration() {
+		
+		return facet_configuration;
+	}
+	
+	public Map<Integer,Integer> getFacetCardinality() {
+		
+		return facet_cardinality;
+	}
+	
+	private List<HComponent> facet_multiplied_of_ic = new ArrayList<HComponent>();
+
+	public void addInnerComponentWithMultipliedFacet(HComponent c) 
+	{
+		if (!facet_multiplied_of_ic.contains(c))
+		     facet_multiplied_of_ic.add(c);		
+	}
+	
+	public List<HComponent> getInnerComponentWithMultipliedFacet()
+	{
+		return facet_multiplied_of_ic;
+	}
+	
+	
+	public int getIndexReplica() {
+		return index_replica;
+	}
+
+	public void setIndexReplica(int index_replica) {
+		this.index_replica = index_replica;
+	}
+
+	private int index_replica = 0;
+	
+	
 }

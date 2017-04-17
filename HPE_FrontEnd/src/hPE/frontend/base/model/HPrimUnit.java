@@ -255,6 +255,15 @@ public abstract class HPrimUnit extends HVisualElement
 //	private HBinding binding;
 	
 	
+	private int facet = 0;
+	
+	public int getFacet() {
+		return facet;
+	}
+
+	public void setFacet(int facet) {
+		this.facet = facet;
+	}	
 	
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#getBinding()
@@ -662,7 +671,16 @@ public abstract class HPrimUnit extends HVisualElement
 
 	}
 	
+	private int facet_instance = 0;
 	
+	public int getFacetInstance() {
+		return facet_instance;
+	}
+
+	public void setFacetInstance(int facet_instance) {
+		this.facet_instance = facet_instance;
+	}	
+
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#getReplica()
 	 */

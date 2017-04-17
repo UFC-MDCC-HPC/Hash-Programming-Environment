@@ -2,15 +2,25 @@ package hPE.frontend.base.figures;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 public class EntryFigure extends NodeFigure {
+
+	Label label = new Label();
 
 	public EntryFigure() {
 		super();
 		this.setBackgroundColor(ColorConstants.blue);
-		
+		add(label);
+	}
+
+	public void setLabelText(String text) {
+		label.setText(text);
+		label.setFont(new Font(null,"Arial",6,SWT.BOLD));
+		label.setBounds(this.getBounds());
 	}
 
 	boolean is_multiple = false;

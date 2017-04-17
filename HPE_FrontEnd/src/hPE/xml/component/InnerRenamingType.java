@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.InnerRenamingType#getCNewName <em>CNew Name</em>}</li>
  *   <li>{@link hPE.xml.component.InnerRenamingType#getCOldName <em>COld Name</em>}</li>
  *   <li>{@link hPE.xml.component.InnerRenamingType#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.InnerRenamingType#getIndexReplica <em>Index Replica</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,6 +54,61 @@ public interface InnerRenamingType extends EObject {
 	 * @generated
 	 */
 	void setCRef(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Index Replica</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Index Replica</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Index Replica</em>' attribute.
+	 * @see #isSetIndexReplica()
+	 * @see #unsetIndexReplica()
+	 * @see #setIndexReplica(int)
+	 * @see hPE.xml.component.ComponentPackage#getInnerRenamingType_IndexReplica()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='index_replica'"
+	 * @generated
+	 */
+	int getIndexReplica();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.InnerRenamingType#getIndexReplica <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Index Replica</em>' attribute.
+	 * @see #isSetIndexReplica()
+	 * @see #unsetIndexReplica()
+	 * @see #getIndexReplica()
+	 * @generated
+	 */
+	void setIndexReplica(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.InnerRenamingType#getIndexReplica <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIndexReplica()
+	 * @see #getIndexReplica()
+	 * @see #setIndexReplica(int)
+	 * @generated
+	 */
+	void unsetIndexReplica();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.InnerRenamingType#getIndexReplica <em>Index Replica</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Index Replica</em>' attribute is set.
+	 * @see #unsetIndexReplica()
+	 * @see #getIndexReplica()
+	 * @see #setIndexReplica(int)
+	 * @generated
+	 */
+	boolean isSetIndexReplica();
 
 	/**
 	 * Returns the value of the '<em><b>COld Name</b></em>' attribute.

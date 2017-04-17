@@ -154,7 +154,7 @@ public class HpeWorkspaceCmd implements HpeGenericCmd {
 				HComponent c = null;
 				URI uri = URI.createURI(file.getPath());
 				c = HComponentFactoryImpl.eInstance.loadComponent(uri, true,
-						false, false, false, false);
+						false, false, false, false).get(0);
 				NAntBuilder.createBuildFile(c);
 
 				// execute nant

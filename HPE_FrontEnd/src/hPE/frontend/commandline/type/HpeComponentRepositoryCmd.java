@@ -374,7 +374,7 @@ public class HpeComponentRepositoryCmd implements HpeGenericCmd{
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true).get(0);
 		
 			int[] eVal = new int[enumerators.values().size()];
 			int i = 0;
@@ -466,7 +466,7 @@ public class HpeComponentRepositoryCmd implements HpeGenericCmd{
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true).get(0);
 		
 			String message = HPEPlatform.deploy(location.toString(), c, user_name, password, dir);
 			

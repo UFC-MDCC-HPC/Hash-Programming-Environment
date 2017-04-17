@@ -6,6 +6,7 @@ package hPE.xml.component.validation;
 
 import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExternalLibraryType;
+import hPE.xml.component.FacetMultiplicityType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.InnerComponentType;
@@ -44,4 +45,6 @@ public interface ComponentBodyTypeValidator {
 	boolean validateFusionsOfReplicators(EList<FusionsOfReplicatorsType> value);
 
 	boolean validateExternalLibrary(EList<ExternalLibraryType> value);
+
+	boolean validateFacetMultiplicity(EList<FacetMultiplicityType> value);
 }

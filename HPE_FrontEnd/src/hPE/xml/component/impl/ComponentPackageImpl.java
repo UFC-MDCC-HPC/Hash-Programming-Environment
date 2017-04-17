@@ -29,6 +29,9 @@ import hPE.xml.component.ExposePortType;
 import hPE.xml.component.ExtendsType;
 import hPE.xml.component.ExtensionTypeType;
 import hPE.xml.component.ExternalLibraryType;
+import hPE.xml.component.FacetConfigurationType;
+import hPE.xml.component.FacetMultipleType;
+import hPE.xml.component.FacetMultiplicityType;
 import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
@@ -234,6 +237,27 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass externalLibraryTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass facetConfigurationTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass facetMultipleTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass facetMultiplicityTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -851,8 +875,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_HashComponentUID() {
-		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(3);
+	public EReference getComponentHeaderType_FacetConfiguration() {
+		return (EReference)componentHeaderTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -860,7 +884,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_IsAbstract() {
+	public EAttribute getComponentHeaderType_HashComponentUID() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -869,7 +893,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Kind() {
+	public EAttribute getComponentHeaderType_IsAbstract() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -878,7 +902,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_LocationURI() {
+	public EAttribute getComponentHeaderType_Kind() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -887,7 +911,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Name() {
+	public EAttribute getComponentHeaderType_LocationURI() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -896,8 +920,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_PackagePath() {
+	public EAttribute getComponentHeaderType_Name() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentHeaderType_PackagePath() {
+		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -950,7 +983,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_HashComponentUID() {
+	public EAttribute getComponentInUseType_RevokeMultipleFacet() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -959,7 +992,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_LocalRef() {
+	public EAttribute getComponentInUseType_HashComponentUID() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -968,7 +1001,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Location() {
+	public EAttribute getComponentInUseType_IndexReplica() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -977,7 +1010,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Multiple() {
+	public EAttribute getComponentInUseType_LocalRef() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -986,7 +1019,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Name() {
+	public EAttribute getComponentInUseType_Location() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -995,7 +1028,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Package() {
+	public EAttribute getComponentInUseType_Multiple() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(9);
 	}
 
@@ -1004,7 +1037,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_ParameterId() {
+	public EAttribute getComponentInUseType_Name() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(10);
 	}
 
@@ -1013,8 +1046,26 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Version() {
+	public EAttribute getComponentInUseType_Package() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentInUseType_ParameterId() {
+		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentInUseType_Version() {
+		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -1499,6 +1550,87 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getFacetConfigurationType() {
+		return facetConfigurationTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFacetConfigurationType_Facet() {
+		return (EAttribute)facetConfigurationTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFacetConfigurationType_Multiple() {
+		return (EAttribute)facetConfigurationTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFacetMultipleType() {
+		return facetMultipleTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFacetMultipleType_Facet() {
+		return (EAttribute)facetMultipleTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFacetMultiplicityType() {
+		return facetMultiplicityTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFacetMultiplicityType_Cardinality() {
+		return (EAttribute)facetMultiplicityTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFacetMultiplicityType_CRef() {
+		return (EAttribute)facetMultiplicityTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFacetMultiplicityType_Facet() {
+		return (EAttribute)facetMultiplicityTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFusionOfReplicatorsType() {
 		return fusionOfReplicatorsTypeEClass;
 	}
@@ -1554,7 +1686,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EAttribute getFusionType_CRefs() {
-		return (EAttribute)fusionTypeEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)fusionTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1563,7 +1695,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EAttribute getFusionType_PRef() {
-		return (EAttribute)fusionTypeEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)fusionTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1699,6 +1831,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EAttribute getInnerRenamingType_CRef() {
 		return (EAttribute)innerRenamingTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInnerRenamingType_IndexReplica() {
+		return (EAttribute)innerRenamingTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -2660,7 +2801,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_Parallel() {
+	public EAttribute getUnitBoundsType_Facet() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2669,7 +2810,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_Replica() {
+	public EAttribute getUnitBoundsType_FacetInstance() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2678,7 +2819,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_SliceReplica() {
+	public EAttribute getUnitBoundsType_FacetInstanceEnclosing() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -2687,7 +2828,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_UnitReplica() {
+	public EAttribute getUnitBoundsType_Parallel() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -2696,8 +2837,35 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_URef() {
+	public EAttribute getUnitBoundsType_Replica() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitBoundsType_SliceReplica() {
+		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitBoundsType_UnitReplica() {
+		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitBoundsType_URef() {
+		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -3134,6 +3302,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__BASE_TYPE);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__VERSIONS);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES);
+		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__FACET_CONFIGURATION);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__IS_ABSTRACT);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__KIND);
@@ -3146,7 +3315,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PARAMETER);
 		createEReference(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PORT);
 		createEReference(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__UNIT_BOUNDS);
+		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID);
+		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__INDEX_REPLICA);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__LOCAL_REF);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__LOCATION);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__MULTIPLE);
@@ -3224,6 +3395,18 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(externalLibraryTypeEClass, EXTERNAL_LIBRARY_TYPE__CONTENTS);
 		createEAttribute(externalLibraryTypeEClass, EXTERNAL_LIBRARY_TYPE__NAME);
 
+		facetConfigurationTypeEClass = createEClass(FACET_CONFIGURATION_TYPE);
+		createEAttribute(facetConfigurationTypeEClass, FACET_CONFIGURATION_TYPE__FACET);
+		createEAttribute(facetConfigurationTypeEClass, FACET_CONFIGURATION_TYPE__MULTIPLE);
+
+		facetMultipleTypeEClass = createEClass(FACET_MULTIPLE_TYPE);
+		createEAttribute(facetMultipleTypeEClass, FACET_MULTIPLE_TYPE__FACET);
+
+		facetMultiplicityTypeEClass = createEClass(FACET_MULTIPLICITY_TYPE);
+		createEAttribute(facetMultiplicityTypeEClass, FACET_MULTIPLICITY_TYPE__CARDINALITY);
+		createEAttribute(facetMultiplicityTypeEClass, FACET_MULTIPLICITY_TYPE__CREF);
+		createEAttribute(facetMultiplicityTypeEClass, FACET_MULTIPLICITY_TYPE__FACET);
+
 		fusionOfReplicatorsTypeEClass = createEClass(FUSION_OF_REPLICATORS_TYPE);
 		createEAttribute(fusionOfReplicatorsTypeEClass, FUSION_OF_REPLICATORS_TYPE__EREF);
 		createEAttribute(fusionOfReplicatorsTypeEClass, FUSION_OF_REPLICATORS_TYPE__ORIGIN_REF);
@@ -3232,8 +3415,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(fusionsOfReplicatorsTypeEClass, FUSIONS_OF_REPLICATORS_TYPE__FUSION_OF_REPLICATORS);
 
 		fusionTypeEClass = createEClass(FUSION_TYPE);
-		createEAttribute(fusionTypeEClass, FUSION_TYPE__CREFS);
 		createEAttribute(fusionTypeEClass, FUSION_TYPE__PREF);
+		createEAttribute(fusionTypeEClass, FUSION_TYPE__CREFS);
 
 		guardConditionTypeEClass = createEClass(GUARD_CONDITION_TYPE);
 		createEAttribute(guardConditionTypeEClass, GUARD_CONDITION_TYPE__CONDITION1);
@@ -3257,6 +3440,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(innerRenamingTypeEClass, INNER_RENAMING_TYPE__CNEW_NAME);
 		createEAttribute(innerRenamingTypeEClass, INNER_RENAMING_TYPE__COLD_NAME);
 		createEAttribute(innerRenamingTypeEClass, INNER_RENAMING_TYPE__CREF);
+		createEAttribute(innerRenamingTypeEClass, INNER_RENAMING_TYPE__INDEX_REPLICA);
 
 		interfaceParameterTypeEClass = createEClass(INTERFACE_PARAMETER_TYPE);
 		createEAttribute(interfaceParameterTypeEClass, INTERFACE_PARAMETER_TYPE__INAME);
@@ -3386,6 +3570,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		unitBoundsTypeEClass = createEClass(UNIT_BOUNDS_TYPE);
 		createEReference(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION);
+		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__FACET);
+		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__FACET_INSTANCE);
+		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__FACET_INSTANCE_ENCLOSING);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__PARALLEL);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__REPLICA);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__SLICE_REPLICA);
@@ -3517,6 +3704,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentHeaderType_BaseType(), this.getBaseTypeType(), null, "baseType", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentHeaderType_Versions(), this.getVersionType(), null, "versions", null, 1, -1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentHeaderType_VisualAttributes(), this.getVisualElementAttributes(), null, "visualAttributes", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComponentHeaderType_FacetConfiguration(), this.getFacetConfigurationType(), null, "facetConfiguration", null, 0, -1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_IsAbstract(), theXMLTypePackage.getBoolean(), "isAbstract", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Kind(), this.getSupportedKinds(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3529,7 +3717,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentInUseType_Parameter(), this.getParameterRenaming(), null, "parameter", null, 0, -1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentInUseType_Port(), this.getInnerComponentType(), null, "port", null, 0, -1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentInUseType_UnitBounds(), this.getUnitBoundsType(), null, "unitBounds", null, 0, -1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentInUseType_RevokeMultipleFacet(), theXMLTypePackage.getInt(), "revokeMultipleFacet", null, 0, -1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentInUseType_IndexReplica(), theXMLTypePackage.getInt(), "indexReplica", "0", 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_LocalRef(), theXMLTypePackage.getString(), "localRef", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Location(), theXMLTypePackage.getAnyURI(), "location", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3607,6 +3797,18 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getExternalLibraryType_Contents(), theXMLTypePackage.getString(), "contents", null, 0, 1, ExternalLibraryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExternalLibraryType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ExternalLibraryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(facetConfigurationTypeEClass, FacetConfigurationType.class, "FacetConfigurationType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getFacetConfigurationType_Facet(), theXMLTypePackage.getInt(), "facet", null, 0, 1, FacetConfigurationType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFacetConfigurationType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, FacetConfigurationType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(facetMultipleTypeEClass, FacetMultipleType.class, "FacetMultipleType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getFacetMultipleType_Facet(), theXMLTypePackage.getString(), "facet", null, 0, 1, FacetMultipleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(facetMultiplicityTypeEClass, FacetMultiplicityType.class, "FacetMultiplicityType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getFacetMultiplicityType_Cardinality(), theXMLTypePackage.getInt(), "cardinality", null, 0, 1, FacetMultiplicityType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFacetMultiplicityType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, FacetMultiplicityType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFacetMultiplicityType_Facet(), theXMLTypePackage.getInt(), "facet", null, 0, 1, FacetMultiplicityType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(fusionOfReplicatorsTypeEClass, FusionOfReplicatorsType.class, "FusionOfReplicatorsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFusionOfReplicatorsType_ERef(), theXMLTypePackage.getString(), "eRef", null, 1, 1, FusionOfReplicatorsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFusionOfReplicatorsType_OriginRef(), theXMLTypePackage.getString(), "originRef", null, 0, -1, FusionOfReplicatorsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3615,8 +3817,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getFusionsOfReplicatorsType_FusionOfReplicators(), this.getFusionOfReplicatorsType(), null, "fusionOfReplicators", null, 1, -1, FusionsOfReplicatorsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fusionTypeEClass, FusionType.class, "FusionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getFusionType_CRefs(), theXMLTypePackage.getString(), "cRefs", null, 1, -1, FusionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFusionType_PRef(), theXMLTypePackage.getString(), "pRef", null, 1, 1, FusionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFusionType_CRefs(), theXMLTypePackage.getString(), "cRefs", null, 1, -1, FusionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(guardConditionTypeEClass, GuardConditionType.class, "GuardConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGuardConditionType_Condition1(), theXMLTypePackage.getString(), "condition1", null, 0, 1, GuardConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3640,6 +3842,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getInnerRenamingType_CNewName(), theXMLTypePackage.getString(), "cNewName", null, 0, 1, InnerRenamingType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInnerRenamingType_COldName(), theXMLTypePackage.getString(), "cOldName", null, 0, 1, InnerRenamingType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInnerRenamingType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, InnerRenamingType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInnerRenamingType_IndexReplica(), theXMLTypePackage.getInt(), "indexReplica", "0", 0, 1, InnerRenamingType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(interfaceParameterTypeEClass, InterfaceParameterType.class, "InterfaceParameterType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInterfaceParameterType_Iname(), theXMLTypePackage.getString(), "iname", null, 0, 1, InterfaceParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3769,6 +3972,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(unitBoundsTypeEClass, UnitBoundsType.class, "UnitBoundsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUnitBoundsType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitBoundsType_Facet(), theXMLTypePackage.getInt(), "facet", "0", 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitBoundsType_FacetInstance(), theXMLTypePackage.getInt(), "facetInstance", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitBoundsType_FacetInstanceEnclosing(), theXMLTypePackage.getInt(), "facetInstanceEnclosing", "0", 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_Parallel(), theXMLTypePackage.getBoolean(), "parallel", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_Replica(), theXMLTypePackage.getUnsignedInt(), "replica", "0", 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_SliceReplica(), theXMLTypePackage.getInt(), "sliceReplica", "0", 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4050,6 +4256,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "visualAttributes"
 		   });	
 		addAnnotation
+		  (getComponentHeaderType_FacetConfiguration(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "facet_configuration"
+		   });	
+		addAnnotation
 		  (getComponentHeaderType_HashComponentUID(), 
 		   source, 
 		   new String[] {
@@ -4127,11 +4340,25 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "unitBounds"
 		   });	
 		addAnnotation
+		  (getComponentInUseType_RevokeMultipleFacet(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "revokeMultipleFacet"
+		   });	
+		addAnnotation
 		  (getComponentInUseType_HashComponentUID(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "hash_component_UID"
+		   });	
+		addAnnotation
+		  (getComponentInUseType_IndexReplica(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "index_replica"
 		   });	
 		addAnnotation
 		  (getComponentInUseType_LocalRef(), 
@@ -4556,6 +4783,69 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "name"
 		   });	
 		addAnnotation
+		  (facetConfigurationTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "FacetConfigurationType",
+			 "kind", "empty"
+		   });	
+		addAnnotation
+		  (getFacetConfigurationType_Facet(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "facet"
+		   });	
+		addAnnotation
+		  (getFacetConfigurationType_Multiple(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "multiple"
+		   });	
+		addAnnotation
+		  (facetMultipleTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "FacetMultipleType",
+			 "kind", "empty"
+		   });	
+		addAnnotation
+		  (getFacetMultipleType_Facet(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "facet"
+		   });	
+		addAnnotation
+		  (facetMultiplicityTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "FacetMultiplicityType",
+			 "kind", "empty"
+		   });	
+		addAnnotation
+		  (getFacetMultiplicityType_Cardinality(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "cardinality"
+		   });	
+		addAnnotation
+		  (getFacetMultiplicityType_CRef(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "cRef"
+		   });	
+		addAnnotation
+		  (getFacetMultiplicityType_Facet(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "facet"
+		   });	
+		addAnnotation
 		  (fusionOfReplicatorsTypeEClass, 
 		   source, 
 		   new String[] {
@@ -4598,18 +4888,18 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "elementOnly"
 		   });	
 		addAnnotation
-		  (getFusionType_CRefs(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "cRefs"
-		   });	
-		addAnnotation
 		  (getFusionType_PRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "pRef"
+		   });	
+		addAnnotation
+		  (getFusionType_CRefs(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "cRefs"
 		   });	
 		addAnnotation
 		  (guardConditionTypeEClass, 
@@ -4732,6 +5022,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
+		   });	
+		addAnnotation
+		  (getInnerRenamingType_IndexReplica(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "index_replica"
 		   });	
 		addAnnotation
 		  (interfaceParameterTypeEClass, 
@@ -5486,6 +5783,27 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
+		   });	
+		addAnnotation
+		  (getUnitBoundsType_Facet(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "facet"
+		   });	
+		addAnnotation
+		  (getUnitBoundsType_FacetInstance(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "facet_instance"
+		   });	
+		addAnnotation
+		  (getUnitBoundsType_FacetInstanceEnclosing(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "facet_instance_enclosing"
 		   });	
 		addAnnotation
 		  (getUnitBoundsType_Parallel(), 

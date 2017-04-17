@@ -48,10 +48,7 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
             // slice_abstraction_figure.setForegroundColor(ColorConstants.black);
         }
 
-//        if (slice_abstraction.getNestingFactor() > 0)
-//            slice_abstraction_figure.setLabelText((new Integer(slice_abstraction.getNestingFactor())).toString());
-//        else
-        	slice_abstraction_figure.setLabelText("");
+       	slice_abstraction_figure.setLabelText("");
 
         try{
 	        Label ff = new Label(" slice " + (slice_abstraction.getName() == null ? "" : slice_abstraction.getName() ) + " ");

@@ -262,6 +262,14 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
     	this.colocated_units = colocated_units;
     }
 
+	@Override
+	public void setFacetInstance(int facet_instance) {
+		this.getActualUnit().setFacetInstance(facet_instance);
+		
+	}
+
+
+
 
 
 }

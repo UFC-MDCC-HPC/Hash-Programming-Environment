@@ -23,23 +23,14 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link hPE.xml.component.impl.FusionTypeImpl#getCRefs <em>CRefs</em>}</li>
  *   <li>{@link hPE.xml.component.impl.FusionTypeImpl#getPRef <em>PRef</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.FusionTypeImpl#getCRefs <em>CRefs</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class FusionTypeImpl extends MinimalEObjectImpl.Container implements FusionType {
-	/**
-	 * The cached value of the '{@link #getCRefs() <em>CRefs</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCRefs()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> cRefs;
 	/**
 	 * The default value of the '{@link #getPRef() <em>PRef</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -58,6 +49,15 @@ public class FusionTypeImpl extends MinimalEObjectImpl.Container implements Fusi
 	 * @ordered
 	 */
 	protected String pRef = PREF_EDEFAULT;
+	/**
+	 * The cached value of the '{@link #getCRefs() <em>CRefs</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCRefs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> cRefs;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,10 +118,10 @@ public class FusionTypeImpl extends MinimalEObjectImpl.Container implements Fusi
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentPackage.FUSION_TYPE__CREFS:
-				return getCRefs();
 			case ComponentPackage.FUSION_TYPE__PREF:
 				return getPRef();
+			case ComponentPackage.FUSION_TYPE__CREFS:
+				return getCRefs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -135,12 +135,12 @@ public class FusionTypeImpl extends MinimalEObjectImpl.Container implements Fusi
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ComponentPackage.FUSION_TYPE__PREF:
+				setPRef((String)newValue);
+				return;
 			case ComponentPackage.FUSION_TYPE__CREFS:
 				getCRefs().clear();
 				getCRefs().addAll((Collection<? extends String>)newValue);
-				return;
-			case ComponentPackage.FUSION_TYPE__PREF:
-				setPRef((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -154,11 +154,11 @@ public class FusionTypeImpl extends MinimalEObjectImpl.Container implements Fusi
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.FUSION_TYPE__CREFS:
-				getCRefs().clear();
-				return;
 			case ComponentPackage.FUSION_TYPE__PREF:
 				setPRef(PREF_EDEFAULT);
+				return;
+			case ComponentPackage.FUSION_TYPE__CREFS:
+				getCRefs().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -172,10 +172,10 @@ public class FusionTypeImpl extends MinimalEObjectImpl.Container implements Fusi
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.FUSION_TYPE__CREFS:
-				return cRefs != null && !cRefs.isEmpty();
 			case ComponentPackage.FUSION_TYPE__PREF:
 				return PREF_EDEFAULT == null ? pRef != null : !PREF_EDEFAULT.equals(pRef);
+			case ComponentPackage.FUSION_TYPE__CREFS:
+				return cRefs != null && !cRefs.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -190,10 +190,10 @@ public class FusionTypeImpl extends MinimalEObjectImpl.Container implements Fusi
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (cRefs: ");
-		result.append(cRefs);
-		result.append(", pRef: ");
+		result.append(" (pRef: ");
 		result.append(pRef);
+		result.append(", cRefs: ");
+		result.append(cRefs);
 		result.append(')');
 		return result.toString();
 	}

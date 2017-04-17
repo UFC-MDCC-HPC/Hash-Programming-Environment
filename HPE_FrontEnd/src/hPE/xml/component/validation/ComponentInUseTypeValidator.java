@@ -24,7 +24,11 @@ public interface ComponentInUseTypeValidator {
 	boolean validateParameter(EList<ParameterRenaming> value);
 	boolean validatePort(EList<InnerComponentType> value);
 	boolean validateUnitBounds(EList<UnitBoundsType> value);
+	boolean validateRevokeMultipleFacet(EList<Integer> value);
+
 	boolean validateHashComponentUID(String value);
+	boolean validateIndexReplica(int value);
+
 	boolean validateLocalRef(String value);
 	boolean validateLocation(String value);
 	boolean validateMultiple(boolean value);

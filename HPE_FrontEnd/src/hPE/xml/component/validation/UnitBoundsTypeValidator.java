@@ -16,6 +16,12 @@ public interface UnitBoundsTypeValidator {
 	boolean validate();
 
 	boolean validateVisualDescription(VisualElementAttributes value);
+	boolean validateFacet(int value);
+
+	boolean validateFacetInstance(int value);
+
+	boolean validateFacetInstanceEnclosing(int value);
+
 	boolean validateParallel(boolean value);
 	boolean validateReplica(long value);
 	boolean validateSliceReplica(int value);

@@ -15,20 +15,10 @@
     <tns:action id="122" name="PERFORM"/>
     <tns:action id="123" name="CHUNK_READY"/>
     </tns:task_port>
-    <tns:task_port facet="0" id="130" id_component="1" name="task_binding_split_first">
-    <tns:action id="1310" name="READ_CHUNK"/>
-    <tns:action id="1320" name="PERFORM"/>
-    <tns:action id="1330" name="CHUNK_READY"/>
-    </tns:task_port>
-    <tns:task_port facet="0" id="131" id_component="1" name="task_binding_split_next">
+    <tns:task_port facet="0" id="131" id_component="1" name="task_binding_split">
     <tns:action id="1311" name="READ_CHUNK"/>
     <tns:action id="1321" name="PERFORM"></tns:action>
     <tns:action id="1331" name="CHUNK_READY"/>
-    </tns:task_port>
-    <tns:task_port facet="0" id="14" id_component="1" name="task_binding_data">
-    <tns:action id="141" name="READ_SOURCE"/>
-    <tns:action id="142" name="TERMINATE"/>
-    <tns:action id="143" name="WRITE_SINK"/>
     </tns:task_port>
     <tns:task_port facet="0" id="15" id_component="1" name="task_binding_shuffle">
     <tns:action id="151" name="READ_CHUNK"/>
@@ -62,20 +52,10 @@
     <tns:uses_port facet="2" id="42" id_component="4" name="sink"/>
     <tns:uses_port facet="3" id="43" id_component="4" name="source"/>
     <tns:provides_port facet="1" id="44" id_component="4" name="feed_pairs"/>
-    <tns:task_port facet="0" id="450" id_component="4" name="task_binding_split_first">
-    <tns:action id="4510" name="READ_CHUNK"/>
-    <tns:action id="4520" name="PERFORM"/>
-    <tns:action id="4530" name="CHUNK_READY"/>
-    </tns:task_port>
-    <tns:task_port facet="0" id="451" id_component="4" name="task_binding_split_next">
+    <tns:task_port facet="0" id="451" id_component="4" name="task_binding_split">
     <tns:action id="4511" name="READ_CHUNK"/>
     <tns:action id="4521" name="PERFORM"/>
     <tns:action id="4531" name="CHUNK_READY"/>
-    </tns:task_port>
-    <tns:task_port facet="0" id="46" id_component="4" name="task_binding_data">
-    <tns:action id="461" name="READ_SOURCE"/>
-    <tns:action id="462" name="TERMINATE"/>
-    <tns:action id="463" name="WRITESINK"/>
     </tns:task_port>
     <tns:uses_port facet="0" id="470" id_component="4" name="platform_map"/>
     <tns:uses_port facet="0" id="471" id_component="4" name="platform_reduce"/>
@@ -95,11 +75,11 @@
     </tns:connector>
     <tns:computation id="6" name="data_source">
     <tns:uses_port facet="0" id="62" id_component="6" name="platform_data_source"/>
-    <tns:provides_port facet="0" id="61" id_component="6" name="reader"/>
+    <tns:provides_port facet="0" id="61" id_component="6" name="input_data"/>
     </tns:computation>
     <tns:computation id="7" name="data_sink">
     <tns:uses_port facet="0" id="72" id_component="7" name="platform_data_sink"/>
-    <tns:provides_port facet="0" id="71" id_component="7" name="writer"/>
+    <tns:uses_port facet="0" id="71" id_component="7" name="output_data"/>
     </tns:computation>
     <tns:platform id="253" name="platform_SAFe">
     <tns:provides_port facet="0" id="2513" id_component="253" name="platform"/>
@@ -175,13 +155,13 @@
     <tns:uses_port facet="0" id="41" id_component="4" name="collect_pairs"/>
     <tns:provides_port facet="0" id="33" id_component="3" name="feed_pairs"/>
   </tns:env_binding>
-  <tns:env_binding id="15" name="output_data">
-    <tns:uses_port facet="3" id="42" id_component="4" name="sink"/>
-    <tns:provides_port facet="0" id="71" id_component="7" name="writer"/>
-  </tns:env_binding>
   <tns:env_binding id="16" name="input_data">
-    <tns:uses_port facet="2" id="43" id_component="4" name="source"/>
-    <tns:provides_port facet="0" id="61" id_component="6" name="reader"/>
+    <tns:uses_port facet="2" id="41" id_component="4" name="collect_pairs"/>
+    <tns:provides_port facet="0" id="61" id_component="6" name="input_data"/>
+  </tns:env_binding>
+  <tns:env_binding id="15" name="output_data">
+    <tns:uses_port facet="0" id="71" id_component="7" name="output_data"/>
+    <tns:provides_port facet="3" id="44" id_component="4" name="feed_pairs"/>
   </tns:env_binding>
    <tns:env_binding id="12" name="intermediate_pairs_global">
     <tns:uses_port facet="0" id="31" id_component="3" name="collect_pairs"/>
@@ -199,21 +179,10 @@
     <tns:peer facet="0" id="12" id_component="1" name="task_reduce"/>
     <tns:peer facet="0" id="34" id_component="3" name="task_reduce"></tns:peer>
   </tns:task_binding>
-  <tns:task_binding id="200" name="task_binding_split_first">
-    <tns:peer facet="0" id="130" id_component="1" name="task_binding_split_first"/>
-    <tns:peer facet="1" id="450" id_component="4" name="task_binding_split_first"/>
-    <tns:peer facet="2" id="450" id_component="4" name="task_binding_split_first"/>
-  </tns:task_binding>
-  <tns:task_binding id="201" name="task_binding_split_next">
-    <tns:peer facet="0" id="131" id_component="1" name="task_binding_split_next"/>
-    <tns:peer facet="0" id="451" id_component="4" name="task_binding_split_next"/>
-    <tns:peer facet="1" id="451" id_component="4" name="task_binding_split_next"/>
-  </tns:task_binding>
-  <tns:task_binding id="21" name="task_binding_data">
-    <tns:peer facet="0" id="14" id_component="1" name="task_binding_data"/>
-    <tns:peer facet="1" id="46" id_component="4" name="task_binding_data"/>
-    <tns:peer facet="2" id="46" id_component="4" name="task_binding_data"/>
-    <tns:peer facet="3" id="46" id_component="4" name="task_binding_data"/>
+  <tns:task_binding id="201" name="task_binding_split">
+    <tns:peer facet="0" id="131" id_component="1" name="task_binding_split"/>
+    <tns:peer facet="0" id="451" id_component="4" name="task_binding_split"/>
+    <tns:peer facet="1" id="451" id_component="4" name="task_binding_split"/>
   </tns:task_binding>
   <tns:task_binding id="22" name="task_binding_shuffle">
     <tns:peer facet="0" id="15" id_component="1" name="task_binding_shuffle"/>

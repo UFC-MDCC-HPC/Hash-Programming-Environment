@@ -111,9 +111,6 @@ public class ComponentEditPart<ModelType extends HComponent,
 		component_figure.setPort(!component_.isDirectSonOfTheTopConfiguration());
         component_figure.setBounds(calculateBounds(component_));
         
-//        List<HComponent> cInnerTop = component_.getTopParentConfigurations();
-//        String originRef = cInnerTop.size() > 0 ? cInnerTop.get(0).getRef() + "$" + component_.getSavedName(): "";
-        
         component_figure.setName(component_.getRef() + (component.hasFreeVariables() ? " [?]" : "") /*+ "+++" + originRef*/);
 		component_figure.setToolTip(ff);
         component_figure.setRecursive(component_.isRecursive());
@@ -125,8 +122,6 @@ public class ComponentEditPart<ModelType extends HComponent,
                               (!component_.isDirectSonOfTheTopConfiguration() && component_.getTopParentConfigurations().get(0).isMultiple());
         
         component_figure.setMultiple(isMultiple);
-				
-        
 	}
 	
 

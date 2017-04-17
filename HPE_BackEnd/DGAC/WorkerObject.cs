@@ -1125,6 +1125,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				int res = ((GoPort)remote_ports_dict[id]).go();
 			}));
 			t.Start ();
+			t.Join ();
 			Console.WriteLine ("END PERFORM GO -  WORKER OBJECT " + this.GetHashCode());
 			return 0;
 		}
@@ -1740,18 +1741,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public int perform_go(int id)
 		{			
-			//int res = 0;
-			//Console.Error.WriteLine ("BEGIN PERFORM GO - REMOTE WORKER OBJECT $$$ " + this.GetHashCode());
-			//res = Channel.perform_go (id);
-			//Console.Error.WriteLine("END PERFORM GO - REMOTE WORKER OBJECT $$$ " + this.GetHashCode());
-			//return res;
+			int res = 0;
+			Console.Error.WriteLine ("BEGIN PERFORM GO - REMOTE WORKER OBJECT $$$ " + this.GetHashCode());
+			res = Channel.perform_go (id);
+			Console.Error.WriteLine("END PERFORM GO - REMOTE WORKER OBJECT $$$ " + this.GetHashCode());
+			return res;
 
-			Console.WriteLine ("BEGIN PERFORM GO 1 - REMOTE WORKER OBJECT ### " + this.GetHashCode());
-			IAsyncResult res = Channel.BeginPerformGo (id, null, null);
-			Console.WriteLine ("BEGIN PERFORM GO 2 - REMOTE WORKER OBJECT ### " + this.GetHashCode());
-			res.AsyncWaitHandle.WaitOne ();
-			Console.WriteLine("END PERFORM GO - REMOTE WORKER OBJECT ###" + this.GetHashCode());
-			return Channel.EndPerformGo (res);
+			//Console.WriteLine ("BEGIN PERFORM GO 1 - REMOTE WORKER OBJECT ### " + this.GetHashCode());
+			//IAsyncResult res = Channel.BeginPerformGo (id, null, null);
+			//Console.WriteLine ("BEGIN PERFORM GO 2 - REMOTE WORKER OBJECT ### " + this.GetHashCode());
+			//res.AsyncWaitHandle.WaitOne ();
+			//Console.WriteLine("END PERFORM GO - REMOTE WORKER OBJECT ###" + this.GetHashCode());
+			//return Channel.EndPerformGo (res);
 		}
 			
 		public IAsyncResult BeginPerformGo(int id, AsyncCallback callback, object asyncState)

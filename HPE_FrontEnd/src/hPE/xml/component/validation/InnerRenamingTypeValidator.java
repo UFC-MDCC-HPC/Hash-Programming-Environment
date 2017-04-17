@@ -17,4 +17,6 @@ public interface InnerRenamingTypeValidator {
 	boolean validateCNewName(String value);
 	boolean validateCOldName(String value);
 	boolean validateCRef(String value);
+
+	boolean validateIndexReplica(int value);
 }

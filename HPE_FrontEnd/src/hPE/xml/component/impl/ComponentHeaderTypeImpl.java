@@ -9,6 +9,7 @@ package hPE.xml.component.impl;
 import hPE.xml.component.BaseTypeType;
 import hPE.xml.component.ComponentHeaderType;
 import hPE.xml.component.ComponentPackage;
+import hPE.xml.component.FacetConfigurationType;
 import hPE.xml.component.SupportedKinds;
 import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getBaseType <em>Base Type</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getVersions <em>Versions</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getVisualAttributes <em>Visual Attributes</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getFacetConfiguration <em>Facet Configuration</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getKind <em>Kind</em>}</li>
@@ -74,6 +76,16 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 	 * @ordered
 	 */
 	protected VisualElementAttributes visualAttributes;
+
+	/**
+	 * The cached value of the '{@link #getFacetConfiguration() <em>Facet Configuration</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFacetConfiguration()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<FacetConfigurationType> facetConfiguration;
 
 	/**
 	 * The default value of the '{@link #getHashComponentUID() <em>Hash Component UID</em>}' attribute.
@@ -335,6 +347,18 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<FacetConfigurationType> getFacetConfiguration() {
+		if (facetConfiguration == null) {
+			facetConfiguration = new EObjectContainmentEList<FacetConfigurationType>(FacetConfigurationType.class, this, ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION);
+		}
+		return facetConfiguration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getHashComponentUID() {
 		return hashComponentUID;
 	}
@@ -520,6 +544,8 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 				return ((InternalEList<?>)getVersions()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES:
 				return basicSetVisualAttributes(null, msgs);
+			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
+				return ((InternalEList<?>)getFacetConfiguration()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -538,6 +564,8 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 				return getVersions();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES:
 				return getVisualAttributes();
+			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
+				return getFacetConfiguration();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return getHashComponentUID();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
@@ -572,6 +600,10 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES:
 				setVisualAttributes((VisualElementAttributes)newValue);
+				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
+				getFacetConfiguration().clear();
+				getFacetConfiguration().addAll((Collection<? extends FacetConfigurationType>)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID((String)newValue);
@@ -612,6 +644,9 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 			case ComponentPackage.COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES:
 				setVisualAttributes((VisualElementAttributes)null);
 				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
+				getFacetConfiguration().clear();
+				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID(HASH_COMPONENT_UID_EDEFAULT);
 				return;
@@ -648,6 +683,8 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 				return versions != null && !versions.isEmpty();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES:
 				return visualAttributes != null;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
+				return facetConfiguration != null && !facetConfiguration.isEmpty();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return HASH_COMPONENT_UID_EDEFAULT == null ? hashComponentUID != null : !HASH_COMPONENT_UID_EDEFAULT.equals(hashComponentUID);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getBaseType <em>Base Type</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getVersions <em>Versions</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getVisualAttributes <em>Visual Attributes</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentHeaderType#getFacetConfiguration <em>Facet Configuration</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}</li>
@@ -104,6 +105,23 @@ public interface ComponentHeaderType extends EObject {
 	 * @generated
 	 */
 	void setVisualAttributes(VisualElementAttributes value);
+
+	/**
+	 * Returns the value of the '<em><b>Facet Configuration</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.FacetConfigurationType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Facet Configuration</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Facet Configuration</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_FacetConfiguration()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='facet_configuration'"
+	 * @generated
+	 */
+	EList<FacetConfigurationType> getFacetConfiguration();
 
 	/**
 	 * Returns the value of the '<em><b>Hash Component UID</b></em>' attribute.

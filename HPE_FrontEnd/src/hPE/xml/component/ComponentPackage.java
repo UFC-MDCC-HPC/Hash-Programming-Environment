@@ -345,13 +345,22 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES = 2;
 
 	/**
+	 * The feature id for the '<em><b>Facet Configuration</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_HEADER_TYPE__FACET_CONFIGURATION = 3;
+
+	/**
 	 * The feature id for the '<em><b>Hash Component UID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID = 3;
+	int COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID = 4;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -360,7 +369,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__IS_ABSTRACT = 4;
+	int COMPONENT_HEADER_TYPE__IS_ABSTRACT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -369,7 +378,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__KIND = 5;
+	int COMPONENT_HEADER_TYPE__KIND = 6;
 
 	/**
 	 * The feature id for the '<em><b>Location URI</b></em>' attribute.
@@ -378,7 +387,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__LOCATION_URI = 6;
+	int COMPONENT_HEADER_TYPE__LOCATION_URI = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -387,7 +396,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__NAME = 7;
+	int COMPONENT_HEADER_TYPE__NAME = 8;
 
 	/**
 	 * The feature id for the '<em><b>Package Path</b></em>' attribute.
@@ -396,7 +405,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 8;
+	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 9;
 
 	/**
 	 * The number of structural features of the '<em>Header Type</em>' class.
@@ -405,7 +414,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 9;
+	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 10;
 
 	/**
 	 * The number of operations of the '<em>Header Type</em>' class.
@@ -463,13 +472,31 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_IN_USE_TYPE__UNIT_BOUNDS = 3;
 
 	/**
+	 * The feature id for the '<em><b>Revoke Multiple Facet</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET = 4;
+
+	/**
 	 * The feature id for the '<em><b>Hash Component UID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID = 4;
+	int COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID = 5;
+
+	/**
+	 * The feature id for the '<em><b>Index Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IN_USE_TYPE__INDEX_REPLICA = 6;
 
 	/**
 	 * The feature id for the '<em><b>Local Ref</b></em>' attribute.
@@ -478,7 +505,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__LOCAL_REF = 5;
+	int COMPONENT_IN_USE_TYPE__LOCAL_REF = 7;
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -487,7 +514,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__LOCATION = 6;
+	int COMPONENT_IN_USE_TYPE__LOCATION = 8;
 
 	/**
 	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
@@ -496,7 +523,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__MULTIPLE = 7;
+	int COMPONENT_IN_USE_TYPE__MULTIPLE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -505,7 +532,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__NAME = 8;
+	int COMPONENT_IN_USE_TYPE__NAME = 10;
 
 	/**
 	 * The feature id for the '<em><b>Package</b></em>' attribute.
@@ -514,7 +541,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__PACKAGE = 9;
+	int COMPONENT_IN_USE_TYPE__PACKAGE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Parameter Id</b></em>' attribute.
@@ -523,7 +550,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__PARAMETER_ID = 10;
+	int COMPONENT_IN_USE_TYPE__PARAMETER_ID = 12;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -532,7 +559,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__VERSION = 11;
+	int COMPONENT_IN_USE_TYPE__VERSION = 13;
 
 	/**
 	 * The number of structural features of the '<em>In Use Type</em>' class.
@@ -541,7 +568,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE_FEATURE_COUNT = 12;
+	int COMPONENT_IN_USE_TYPE_FEATURE_COUNT = 14;
 
 	/**
 	 * The number of operations of the '<em>In Use Type</em>' class.
@@ -1370,6 +1397,144 @@ public interface ComponentPackage extends EPackage {
 	int EXTERNAL_LIBRARY_TYPE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.FacetConfigurationTypeImpl <em>Facet Configuration Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.FacetConfigurationTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFacetConfigurationType()
+	 * @generated
+	 */
+	int FACET_CONFIGURATION_TYPE = 21;
+
+	/**
+	 * The feature id for the '<em><b>Facet</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_CONFIGURATION_TYPE__FACET = 0;
+
+	/**
+	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_CONFIGURATION_TYPE__MULTIPLE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Facet Configuration Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_CONFIGURATION_TYPE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Facet Configuration Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_CONFIGURATION_TYPE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.FacetMultipleTypeImpl <em>Facet Multiple Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.FacetMultipleTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFacetMultipleType()
+	 * @generated
+	 */
+	int FACET_MULTIPLE_TYPE = 22;
+
+	/**
+	 * The feature id for the '<em><b>Facet</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLE_TYPE__FACET = 0;
+
+	/**
+	 * The number of structural features of the '<em>Facet Multiple Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLE_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Facet Multiple Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLE_TYPE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.FacetMultiplicityTypeImpl <em>Facet Multiplicity Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.FacetMultiplicityTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFacetMultiplicityType()
+	 * @generated
+	 */
+	int FACET_MULTIPLICITY_TYPE = 23;
+
+	/**
+	 * The feature id for the '<em><b>Cardinality</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLICITY_TYPE__CARDINALITY = 0;
+
+	/**
+	 * The feature id for the '<em><b>CRef</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLICITY_TYPE__CREF = 1;
+
+	/**
+	 * The feature id for the '<em><b>Facet</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLICITY_TYPE__FACET = 2;
+
+	/**
+	 * The number of structural features of the '<em>Facet Multiplicity Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLICITY_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Facet Multiplicity Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FACET_MULTIPLICITY_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.FusionOfReplicatorsTypeImpl <em>Fusion Of Replicators Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1377,7 +1542,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSION_OF_REPLICATORS_TYPE = 21;
+	int FUSION_OF_REPLICATORS_TYPE = 24;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -1423,7 +1588,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionsOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSIONS_OF_REPLICATORS_TYPE = 22;
+	int FUSIONS_OF_REPLICATORS_TYPE = 25;
 
 	/**
 	 * The feature id for the '<em><b>Fusion Of Replicators</b></em>' containment reference list.
@@ -1460,16 +1625,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionType()
 	 * @generated
 	 */
-	int FUSION_TYPE = 23;
-
-	/**
-	 * The feature id for the '<em><b>CRefs</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUSION_TYPE__CREFS = 0;
+	int FUSION_TYPE = 26;
 
 	/**
 	 * The feature id for the '<em><b>PRef</b></em>' attribute.
@@ -1478,7 +1634,16 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUSION_TYPE__PREF = 1;
+	int FUSION_TYPE__PREF = 0;
+
+	/**
+	 * The feature id for the '<em><b>CRefs</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUSION_TYPE__CREFS = 1;
 
 	/**
 	 * The number of structural features of the '<em>Fusion Type</em>' class.
@@ -1506,7 +1671,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardType()
 	 * @generated
 	 */
-	int GUARD_TYPE = 25;
+	int GUARD_TYPE = 28;
 
 	/**
 	 * The feature id for the '<em><b>Group</b></em>' attribute list.
@@ -1579,7 +1744,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardConditionType()
 	 * @generated
 	 */
-	int GUARD_CONDITION_TYPE = 24;
+	int GUARD_CONDITION_TYPE = 27;
 
 	/**
 	 * The feature id for the '<em><b>Group</b></em>' attribute list.
@@ -1661,7 +1826,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getHExternalLibraryType()
 	 * @generated
 	 */
-	int HEXTERNAL_LIBRARY_TYPE = 26;
+	int HEXTERNAL_LIBRARY_TYPE = 29;
 
 	/**
 	 * The number of structural features of the '<em>HExternal Library Type</em>' class.
@@ -1689,7 +1854,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getImplementsType()
 	 * @generated
 	 */
-	int IMPLEMENTS_TYPE = 27;
+	int IMPLEMENTS_TYPE = 30;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1726,7 +1891,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerComponentType()
 	 * @generated
 	 */
-	int INNER_COMPONENT_TYPE = 28;
+	int INNER_COMPONENT_TYPE = 31;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1765,6 +1930,15 @@ public interface ComponentPackage extends EPackage {
 	int INNER_COMPONENT_TYPE__UNIT_BOUNDS = COMPONENT_IN_USE_TYPE__UNIT_BOUNDS;
 
 	/**
+	 * The feature id for the '<em><b>Revoke Multiple Facet</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_COMPONENT_TYPE__REVOKE_MULTIPLE_FACET = COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET;
+
+	/**
 	 * The feature id for the '<em><b>Hash Component UID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1772,6 +1946,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int INNER_COMPONENT_TYPE__HASH_COMPONENT_UID = COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID;
+
+	/**
+	 * The feature id for the '<em><b>Index Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_COMPONENT_TYPE__INDEX_REPLICA = COMPONENT_IN_USE_TYPE__INDEX_REPLICA;
 
 	/**
 	 * The feature id for the '<em><b>Local Ref</b></em>' attribute.
@@ -1871,7 +2054,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerRenamingType()
 	 * @generated
 	 */
-	int INNER_RENAMING_TYPE = 29;
+	int INNER_RENAMING_TYPE = 32;
 
 	/**
 	 * The feature id for the '<em><b>CNew Name</b></em>' attribute.
@@ -1901,13 +2084,22 @@ public interface ComponentPackage extends EPackage {
 	int INNER_RENAMING_TYPE__CREF = 2;
 
 	/**
+	 * The feature id for the '<em><b>Index Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_RENAMING_TYPE__INDEX_REPLICA = 3;
+
+	/**
 	 * The number of structural features of the '<em>Inner Renaming Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INNER_RENAMING_TYPE_FEATURE_COUNT = 3;
+	int INNER_RENAMING_TYPE_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Inner Renaming Type</em>' class.
@@ -1926,7 +2118,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceParameterType()
 	 * @generated
 	 */
-	int INTERFACE_PARAMETER_TYPE = 30;
+	int INTERFACE_PARAMETER_TYPE = 33;
 
 	/**
 	 * The feature id for the '<em><b>Iname</b></em>' attribute.
@@ -1999,7 +2191,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfacePortType()
 	 * @generated
 	 */
-	int INTERFACE_PORT_TYPE = 31;
+	int INTERFACE_PORT_TYPE = 34;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2054,7 +2246,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceRefType()
 	 * @generated
 	 */
-	int INTERFACE_REF_TYPE = 32;
+	int INTERFACE_REF_TYPE = 35;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2100,7 +2292,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceRefType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_REF_TYPE = 33;
+	int INTERFACE_SLICE_REF_TYPE = 36;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2155,7 +2347,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_TYPE = 34;
+	int INTERFACE_SLICE_TYPE = 37;
 
 	/**
 	 * The feature id for the '<em><b>Origin Ref</b></em>' containment reference.
@@ -2210,7 +2402,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceType()
 	 * @generated
 	 */
-	int INTERFACE_TYPE = 35;
+	int INTERFACE_TYPE = 38;
 
 	/**
 	 * The feature id for the '<em><b>Slice</b></em>' containment reference list.
@@ -2337,7 +2529,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterRenaming()
 	 * @generated
 	 */
-	int PARAMETER_RENAMING = 36;
+	int PARAMETER_RENAMING = 39;
 
 	/**
 	 * The feature id for the '<em><b>Form Field Id</b></em>' attribute.
@@ -2392,7 +2584,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterSupplyType()
 	 * @generated
 	 */
-	int PARAMETER_SUPPLY_TYPE = 37;
+	int PARAMETER_SUPPLY_TYPE = 40;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2447,7 +2639,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterType()
 	 * @generated
 	 */
-	int PARAMETER_TYPE = 38;
+	int PARAMETER_TYPE = 41;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2520,7 +2712,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortSliceType()
 	 * @generated
 	 */
-	int PORT_SLICE_TYPE = 39;
+	int PORT_SLICE_TYPE = 42;
 
 	/**
 	 * The feature id for the '<em><b>PRef</b></em>' attribute.
@@ -2566,7 +2758,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortType()
 	 * @generated
 	 */
-	int PORT_TYPE = 40;
+	int PORT_TYPE = 43;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2621,7 +2813,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolChoiceType()
 	 * @generated
 	 */
-	int PROTOCOL_CHOICE_TYPE = 41;
+	int PROTOCOL_CHOICE_TYPE = 44;
 
 	/**
 	 * The feature id for the '<em><b>Par</b></em>' containment reference.
@@ -2685,7 +2877,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolType()
 	 * @generated
 	 */
-	int PROTOCOL_TYPE = 46;
+	int PROTOCOL_TYPE = 49;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2740,7 +2932,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolCombinatorType()
 	 * @generated
 	 */
-	int PROTOCOL_COMBINATOR_TYPE = 42;
+	int PROTOCOL_COMBINATOR_TYPE = 45;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2804,7 +2996,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolCombinatorVisualType()
 	 * @generated
 	 */
-	int PROTOCOL_COMBINATOR_VISUAL_TYPE = 43;
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2877,7 +3069,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolPerformType()
 	 * @generated
 	 */
-	int PROTOCOL_PERFORM_TYPE = 44;
+	int PROTOCOL_PERFORM_TYPE = 47;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2950,7 +3142,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolPerformVisualType()
 	 * @generated
 	 */
-	int PROTOCOL_PERFORM_VISUAL_TYPE = 45;
+	int PROTOCOL_PERFORM_VISUAL_TYPE = 48;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -3032,7 +3224,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getRecursiveEntryType()
 	 * @generated
 	 */
-	int RECURSIVE_ENTRY_TYPE = 47;
+	int RECURSIVE_ENTRY_TYPE = 50;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -3069,7 +3261,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceFileType()
 	 * @generated
 	 */
-	int SOURCE_FILE_TYPE = 48;
+	int SOURCE_FILE_TYPE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Dependency</b></em>' attribute list.
@@ -3169,7 +3361,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceType()
 	 * @generated
 	 */
-	int SOURCE_TYPE = 49;
+	int SOURCE_TYPE = 52;
 
 	/**
 	 * The feature id for the '<em><b>File</b></em>' containment reference list.
@@ -3224,7 +3416,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitEnumeratorType()
 	 * @generated
 	 */
-	int SPLIT_ENUMERATOR_TYPE = 50;
+	int SPLIT_ENUMERATOR_TYPE = 53;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -3261,7 +3453,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitLinkType()
 	 * @generated
 	 */
-	int SPLIT_LINK_TYPE = 51;
+	int SPLIT_LINK_TYPE = 54;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -3307,7 +3499,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitType()
 	 * @generated
 	 */
-	int SPLIT_TYPE = 52;
+	int SPLIT_TYPE = 55;
 
 	/**
 	 * The feature id for the '<em><b>Split Link</b></em>' containment reference list.
@@ -3389,7 +3581,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitActionType()
 	 * @generated
 	 */
-	int UNIT_ACTION_TYPE = 53;
+	int UNIT_ACTION_TYPE = 56;
 
 	/**
 	 * The feature id for the '<em><b>Protocol</b></em>' containment reference.
@@ -3435,7 +3627,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitBoundsType()
 	 * @generated
 	 */
-	int UNIT_BOUNDS_TYPE = 54;
+	int UNIT_BOUNDS_TYPE = 57;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -3447,13 +3639,40 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION = 0;
 
 	/**
+	 * The feature id for the '<em><b>Facet</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_BOUNDS_TYPE__FACET = 1;
+
+	/**
+	 * The feature id for the '<em><b>Facet Instance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_BOUNDS_TYPE__FACET_INSTANCE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Facet Instance Enclosing</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_BOUNDS_TYPE__FACET_INSTANCE_ENCLOSING = 3;
+
+	/**
 	 * The feature id for the '<em><b>Parallel</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__PARALLEL = 1;
+	int UNIT_BOUNDS_TYPE__PARALLEL = 4;
 
 	/**
 	 * The feature id for the '<em><b>Replica</b></em>' attribute.
@@ -3462,7 +3681,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__REPLICA = 2;
+	int UNIT_BOUNDS_TYPE__REPLICA = 5;
 
 	/**
 	 * The feature id for the '<em><b>Slice Replica</b></em>' attribute.
@@ -3471,7 +3690,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__SLICE_REPLICA = 3;
+	int UNIT_BOUNDS_TYPE__SLICE_REPLICA = 6;
 
 	/**
 	 * The feature id for the '<em><b>Unit Replica</b></em>' attribute.
@@ -3480,7 +3699,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__UNIT_REPLICA = 4;
+	int UNIT_BOUNDS_TYPE__UNIT_REPLICA = 7;
 
 	/**
 	 * The feature id for the '<em><b>URef</b></em>' attribute.
@@ -3489,7 +3708,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__UREF = 5;
+	int UNIT_BOUNDS_TYPE__UREF = 8;
 
 	/**
 	 * The number of structural features of the '<em>Unit Bounds Type</em>' class.
@@ -3498,7 +3717,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE_FEATURE_COUNT = 6;
+	int UNIT_BOUNDS_TYPE_FEATURE_COUNT = 9;
 
 	/**
 	 * The number of operations of the '<em>Unit Bounds Type</em>' class.
@@ -3517,7 +3736,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitConditionType()
 	 * @generated
 	 */
-	int UNIT_CONDITION_TYPE = 55;
+	int UNIT_CONDITION_TYPE = 58;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -3563,7 +3782,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitRefType()
 	 * @generated
 	 */
-	int UNIT_REF_TYPE = 56;
+	int UNIT_REF_TYPE = 59;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -3636,7 +3855,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitSliceType()
 	 * @generated
 	 */
-	int UNIT_SLICE_TYPE = 57;
+	int UNIT_SLICE_TYPE = 60;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -3745,7 +3964,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitType()
 	 * @generated
 	 */
-	int UNIT_TYPE = 58;
+	int UNIT_TYPE = 61;
 
 	/**
 	 * The feature id for the '<em><b>Super</b></em>' containment reference list.
@@ -3863,7 +4082,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVersionType()
 	 * @generated
 	 */
-	int VERSION_TYPE = 59;
+	int VERSION_TYPE = 62;
 
 	/**
 	 * The feature id for the '<em><b>Field1</b></em>' attribute.
@@ -3927,7 +4146,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVisualElementAttributes()
 	 * @generated
 	 */
-	int VISUAL_ELEMENT_ATTRIBUTES = 60;
+	int VISUAL_ELEMENT_ATTRIBUTES = 63;
 
 	/**
 	 * The feature id for the '<em><b>Color</b></em>' containment reference.
@@ -4000,7 +4219,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationType()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE = 61;
+	int QUANTIFICATION_TYPE = 64;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.SupportedKinds <em>Supported Kinds</em>}' enum.
@@ -4010,7 +4229,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKinds()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS = 62;
+	int SUPPORTED_KINDS = 65;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.VarianceType <em>Variance Type</em>}' enum.
@@ -4020,7 +4239,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVarianceType()
 	 * @generated
 	 */
-	int VARIANCE_TYPE = 63;
+	int VARIANCE_TYPE = 66;
 
 	/**
 	 * The meta object id for the '<em>Quantification Type Object</em>' data type.
@@ -4030,7 +4249,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationTypeObject()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE_OBJECT = 64;
+	int QUANTIFICATION_TYPE_OBJECT = 67;
 
 	/**
 	 * The meta object id for the '<em>Supported Kinds Object</em>' data type.
@@ -4040,7 +4259,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKindsObject()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS_OBJECT = 65;
+	int SUPPORTED_KINDS_OBJECT = 68;
 
 
 	/**
@@ -4051,7 +4270,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVarianceTypeObject()
 	 * @generated
 	 */
-	int VARIANCE_TYPE_OBJECT = 66;
+	int VARIANCE_TYPE_OBJECT = 69;
 
 
 	/**
@@ -4326,6 +4545,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getComponentHeaderType_VisualAttributes();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentHeaderType#getFacetConfiguration <em>Facet Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Facet Configuration</em>'.
+	 * @see hPE.xml.component.ComponentHeaderType#getFacetConfiguration()
+	 * @see #getComponentHeaderType()
+	 * @generated
+	 */
+	EReference getComponentHeaderType_FacetConfiguration();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4446,6 +4676,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getComponentInUseType_UnitBounds();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link hPE.xml.component.ComponentInUseType#getRevokeMultipleFacet <em>Revoke Multiple Facet</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Revoke Multiple Facet</em>'.
+	 * @see hPE.xml.component.ComponentInUseType#getRevokeMultipleFacet()
+	 * @see #getComponentInUseType()
+	 * @generated
+	 */
+	EAttribute getComponentInUseType_RevokeMultipleFacet();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentInUseType#getHashComponentUID <em>Hash Component UID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4455,6 +4696,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getComponentInUseType_HashComponentUID();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentInUseType#getIndexReplica <em>Index Replica</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index Replica</em>'.
+	 * @see hPE.xml.component.ComponentInUseType#getIndexReplica()
+	 * @see #getComponentInUseType()
+	 * @generated
+	 */
+	EAttribute getComponentInUseType_IndexReplica();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentInUseType#getLocalRef <em>Local Ref</em>}'.
@@ -5101,6 +5353,102 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getExternalLibraryType_Name();
 
 	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.FacetConfigurationType <em>Facet Configuration Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Facet Configuration Type</em>'.
+	 * @see hPE.xml.component.FacetConfigurationType
+	 * @generated
+	 */
+	EClass getFacetConfigurationType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.FacetConfigurationType#getFacet <em>Facet</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Facet</em>'.
+	 * @see hPE.xml.component.FacetConfigurationType#getFacet()
+	 * @see #getFacetConfigurationType()
+	 * @generated
+	 */
+	EAttribute getFacetConfigurationType_Facet();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.FacetConfigurationType#isMultiple <em>Multiple</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Multiple</em>'.
+	 * @see hPE.xml.component.FacetConfigurationType#isMultiple()
+	 * @see #getFacetConfigurationType()
+	 * @generated
+	 */
+	EAttribute getFacetConfigurationType_Multiple();
+
+	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.FacetMultipleType <em>Facet Multiple Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Facet Multiple Type</em>'.
+	 * @see hPE.xml.component.FacetMultipleType
+	 * @generated
+	 */
+	EClass getFacetMultipleType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.FacetMultipleType#getFacet <em>Facet</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Facet</em>'.
+	 * @see hPE.xml.component.FacetMultipleType#getFacet()
+	 * @see #getFacetMultipleType()
+	 * @generated
+	 */
+	EAttribute getFacetMultipleType_Facet();
+
+	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.FacetMultiplicityType <em>Facet Multiplicity Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Facet Multiplicity Type</em>'.
+	 * @see hPE.xml.component.FacetMultiplicityType
+	 * @generated
+	 */
+	EClass getFacetMultiplicityType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.FacetMultiplicityType#getCardinality <em>Cardinality</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Cardinality</em>'.
+	 * @see hPE.xml.component.FacetMultiplicityType#getCardinality()
+	 * @see #getFacetMultiplicityType()
+	 * @generated
+	 */
+	EAttribute getFacetMultiplicityType_Cardinality();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.FacetMultiplicityType#getCRef <em>CRef</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>CRef</em>'.
+	 * @see hPE.xml.component.FacetMultiplicityType#getCRef()
+	 * @see #getFacetMultiplicityType()
+	 * @generated
+	 */
+	EAttribute getFacetMultiplicityType_CRef();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.FacetMultiplicityType#getFacet <em>Facet</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Facet</em>'.
+	 * @see hPE.xml.component.FacetMultiplicityType#getFacet()
+	 * @see #getFacetMultiplicityType()
+	 * @generated
+	 */
+	EAttribute getFacetMultiplicityType_Facet();
+
+	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.FusionOfReplicatorsType <em>Fusion Of Replicators Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5343,6 +5691,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInnerRenamingType_CRef();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InnerRenamingType#getIndexReplica <em>Index Replica</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index Replica</em>'.
+	 * @see hPE.xml.component.InnerRenamingType#getIndexReplica()
+	 * @see #getInnerRenamingType()
+	 * @generated
+	 */
+	EAttribute getInnerRenamingType_IndexReplica();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.InterfaceParameterType <em>Interface Parameter Type</em>}'.
@@ -6486,6 +6845,39 @@ public interface ComponentPackage extends EPackage {
 	EReference getUnitBoundsType_VisualDescription();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitBoundsType#getFacet <em>Facet</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Facet</em>'.
+	 * @see hPE.xml.component.UnitBoundsType#getFacet()
+	 * @see #getUnitBoundsType()
+	 * @generated
+	 */
+	EAttribute getUnitBoundsType_Facet();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitBoundsType#getFacetInstance <em>Facet Instance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Facet Instance</em>'.
+	 * @see hPE.xml.component.UnitBoundsType#getFacetInstance()
+	 * @see #getUnitBoundsType()
+	 * @generated
+	 */
+	EAttribute getUnitBoundsType_FacetInstance();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitBoundsType#getFacetInstanceEnclosing <em>Facet Instance Enclosing</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Facet Instance Enclosing</em>'.
+	 * @see hPE.xml.component.UnitBoundsType#getFacetInstanceEnclosing()
+	 * @see #getUnitBoundsType()
+	 * @generated
+	 */
+	EAttribute getUnitBoundsType_FacetInstanceEnclosing();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitBoundsType#isParallel <em>Parallel</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7227,6 +7619,14 @@ public interface ComponentPackage extends EPackage {
 		EReference COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES = eINSTANCE.getComponentHeaderType_VisualAttributes();
 
 		/**
+		 * The meta object literal for the '<em><b>Facet Configuration</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT_HEADER_TYPE__FACET_CONFIGURATION = eINSTANCE.getComponentHeaderType_FacetConfiguration();
+
+		/**
 		 * The meta object literal for the '<em><b>Hash Component UID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7317,12 +7717,28 @@ public interface ComponentPackage extends EPackage {
 		EReference COMPONENT_IN_USE_TYPE__UNIT_BOUNDS = eINSTANCE.getComponentInUseType_UnitBounds();
 
 		/**
+		 * The meta object literal for the '<em><b>Revoke Multiple Facet</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET = eINSTANCE.getComponentInUseType_RevokeMultipleFacet();
+
+		/**
 		 * The meta object literal for the '<em><b>Hash Component UID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID = eINSTANCE.getComponentInUseType_HashComponentUID();
+
+		/**
+		 * The meta object literal for the '<em><b>Index Replica</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_IN_USE_TYPE__INDEX_REPLICA = eINSTANCE.getComponentInUseType_IndexReplica();
 
 		/**
 		 * The meta object literal for the '<em><b>Local Ref</b></em>' attribute feature.
@@ -7837,6 +8253,84 @@ public interface ComponentPackage extends EPackage {
 		EAttribute EXTERNAL_LIBRARY_TYPE__NAME = eINSTANCE.getExternalLibraryType_Name();
 
 		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.FacetConfigurationTypeImpl <em>Facet Configuration Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.FacetConfigurationTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getFacetConfigurationType()
+		 * @generated
+		 */
+		EClass FACET_CONFIGURATION_TYPE = eINSTANCE.getFacetConfigurationType();
+
+		/**
+		 * The meta object literal for the '<em><b>Facet</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACET_CONFIGURATION_TYPE__FACET = eINSTANCE.getFacetConfigurationType_Facet();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACET_CONFIGURATION_TYPE__MULTIPLE = eINSTANCE.getFacetConfigurationType_Multiple();
+
+		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.FacetMultipleTypeImpl <em>Facet Multiple Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.FacetMultipleTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getFacetMultipleType()
+		 * @generated
+		 */
+		EClass FACET_MULTIPLE_TYPE = eINSTANCE.getFacetMultipleType();
+
+		/**
+		 * The meta object literal for the '<em><b>Facet</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACET_MULTIPLE_TYPE__FACET = eINSTANCE.getFacetMultipleType_Facet();
+
+		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.FacetMultiplicityTypeImpl <em>Facet Multiplicity Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.FacetMultiplicityTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getFacetMultiplicityType()
+		 * @generated
+		 */
+		EClass FACET_MULTIPLICITY_TYPE = eINSTANCE.getFacetMultiplicityType();
+
+		/**
+		 * The meta object literal for the '<em><b>Cardinality</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACET_MULTIPLICITY_TYPE__CARDINALITY = eINSTANCE.getFacetMultiplicityType_Cardinality();
+
+		/**
+		 * The meta object literal for the '<em><b>CRef</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACET_MULTIPLICITY_TYPE__CREF = eINSTANCE.getFacetMultiplicityType_CRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Facet</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FACET_MULTIPLICITY_TYPE__FACET = eINSTANCE.getFacetMultiplicityType_Facet();
+
+		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.FusionOfReplicatorsTypeImpl <em>Fusion Of Replicators Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8037,6 +8531,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INNER_RENAMING_TYPE__CREF = eINSTANCE.getInnerRenamingType_CRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Index Replica</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INNER_RENAMING_TYPE__INDEX_REPLICA = eINSTANCE.getInnerRenamingType_IndexReplica();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.InterfaceParameterTypeImpl <em>Interface Parameter Type</em>}' class.
@@ -8935,6 +9437,30 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION = eINSTANCE.getUnitBoundsType_VisualDescription();
+
+		/**
+		 * The meta object literal for the '<em><b>Facet</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_BOUNDS_TYPE__FACET = eINSTANCE.getUnitBoundsType_Facet();
+
+		/**
+		 * The meta object literal for the '<em><b>Facet Instance</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_BOUNDS_TYPE__FACET_INSTANCE = eINSTANCE.getUnitBoundsType_FacetInstance();
+
+		/**
+		 * The meta object literal for the '<em><b>Facet Instance Enclosing</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_BOUNDS_TYPE__FACET_INSTANCE_ENCLOSING = eINSTANCE.getUnitBoundsType_FacetInstanceEnclosing();
 
 		/**
 		 * The meta object literal for the '<em><b>Parallel</b></em>' attribute feature.

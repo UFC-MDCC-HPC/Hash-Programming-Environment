@@ -42,10 +42,13 @@ namespace HPE_DGAC_LoadDB
 
         protected void LoadBodyItems(Object[] cb)
         {
-            foreach (Object o in cb)
+			Console.Write ("LoadBodyItems:" + cb==null);
+			foreach (Object o in cb)
             {
+				Console.Write ("Object:");
                 if (o is InnerComponentType)
                 {
+					Console.WriteLine ("Object:InnerComponentType");
                     if (inner == null) {
                      inner = new List<InnerComponentType>();
                      innerAll = new List<InnerComponentType>();
@@ -56,11 +59,13 @@ namespace HPE_DGAC_LoadDB
                 }
                 else if (o is ParameterType)
                 {
-                    if (parameter == null) parameter = new List<ParameterType>();
+					Console.WriteLine ("Object:ParameterType");
+					if (parameter == null) parameter = new List<ParameterType>();
                     parameter.Add((ParameterType)o);
                 }
                 else if (o is ParameterSupplyType)
                 {
+					Console.WriteLine ("Object:ParameterSupplyType");
                     if (parameterSupply == null) parameterSupply = new List<ParameterSupplyType>();
 					//ParameterSupplyType o_ = (ParameterSupplyType)o;
 					//if (o_.direct)
@@ -68,42 +73,50 @@ namespace HPE_DGAC_LoadDB
                 }
                 else if (o is InnerRenamingType)
                 {
+					Console.WriteLine ("Object:InnerRenamingType");
                     if (innerRenaming == null) innerRenaming = new List<InnerRenamingType>();
                     innerRenaming.Add((InnerRenamingType)o);
                 }
                 else if (o is FusionType)
                 {
+					Console.WriteLine ("Object:FusionType");
 					if (fusion == null) fusion = new Dictionary<string, string>();
 					FusionType fo = (FusionType)o;
 					fusion.Add(fo.pRef,fo.cRefs[0]);
                 }
                 else if (o is SplitType)
                 {
+					Console.WriteLine ("Object:SplitType");
                     if (split == null) split = new List<SplitType>();
                     split.Add((SplitType)o);
                 }
                 else if (o is RecursiveEntryType)
                 {
+					Console.WriteLine ("Object:RecursiveEntryType");
                     if (recursiveEntry == null) recursiveEntry = new List<RecursiveEntryType>();
                     recursiveEntry.Add((RecursiveEntryType)o);
                 }
                 else if (o is InterfaceType)
                 {
+					Console.WriteLine ("Object:InterfaceType");
                     if (anInterface == null) anInterface = new List<InterfaceType>();
                     anInterface.Add((InterfaceType)o);
                 }
                 else if (o is UnitType)
                 {
+					Console.WriteLine ("Object:UnitType");
                     if (unit == null) unit = new List<UnitType>();
                     unit.Add((UnitType)o);
                 }
                 else if (o is EnumeratorType)
                 {
+					Console.WriteLine ("Object:EnumeratorType");
                     if (enumerator == null) enumerator = new List<EnumeratorType>();
                     enumerator.Add((EnumeratorType)o);
                 } 
 				else if (o is ExternalLibraryType)
 				{
+					Console.WriteLine ("Object:ExternalLibraryType");
 					if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
 					externalLibrary.Add((ExternalLibraryType)o);
 				}

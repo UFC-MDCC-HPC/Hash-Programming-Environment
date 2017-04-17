@@ -95,21 +95,25 @@ public class HPEResourceNavigator extends ResourceNavigator {
 									    HComponentFactory factory = HComponentFactory.eInstance;
 									    String strLine;
 									    //Read File Line By Line
-									    while ((strLine = br.readLine()) != null)   {
-									        int i = strLine.lastIndexOf('.');
-									        String p = strLine + Path.SEPARATOR + strLine.substring(i+1) + ".hpe";
-									    	
-											System.out.println("started: deploying " + p);
-											java.io.File file2 = new File(p);
-											URI uri = URI.createFileURI(p);
-											HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
-											factory.saveComponent(c,file2,null);
-											
-										    HPEPlatform.deployByPath(p);
-										    System.out.println("finished: deploying " + p);
-									    }
-									    
-								    	JOptionPane.showMessageDialog(null, "Finished ! All deployed !");
+									    while ((strLine = br.readLine()) != null)
+									    	if (strLine.startsWith("STOP"))
+										    	break;
+									    	else if (!strLine.startsWith("#"))
+										    {	
+										        int i = strLine.lastIndexOf('.');
+										        String p = strLine + Path.SEPARATOR + strLine.substring(i+1) + ".hpe";
+										    	
+												System.out.println("started: deploying " + p);
+												java.io.File file2 = new File(p);
+												URI uri = URI.createFileURI(p);
+												HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false).get(0);
+												factory.saveComponent(c,file2,null);
+												
+											    HPEPlatform.deployByPath(p);
+											    System.out.println("finished: deploying " + p);
+										    } 
+										    
+								    	JOptionPane.showMessageDialog(null, "Finished !");
 									       
 									    }
                                     catch (Exception e)
@@ -141,7 +145,7 @@ public class HPEResourceNavigator extends ResourceNavigator {
 										java.io.File file = new File(pathIn_output.toOSString());
 										URI uri = URI.createFileURI(pathIn.toOSString());
 										
-									    HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
+									    HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false).get(0);
 									    
                                     	XMLConfigurationGenerator.saveComponent(c, file);
                                     	

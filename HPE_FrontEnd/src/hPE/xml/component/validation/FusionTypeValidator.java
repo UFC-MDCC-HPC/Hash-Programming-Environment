@@ -4,6 +4,7 @@
  */
 package hPE.xml.component.validation;
 
+import hPE.xml.component.CRefsIndexedType;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -16,5 +17,9 @@ public interface FusionTypeValidator {
 	boolean validate();
 
 	boolean validateCRefs(EList<String> value);
+	boolean validateCRefsIndexed(EList<CRefsIndexedType> value);
+
 	boolean validatePRef(String value);
+
+	boolean validateNewElement(String value);
 }

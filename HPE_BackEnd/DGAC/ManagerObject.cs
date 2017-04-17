@@ -665,7 +665,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 	                int[] user_nodes;
 	                used_ports.TryGetValue(usingPortNameQ, out user_nodes);
 
-					Console.WriteLine("connect_c2c -2.1 " + (usingPortNameQ) + " , " + (user_nodes==null) + ", used_ports.Count=" + used_ports.Count);
+					Console.WriteLine("connect_c2c -2.1 " + (usingPortNameQ) + ", " + (user_nodes==null) + ", used_ports.Count=" + used_ports.Count);
 					foreach (string k in used_ports.Keys)
 						Console.WriteLine ("-------------------- " + k);
 				
@@ -691,7 +691,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							WorkerComponentID cid_user = user_.getWorkerComponentID (provider_nodes [i]); 
 							Console.WriteLine ("start connect_c2c 0 loop user node " + provider_nodes [i] + " - " + (cid_user == null));
 							WorkerComponentID cid_prov = provider_.getWorkerComponentID (provider_nodes [i]); 
-							Console.WriteLine ("start connect_c2c 0 loop provide  node " + provider_nodes [i] + " - " + (cid_prov == null));
+							Console.WriteLine ("start connect_c2c 0 loop provide node " + provider_nodes [i] + " - " + (cid_prov == null));
 							worker_connection [i] = (WorkerConnectionID)WorkerBuilder [provider_nodes [i]].connect (cid_user, usingPortName, cid_prov, providingPortName);
 							Console.WriteLine ("end connect_c2c 0 loop node " + provider_nodes [i]);
 						}
@@ -1711,11 +1711,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						{
 							Console.WriteLine("createInstanceImpl2 -- LOOP BEGIN " + id_interface);
 							System.Type[] arguments_new_;
-                        	DGAC.BackEnd.calculateActualParams(arguments, acfaRef, id_interface, out arguments_new_);
+						    DGAC.BackEnd.calculateActualParams(c.Arguments, arguments, acfaRef, id_interface, out arguments_new_);
 							type_count += arguments_new_.Length;
 							arguments_new_all.Add(arguments_new_);
 							Console.WriteLine("createInstanceImpl2 -- LOOP END" + id_interface);
 						}
+
+						
 						arguments_new = new System.Type[type_count];
 						int type_counter = 0;
 						foreach (System.Type[] arguments_new_ in arguments_new_all)
@@ -1726,8 +1728,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 								type_counter++;
 							}
 						}
+
+
+					    
+
 						
-					    Console.WriteLine("createInstanceImpl2 - GOING TO calculateGenericClassName ...");
+						Console.WriteLine("createInstanceImpl2 - GOING TO calculateGenericClassName ... {0}", arguments_new.Length);
                         DGAC.BackEnd.calculateGenericClassName(u, arguments_new, out class_name_worker);
 						Console.WriteLine("createInstanceImpl2 - FINISHED calculateActualParams ...");
 					

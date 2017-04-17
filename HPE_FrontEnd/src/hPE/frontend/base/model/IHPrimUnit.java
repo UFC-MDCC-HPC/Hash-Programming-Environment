@@ -28,6 +28,9 @@ public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNam
 	
 	public abstract String getBaseName();
 
+	public abstract int getFacetInstance();
+	void setFacetInstance(int facet_instance);
+
 	/**
 	 */
 	public abstract void addPropertyChangeListener(
@@ -228,4 +231,9 @@ public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNam
 	
 	public int getSliceReplicaIndex();
 	public int getUnitReplicaIndex();
+	
+	public int getFacet();
+
+	public void setFacet(int facet);
+
 }

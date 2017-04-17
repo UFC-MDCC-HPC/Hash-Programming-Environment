@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -34,7 +35,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getPort <em>Port</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getUnitBounds <em>Unit Bounds</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getRevokeMultipleFacet <em>Revoke Multiple Facet</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getHashComponentUID <em>Hash Component UID</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getIndexReplica <em>Index Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getLocalRef <em>Local Ref</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#isMultiple <em>Multiple</em>}</li>
@@ -89,6 +92,16 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 	protected EList<UnitBoundsType> unitBounds;
 
 	/**
+	 * The cached value of the '{@link #getRevokeMultipleFacet() <em>Revoke Multiple Facet</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRevokeMultipleFacet()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Integer> revokeMultipleFacet;
+
+	/**
 	 * The default value of the '{@link #getHashComponentUID() <em>Hash Component UID</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,6 +120,35 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 	 * @ordered
 	 */
 	protected String hashComponentUID = HASH_COMPONENT_UID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIndexReplica() <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndexReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int INDEX_REPLICA_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getIndexReplica() <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndexReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected int indexReplica = INDEX_REPLICA_EDEFAULT;
+
+	/**
+	 * This is true if the Index Replica attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean indexReplicaESet;
 
 	/**
 	 * The default value of the '{@link #getLocalRef() <em>Local Ref</em>}' attribute.
@@ -360,6 +402,18 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Integer> getRevokeMultipleFacet() {
+		if (revokeMultipleFacet == null) {
+			revokeMultipleFacet = new EDataTypeEList<Integer>(Integer.class, this, ComponentPackage.COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET);
+		}
+		return revokeMultipleFacet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getHashComponentUID() {
 		return hashComponentUID;
 	}
@@ -374,6 +428,52 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 		hashComponentUID = newHashComponentUID;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID, oldHashComponentUID, hashComponentUID));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getIndexReplica() {
+		return indexReplica;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIndexReplica(int newIndexReplica) {
+		int oldIndexReplica = indexReplica;
+		indexReplica = newIndexReplica;
+		boolean oldIndexReplicaESet = indexReplicaESet;
+		indexReplicaESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_IN_USE_TYPE__INDEX_REPLICA, oldIndexReplica, indexReplica, !oldIndexReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIndexReplica() {
+		int oldIndexReplica = indexReplica;
+		boolean oldIndexReplicaESet = indexReplicaESet;
+		indexReplica = INDEX_REPLICA_EDEFAULT;
+		indexReplicaESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.COMPONENT_IN_USE_TYPE__INDEX_REPLICA, oldIndexReplica, INDEX_REPLICA_EDEFAULT, oldIndexReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIndexReplica() {
+		return indexReplicaESet;
 	}
 
 	/**
@@ -584,8 +684,12 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 				return getPort();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__UNIT_BOUNDS:
 				return getUnitBounds();
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET:
+				return getRevokeMultipleFacet();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID:
 				return getHashComponentUID();
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__INDEX_REPLICA:
+				return getIndexReplica();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCAL_REF:
 				return getLocalRef();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCATION:
@@ -628,8 +732,15 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 				getUnitBounds().clear();
 				getUnitBounds().addAll((Collection<? extends UnitBoundsType>)newValue);
 				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET:
+				getRevokeMultipleFacet().clear();
+				getRevokeMultipleFacet().addAll((Collection<? extends Integer>)newValue);
+				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID((String)newValue);
+				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__INDEX_REPLICA:
+				setIndexReplica((Integer)newValue);
 				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCAL_REF:
 				setLocalRef((String)newValue);
@@ -676,8 +787,14 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__UNIT_BOUNDS:
 				getUnitBounds().clear();
 				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET:
+				getRevokeMultipleFacet().clear();
+				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID(HASH_COMPONENT_UID_EDEFAULT);
+				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__INDEX_REPLICA:
+				unsetIndexReplica();
 				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCAL_REF:
 				setLocalRef(LOCAL_REF_EDEFAULT);
@@ -720,8 +837,12 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 				return port != null && !port.isEmpty();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__UNIT_BOUNDS:
 				return unitBounds != null && !unitBounds.isEmpty();
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__REVOKE_MULTIPLE_FACET:
+				return revokeMultipleFacet != null && !revokeMultipleFacet.isEmpty();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID:
 				return HASH_COMPONENT_UID_EDEFAULT == null ? hashComponentUID != null : !HASH_COMPONENT_UID_EDEFAULT.equals(hashComponentUID);
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__INDEX_REPLICA:
+				return isSetIndexReplica();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCAL_REF:
 				return LOCAL_REF_EDEFAULT == null ? localRef != null : !LOCAL_REF_EDEFAULT.equals(localRef);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCATION:
@@ -750,8 +871,12 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (hashComponentUID: ");
+		result.append(" (revokeMultipleFacet: ");
+		result.append(revokeMultipleFacet);
+		result.append(", hashComponentUID: ");
 		result.append(hashComponentUID);
+		result.append(", indexReplica: ");
+		if (indexReplicaESet) result.append(indexReplica); else result.append("<unset>");
 		result.append(", localRef: ");
 		result.append(localRef);
 		result.append(", location: ");

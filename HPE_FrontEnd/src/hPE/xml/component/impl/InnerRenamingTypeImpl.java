@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link hPE.xml.component.impl.InnerRenamingTypeImpl#getCNewName <em>CNew Name</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InnerRenamingTypeImpl#getCOldName <em>COld Name</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InnerRenamingTypeImpl#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.InnerRenamingTypeImpl#getIndexReplica <em>Index Replica</em>}</li>
  * </ul>
  * </p>
  *
@@ -90,6 +91,35 @@ public class InnerRenamingTypeImpl extends MinimalEObjectImpl.Container implemen
 	protected String cRef = CREF_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getIndexReplica() <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndexReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int INDEX_REPLICA_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getIndexReplica() <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndexReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected int indexReplica = INDEX_REPLICA_EDEFAULT;
+
+	/**
+	 * This is true if the Index Replica attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean indexReplicaESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -127,6 +157,52 @@ public class InnerRenamingTypeImpl extends MinimalEObjectImpl.Container implemen
 		cRef = newCRef;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.INNER_RENAMING_TYPE__CREF, oldCRef, cRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getIndexReplica() {
+		return indexReplica;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIndexReplica(int newIndexReplica) {
+		int oldIndexReplica = indexReplica;
+		indexReplica = newIndexReplica;
+		boolean oldIndexReplicaESet = indexReplicaESet;
+		indexReplicaESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.INNER_RENAMING_TYPE__INDEX_REPLICA, oldIndexReplica, indexReplica, !oldIndexReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIndexReplica() {
+		int oldIndexReplica = indexReplica;
+		boolean oldIndexReplicaESet = indexReplicaESet;
+		indexReplica = INDEX_REPLICA_EDEFAULT;
+		indexReplicaESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.INNER_RENAMING_TYPE__INDEX_REPLICA, oldIndexReplica, INDEX_REPLICA_EDEFAULT, oldIndexReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIndexReplica() {
+		return indexReplicaESet;
 	}
 
 	/**
@@ -185,6 +261,8 @@ public class InnerRenamingTypeImpl extends MinimalEObjectImpl.Container implemen
 				return getCOldName();
 			case ComponentPackage.INNER_RENAMING_TYPE__CREF:
 				return getCRef();
+			case ComponentPackage.INNER_RENAMING_TYPE__INDEX_REPLICA:
+				return getIndexReplica();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -205,6 +283,9 @@ public class InnerRenamingTypeImpl extends MinimalEObjectImpl.Container implemen
 				return;
 			case ComponentPackage.INNER_RENAMING_TYPE__CREF:
 				setCRef((String)newValue);
+				return;
+			case ComponentPackage.INNER_RENAMING_TYPE__INDEX_REPLICA:
+				setIndexReplica((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -227,6 +308,9 @@ public class InnerRenamingTypeImpl extends MinimalEObjectImpl.Container implemen
 			case ComponentPackage.INNER_RENAMING_TYPE__CREF:
 				setCRef(CREF_EDEFAULT);
 				return;
+			case ComponentPackage.INNER_RENAMING_TYPE__INDEX_REPLICA:
+				unsetIndexReplica();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -245,6 +329,8 @@ public class InnerRenamingTypeImpl extends MinimalEObjectImpl.Container implemen
 				return COLD_NAME_EDEFAULT == null ? cOldName != null : !COLD_NAME_EDEFAULT.equals(cOldName);
 			case ComponentPackage.INNER_RENAMING_TYPE__CREF:
 				return CREF_EDEFAULT == null ? cRef != null : !CREF_EDEFAULT.equals(cRef);
+			case ComponentPackage.INNER_RENAMING_TYPE__INDEX_REPLICA:
+				return isSetIndexReplica();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -265,6 +351,8 @@ public class InnerRenamingTypeImpl extends MinimalEObjectImpl.Container implemen
 		result.append(cOldName);
 		result.append(", cRef: ");
 		result.append(cRef);
+		result.append(", indexReplica: ");
+		if (indexReplicaESet) result.append(indexReplica); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}

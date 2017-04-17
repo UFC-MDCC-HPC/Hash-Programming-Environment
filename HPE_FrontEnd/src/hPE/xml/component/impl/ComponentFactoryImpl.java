@@ -82,6 +82,9 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.EXTENDS_TYPE: return createExtendsType();
 			case ComponentPackage.EXTENSION_TYPE_TYPE: return createExtensionTypeType();
 			case ComponentPackage.EXTERNAL_LIBRARY_TYPE: return createExternalLibraryType();
+			case ComponentPackage.FACET_CONFIGURATION_TYPE: return createFacetConfigurationType();
+			case ComponentPackage.FACET_MULTIPLE_TYPE: return createFacetMultipleType();
+			case ComponentPackage.FACET_MULTIPLICITY_TYPE: return createFacetMultiplicityType();
 			case ComponentPackage.FUSION_OF_REPLICATORS_TYPE: return createFusionOfReplicatorsType();
 			case ComponentPackage.FUSIONS_OF_REPLICATORS_TYPE: return createFusionsOfReplicatorsType();
 			case ComponentPackage.FUSION_TYPE: return createFusionType();
@@ -384,6 +387,36 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public ExternalLibraryType createExternalLibraryType() {
 		ExternalLibraryTypeImpl externalLibraryType = new ExternalLibraryTypeImpl();
 		return externalLibraryType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FacetConfigurationType createFacetConfigurationType() {
+		FacetConfigurationTypeImpl facetConfigurationType = new FacetConfigurationTypeImpl();
+		return facetConfigurationType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FacetMultipleType createFacetMultipleType() {
+		FacetMultipleTypeImpl facetMultipleType = new FacetMultipleTypeImpl();
+		return facetMultipleType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FacetMultiplicityType createFacetMultiplicityType() {
+		FacetMultiplicityTypeImpl facetMultiplicityType = new FacetMultiplicityTypeImpl();
+		return facetMultiplicityType;
 	}
 
 	/**

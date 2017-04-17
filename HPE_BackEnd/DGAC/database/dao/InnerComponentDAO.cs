@@ -96,7 +96,7 @@ public class InnerComponentDAO{
     public IList<InnerComponent> list(int id_abstract_start)
     {
 	
-	   IList<InnerComponent> list = new List<InnerComponent>();
+	   IDictionary<string,InnerComponent> list = new Dictionary<string,InnerComponent>();
 			
 	   int id_abstract = id_abstract_start;
 		
@@ -121,7 +121,10 @@ public class InnerComponentDAO{
 	            ic.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
 	            ic.IsPublic = ((int)reader["public"]) == 0 ? false : true;
 				ic.Multiple = ((int)reader["multiple"]) == 0 ? false : true;
-	            list.Add(ic);
+				if (!list.ContainsKey (ic.Id_inner))
+					list.Add (ic.Id_inner, ic);
+				else
+					Console.Error.WriteLine ("InnerComponentDAT-list: inner component {0} already exists", ic.Id_inner);
 	       }//while
 	       // clean up
 	       reader.Close();
@@ -138,8 +141,10 @@ public class InnerComponentDAO{
 		   else 
 			   id_abstract = -1;			
 	   }
-			
-       return list;
+
+	   IList<InnerComponent> list_return = new List<InnerComponent> (list.Values);
+
+	   return list_return;
        
 	}//list
 	

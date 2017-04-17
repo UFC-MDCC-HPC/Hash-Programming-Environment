@@ -98,6 +98,7 @@ public class ComponentDAO{
         return c;
     }
 
+
     IDictionary<string, Component> cache_c_lp = new Dictionary<string, Component>();
 
     public Component retrieve_libraryPath(string library_path)

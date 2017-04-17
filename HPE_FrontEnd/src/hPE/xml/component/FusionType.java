@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link hPE.xml.component.FusionType#getCRefs <em>CRefs</em>}</li>
  *   <li>{@link hPE.xml.component.FusionType#getPRef <em>PRef</em>}</li>
+ *   <li>{@link hPE.xml.component.FusionType#getCRefs <em>CRefs</em>}</li>
  * </ul>
  * </p>
  *

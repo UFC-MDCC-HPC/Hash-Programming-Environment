@@ -290,8 +290,6 @@ public class CommandLineUtil {
 			//proc.BeginOutputReadLine();
 
 			return proc;
-
-			return proc;
 	}
 
 	public static System.Diagnostics.Process runCommand(string cmd, string args) {

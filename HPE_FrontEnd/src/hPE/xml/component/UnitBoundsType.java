@@ -17,6 +17,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getVisualDescription <em>Visual Description</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitBoundsType#getFacet <em>Facet</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitBoundsType#getFacetInstance <em>Facet Instance</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitBoundsType#getFacetInstanceEnclosing <em>Facet Instance Enclosing</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#isParallel <em>Parallel</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getSliceReplica <em>Slice Replica</em>}</li>
@@ -56,6 +59,170 @@ public interface UnitBoundsType extends EObject {
 	 * @generated
 	 */
 	void setVisualDescription(VisualElementAttributes value);
+
+	/**
+	 * Returns the value of the '<em><b>Facet</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Facet</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Facet</em>' attribute.
+	 * @see #isSetFacet()
+	 * @see #unsetFacet()
+	 * @see #setFacet(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_Facet()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='facet'"
+	 * @generated
+	 */
+	int getFacet();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitBoundsType#getFacet <em>Facet</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Facet</em>' attribute.
+	 * @see #isSetFacet()
+	 * @see #unsetFacet()
+	 * @see #getFacet()
+	 * @generated
+	 */
+	void setFacet(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitBoundsType#getFacet <em>Facet</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetFacet()
+	 * @see #getFacet()
+	 * @see #setFacet(int)
+	 * @generated
+	 */
+	void unsetFacet();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitBoundsType#getFacet <em>Facet</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Facet</em>' attribute is set.
+	 * @see #unsetFacet()
+	 * @see #getFacet()
+	 * @see #setFacet(int)
+	 * @generated
+	 */
+	boolean isSetFacet();
+
+	/**
+	 * Returns the value of the '<em><b>Facet Instance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Facet Instance</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Facet Instance</em>' attribute.
+	 * @see #isSetFacetInstance()
+	 * @see #unsetFacetInstance()
+	 * @see #setFacetInstance(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_FacetInstance()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='facet_instance'"
+	 * @generated
+	 */
+	int getFacetInstance();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitBoundsType#getFacetInstance <em>Facet Instance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Facet Instance</em>' attribute.
+	 * @see #isSetFacetInstance()
+	 * @see #unsetFacetInstance()
+	 * @see #getFacetInstance()
+	 * @generated
+	 */
+	void setFacetInstance(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitBoundsType#getFacetInstance <em>Facet Instance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetFacetInstance()
+	 * @see #getFacetInstance()
+	 * @see #setFacetInstance(int)
+	 * @generated
+	 */
+	void unsetFacetInstance();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitBoundsType#getFacetInstance <em>Facet Instance</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Facet Instance</em>' attribute is set.
+	 * @see #unsetFacetInstance()
+	 * @see #getFacetInstance()
+	 * @see #setFacetInstance(int)
+	 * @generated
+	 */
+	boolean isSetFacetInstance();
+
+	/**
+	 * Returns the value of the '<em><b>Facet Instance Enclosing</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Facet Instance Enclosing</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Facet Instance Enclosing</em>' attribute.
+	 * @see #isSetFacetInstanceEnclosing()
+	 * @see #unsetFacetInstanceEnclosing()
+	 * @see #setFacetInstanceEnclosing(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_FacetInstanceEnclosing()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='facet_instance_enclosing'"
+	 * @generated
+	 */
+	int getFacetInstanceEnclosing();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitBoundsType#getFacetInstanceEnclosing <em>Facet Instance Enclosing</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Facet Instance Enclosing</em>' attribute.
+	 * @see #isSetFacetInstanceEnclosing()
+	 * @see #unsetFacetInstanceEnclosing()
+	 * @see #getFacetInstanceEnclosing()
+	 * @generated
+	 */
+	void setFacetInstanceEnclosing(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitBoundsType#getFacetInstanceEnclosing <em>Facet Instance Enclosing</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetFacetInstanceEnclosing()
+	 * @see #getFacetInstanceEnclosing()
+	 * @see #setFacetInstanceEnclosing(int)
+	 * @generated
+	 */
+	void unsetFacetInstanceEnclosing();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitBoundsType#getFacetInstanceEnclosing <em>Facet Instance Enclosing</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Facet Instance Enclosing</em>' attribute is set.
+	 * @see #unsetFacetInstanceEnclosing()
+	 * @see #getFacetInstanceEnclosing()
+	 * @see #setFacetInstanceEnclosing(int)
+	 * @generated
+	 */
+	boolean isSetFacetInstanceEnclosing();
 
 	/**
 	 * Returns the value of the '<em><b>Parallel</b></em>' attribute.

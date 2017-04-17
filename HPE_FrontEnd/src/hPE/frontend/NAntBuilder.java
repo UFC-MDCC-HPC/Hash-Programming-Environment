@@ -59,7 +59,7 @@ public class NAntBuilder implements Runnable {
 
 		URI uri = URI.createURI(path);
 		HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri, true,
-				false, false, false, relativePath);
+				false, false, false, relativePath).get(0);
 		createBuildFile(c);
 
 	}

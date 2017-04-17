@@ -8,6 +8,7 @@ import hPE.frontend.base.figures.INameEditableFigure;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HUnit;
+import hPE.frontend.base.model.HVisualElement;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.policies.BrowseEditPolicy;
@@ -84,38 +85,32 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 
 	}
 
-	public List getModelChildren() {
-		
-		
+	public List getModelChildren() 
+	{	
 		HComponent model = (ModelType) getModel();
 		
 		List children = new ArrayList();
 		
 		List<IHUnit> us = model.getUnits();
-		for (IHUnit u: us) {
+		for (IHUnit u: us) 
 		    children.addAll(u.getClones());
-		}
 		
 		for (HComponent c : model.getComponents()) 
 			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 				children.add(c);
 		
 		Collection<HComponent> exposed_components = model.getExposedComponents();
-		for (HComponent c : exposed_components) {
+		for (HComponent c : exposed_components) 
+		{
 			List<HComponent> fusion_components = model.getFusionComponents(c.getRef());
 			if (fusion_components == null || !fusion_components.contains(c) || fusion_components.get(0) == c) 
-			{
 				if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 					children.add(c);
-			}
 		}
 
-		for (HInterface an_interface : model.getInterfaces()) {
-			if (!(an_interface.getHidden())) { 
-				children.add(an_interface);
-			} 
-		}
-		
+		for (HInterface an_interface : model.getInterfaces()) 
+			if (!(an_interface.getHidden())) 
+				children.add(an_interface);		
 		
 	    return children;		
 	}

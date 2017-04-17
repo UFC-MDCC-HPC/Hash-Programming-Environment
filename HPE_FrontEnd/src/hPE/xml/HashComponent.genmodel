@@ -64,6 +64,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/baseType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/versions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/visualAttributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/facetConfiguration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/hashComponentUID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/isAbstract"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/kind"/>
@@ -77,6 +78,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentInUseType/port"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentInUseType/unitBounds"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/hashComponentUID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/indexReplica"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/localRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/multiple"/>
@@ -92,6 +94,10 @@
     <genClasses ecoreClass="component.ecore#//ConditionType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ConditionType/condId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ConditionType/sliceId"/>
+    </genClasses>
+    <genClasses ecoreClass="component.ecore#//CRefsIndexedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//CRefsIndexedType/cRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//CRefsIndexedType/indexReplica"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//DocumentRoot">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//DocumentRoot/mixed"/>
@@ -152,6 +158,15 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ExternalLibraryType/contents"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ExternalLibraryType/name"/>
     </genClasses>
+    <genClasses ecoreClass="component.ecore#//FacetConfigurationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FacetConfigurationType/facet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FacetConfigurationType/multiple"/>
+    </genClasses>
+    <genClasses ecoreClass="component.ecore#//FacetMultiplicityType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FacetMultiplicityType/cardinality"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FacetMultiplicityType/cRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FacetMultiplicityType/facet"/>
+    </genClasses>
     <genClasses ecoreClass="component.ecore#//FusionOfReplicatorsType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionOfReplicatorsType/eRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionOfReplicatorsType/originRef"/>
@@ -160,8 +175,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//FusionsOfReplicatorsType/fusionOfReplicators"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//FusionType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionType/cRefs"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionType/pRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionType/cRefs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//FusionType/cRefsIndexed"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//GuardConditionType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//GuardConditionType/condition1"/>
@@ -184,6 +200,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//InnerRenamingType/cNewName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//InnerRenamingType/cOldName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//InnerRenamingType/cRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//InnerRenamingType/indexReplica"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//InterfaceParameterType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//InterfaceParameterType/iname"/>
@@ -313,6 +330,9 @@
     </genClasses>
     <genClasses ecoreClass="component.ecore#//UnitBoundsType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitBoundsType/visualDescription"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/facet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/facetInstance"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/facetInstanceEnclosing"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/parallel"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/replica"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/sliceReplica"/>

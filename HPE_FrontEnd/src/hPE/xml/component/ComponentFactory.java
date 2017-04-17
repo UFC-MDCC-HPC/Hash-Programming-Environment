@@ -215,6 +215,33 @@ public interface ComponentFactory extends EFactory {
 	ExternalLibraryType createExternalLibraryType();
 
 	/**
+	 * Returns a new object of class '<em>Facet Configuration Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Facet Configuration Type</em>'.
+	 * @generated
+	 */
+	FacetConfigurationType createFacetConfigurationType();
+
+	/**
+	 * Returns a new object of class '<em>Facet Multiple Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Facet Multiple Type</em>'.
+	 * @generated
+	 */
+	FacetMultipleType createFacetMultipleType();
+
+	/**
+	 * Returns a new object of class '<em>Facet Multiplicity Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Facet Multiplicity Type</em>'.
+	 * @generated
+	 */
+	FacetMultiplicityType createFacetMultiplicityType();
+
+	/**
 	 * Returns a new object of class '<em>Fusion Of Replicators Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -896,7 +896,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		HComponent c = null;
 				
 		try {
-			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
+			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false).get(0);
 		} catch (HPEInvalidComponentResourceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,3 +1,3 @@
--n 1 mono-service -l:Worker06.lock ../bin/WorkerService.exe --port 4868 --debug --no-daemon
--n 1 mono-service -l:Worker07.lock ../bin/WorkerService.exe --port 4869 --debug --no-daemon
--n 1 mono-service -l:Worker08.lock ../bin/WorkerService.exe --port 4870 --debug --no-daemon
+-n 1 /opt/mono-4.2.2/bin/mono-service -l:Worker06.lock ../bin/WorkerService.exe --port 4868 --debug --no-daemon
+-n 1 /opt/mono-4.2.2/bin/mono-service -l:Worker07.lock ../bin/WorkerService.exe --port 4869 --debug --no-daemon
+-n 1 /opt/mono-4.2.2/bin/mono-service -l:Worker08.lock ../bin/WorkerService.exe --port 4870 --debug --no-daemon

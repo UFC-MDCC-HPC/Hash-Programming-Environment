@@ -269,10 +269,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public int go()
 		{
-			return framework.perform_go (id);
-			//IAsyncResult res = framework.BeginPerformGo (id, null, null);
-			//res.AsyncWaitHandle.WaitOne ();
-			//return framework.EndPerformGo (res);
+			//return framework.perform_go (id);
+			IAsyncResult res = framework.BeginPerformGo (id, null, null);
+			res.AsyncWaitHandle.WaitOne ();
+			return framework.EndPerformGo (res);
 		}
 	}
 

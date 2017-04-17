@@ -198,6 +198,24 @@ public class ComponentSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ComponentPackage.FACET_CONFIGURATION_TYPE: {
+				FacetConfigurationType facetConfigurationType = (FacetConfigurationType)theEObject;
+				T result = caseFacetConfigurationType(facetConfigurationType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ComponentPackage.FACET_MULTIPLE_TYPE: {
+				FacetMultipleType facetMultipleType = (FacetMultipleType)theEObject;
+				T result = caseFacetMultipleType(facetMultipleType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ComponentPackage.FACET_MULTIPLICITY_TYPE: {
+				FacetMultiplicityType facetMultiplicityType = (FacetMultiplicityType)theEObject;
+				T result = caseFacetMultiplicityType(facetMultiplicityType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ComponentPackage.FUSION_OF_REPLICATORS_TYPE: {
 				FusionOfReplicatorsType fusionOfReplicatorsType = (FusionOfReplicatorsType)theEObject;
 				T result = caseFusionOfReplicatorsType(fusionOfReplicatorsType);
@@ -763,6 +781,51 @@ public class ComponentSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseExternalLibraryType(ExternalLibraryType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Facet Configuration Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Facet Configuration Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFacetConfigurationType(FacetConfigurationType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Facet Multiple Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Facet Multiple Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFacetMultipleType(FacetMultipleType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Facet Multiplicity Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Facet Multiplicity Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFacetMultiplicityType(FacetMultiplicityType object) {
 		return null;
 	}
 

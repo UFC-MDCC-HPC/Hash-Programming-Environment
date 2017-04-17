@@ -82,7 +82,8 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 	    
 	   // if (names.size() == 0) name = unit.getName2();
 	    
-	    unit_figure.setName(name);
+	    int facet = unit.getFacet();
+	    unit_figure.setName(name + " (facet " + facet + ")");
         
         if (unit.getInterface() != null)
            unit_figure.setBackgroundColor(((HInterface)unit.getInterface()).getColor());

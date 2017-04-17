@@ -92,4 +92,5 @@ public interface IHUnit extends IHPrimUnit, IUnit,
 	public abstract void setColocatingUnit(IHUnit hUnit);
 	
 	public abstract IHUnit getColocatingUnit();
+	
 }

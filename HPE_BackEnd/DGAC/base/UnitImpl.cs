@@ -155,7 +155,7 @@ namespace br.ufc.pargo.hpe.basic
 			ReconfigurationAdvicePort reconfiguration_port_wrapper = new ReconfigurationAdvicePortWrapper(((ReconfigurationAdvicePort)this).changePort);                        
             services.addProvidesPort(reconfiguration_port_wrapper, Constants.RECONFIGURE_PORT_NAME, Constants.RECONFIGURE_PORT_TYPE, new TypeMapImpl());
 			
-			if (Kind == Constants.KIND_COMPUTATION || Kind == Constants.KIND_SYNCHRONIZER) 
+			if (Kind == Constants.KIND_COMPUTATION || Kind == Constants.KIND_SYNCHRONIZER || Kind == Constants.KIND_APPLICATION) 
 			{	
 				gov.cca.ports.GoPort app_port_wrapper = new GoPortWrapper(((gov.cca.ports.GoPort) this).go, this.GetType());
 			    services.addProvidesPort(app_port_wrapper, Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());

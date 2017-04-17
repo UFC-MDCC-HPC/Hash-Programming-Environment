@@ -46,7 +46,9 @@
         		type="tns:FusionsOfReplicatorsType">
         	</element>
 
-        	<element name="externalLibrary" type="tns:ExternalLibraryType"></element>
+        	<element name="externalLibrary"
+        		type="tns:ExternalLibraryType">
+        	</element>
         </choice>
 	</complexType>
 
@@ -133,17 +135,21 @@
 			<element name="unitBounds" type="tns:UnitBoundsType"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
+			<element name="revokeMultipleFacet" type="int" maxOccurs="unbounded" minOccurs="0"></element>
 		</sequence>
-        <attribute name="package" type="string"></attribute>
-        <attribute name="name" type="string"></attribute>
+		<attribute name="package" type="string"></attribute>
+		<attribute name="name" type="string"></attribute>
 		<attribute name="localRef" type="string"></attribute>
 
-        <attribute name="parameter_id" type="string"></attribute>
+		<attribute name="parameter_id" type="string"></attribute>
 		<attribute name="multiple" type="boolean" use="optional"></attribute>
-        <attribute name="version" type="ID" use="optional"></attribute>
-        <attribute name="location" type="anyURI" use="optional"></attribute>
-        <attribute name="hash_component_UID" type="string" use="optional"></attribute>
-    </complexType>
+		<attribute name="version" type="ID" use="optional"></attribute>
+		<attribute name="location" type="anyURI" use="optional"></attribute>
+		<attribute name="hash_component_UID" type="string"
+			use="optional">
+		</attribute>
+		<attribute name="index_replica" type="int" use="optional" default="0"></attribute>
+	</complexType>
 
 	<simpleType name="SupportedKinds">
 		<restriction base="string">
@@ -260,7 +266,10 @@
 			<element name="versions" type="tns:VersionType"
 				maxOccurs="unbounded" minOccurs="1">
 			</element>
-			<element name="visualAttributes" type="tns:VisualElementAttributes" minOccurs="0" maxOccurs="1"></element>
+			<element name="visualAttributes"
+				type="tns:VisualElementAttributes" minOccurs="0" maxOccurs="1">
+			</element>
+			<element name="facet_configuration" type="tns:FacetConfigurationType" maxOccurs="unbounded" minOccurs="0"></element>
 		</sequence>
 		<attribute name="kind" type="tns:SupportedKinds"></attribute>
 		<attribute name="name" type="string"></attribute>
@@ -401,9 +410,20 @@
 		</sequence>
 		<attribute name="uRef" type="string"></attribute>
 		<attribute name="parallel" type="boolean" use="optional"></attribute>
-		<attribute name="slice_replica" type="int" use="optional" default="0"></attribute>
-		<attribute name="unit_replica" type="int" use="optional" default="0"></attribute>
-		<attribute name="replica" type="unsignedInt" use="optional" default="0"></attribute>
+		<attribute name="slice_replica" type="int" use="optional"
+			default="0">
+		</attribute>
+		<attribute name="unit_replica" type="int" use="optional"
+			default="0">
+		</attribute>
+		<attribute name="replica" type="unsignedInt" use="optional"
+			default="0">
+		</attribute>
+        <attribute name="facet" type="int" use="optional" default="0"></attribute>
+        <attribute name="facet_instance" type="int" use="optional"></attribute>
+		<attribute name="facet_instance_enclosing" type="int"
+			use="optional" default="0">
+		</attribute>
 	</complexType>
 
 
@@ -416,7 +436,8 @@
 		</sequence>
 		<attribute name="cRef" type="string"></attribute>
 		<attribute name="cOldName" type="string"></attribute>
-		<attribute name="cNewName" type="string"></attribute>
+        <attribute name="index_replica" type="int" use="optional" default="0"></attribute>
+        <attribute name="cNewName" type="string"></attribute>
 	</complexType>
 
 	<complexType name="ImplementsType">
@@ -451,11 +472,12 @@
 
     <complexType name="FusionType">
     	<sequence>
-    		<element name="cRefs" type="string" maxOccurs="unbounded"
-    			minOccurs="1">
-    		</element>
     		<element name="pRef" type="string"></element>
+    			<element name="cRefs" type="string"
+    				maxOccurs="unbounded" minOccurs="1">
+    			</element>
     	</sequence>
+
     </complexType>
 
     <complexType name="FusionsOfReplicatorsType">
@@ -684,4 +706,19 @@
     		<enumeration value="invariant"></enumeration>
     	</restriction>
     </simpleType>
+
+    <complexType name="FacetConfigurationType">
+    	<attribute name="facet" type="int"></attribute>
+    	<attribute name="multiple" type="boolean"></attribute>
+    </complexType>
+
+    <complexType name="FacetMultiplicityType">
+    	<attribute name="cRef" type="string"></attribute>
+    	<attribute name="facet" type="int"></attribute>
+    	<attribute name="cardinality" type="int"></attribute>
+    </complexType>
+
+    <complexType name="FacetMultipleType">
+    	<attribute name="facet" type="string"></attribute>
+    </complexType>
 </schema>

@@ -5,6 +5,7 @@
 package hPE.xml.component.validation;
 
 import hPE.xml.component.BaseTypeType;
+import hPE.xml.component.FacetConfigurationType;
 import hPE.xml.component.SupportedKinds;
 import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
@@ -23,6 +24,8 @@ public interface ComponentHeaderTypeValidator {
 	boolean validateBaseType(BaseTypeType value);
 	boolean validateVersions(EList<VersionType> value);
 	boolean validateVisualAttributes(VisualElementAttributes value);
+	boolean validateFacetConfiguration(EList<FacetConfigurationType> value);
+
 	boolean validateHashComponentUID(String value);
 	boolean validateIsAbstract(boolean value);
 	boolean validateKind(SupportedKinds value);

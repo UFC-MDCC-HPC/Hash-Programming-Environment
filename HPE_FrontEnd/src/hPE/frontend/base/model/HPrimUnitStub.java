@@ -7,7 +7,6 @@ import hPE.frontend.base.interfaces.IInterface;
 import hPE.frontend.base.interfaces.IInterfaceSlice;
 
 import java.util.Iterator;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Collection;
@@ -27,6 +26,22 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
     	return unit;
     }
 	
+	@Override
+	public int getFacet() {
+		return this.getActualUnit().getFacet();
+	}
+
+	@Override
+	public void setFacet(int facet) {
+		this.getActualUnit().setFacet(facet);		
+	}
+
+	@Override
+	public int getFacetInstance() {
+		
+		return this.getActualUnit().getFacetInstance();
+	}
+
 	
 	public void setPrimUnit(IHPrimUnit unit) {
 		this.unit = unit;

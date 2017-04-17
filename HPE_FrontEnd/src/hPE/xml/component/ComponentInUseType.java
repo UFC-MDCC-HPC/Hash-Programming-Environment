@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ComponentInUseType#getParameter <em>Parameter</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getPort <em>Port</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getUnitBounds <em>Unit Bounds</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentInUseType#getRevokeMultipleFacet <em>Revoke Multiple Facet</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getHashComponentUID <em>Hash Component UID</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentInUseType#getIndexReplica <em>Index Replica</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getLocalRef <em>Local Ref</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getLocation <em>Location</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#isMultiple <em>Multiple</em>}</li>
@@ -117,6 +119,23 @@ public interface ComponentInUseType extends EObject {
 	EList<UnitBoundsType> getUnitBounds();
 
 	/**
+	 * Returns the value of the '<em><b>Revoke Multiple Facet</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Integer}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Revoke Multiple Facet</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Revoke Multiple Facet</em>' attribute list.
+	 * @see hPE.xml.component.ComponentPackage#getComponentInUseType_RevokeMultipleFacet()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='element' name='revokeMultipleFacet'"
+	 * @generated
+	 */
+	EList<Integer> getRevokeMultipleFacet();
+
+	/**
 	 * Returns the value of the '<em><b>Hash Component UID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -142,6 +161,61 @@ public interface ComponentInUseType extends EObject {
 	 * @generated
 	 */
 	void setHashComponentUID(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Index Replica</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Index Replica</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Index Replica</em>' attribute.
+	 * @see #isSetIndexReplica()
+	 * @see #unsetIndexReplica()
+	 * @see #setIndexReplica(int)
+	 * @see hPE.xml.component.ComponentPackage#getComponentInUseType_IndexReplica()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='index_replica'"
+	 * @generated
+	 */
+	int getIndexReplica();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentInUseType#getIndexReplica <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Index Replica</em>' attribute.
+	 * @see #isSetIndexReplica()
+	 * @see #unsetIndexReplica()
+	 * @see #getIndexReplica()
+	 * @generated
+	 */
+	void setIndexReplica(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.ComponentInUseType#getIndexReplica <em>Index Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIndexReplica()
+	 * @see #getIndexReplica()
+	 * @see #setIndexReplica(int)
+	 * @generated
+	 */
+	void unsetIndexReplica();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.ComponentInUseType#getIndexReplica <em>Index Replica</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Index Replica</em>' attribute is set.
+	 * @see #unsetIndexReplica()
+	 * @see #getIndexReplica()
+	 * @see #setIndexReplica(int)
+	 * @generated
+	 */
+	boolean isSetIndexReplica();
 
 	/**
 	 * Returns the value of the '<em><b>Local Ref</b></em>' attribute.

@@ -21,16 +21,8 @@ public abstract class HUnit extends HPrimUnit implements IHUnit
 {
 	static final long serialVersionUID = 1;	
 	
-	private int facet = 0;
 	
-	public int getFacet() {
-		return facet;
-	}
 
-	public void setFacet(int facet) {
-		this.facet = facet;
-	}	
-	
 	/** 
 	 * @uml.property name="unit_slice_abstractions"
 	 * @uml.associationEnd multiplicity="(0 -1)" ordering="true" inverse="unit:hPE.model.HUnitSliceAbstraction"
