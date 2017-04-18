@@ -164,7 +164,8 @@
 			<enumeration value="Binding"></enumeration>
 			<enumeration value="Topology"></enumeration>
 			<enumeration value="System"></enumeration>
-			<enumeration value="Proxy"></enumeration>
+			<enumeration value="Tactical"></enumeration>
+			<enumeration value="Certifier"></enumeration>
 		</restriction>
 	</simpleType>
 

@@ -3355,6 +3355,9 @@
         System,
         
         /// <remarks/>
-        Proxy,
+        Certifier,
+
+		/// <remarks/>
+		Tactical,
     }
 //}

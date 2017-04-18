@@ -1,0 +1,7 @@
+forall c:Nat.val(c==3 &&
+    c==4 &&
+    c==5 &&
+    c==6 &&
+    c==10 
+   ) => [!resolve(c)*.deploy(c)]false && < true*.resolve(c).!release(c)*.deploy(c) > true
+%2

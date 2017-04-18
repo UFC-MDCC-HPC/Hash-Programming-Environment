@@ -4040,7 +4040,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.BINDING);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TOPOLOGY);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SYSTEM);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.PROXY);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.CERTIFIER);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TACTICAL);
 
 		initEEnum(varianceTypeEEnum, VarianceType.class, "VarianceType");
 		addEEnumLiteral(varianceTypeEEnum, VarianceType.COVARIANT);

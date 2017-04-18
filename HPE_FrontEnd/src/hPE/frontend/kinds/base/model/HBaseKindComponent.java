@@ -6,7 +6,7 @@ import org.eclipse.emf.common.util.URI;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.kinds.facet.model.HFacetComponent;
+import hPE.frontend.kinds.certifier.model.HCertifierComponent;
 
 public abstract class HBaseKindComponent extends HComponent {
 

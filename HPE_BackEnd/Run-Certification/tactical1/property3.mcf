@@ -1,0 +1,8 @@
+forall c:Nat.val(c==3 &&
+    c==4 &&
+    c==5 &&
+    c==6 &&
+    c==10 
+   ) => [!deploy(c)*.instantiate(c)]false && < true*.deploy(c).!release(c)*.instantiate(c) > true
+
+%3

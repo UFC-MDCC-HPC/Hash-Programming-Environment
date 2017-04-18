@@ -32,13 +32,14 @@ import hPE.frontend.kinds.activate.model.protocol.IProtocol;
 import hPE.frontend.kinds.activate.model.protocol.IProtocolCombinator;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.binding.model.HBindingComponent;
+import hPE.frontend.kinds.certifier.model.HCertifierComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
-import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.frontend.kinds.tactical.model.HTacticalComponent;
 import hPE.frontend.kinds.topology.model.HTopologyComponent;
 import hPE.ui.preferences.PreferenceConstants;
 import hPE.util.CommandLine;
@@ -3570,8 +3571,10 @@ public final class HComponentFactoryImpl implements HComponentFactory
 			c = new HQualifierComponent(name, location, uri);
 			// } else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
 			// c = new HEnumeratorComponent(name, location, uri);
-		} else if (kind.getName().equals(HFacetComponent.KIND)) {
-			c = new HFacetComponent(name, location, uri);
+		} else if (kind.getName().equals(HCertifierComponent.KIND)) {
+			c = new HCertifierComponent(name, location, uri);
+		} else if (kind.getName().equals(HTacticalComponent.KIND)) {
+			c = new HTacticalComponent(name, location, uri);
 		} else if (kind.getName().equals(HBindingComponent.KIND)) {
 			c = new HBindingComponent(name, location, uri);
 		} else if (kind.getName().equals(HTopologyComponent.KIND)) {

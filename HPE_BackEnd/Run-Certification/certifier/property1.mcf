@@ -1,0 +1,2 @@
+forall i:Nat.val(i==1) => [true*]<true*.break(i)> true
+%1

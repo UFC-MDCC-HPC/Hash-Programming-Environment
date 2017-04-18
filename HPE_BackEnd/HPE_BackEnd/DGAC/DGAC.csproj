@@ -455,9 +455,6 @@
     <Compile Include="..\..\DGAC\base\SystemKind.cs">
       <Link>base\SystemKind.cs</Link>
     </Compile>
-    <Compile Include="..\..\DGAC\base\ProxyKind.cs">
-      <Link>base\ProxyKind.cs</Link>
-    </Compile>
     <Compile Include="..\..\DGAC\SAFe_architecture_V5.cs">
       <Link>deploy\SAFe_architecture_V5.cs</Link>
     </Compile>
@@ -469,6 +466,12 @@
     </Compile>
     <Compile Include="..\..\DGAC\ManagerIgnoredComponentIDImpl.cs">
       <Link>manager\ManagerIgnoredComponentIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\CertifierKind.cs">
+      <Link>base\CertifierKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\TacticalKind.cs">
+      <Link>base\TacticalKind.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

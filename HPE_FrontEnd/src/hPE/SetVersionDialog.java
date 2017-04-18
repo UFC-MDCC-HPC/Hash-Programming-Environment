@@ -2,13 +2,14 @@ package hPE;
 
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.binding.model.HBindingComponent;
+import hPE.frontend.kinds.certifier.model.HCertifierComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
-import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.frontend.kinds.tactical.model.HTacticalComponent;
 import hPE.frontend.kinds.topology.model.HTopologyComponent;
 
 import org.eclipse.swt.SWT;
@@ -38,7 +39,8 @@ public class SetVersionDialog extends Composite {
 	private Button radioArchitecture = null;
 	private Button radioQualifier = null;
 	private Button radioService = null;
-	private Button radioFacet = null;
+	private Button radioCertifier = null;
+	private Button radioTactical = null;
 	private Button radioBinding = null;
 	
 	public SetVersionDialog(SelectionListener sl, Composite parent, int style) {
@@ -56,25 +58,25 @@ public class SetVersionDialog extends Composite {
 	private void initialize() {
 		labelVersion = new Label(this, SWT.NONE);
 		labelVersion.setText("Initial Version:");
-		labelVersion.setBounds(new Rectangle(5, 7, 71, 13));
+		labelVersion.setBounds(new Rectangle(5, 2, 100, 17));
 		spinnerV1 = new Spinner(this, SWT.NONE);
 		spinnerV1.setDigits(0);
 		spinnerV1.setSelection(1);
 		spinnerV1.setMaximum(99999);
 		spinnerV1.setEnabled(false);
-		spinnerV1.setBounds(new Rectangle(85, 5, 53, 17));
+		spinnerV1.setBounds(new Rectangle(110, 2, 53, 17));
 		spinnerV2 = new Spinner(this, SWT.NONE);
 		spinnerV2.setMaximum(99999);
 		spinnerV2.setEnabled(false);
-		spinnerV2.setBounds(new Rectangle(150, 5, 53, 17));
+		spinnerV2.setBounds(new Rectangle(175, 2, 53, 17));
 		spinnerV3 = new Spinner(this, SWT.NONE);
 		spinnerV3.setMaximum(99999);
 		spinnerV3.setEnabled(false);
-		spinnerV3.setBounds(new Rectangle(215, 5, 53, 17));
+		spinnerV3.setBounds(new Rectangle(240, 2, 53, 17));
 		spinnerV4 = new Spinner(this, SWT.NONE);
 		spinnerV4.setMaximum(99999);
 		spinnerV4.setEnabled(false);
-		spinnerV4.setBounds(new Rectangle(280, 5, 53, 17));
+		spinnerV4.setBounds(new Rectangle(305, 2, 53, 17));
 		this.setLayout(null);
 		createGroup();
 		createGroupKinds();
@@ -91,70 +93,76 @@ public class SetVersionDialog extends Composite {
 		groupKinds.setText("Component Kinds");
 		groupKinds.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		groupKinds.setLayout(null);
-		groupKinds.setBounds(new Rectangle(5, 30, /*361*/ 420, 81));
+		groupKinds.setBounds(new Rectangle(5, 30, 500, 100));
 		
 		radioApplication = new Button(groupKinds, SWT.RADIO);
 		radioApplication.setText(HApplicationComponent.KIND);
-		radioApplication.setBounds(new Rectangle(13, 18, 111, 16));
+		radioApplication.setBounds(new Rectangle(13, 10, 120, 16));
 		radioApplication.addSelectionListener(sl);
 		radioApplication.setSelection(true);
 
 		radioEnvironment = new Button(groupKinds, SWT.RADIO);
 		radioEnvironment.setText(HEnvironmentComponent.KIND);
-		radioEnvironment.setBounds(new Rectangle(13, 38, 111, 16));
+		radioEnvironment.setBounds(new Rectangle(13, 30, 120, 18));
 		radioEnvironment.addSelectionListener(sl);
 		radioEnvironment.setSelection(false);
 		
 		radioDataStructure = new Button(groupKinds, SWT.RADIO);
 		radioDataStructure.setText(HDataComponent.KIND);
-		radioDataStructure.setBounds(new Rectangle(13, 58, 111, 16));
+		radioDataStructure.setBounds(new Rectangle(13, 50, 120, 18));
 		radioDataStructure.addSelectionListener(sl);
 		radioDataStructure.setSelection(false);
 
 		radioComputation = new Button(groupKinds, SWT.RADIO);
 		radioComputation.setText(HComputationComponent.KIND);
-		radioComputation.setBounds(new Rectangle(128, 18, 106, 16));
+		radioComputation.setBounds(new Rectangle(138, 10, 120, 18));
 		radioComputation.addSelectionListener(sl);
 		radioComputation.setSelection(false);
 		
 		radioArchitecture = new Button(groupKinds, SWT.RADIO);
 		radioArchitecture.setText(HPlatformComponent.KIND);
-		radioArchitecture.setBounds(new Rectangle(128, 38, 106, 16));
+		radioArchitecture.setBounds(new Rectangle(138, 30, 120, 18));
 		radioArchitecture.addSelectionListener(sl);
 		radioArchitecture.setSelection(false);
 
 		radioSynchronizer = new Button(groupKinds, SWT.RADIO);
 		radioSynchronizer.setText(HSynchronizationComponent.KIND);
-		radioSynchronizer.setBounds(new Rectangle(238, 18, 100, 16));
+		radioSynchronizer.setBounds(new Rectangle(138, 50, 120, 18));
 		radioSynchronizer.addSelectionListener(sl);
 		radioSynchronizer.setSelection(false);
 
 		radioQualifier = new Button(groupKinds, SWT.RADIO);
 		radioQualifier.setText(HQualifierComponent.KIND);
-		radioQualifier.setBounds(new Rectangle(238, 38, 100, 16));
+		radioQualifier.setBounds(new Rectangle(263, 10, 120, 18));
 		radioQualifier.addSelectionListener(sl);
 		radioQualifier.setSelection(false);
 
 		radioService = new Button(groupKinds, SWT.RADIO);
 		radioService.addSelectionListener(sl);
 		radioService.setSelection(false);
-		radioService.setBounds(new Rectangle(238, 58, 100, 16));
-		radioService.setText(HTopologyComponent.KIND);
-		
-		radioFacet = new Button(groupKinds, SWT.RADIO);
-		radioFacet.addSelectionListener(sl);
-		radioFacet.setEnabled(true);
-		radioFacet.setSelection(false);
-		radioFacet.setBounds(new Rectangle(343, 18, 70, 16));
-		radioFacet.setText(HFacetComponent.KIND);
+		radioService.setBounds(new Rectangle(263, 30, 120, 18));
+		radioService.setText(HTopologyComponent.KIND);		
 		
 		radioBinding = new Button(groupKinds, SWT.RADIO);
 		radioBinding.addSelectionListener(sl);
 		radioBinding.setEnabled(true);
 		radioBinding.setSelection(false);
-		radioBinding.setBounds(new Rectangle(343, 38, 70, 16));
+		radioBinding.setBounds(new Rectangle(263, 50, 120, 18));
 		radioBinding.setText(HBindingComponent.KIND);
 
+		radioCertifier = new Button(groupKinds, SWT.RADIO);
+		radioCertifier.addSelectionListener(sl);
+		radioCertifier.setEnabled(true);
+		radioCertifier.setSelection(false);
+		radioCertifier.setBounds(new Rectangle(388, 10, 120, 18));
+		radioCertifier.setText(HCertifierComponent.KIND);
+
+		radioTactical = new Button(groupKinds, SWT.RADIO);
+		radioTactical.addSelectionListener(sl);
+		radioTactical.setEnabled(true);
+		radioTactical.setSelection(false);
+		radioTactical.setBounds(new Rectangle(388, 30, 120, 18));
+		radioTactical.setText(HTacticalComponent.KIND);
 	}
 
 	public Button getRadioApplication() {
@@ -193,8 +201,12 @@ public class SetVersionDialog extends Composite {
 		return this.radioService;
 	}
 	
-	public Button getRadioFacet() {
-		return this.radioFacet;
+	public Button getRadioCertifier() {
+		return this.radioCertifier;
+	}
+
+	public Button getRadioTactical() {
+		return this.radioTactical;
 	}
 
 	public Button getRadioBinding() {
@@ -257,7 +269,7 @@ public class SetVersionDialog extends Composite {
 		group = new Group(this, SWT.NONE);
 		group.setLayout(null);
 		group.setText("");
-		group.setBounds(new Rectangle(/* 375 */ 430, 30, 85, 81));
+		group.setBounds(new Rectangle(510, 39, 130, 91));
 		org.eclipse.swt.events.SelectionListener sl = new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				Object src = e.getSource();
@@ -269,12 +281,12 @@ public class SetVersionDialog extends Composite {
 		};
 		radioButtonAbstract = new Button(group, SWT.RADIO);
 		radioButtonAbstract.setText("Abstract");
-		radioButtonAbstract.setBounds(new Rectangle(8, 23, 62, 16));
+		radioButtonAbstract.setBounds(new Rectangle(8, 23, 90, 16));
 		radioButtonAbstract.setSelection(true);
 		radioButtonAbstract.addSelectionListener(sl);
 		radioButtonConcrete = new Button(group, SWT.RADIO);
 		radioButtonConcrete.setText("Concrete");
-		radioButtonConcrete.setBounds(new Rectangle(8, 53, 65, 16));
+		radioButtonConcrete.setBounds(new Rectangle(8, 53, 90, 16));
 		radioButtonConcrete.addSelectionListener(sl);
 	}
 	

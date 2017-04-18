@@ -1,0 +1,97 @@
+act resolve, resolve1_mapper, resolve2_mapper, deploy, deploy1_mapper, deploy2_mapper, instantiate, instantiate1_mapper, instantiate2_mapper,
+release, release1_mapper, release2_mapper: Nat; act compute, compute1_mapper, compute2_mapper, w_guard, c_guard, guard, guard1_mapper, 
+guard2_mapper, w_guard_mapper: Nat # Nat; act pass, obtain, transfer: Nat; act m_repeat, r_repeat, repeat: Nat; act p_break, m_break, 
+break:Nat; act pass_enable, obtain_enable, transfer_enable: Nat # Nat;
+
+proc Workflow = 
+resolve(3).deploy(3).instantiate(3).
+resolve(4).deploy(4).instantiate(4).
+(sum n:Nat.(n == 1 || n == 2) -> pass(n).sum n:Nat.(n == 1 || n == 2) -> pass(n).sum m:Nat.(m == 3 || m == 4) -> obtain(m).
+sum m:Nat.(m == 3 || m == 4) ->obtain(m)).
+(sum n:Nat.(n == 5 || n == 6) -> pass(n).sum n:Nat.(n == 5 || n == 6) -> pass(n).sum m:Nat.(m == 7 || m == 8) -> obtain(m).
+sum m:Nat.(m == 7 || m == 8) ->obtain(m)).
+(sum n:Nat.(n == 9 || n == 10) -> pass(n).sum n:Nat.(n == 9 || n == 10) -> pass(n).sum m:Nat.(m == 11 || m == 12) -> obtain(m).
+sum m:Nat.(m == 11 || m == 12) ->obtain(m)).
+resolve(6).deploy(6).instantiate(6).
+resolve(10).deploy(10).instantiate(10).
+compute(3,341).compute(3,352).(pass_enable(3,353)+pass_enable(3,342)).
+m_repeat(1).obtain(26).
+release(3).release(4). 
+(sum n:Nat.(n == 27 || n == 28) -> pass(n).sum n:Nat.(n == 27 || n == 28) -> pass(n).sum m:Nat.(m == 29 || m == 30) -> obtain(m).
+sum m:Nat.(m == 29 || m == 30) ->obtain(m)).
+release(6).release(10).Workflow;
+	
+proc ManagerRepeat1 = (obtain(25).m_repeat(1) + m_break(1).pass(26)).ManagerRepeat1;
+
+proc Repeat1 = r_repeat(1).(w_guard(3,353).
+(sum n:Nat.(n == 13 || n == 14) -> pass(n).sum n:Nat.(n == 13 || n == 14) -> pass(n).sum m:Nat.(m == 15 || m == 16) -> obtain(m).
+sum m:Nat.(m == 15 || m == 16) ->obtain(m)).
+(sum n:Nat.(n == 17 || n == 18) -> pass(n).sum n:Nat.(n == 17 || n == 18) -> pass(n).sum m:Nat.(m == 19 || m == 20) -> obtain(m).
+sum m:Nat.(m == 19 || m == 20) ->obtain(m)).
+pass_enable(5,553) +
+w_guard_mapper(5,553).compute(10,1051).compute(10,1052).pass_enable(10,1053) + 
+w_guard(10,1053).compute(4,451).compute(4,452).pass_enable(4,453) + 
+w_guard(4,453).compute(6,651).compute(6,652).pass_enable(6,653) + 
+w_guard(6,653).compute(3,351).compute(3,352).(pass_enable(3,353)+pass_enable(3,342)) + 
+w_guard(3,342).compute(3,343).p_break(1).Repeat1).pass(25).Repeat1;	
+
+proc Psplitter_chunk_ready = obtain_enable(3,353).c_guard(3,353).Psplitter_chunk_ready;
+
+proc Psplitter_terminate = obtain_enable(3,342).c_guard(3,342).Psplitter_terminate;
+
+proc Pshuffler_chunk_ready = obtain_enable(4,453).c_guard(4,453).Pshuffler_chunk_ready;
+
+proc Pmapper_chunk_ready = obtain_enable(5,553).
+ (sum n:Nat.(n == 21 || n == 22) -> pass(n).sum n:Nat.(n == 21 || n == 22) -> pass(n).sum m:Nat.(m == 23 || m == 24) -> obtain(m).
+ sum m:Nat.(m == 23 || m == 24) ->obtain(m)).Pmapper_chunk_ready;
+
+proc Preducer_chunk_ready = obtain_enable(6,653).c_guard(6,653).Preducer_chunk_ready;
+
+proc Pcombiner_chunk_ready = obtain_enable(10,1053).c_guard(10,1053).Pcombiner_chunk_ready;
+
+proc Parallel1mapper_resolve = obtain(1).resolve1_mapper(5).pass(3).Parallel1mapper_resolve;
+
+proc Parallel2mapper_resolve = obtain(2).resolve2_mapper(5).pass(4).Parallel2mapper_resolve;
+
+proc Parallel1mapper_deploy = obtain(5).deploy1_mapper(5).pass(7).Parallel1mapper_deploy;
+
+proc Parallel2mapper_deploy = obtain(6).deploy2_mapper(5).pass(8).Parallel2mapper_deploy;
+
+proc Parallel1mapper_instantiate = obtain(9).instantiate1_mapper(5).pass(11).Parallel1mapper_instantiate;
+
+proc Parallel2mapper_instantiate = obtain(10).instantiate2_mapper(5).pass(12).Parallel2mapper_instantiate;
+
+proc Parallel1mapper_release = obtain(27).release1_mapper(5).pass(29).Parallel1mapper_release;
+
+proc Parallel2mapper_release = obtain(28).release2_mapper(5).pass(30).Parallel2mapper_release;
+
+proc Parallel1mapper_read_chunk = obtain(13).compute1_mapper(5,551).pass(15).Parallel1mapper_read_chunk;
+
+proc Parallel2mapper_read_chunk = obtain(14).compute2_mapper(5,551).pass(16).Parallel2mapper_read_chunk;
+
+proc Parallel1mapper_perform = obtain(17).compute1_mapper(5,552).pass(19).Parallel1mapper_perform;
+
+proc Parallel2mapper_perform = obtain(18).compute2_mapper(5,552).pass(20).Parallel2mapper_perform;
+
+proc Parallel1mapper_chunk_ready = obtain(21).guard1_mapper(5,553).pass(23).Parallel1mapper_chunk_ready;
+
+proc Parallel2mapper_chunk_ready = obtain(22).guard2_mapper(5,553).pass(24).Parallel2mapper_chunk_ready;
+
+proc S = allow({resolve, deploy, instantiate, release, compute, guard, transfer, repeat, break, transfer_enable},
+         comm ({resolve1_mapper | resolve2_mapper -> resolve,
+                deploy1_mapper | deploy2_mapper -> deploy,
+                instantiate1_mapper | instantiate2_mapper -> instantiate,
+                release1_mapper | release2_mapper -> release,
+                compute1_mapper | compute2_mapper -> compute,
+                w_guard | c_guard -> guard,
+                guard1_mapper | guard2_mapper | w_guard_mapper-> guard,
+		        pass | obtain -> transfer,
+		        m_repeat | r_repeat -> repeat,
+		        p_break | m_break -> break,
+       	        pass_enable | obtain_enable -> transfer_enable}, 
+	     Workflow||ManagerRepeat1||Repeat1||Psplitter_chunk_ready||Psplitter_terminate||Pshuffler_chunk_ready||Pmapper_chunk_ready||
+         Preducer_chunk_ready||Pcombiner_chunk_ready||Parallel1mapper_resolve||Parallel2mapper_resolve||Parallel1mapper_deploy||
+         Parallel2mapper_deploy||Parallel1mapper_instantiate||Parallel2mapper_instantiate||Parallel1mapper_read_chunk||
+         Parallel2mapper_read_chunk||Parallel1mapper_perform||Parallel2mapper_perform||Parallel1mapper_chunk_ready||
+         Parallel2mapper_chunk_ready||Parallel1mapper_release||Parallel2mapper_release));
+init S;

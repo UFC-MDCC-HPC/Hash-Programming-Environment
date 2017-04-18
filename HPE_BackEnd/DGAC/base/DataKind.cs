@@ -9,14 +9,11 @@ using br.ufc.pargo.hpe.basic;
 
 namespace br.ufc.pargo.hpe.kinds
 {
-
-
     public interface IDataStructureKind : IUnit
 	{
 	}
 	
 	public abstract class DataStructure : Unit, IDataStructureKind {
 	   
-	}
-	
+	}	
 }

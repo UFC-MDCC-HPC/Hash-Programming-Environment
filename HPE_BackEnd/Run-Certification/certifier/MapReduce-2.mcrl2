@@ -1,0 +1,48 @@
+act pass, obtain, transfer, resolve, deploy, instantiate, release:Nat;
+act compute:Nat # Nat;
+act pass_fin_w, obtain_fin_w, transfer_fin_w;
+act pass_repeat, obtain_repeat, repeat: Nat;
+act pass_break, obtain_break, break:Nat;
+
+proc workflow = pass(1).obtain_fin_w.workflow;
+
+proc sequence1 = obtain(1).pass(2).obtain(3).pass(4).obtain(5).pass(6).obtain(7).pass(8).obtain(9).pass(10).
+				 obtain(11).compute(3,341).compute(3,352).pass_repeat(1).obtain(13).
+				 pass_fin_w.sequence1;
+
+proc sequence2 = obtain(2).resolve(4).deploy(4).instantiate(4).pass(3).sequence2;
+
+proc sequence3 = obtain(4).resolve(3).deploy(3).instantiate(3).pass(5).sequence3;
+
+proc sequence4 = obtain(6).resolve(5).deploy(5).instantiate(5).pass(7).sequence4;
+
+proc sequence5 = obtain(8).resolve(6).deploy(6).instantiate(6).pass(9).sequence5;
+
+proc sequence6 = obtain(10).resolve(10).deploy(10).instantiate(10).pass(11).sequence6;
+
+proc m_repeat1 = (obtain(12).pass_repeat(1) + obtain_break(1).pass(13)).m_repeat1;
+
+proc repeat1 = obtain_repeat(1).pass(14).repeat1;	
+
+proc select1 = obtain(14).(compute(3,353).pass(15).obtain(16).pass(12) + compute(5,553).pass(17).obtain(18).pass(12) + compute(10,1053).pass(19).obtain(20).pass(12) + compute(4,453).pass(21).obtain(22).pass(12) + compute(6,653).pass(23).obtain(24).pass(12) + compute(3,342).pass(25).pass(12) + obtain_break(2).pass_break(1)).select1;
+
+proc sequence7 = obtain(15).compute(5,551).compute(5,552).pass(16).sequence7;
+
+proc sequence8 = obtain(17).compute(10,1051).compute(10,1052).pass(18).sequence8;
+
+proc sequence9 = obtain(19).compute(4,451).compute(4,452).pass(20).sequence9;
+
+proc sequence10 = obtain(21).compute(6,651).compute(6,652).pass(22).sequence10;
+
+proc sequence11 = obtain(23).compute(3,351).compute(3,352).pass(24).sequence11;
+
+proc sequence12 = obtain(25).compute(3,343).pass_break(2).sequence12;
+
+proc S = allow({transfer, transfer_fin_w, resolve, deploy, instantiate, compute, repeat, break},
+         comm ({pass | obtain -> transfer, 
+		  pass_fin_w | obtain_fin_w -> transfer_fin_w,
+		  pass_repeat | obtain_repeat -> repeat,
+		  pass_break | obtain_break -> break}, 
+	     workflow||sequence1||sequence2||sequence3||sequence4||sequence5||sequence6||sequence7||sequence8
+		  ||m_repeat1||repeat1||select1||sequence9||sequence10||sequence11||sequence12));
+init S;

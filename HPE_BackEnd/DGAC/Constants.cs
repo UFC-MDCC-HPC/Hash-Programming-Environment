@@ -172,7 +172,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 		public const int KIND_DATASTRUCTURE = 6;
 		public const int KIND_BINDING = 7;
 		public const int KIND_SYSTEM = 8;
-		public const int KIND_PROXY = 9;
+		public const int KIND_CERTIFIER = 9;
+		public const int KIND_TACTICAL = 10;
 
 		public const string KIND_APPLICATION_NAME = "Application";
         public const string KIND_COMPUTATION_NAME = "Computation";
@@ -184,7 +185,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string KIND_TOPOLOGY_NAME = "Topology";
 		public const string KIND_BINDING_NAME = "Binding";
 		public const string KIND_SYSTEM_NAME = "System";
-		public const string KIND_PROXY_NAME = "Proxy";
+		public const string KIND_CERTIFIER_NAME = "Certifier";
+		public const string KIND_TACTICAL_NAME = "Tactical";
 
 		public static IDictionary<VarianceType, string> varianceValue = new Dictionary<VarianceType, string>()
 		{
@@ -231,7 +233,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 			{KIND_BINDING_NAME, Constants.KIND_BINDING},
 			//{KIND_TOPOLOGY_NAME, Constants.KIND_TOPOLOGY},
 			{KIND_SYSTEM_NAME, Constants.KIND_SYSTEM},
-			{KIND_PROXY_NAME, Constants.KIND_PROXY}
+			{KIND_CERTIFIER_NAME, Constants.KIND_CERTIFIER},
+			{KIND_TACTICAL_NAME, Constants.KIND_TACTICAL}
 		};
 
         public static string getArgVal(string argId)

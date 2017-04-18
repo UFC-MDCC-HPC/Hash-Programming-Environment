@@ -125,14 +125,22 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	SYSTEM(10, "System", "System"), /**
-	 * The '<em><b>Proxy</b></em>' literal object.
+	 * The '<em><b>Certifier</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #PROXY_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	PROXY(11, "Proxy", "Proxy");
+	CERTIFIER(11, "Certifier", "Certifier"), /**
+	 * The '<em><b>Tactical</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #PROXY_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	TACTICAL(12, "Tactical", "Tactical");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -302,19 +310,34 @@ public enum SupportedKinds implements Enumerator {
 	public static final int SYSTEM_VALUE = 10;
 
 	/**
-	 * The '<em><b>Proxy</b></em>' literal value.
+	 * The '<em><b>Certifier</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Proxy</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>Certifier</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #PROXY
-	 * @model name="Proxy"
+	 * @see #CERTIFIER
+	 * @model name="Certifier"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PROXY_VALUE = 11;
+	public static final int CERTIFIER_VALUE = 11;
+
+	/**
+	 * The '<em><b>Tactical</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Tactical</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #TACTICAL
+	 * @model name="Tactical"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TACTICAL_VALUE = 12;
 
 	/**
 	 * An array of all the '<em><b>Supported Kinds</b></em>' enumerators.
@@ -335,7 +358,8 @@ public enum SupportedKinds implements Enumerator {
 			BINDING,
 			TOPOLOGY,
 			SYSTEM,
-			PROXY,
+			CERTIFIER,
+			TACTICAL
 		};
 
 	/**
@@ -397,7 +421,8 @@ public enum SupportedKinds implements Enumerator {
 			case BINDING_VALUE: return BINDING;
 			case TOPOLOGY_VALUE: return TOPOLOGY;
 			case SYSTEM_VALUE: return SYSTEM;
-			case PROXY_VALUE: return PROXY;
+			case CERTIFIER_VALUE: return CERTIFIER;
+			case TACTICAL_VALUE: return TACTICAL;
 		}
 		return null;
 	}

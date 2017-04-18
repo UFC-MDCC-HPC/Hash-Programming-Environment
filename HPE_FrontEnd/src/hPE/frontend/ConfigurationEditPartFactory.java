@@ -75,6 +75,26 @@ import hPE.frontend.kinds.binding.model.HBindingInterfaceSlice;
 import hPE.frontend.kinds.binding.model.HBindingUnit;
 import hPE.frontend.kinds.binding.model.HBindingUnitSlice;
 import hPE.frontend.kinds.binding.model.IHBindingUnit;
+import hPE.frontend.kinds.certifier.edits.CertifierComponentEditPart;
+import hPE.frontend.kinds.certifier.edits.CertifierConfigurationEditPart;
+import hPE.frontend.kinds.certifier.edits.CertifierEntryEditPart;
+import hPE.frontend.kinds.certifier.edits.CertifierInterfaceEditPart;
+import hPE.frontend.kinds.certifier.edits.CertifierInterfaceSliceEditPart;
+import hPE.frontend.kinds.certifier.edits.CertifierUnitEditPart;
+import hPE.frontend.kinds.certifier.edits.CertifierUnitSliceEditPart;
+import hPE.frontend.kinds.certifier.figures.CertifierComponentFigure;
+import hPE.frontend.kinds.certifier.figures.CertifierConfigurationFigure;
+import hPE.frontend.kinds.certifier.figures.CertifierEntryFigure;
+import hPE.frontend.kinds.certifier.figures.CertifierInterfaceFigure;
+import hPE.frontend.kinds.certifier.figures.CertifierInterfaceSliceFigure;
+import hPE.frontend.kinds.certifier.figures.CertifierUnitFigure;
+import hPE.frontend.kinds.certifier.figures.CertifierUnitSliceFigure;
+import hPE.frontend.kinds.certifier.model.HCertifierComponent;
+import hPE.frontend.kinds.certifier.model.HCertifierInterface;
+import hPE.frontend.kinds.certifier.model.HCertifierInterfaceSlice;
+import hPE.frontend.kinds.certifier.model.HCertifierUnit;
+import hPE.frontend.kinds.certifier.model.HCertifierUnitSlice;
+import hPE.frontend.kinds.certifier.model.IHCertifierUnit;
 import hPE.frontend.kinds.computation.edits.ComputationComponentEditPart;
 import hPE.frontend.kinds.computation.edits.ComputationConfigurationEditPart;
 import hPE.frontend.kinds.computation.edits.ComputationEntryEditPart;
@@ -135,26 +155,6 @@ import hPE.frontend.kinds.environment.model.HEnvironmentInterfaceSlice;
 import hPE.frontend.kinds.environment.model.HEnvironmentUnit;
 import hPE.frontend.kinds.environment.model.HEnvironmentUnitSlice;
 import hPE.frontend.kinds.environment.model.IHEnvironmentUnit;
-import hPE.frontend.kinds.facet.edits.FacetComponentEditPart;
-import hPE.frontend.kinds.facet.edits.FacetConfigurationEditPart;
-import hPE.frontend.kinds.facet.edits.FacetEntryEditPart;
-import hPE.frontend.kinds.facet.edits.FacetInterfaceEditPart;
-import hPE.frontend.kinds.facet.edits.FacetInterfaceSliceEditPart;
-import hPE.frontend.kinds.facet.edits.FacetUnitEditPart;
-import hPE.frontend.kinds.facet.edits.FacetUnitSliceEditPart;
-import hPE.frontend.kinds.facet.figures.FacetComponentFigure;
-import hPE.frontend.kinds.facet.figures.FacetConfigurationFigure;
-import hPE.frontend.kinds.facet.figures.FacetEntryFigure;
-import hPE.frontend.kinds.facet.figures.FacetInterfaceFigure;
-import hPE.frontend.kinds.facet.figures.FacetInterfaceSliceFigure;
-import hPE.frontend.kinds.facet.figures.FacetUnitFigure;
-import hPE.frontend.kinds.facet.figures.FacetUnitSliceFigure;
-import hPE.frontend.kinds.facet.model.HFacetComponent;
-import hPE.frontend.kinds.facet.model.HFacetInterface;
-import hPE.frontend.kinds.facet.model.HFacetInterfaceSlice;
-import hPE.frontend.kinds.facet.model.HFacetUnit;
-import hPE.frontend.kinds.facet.model.HFacetUnitSlice;
-import hPE.frontend.kinds.facet.model.IHFacetUnit;
 import hPE.frontend.kinds.platform.edits.PlatformComponentEditPart;
 import hPE.frontend.kinds.platform.edits.PlatformConfigurationEditPart;
 import hPE.frontend.kinds.platform.edits.PlatformEntryEditPart;
@@ -215,6 +215,21 @@ import hPE.frontend.kinds.synchronization.model.HSynchronizationInterfaceSlice;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationUnit;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationUnitSlice;
 import hPE.frontend.kinds.synchronization.model.IHSynchronizationUnit;
+import hPE.frontend.kinds.tactical.edits.TacticalComponentEditPart;
+import hPE.frontend.kinds.tactical.edits.TacticalConfigurationEditPart;
+import hPE.frontend.kinds.tactical.edits.TacticalEntryEditPart;
+import hPE.frontend.kinds.tactical.edits.TacticalInterfaceEditPart;
+import hPE.frontend.kinds.tactical.edits.TacticalInterfaceSliceEditPart;
+import hPE.frontend.kinds.tactical.edits.TacticalUnitEditPart;
+import hPE.frontend.kinds.tactical.edits.TacticalUnitSliceEditPart;
+import hPE.frontend.kinds.tactical.figures.TacticalComponentFigure;
+import hPE.frontend.kinds.tactical.figures.TacticalConfigurationFigure;
+import hPE.frontend.kinds.tactical.model.HTacticalComponent;
+import hPE.frontend.kinds.tactical.model.HTacticalInterface;
+import hPE.frontend.kinds.tactical.model.HTacticalInterfaceSlice;
+import hPE.frontend.kinds.tactical.model.HTacticalUnit;
+import hPE.frontend.kinds.tactical.model.HTacticalUnitSlice;
+import hPE.frontend.kinds.tactical.model.IHTacticalUnit;
 import hPE.frontend.kinds.topology.edits.TopologyComponentEditPart;
 import hPE.frontend.kinds.topology.edits.TopologyConfigurationEditPart;
 import hPE.frontend.kinds.topology.edits.TopologyEntryEditPart;
@@ -276,8 +291,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierConfigurationEditPart<HQualifierComponent,QualifierConfigurationFigure>();
 				else if (model instanceof HEnvironmentComponent)
 					part = new EnvironmentConfigurationEditPart<HEnvironmentComponent,EnvironmentConfigurationFigure>();
-				else if (model instanceof HFacetComponent)
-					part = new FacetConfigurationEditPart<HFacetComponent,FacetConfigurationFigure>();
+				else if (model instanceof HCertifierComponent)
+					part = new CertifierConfigurationEditPart<HCertifierComponent,CertifierConfigurationFigure>();
+				else if (model instanceof HTacticalComponent)
+					part = new TacticalConfigurationEditPart<HTacticalComponent,TacticalConfigurationFigure>();
 				else if (model instanceof HBindingComponent)
 					part = new BindingConfigurationEditPart<HBindingComponent,BindingConfigurationFigure>();
 				else 
@@ -306,8 +323,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierComponentEditPart<HQualifierComponent,QualifierComponentFigure>();
 				else if (model instanceof HEnvironmentComponent)
 					part = new EnvironmentComponentEditPart<HEnvironmentComponent,EnvironmentComponentFigure>();
-				else if (model instanceof HFacetComponent)
-					part = new FacetComponentEditPart<HFacetComponent,FacetComponentFigure>();
+				else if (model instanceof HCertifierComponent)
+					part = new CertifierComponentEditPart<HCertifierComponent,CertifierComponentFigure>();
+				else if (model instanceof HTacticalComponent)
+					part = new TacticalComponentEditPart<HTacticalComponent,TacticalComponentFigure>();
 				else if (model instanceof HBindingComponent)
 					part = new BindingComponentEditPart<HBindingComponent,BindingComponentFigure>();
 				else 
@@ -338,8 +357,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentUnitEditPart<HEnvironmentUnit,EnvironmentUnitFigure>();
 				else if (model instanceof IHQualifierUnit) 
 					part = new QualifierUnitEditPart<HQualifierUnit,QualifierUnitFigure>();
-				else if (model instanceof IHFacetUnit) 
-					part = new FacetUnitEditPart<HFacetUnit,FacetUnitFigure>();
+				else if (model instanceof IHCertifierUnit) 
+					part = new CertifierUnitEditPart<HCertifierUnit,CertifierUnitFigure>();
+				else if (model instanceof IHTacticalUnit) 
+					part = new TacticalUnitEditPart<HCertifierUnit,CertifierUnitFigure>();
 				else if (model instanceof IHBindingUnit) 
 					part = new BindingUnitEditPart<HBindingUnit,BindingUnitFigure>();
 				else 
@@ -361,8 +382,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentEntryEditPart<HEnvironmentUnit,EnvironmentEntryFigure>();
 				else if (model instanceof HQualifierUnit) 
 					part = new QualifierEntryEditPart<HQualifierUnit,QualifierEntryFigure>();
-				else if (model instanceof HFacetUnit) 
-					part = new FacetEntryEditPart<HFacetUnit,FacetEntryFigure>();
+				else if (model instanceof HCertifierUnit) 
+					part = new CertifierEntryEditPart<HCertifierUnit,CertifierEntryFigure>();
+				else if (model instanceof HTacticalUnit) 
+					part = new TacticalEntryEditPart<HCertifierUnit,CertifierEntryFigure>();
 				else if (model instanceof HBindingUnit) 
 					part = new BindingEntryEditPart<HBindingUnit,BindingEntryFigure>();
 				else 
@@ -386,8 +409,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new EnvironmentUnitSliceEditPart<HEnvironmentUnitSlice,EnvironmentUnitSliceFigure>();
 			else if (model instanceof HQualifierUnitSlice) 
 			    part = new QualifierUnitSliceEditPart<HQualifierUnitSlice,QualifierUnitSliceFigure>();
-			else if (model instanceof HFacetUnitSlice) 
-			    part = new FacetUnitSliceEditPart<HFacetUnitSlice,FacetUnitSliceFigure>();
+			else if (model instanceof HCertifierUnitSlice) 
+			    part = new CertifierUnitSliceEditPart<HCertifierUnitSlice,CertifierUnitSliceFigure>();
+			else if (model instanceof HTacticalUnitSlice) 
+			    part = new TacticalUnitSliceEditPart<HCertifierUnitSlice,CertifierUnitSliceFigure>();
 			else if (model instanceof HBindingUnitSlice) 
 			    part = new BindingUnitSliceEditPart<HBindingUnitSlice,BindingUnitSliceFigure>();
 			else 
@@ -409,8 +434,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new EnvironmentInterfaceSliceEditPart<HEnvironmentInterfaceSlice,EnvironmentInterfaceSliceFigure>();
 			else if (model instanceof HQualifierInterfaceSlice) 
 			    part = new QualifierInterfaceSliceEditPart<HQualifierInterfaceSlice,QualifierInterfaceSliceFigure>();
-			else if (model instanceof HFacetInterfaceSlice) 
-			    part = new FacetInterfaceSliceEditPart<HFacetInterfaceSlice,FacetInterfaceSliceFigure>();
+			else if (model instanceof HCertifierInterfaceSlice) 
+			    part = new CertifierInterfaceSliceEditPart<HCertifierInterfaceSlice,CertifierInterfaceSliceFigure>();
+			else if (model instanceof HTacticalInterfaceSlice) 
+			    part = new TacticalInterfaceSliceEditPart<HCertifierInterfaceSlice,CertifierInterfaceSliceFigure>();
 			else if (model instanceof HBindingInterfaceSlice) 
 			    part = new BindingInterfaceSliceEditPart<HBindingInterfaceSlice,BindingInterfaceSliceFigure>();
 			else 
@@ -434,8 +461,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 				part = new EnvironmentInterfaceEditPart<HEnvironmentInterface,EnvironmentInterfaceFigure>();
 			else if (model instanceof HQualifierInterface)
 				part = new QualifierInterfaceEditPart<HQualifierInterface,QualifierInterfaceFigure>();
-			else if (model instanceof HFacetInterface)
-				part = new FacetInterfaceEditPart<HFacetInterface,FacetInterfaceFigure>();
+			else if (model instanceof HCertifierInterface)
+				part = new CertifierInterfaceEditPart<HCertifierInterface,CertifierInterfaceFigure>();
+			else if (model instanceof HTacticalInterface)
+				part = new TacticalInterfaceEditPart<HCertifierInterface,CertifierInterfaceFigure>();
 			else if (model instanceof HBindingInterface)
 				part = new BindingInterfaceEditPart<HBindingInterface,BindingInterfaceFigure>();
 			else 

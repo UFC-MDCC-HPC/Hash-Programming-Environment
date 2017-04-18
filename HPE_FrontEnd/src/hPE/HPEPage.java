@@ -3,13 +3,14 @@ package hPE;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.binding.model.HBindingComponent;
+import hPE.frontend.kinds.certifier.model.HCertifierComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
-import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.frontend.kinds.tactical.model.HTacticalComponent;
 import hPE.frontend.kinds.topology.model.HTopologyComponent;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
@@ -144,8 +145,9 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			case 6: c = new HQualifierComponent(s,null,uriAbsolutePath); break;
 			case 7: c = new HApplicationComponent(s,null,uriAbsolutePath); break;
 		    case 8: c = new HTopologyComponent(s,null,uriAbsolutePath); break;
-			case 10: c = new HFacetComponent(s,null,uriAbsolutePath); break;
+			case 10: c = new HCertifierComponent(s,null,uriAbsolutePath); break;
 			case 11: c = new HBindingComponent(s,null,uriAbsolutePath); break;
+			case 12: c = new HTacticalComponent(s,null,uriAbsolutePath); break;
 			}
 			
 			setComponentVersion(c);
@@ -248,18 +250,21 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		} if( e.getSource() == composite2.getRadioEnumerator() ){
 			modelSelected1 = 9;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == composite2.getRadioFacet() ){
+		} if( e.getSource() == composite2.getRadioCertifier() ){
 			modelSelected1 = 10;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		} if( e.getSource() == composite2.getRadioBinding() ){
 			modelSelected1 = 11;
+			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
+		} if( e.getSource() == composite2.getRadioTactical() ){
+			modelSelected1 = 12;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		}
 		
 		Object source = e.getSource();
 		if (source instanceof Button) {
 			Button button = (Button) source;
-		    composite2.getRadioButtonConcrete().setEnabled(!button.getText().equals(HFacetComponent.KIND) && ! button.getText().equals(HQualifierComponent.KIND));
+		    composite2.getRadioButtonConcrete().setEnabled(!button.getText().equals(HQualifierComponent.KIND));
 		}
 		
 	}	

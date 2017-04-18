@@ -423,7 +423,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 case Constants.KIND_PLATFORM:
                 case Constants.KIND_QUALIFIER:
 			    case Constants.KIND_BINDING:
-				case Constants.KIND_PROXY:
+				case Constants.KIND_TACTICAL:
+				case Constants.KIND_CERTIFIER:
                 case Constants.KIND_SYNCHRONIZER: cid = createInstanceBaseForAllKinds(instanceName, className, properties); break;
 				default:
 					Console.WriteLine ("Unrecognized component kind: " + kind);
