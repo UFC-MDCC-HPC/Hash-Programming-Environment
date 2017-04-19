@@ -26,20 +26,22 @@ namespace br.ufc.pargo.hpe.kinds
 
 		public abstract void setData ();
 
+		public abstract string Orchestration {get; }
+
 		public override void main()
 		{
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
 			setData();		
-			CerificationResult result = perform_certify ();
+			CerificationResult result = perform_certify (Orchestration);
 
 			sw.Stop();
 
 			Console.WriteLine("Tempo total de verificação={0} : INCONCLUSIVE ? {1}",sw.Elapsed, result == CerificationResult.Inconclusive);
 		}
 
-		private CerificationResult perform_certify()
+		private CerificationResult perform_certify(string orchestration)
 		{
 			throw new Exception ("TODO perform_certify");
 		}
