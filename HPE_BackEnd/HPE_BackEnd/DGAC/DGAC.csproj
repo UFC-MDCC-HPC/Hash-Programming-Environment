@@ -483,6 +483,15 @@
     <Compile Include="..\..\DGAC\base\SAFe_workflow_V6.cs">
       <Link>base\SAFe_workflow_V6.cs</Link>
     </Compile>
+    <Compile Include="..\..\DGAC\base\WorkflowParser.cs">
+      <Link>base\WorkflowParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\WorkflowAST.cs">
+      <Link>base\WorkflowAST.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\WorkflowOrchestrator.cs">
+      <Link>base\WorkflowOrchestrator.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

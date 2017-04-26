@@ -11,13 +11,13 @@
 		<complexContent>
 			<extension base="tns:SAFeSWL_OperationBaseType">
 				<choice maxOccurs="unbounded" minOccurs="1">
-					<element name="skip" type="tns:SAFeSWL_OperationBaseType"
+					<element name="skip" type="tns:SAFeSWL_OperationPrimitiveType"
 						maxOccurs="1" minOccurs="1">
 					</element>
-					<element name="break" type="tns:SAFeSWL_OperationBaseType"
+					<element name="break" type="tns:SAFeSWL_OperationPrimitiveType"
 						maxOccurs="1" minOccurs="1">
 					</element>
-					<element name="continue" type="tns:SAFeSWL_OperationBaseType"
+					<element name="continue" type="tns:SAFeSWL_OperationPrimitiveType"
 						maxOccurs="1" minOccurs="1">
 					</element>
 					<element name="start" type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType"
@@ -40,24 +40,7 @@
 					</element>
 					<element name="choice" maxOccurs="1" minOccurs="1" type="tns:SAFeSWL_OperationChoiceType">
 					</element>
-					<element name="iterate" maxOccurs="1" minOccurs="1">
-						<complexType>
-							<complexContent>
-								<extension base="tns:SAFeSWL_OperationBaseType">
-									<sequence>
-										<element name="operation"
-											type="tns:SAFeSWL_OperationManyType" maxOccurs="unbounded"
-											minOccurs="1">
-										</element>
-									</sequence>
-									<attribute name="max" type="int">
-									</attribute>
-									<attribute name="iter_label"
-										type="string">
-									</attribute>
-								</extension>
-							</complexContent>
-						</complexType>
+					<element name="iterate" maxOccurs="1" minOccurs="1" type="tns:SAFeSWL_OperationAnyType">
 					</element>
 				</choice>
 			</extension>
@@ -151,6 +134,9 @@
 		<complexContent>
 			<extension base="tns:SAFeSWL_OperationAnyType">
 
+				<sequence>
+					<element name="branch" type="tns:SAFeSWL_OperationAnyType"></element>
+				</sequence>
 				<attribute name="id_port" type="string"></attribute>
 				<attribute name="action" type="string"></attribute>
 			</extension>
