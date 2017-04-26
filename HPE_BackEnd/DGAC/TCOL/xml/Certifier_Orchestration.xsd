@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="urn:Certifier_Orchestration" targetNamespace="http://www.example.org/Certifier_Orchestration"
+	xmlns:tns="http://www.example.org/Certifier_Orchestration" elementFormDefault="qualified">
+
+	<element name="orchestration" type="tns:XMLCertifierOperation"></element>
+
+	<complexType name="XMLCertifierOperation">
+		<complexContent>
+			<extension base="tns:XMLCertifierBase">
+				<choice>
+					<element name="skip_oper" type="tns:XMLCertifierBase"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="break_oper" type="tns:XMLCertifierBase"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="continue_oper" type="tns:XMLCertifierBase"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="start_oper" type="tns:XMLCertifierPrimOper"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="wait_oper" type="tns:XMLCertifierPrimOper"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="cancel_oper" type="tns:XMLCertifierPrimOper"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="perform_oper" maxOccurs="1" minOccurs="1"
+						type="tns:XMLCertifierAction">
+					</element>
+					<element name="sequence_oper" type="tns:XMLCertifierCompOper"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="parallel_oper" type="tns:XMLCertifierCompOper"
+						maxOccurs="1" minOccurs="1">
+					</element>
+					<element name="select_oper" maxOccurs="1" minOccurs="1" type="tns:selectoperComplexType">
+					</element>
+					<element name="switch_oper" maxOccurs="1" minOccurs="1" type="tns:switchoperComplexType">
+					</element>
+					<element name="repeat_oper" maxOccurs="1" minOccurs="1">
+						<complexType>
+							<complexContent>
+								<extension base="tns:XMLCertifierBase">
+									<sequence>
+										<element name="operation"
+											type="tns:XMLCertifierOperation" maxOccurs="unbounded" minOccurs="1">
+										</element>
+									</sequence>
+									<attribute name="max" type="int">
+									</attribute>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="XMLCertifierBase">
+		<attribute name="order" type="int"></attribute>
+		<attribute name="value" type="string"></attribute>
+		<attribute name="oper_name" type="string"></attribute>
+		<attribute name="level" type="int"></attribute>
+	</complexType>
+
+	<complexType name="XMLCertifierAction">
+		<complexContent>
+			<extension base="tns:XMLCertifierBase">
+				<attribute name="action" type="tns:ActionType"
+					use="required">
+				</attribute>
+				<attribute name="comp_id" type="string"></attribute>
+				<attribute name="action_id" type="string"
+					use="required">
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="XMLCertifierPrimOper">
+		<complexContent>
+			<extension base="tns:XMLCertifierBase">
+				<sequence>
+
+					<element name="action" type="tns:XMLCertifierAction"></element>
+
+				</sequence>
+				<attribute name="handle_id" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="XMLCertifierCompOper">
+		<complexContent>
+			<extension base="tns:XMLCertifierBase">
+				<sequence>
+					<element name="operation" type="tns:XMLCertifierOperation"
+						maxOccurs="unbounded" minOccurs="1"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="ActionType">
+		<restriction base="string">
+			<enumeration value="resolve" />
+			<enumeration value="deploy" />
+			<enumeration value="instantiate" />
+			<enumeration value="release" />
+			<enumeration value="compute" />
+			
+			
+			
+		</restriction>
+	</simpleType>
+	<complexType name="selectoperComplexType">
+		<complexContent>
+			<extension base="tns:XMLCertifierBase">
+				<sequence>
+					<element minOccurs="1" maxOccurs="unbounded"
+						name="choice">
+						<complexType>
+							<complexContent>
+								<extension
+									base="tns:XMLCertifierBase">
+									<sequence>
+										<element minOccurs="1"
+											maxOccurs="1" name="operation"
+											type="tns:XMLCertifierOperation">
+										</element>
+									</sequence>
+									<attribute name="comp_id"
+										type="string">
+									</attribute>
+									<attribute name="action_id"
+										type="string">
+									</attribute>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</sequence>
+				<attribute name="chosen" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="switchoperComplexType">
+		<complexContent>
+			<extension base="tns:XMLCertifierBase">
+				<sequence>
+					<element minOccurs="1" maxOccurs="unbounded"
+						name="choice">
+						<complexType>
+							<complexContent>
+								<extension base="tns:XMLCertifierBase">
+									<sequence>
+										<element minOccurs="1"
+											maxOccurs="1" name="operation"
+											type="tns:XMLCertifierOperation">
+										</element>
+									</sequence>
+									<attribute name="condition"
+										type="string">
+									</attribute>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>

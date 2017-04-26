@@ -68,6 +68,9 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="mscorlib" />
+    <Reference Include="ExpressionEvaluator">
+      <HintPath>..\..\bin\ExpressionEvaluator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -492,6 +495,93 @@
     <Compile Include="..\..\DGAC\base\WorkflowOrchestrator.cs">
       <Link>base\WorkflowOrchestrator.cs</Link>
     </Compile>
+    <Compile Include="..\..\DGAC\TCOL\action.logic\LogicAction.cs">
+      <Link>TCOL\action.logic\LogicAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\action.logic\LogicActionInstantiate.cs">
+      <Link>TCOL\action.logic\LogicActionInstantiate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\grammar\CertifierOrchestration.cs">
+      <Link>TCOL\grammar\CertifierOrchestration.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\grammar\CertifierOrchestrationElement.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationElement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\grammar\CertifierOrchestrationOperation.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationOperation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\grammar\CertifierOrchestrationParser.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\grammar\CertifierOrchestrationValidator.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\grammar\Certifier_Orchestration.cs">
+      <Link>TCOL\grammar\Certifier_Orchestration.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\grammar\ObjectFactory.cs">
+      <Link>TCOL\grammar\ObjectFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\util\CertifierConsoleLogger.cs">
+      <Link>TCOL\util\CertifierConsoleLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\util\CertifierConstants.cs">
+      <Link>TCOL\util\CertifierConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\util\MultikeyConcurrentDictionary.cs">
+      <Link>TCOL\util\MultikeyConcurrentDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor\AbstractCertifierElementLogic.cs">
+      <Link>TCOL\visitor\AbstractCertifierElementLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor\CertifierVisitorImpl.cs">
+      <Link>TCOL\visitor\CertifierVisitorImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor\ICertifierVisitor.cs">
+      <Link>TCOL\visitor\ICertifierVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicBreakOper.cs">
+      <Link>TCOL\visitor.logic\LogicBreakOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicCancelOper.cs">
+      <Link>TCOL\visitor.logic\LogicCancelOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicContinueOper.cs">
+      <Link>TCOL\visitor.logic\LogicContinueOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicParallelOper.cs">
+      <Link>TCOL\visitor.logic\LogicParallelOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicPerformOper.cs">
+      <Link>TCOL\visitor.logic\LogicPerformOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicRepeatOper.cs">
+      <Link>TCOL\visitor.logic\LogicRepeatOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicSelectOper.cs">
+      <Link>TCOL\visitor.logic\LogicSelectOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicSequenceOper.cs">
+      <Link>TCOL\visitor.logic\LogicSequenceOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicSkipOper.cs">
+      <Link>TCOL\visitor.logic\LogicSkipOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicStartOper.cs">
+      <Link>TCOL\visitor.logic\LogicStartOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicSwitchOper.cs">
+      <Link>TCOL\visitor.logic\LogicSwitchOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\LogicWaitOper.cs">
+      <Link>TCOL\visitor.logic\LogicWaitOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\visitor.logic\ParallelJob.cs">
+      <Link>TCOL\visitor.logic\ParallelJob.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TCOL\action.logic\LogicActionCompute.cs">
+      <Link>TCOL\action.logic\LogicActionCompute.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -547,6 +637,18 @@
     <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base">
       <Link>connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base</Link>
     </None>
+    <None Include="..\..\DGAC\TCOL\xml\Certifier_Orchestration.xsd">
+      <Link>TCOL\xml\Certifier_Orchestration.xsd</Link>
+    </None>
+    <None Include="..\..\DGAC\TCOL\xml\orchestration_sequence_parallel_start.xml">
+      <Link>TCOL\xml\orchestration_sequence_parallel_start.xml</Link>
+    </None>
+    <None Include="..\..\DGAC\TCOL\xml\orchestration_sequence_parallel_switch.xml">
+      <Link>TCOL\xml\orchestration_sequence_parallel_switch.xml</Link>
+    </None>
+    <None Include="..\..\DGAC\TCOL\xml\orchestration_swc2.xml">
+      <Link>TCOL\xml\orchestration_swc2.xml</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -570,6 +672,7 @@
     <Folder Include="bin\" />
     <Folder Include="instantiator\" />
     <Folder Include="component_ref\" />
+    <Folder Include="TCOL\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

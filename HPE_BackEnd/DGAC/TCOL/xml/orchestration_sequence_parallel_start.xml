@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:orchestration xmlns:tns="http://www.example.org/Certifier_Orchestration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/Certifier_Orchestration Certifier_Orchestration.xsd ">
+
+	<tns:sequence_oper>
+
+		
+		<tns:operation>
+			<tns:parallel_oper>
+				<tns:operation>
+					<tns:perform_oper action="instantiate" comp_id="0"/>
+				</tns:operation>
+				<tns:operation>
+						<tns:perform_oper action="instantiate" comp_id="1" />
+				</tns:operation>
+			</tns:parallel_oper>
+		</tns:operation>
+		
+		<tns:operation>
+			<tns:parallel_oper>
+				<tns:operation>
+					<tns:start_oper handle_id="0">
+						<tns:action action="compute" comp_id ="0" action_id="verify_perform"/>	
+					</tns:start_oper>
+				</tns:operation>
+				<tns:operation>
+					<tns:start_oper handle_id="1">
+						<tns:action action="compute" comp_id ="1" action_id="verify_perform"/>	
+					</tns:start_oper>
+				</tns:operation>
+			</tns:parallel_oper>
+		</tns:operation>
+		
+	</tns:sequence_oper>
+
+	
+	
+</tns:orchestration>

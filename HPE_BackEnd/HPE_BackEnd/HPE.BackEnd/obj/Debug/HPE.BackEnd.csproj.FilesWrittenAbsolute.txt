@@ -3,3 +3,8 @@
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/bin/DGAC.dll.mdb
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/bin/MPI.dll
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/bin/MySql.Data.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/bin/DGAC.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/bin/DGAC.dll.mdb
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/bin/MPI.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPE.BackEnd/bin/MySql.Data.dll
