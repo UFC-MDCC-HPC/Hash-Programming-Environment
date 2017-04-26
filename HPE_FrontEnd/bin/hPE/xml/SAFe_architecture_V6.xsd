@@ -138,9 +138,9 @@
 	</complexType>
 
 	<complexType name="SAFeSWL_Port">
-        <attribute name="id_component" type="string"></attribute>
+        <attribute name="id_component" type="string" use="optional"></attribute>
         <attribute name="id_port" type="string"></attribute>
-        <attribute name="facet" type="int"></attribute>
+        <attribute name="facet" type="int" use="optional" default="0"></attribute>
         <attribute name="wsdl_path" type="string" use="optional"></attribute>
 	</complexType>
 

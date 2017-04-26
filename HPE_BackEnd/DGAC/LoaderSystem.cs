@@ -648,8 +648,8 @@ namespace br.ufc.pargo.hpe.backend
 				string cRef = kv1.Key;
 				if (platforms.Contains (cRef)) continue;
 				AbstractComponentFunctor acf = backend.DGAC.BackEnd.acfdao.retrieve_libraryPath(c.component_ref);
-				if (c_unit_mapping.ContainsKey(kv1.Key))
-					foreach (Instantiator.UnitMappingType u in c_unit_mapping[kv1.Key]) 					
+				if (c_unit_mapping.ContainsKey(cRef))
+					foreach (Instantiator.UnitMappingType u in c_unit_mapping[cRef]) 					
 					{
 						string uRef = u.unit_id;
 						string qualified_class_name = backend.DGAC.BackEnd.idao.retrieve (acf.Id_abstract, uRef).Class_name;
@@ -668,7 +668,7 @@ namespace br.ufc.pargo.hpe.backend
 				}
 			}
 
-			IDictionary<SliceList, IList<int>> slice_mapping = new Dictionary<SliceList, IList<int>> ();
+			IList<SliceList> slice_mapping = new List<SliceList> ();
 
 			SliceList slice_list_root = null; 
 
@@ -677,11 +677,9 @@ namespace br.ufc.pargo.hpe.backend
 				/* The SAFe facet (0) is treated separately. */
 				if (r.Key != 0) 
 				{
-					bool hasSlice = slice_mapping.ContainsKey (r.Value);
-					IList<int> node_list = hasSlice ? slice_mapping [r.Value] : new List<int> ();
-					node_list.Add (r.Key);
+					bool hasSlice = slice_mapping.Contains (r.Value);
 					if (!hasSlice)
-						slice_mapping.Add (r.Value, node_list);
+						slice_mapping.Add (r.Value);
 				} 
 				else 
 				{
@@ -808,7 +806,7 @@ namespace br.ufc.pargo.hpe.backend
 
 			// PEER UNITS
 			int unit_counter = 0;
-			foreach (KeyValuePair<SliceList,IList<int>> r in slice_mapping) 
+			foreach (SliceList slice_list in slice_mapping) 
 			{
 				string uname = "peer_" + (unit_counter);
 				string iname = "IPeer_" + (unit_counter++);
@@ -866,7 +864,7 @@ namespace br.ufc.pargo.hpe.backend
 
 				IDictionary<string, IList<PortSliceType>> ports = new Dictionary<string, IList<PortSliceType>>();
 
-				foreach (Tuple<string,string,string> slice in r.Key.Value) 
+				foreach (Tuple<string,string,string> slice in slice_list.Value) 
 				{
 					IList<string> slice_port_list = new List<string> ();
 
@@ -1769,7 +1767,7 @@ namespace br.ufc.pargo.hpe.backend
 			return r;
 		}
 		/*
-		public static void deploySystemComponent(SAFeSWL.Architecture workflow_architecture, IDictionary<string,Instantiator.UnitMappingType[]> all_unit_mapping) 
+		public static void deploySystemComponent(SAFeSWL_Architecture workflow_architecture, IDictionary<string,Instantiator.UnitMappingType[]> all_unit_mapping) 
 		{
 			string app_name = null;
 			string application_component_name = null;
@@ -1831,7 +1829,7 @@ namespace br.ufc.pargo.hpe.backend
 			}
 		}
 */
-		public static IDictionary<string,int[]> componentsInPlatform (SAFeSWL.Architecture arch_desc, string platform_ref)
+		public static IDictionary<string,int[]> componentsInPlatform (SAFeSWL_Architecture arch_desc, string platform_ref)
 		{
 			IDictionary<string,int[]> result = new Dictionary<string, int[]>();
 
@@ -1858,11 +1856,11 @@ namespace br.ufc.pargo.hpe.backend
 		}
 
 		/* Placement of components and bindings */
-		public static IDictionary<string,Tuple<int,string>[]> placementOfComponents (SAFeSWL.Architecture arch_desc)
+		public static IDictionary<string,Tuple<int,string>[]> placementOfComponents (SAFeSWL_Architecture arch_desc)
 		{
 			IDictionary<string, Tuple<int,string>[]> result_1 = placementOfComputationsAndConnectors (arch_desc);
-			result_1.Add (arch_desc.application.name, new Tuple<int,string>[1]{new Tuple<int, string>(0, "platform_SAFe")});
-			result_1.Add (arch_desc.workflow.name, new Tuple<int,string>[1]{new Tuple<int, string>(0, "platform_SAFe")});
+			result_1.Add (arch_desc.application.id_component, new Tuple<int,string>[1]{new Tuple<int, string>(0, "platform_SAFe")});
+			result_1.Add (arch_desc.workflow.id_component, new Tuple<int,string>[1]{new Tuple<int, string>(0, "platform_SAFe")});
 			IDictionary<string, Tuple<int,string>[]> result_2 = placementOfEnvironmentBindings (arch_desc, result_1);
 			IDictionary<string, Tuple<int,string>[]> result_3 = placementOfTaskBindings (arch_desc, result_1);
 
@@ -1875,26 +1873,26 @@ namespace br.ufc.pargo.hpe.backend
 			return result_1;
 		}
 
-		public static IDictionary<string,Tuple<int,string>[]> placementOfEnvironmentBindings (SAFeSWL.Architecture arch_desc, IDictionary<string, Tuple<int,string>[]> placement)
+		public static IDictionary<string,Tuple<int,string>[]> placementOfEnvironmentBindings (SAFeSWL_Architecture arch_desc, IDictionary<string, Tuple<int,string>[]> placement)
 		{
 			IDictionary<string, Tuple<int,string>[]> result = new Dictionary<string, Tuple<int,string>[]> ();
 
-			IDictionary<int, SAFeSWL.Component> cids = getComponentsOfArchitecture (arch_desc);
+			IDictionary<string, SAFeSWL_Component> cids = getComponentsOfArchitecture (arch_desc);
 
-			BindingEnvironment[] bs = arch_desc.env_binding;
-			foreach (BindingEnvironment b in bs) 
+			SAFeSWL_BindingService[] bs = arch_desc.service_binding;
+			foreach (SAFeSWL_BindingService b in bs) 
 			{
-				SAFeSWL.Component user_partner = b.uses_port.id_component == arch_desc.application.id ? 
+				SAFeSWL_Component user_partner = b.user_port.id_component == arch_desc.application.id_component ? 
 					arch_desc.application : 
-					cids [b.uses_port.id_component];
+					cids [b.user_port.id_component];
 
-				SAFeSWL.Component prov_parnter = b.provides_port.id_component == arch_desc.application.id ? 
+				SAFeSWL_Component prov_parnter = b.provider_port.id_component == arch_desc.application.id_component ? 
 					arch_desc.application : 
-					cids [b.provides_port.id_component];
-				if (!(prov_parnter is SAFeSWL.Platform)) 
+					cids [b.provider_port.id_component];
+				if (!(prov_parnter is SAFeSWL_Platform)) 
 				{
-					string user_place = placement [user_partner.name] [b.uses_port.facet].Item2;
-					string prov_place = placement [prov_parnter.name] [b.provides_port.facet].Item2;
+					string user_place = placement [user_partner.id_component] [b.user_port.facet].Item2;
+					string prov_place = placement [prov_parnter.id_component] [b.provider_port.facet].Item2;
 
 					if (user_place.Equals (prov_place))
 						result.Add (b.name, new Tuple<int,string>[1] { new Tuple<int, string> (0, user_place) });
@@ -1908,22 +1906,22 @@ namespace br.ufc.pargo.hpe.backend
 			return result;
 		}
 
-		public static IDictionary<string,Tuple<int,string>[]> placementOfTaskBindings (SAFeSWL.Architecture arch_desc, IDictionary<string, Tuple<int,string>[]> placement)
+		public static IDictionary<string,Tuple<int,string>[]> placementOfTaskBindings (SAFeSWL_Architecture arch_desc, IDictionary<string, Tuple<int,string>[]> placement)
 		{
 			IDictionary<string, Tuple<int,string>[]> result = new Dictionary<string, Tuple<int,string>[]> ();
 
-			IDictionary<int, SAFeSWL.Component> cids = getComponentsOfArchitecture (arch_desc);
+			IDictionary<string, SAFeSWL_Component> cids = getComponentsOfArchitecture (arch_desc);
 
-			BindingTask[] bs = arch_desc.task_binding;
-			foreach (BindingTask b in bs) 
+			SAFeSWL_BindingAction[] bs = arch_desc.action_binding;
+			foreach (SAFeSWL_BindingAction b in bs) 
 			{
 				IList<Tuple<int,string>> binding_platforms = new List<Tuple<int, string>> (); 
 
 				int i = 0;
-				foreach (PortTask port in b.peer) 
+				foreach (SAFeSWL_PortAction port in b.peer) 
 				{
-					SAFeSWL.Component peer_partner = cids[port.id_component];
-					string peer_place = placement[peer_partner.name][port.facet].Item2;
+					SAFeSWL_Component peer_partner = cids[port.id_component];
+					string peer_place = placement[peer_partner.id_component][port.facet].Item2;
 					binding_platforms.Add (new Tuple<int, string> (i++,peer_place));
 				}
 				Tuple<int,string>[] binding_platforms_array = new Tuple<int, string>[binding_platforms.Count];
@@ -1935,25 +1933,25 @@ namespace br.ufc.pargo.hpe.backend
 			return result;
 		}
 
-		public static IDictionary<string, IDictionary<string, BindingEnvironment>> bindingsOfComponentInArchitecture (SAFeSWL.Architecture arch_desc)
+		public static IDictionary<string, IDictionary<string, SAFeSWL_BindingService>> bindingsOfComponentInArchitecture (SAFeSWL_Architecture arch_desc)
 		{
-			IDictionary<string, IDictionary<string, BindingEnvironment>> result = new Dictionary<string, IDictionary<string, BindingEnvironment>> ();
+			IDictionary<string, IDictionary<string, SAFeSWL_BindingService>> result = new Dictionary<string, IDictionary<string, SAFeSWL_BindingService>> ();
 
-			SAFeSWL.BindingEnvironment[] bs = arch_desc.env_binding;
-			SAFeSWL.Component[] cs = arch_desc.body;
-			foreach (SAFeSWL.Component c in cs) 
-				if (!(c is SAFeSWL.Platform))
+			SAFeSWL_BindingService[] bs = arch_desc.service_binding;
+			SAFeSWL_Component[] cs = arch_desc.solution;
+			foreach (SAFeSWL_Component c in cs) 
+				if (!(c is SAFeSWL_Platform))
 				{
-					foreach (SAFeSWL.BindingEnvironment b in bs)
+					foreach (SAFeSWL_BindingService b in bs)
 					{
-						if (c.id == b.uses_port.id_component || c.id == b.provides_port.id_component) 
+						if (c.id_component == b.user_port.id_component || c.id_component == b.provider_port.id_component) 
 						{
-							string port_name = c.id == b.uses_port.id_component ? b.uses_port.name : b.provides_port.name;
-							IDictionary<string, BindingEnvironment> bindings_of_c;
-							if (!result.TryGetValue (c.name, out bindings_of_c))
+							string port_name = c.id_component == b.user_port.id_component ? b.user_port.id_port : b.provider_port.id_port;
+							IDictionary<string, SAFeSWL_BindingService> bindings_of_c;
+							if (!result.TryGetValue (c.id_component, out bindings_of_c))
 							{
-								bindings_of_c = new Dictionary<string, BindingEnvironment> ();
-								result.Add (c.name, bindings_of_c);
+								bindings_of_c = new Dictionary<string, SAFeSWL_BindingService> ();
+								result.Add (c.id_component, bindings_of_c);
 							}
 
 							bindings_of_c.Add (port_name, b);
@@ -1965,24 +1963,24 @@ namespace br.ufc.pargo.hpe.backend
 			return result;
 		}
 
-		public static IDictionary<string,Tuple<int,string>[]> placementOfComputationsAndConnectors (SAFeSWL.Architecture arch_desc)
+		public static IDictionary<string,Tuple<int,string>[]> placementOfComputationsAndConnectors (SAFeSWL_Architecture arch_desc)
 		{
 			IDictionary<string, Tuple<int,string>[]> result = new Dictionary<string, Tuple<int,string>[]> ();
 
-			IDictionary<int, SAFeSWL.Component> cids = getComponentsOfArchitecture (arch_desc);
-			IDictionary<string, IDictionary<string, BindingEnvironment>> bs = bindingsOfComponentInArchitecture (arch_desc);
+			IDictionary<string, SAFeSWL_Component> cids = getComponentsOfArchitecture (arch_desc);
+			IDictionary<string, IDictionary<string, SAFeSWL_BindingService>> bs = bindingsOfComponentInArchitecture (arch_desc);
 
 			/* TODO: Take repository into consideration. Repositories are platforms with a service for accessing data. */
 
 			// Take the platform of each computation component
-			SAFeSWL.Component[] cs = arch_desc.body;
-			foreach (SAFeSWL.Component c in cs) 
+			SAFeSWL_Component[] cs = arch_desc.solution;
+			foreach (SAFeSWL_Component c in cs) 
 			{
-				if (c is SAFeSWL.Computation) 
+				if (c is SAFeSWL_Computation) 
 				{
-					BindingEnvironment b = bs [c.name]["platform"];
-					SAFeSWL.Component c_platform = cids[b.provides_port.id_component];
-					result.Add (c.name, new Tuple<int,string>[1] { new Tuple<int,string>(0, c_platform.name) });
+					SAFeSWL_BindingService b = bs [c.id_component]["platform"];
+					SAFeSWL_Component c_platform = cids[b.provider_port.id_component];
+					result.Add (c.id_component, new Tuple<int,string>[1] { new Tuple<int,string>(0, c_platform.id_component) });
 				}
 			}
 
@@ -1990,26 +1988,26 @@ namespace br.ufc.pargo.hpe.backend
 			IDictionary<string, IDictionary<int,IList<string>>> connector_places = new Dictionary<string, IDictionary<int,IList<string>>> ();
 
 			// Take the platforms of each connector component in connector_places
-			foreach (SAFeSWL.Component c in cs) 
+			foreach (SAFeSWL_Component c in cs) 
 			{
-				if (c is SAFeSWL.Connector) 
+				if (c is SAFeSWL_Connector) 
 				{
-					IDictionary<string, BindingEnvironment> bindings_of_c = bs [c.name];
-					foreach (BindingEnvironment binding_of_c in bindings_of_c.Values) 
+					IDictionary<string, SAFeSWL_BindingService> bindings_of_c = bs [c.id_component];
+					foreach (SAFeSWL_BindingService binding_of_c in bindings_of_c.Values) 
 					{
-						PortEnvironment port_of_other_c = binding_of_c.uses_port.id_component == c.id ? (PortEnvironment) binding_of_c.provides_port : (PortEnvironment) binding_of_c.uses_port;
-						PortEnvironment port_of_c = binding_of_c.uses_port.id_component != c.id ? (PortEnvironment) binding_of_c.provides_port : (PortEnvironment) binding_of_c.uses_port;
-						Debug.Assert (port_of_other_c.id_component != c.id);
-						SAFeSWL.Component other_c = cids[port_of_other_c.id_component];
-						if (other_c is SAFeSWL.Computation) 
+						SAFeSWL_PortEnvironment port_of_other_c = binding_of_c.user_port.id_component == c.id_component ? (SAFeSWL_PortEnvironment ) binding_of_c.provider_port : (SAFeSWL_PortEnvironment ) binding_of_c.user_port;
+						SAFeSWL_PortEnvironment  port_of_c = binding_of_c.user_port.id_component != c.id_component ? (SAFeSWL_PortEnvironment ) binding_of_c.provider_port : (SAFeSWL_PortEnvironment ) binding_of_c.user_port;
+						Debug.Assert (port_of_other_c.id_component != c.id_component);
+						SAFeSWL_Component other_c = cids[port_of_other_c.id_component];
+						if (other_c is SAFeSWL_Computation) 
 						{
 							IDictionary<int,IList<string>> places;
-							if (!connector_places.TryGetValue (c.name, out places)) 
+							if (!connector_places.TryGetValue (c.id_component, out places)) 
 							{
 								places = new Dictionary<int,IList<string>> ();
-								connector_places.Add (c.name, places);
+								connector_places.Add (c.id_component, places);
 							}
-							string platform = result [other_c.name][0].Item2;
+							string platform = result [other_c.id_component][0].Item2;
 							IList<string> platform_list;
 							if (!places.TryGetValue (port_of_c.facet, out platform_list)) 
 							{
@@ -2050,39 +2048,37 @@ namespace br.ufc.pargo.hpe.backend
 			return result;
 		}
 
-		private static IDictionary<int, SAFeSWL.Component> getComponentsOfArchitecture (SAFeSWL.Architecture arch_desc)
+		private static IDictionary<string, SAFeSWL_Component> getComponentsOfArchitecture (SAFeSWL_Architecture arch_desc)
 		{
-			IDictionary<int, SAFeSWL.Component> result = new Dictionary<int, SAFeSWL.Component> ();
+			IDictionary<string, SAFeSWL_Component> result = new Dictionary<string, SAFeSWL_Component> ();
 
-			result.Add (arch_desc.application.id, arch_desc.application);
-			result.Add (arch_desc.workflow.id, arch_desc.workflow);
+			result.Add (arch_desc.application.id_component, arch_desc.application);
+			result.Add (arch_desc.workflow.id_component, arch_desc.workflow);
 
-			SAFeSWL.Component[] cs = arch_desc.body;
-			foreach (SAFeSWL.Component c in cs) 
-				result.Add (c.id, c);
+			SAFeSWL_Component[] cs = arch_desc.solution;
+			foreach (SAFeSWL_Component c in cs) 
+				result.Add (c.id_component, c);
 
 			return result;
 		}
 
-		private static IDictionary<string, SAFeSWL.Component> getComponentsOfArchitectureByName (SAFeSWL.Architecture arch_desc)
+		private static IDictionary<string, SAFeSWL_Component> getComponentsOfArchitectureByName (SAFeSWL_Architecture arch_desc)
 		{
-			IDictionary<string, SAFeSWL.Component> result = new Dictionary<string, SAFeSWL.Component> ();
+			IDictionary<string, SAFeSWL_Component> result = new Dictionary<string, SAFeSWL_Component> ();
 
-			result.Add (arch_desc.application.name, arch_desc.application);
-			result.Add (arch_desc.workflow.name, arch_desc.workflow);
+			result.Add (arch_desc.application.id_component, arch_desc.application);
+			result.Add (arch_desc.workflow.id_component, arch_desc.workflow);
 
-			SAFeSWL.Component[] cs = arch_desc.body;
-			foreach (SAFeSWL.Component c in cs) 
-				result.Add (c.name, c);
+			SAFeSWL_Component[] cs = arch_desc.solution;
+			foreach (SAFeSWL_Component c in cs) 
+				result.Add (c.id_component, c);
 
 			return result;
 		}
 			
 
 		public static void readArchitecture
-								 (SAFeSWL.Architecture workflow_architecture,
-							      IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts,
-								  IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping,
+								 (SAFeSWL_Architecture workflow_architecture,
 		                          ref string app_name,
 								  ref string application_component_name,
 								  ref string workflow_component_name,
@@ -2090,99 +2086,96 @@ namespace br.ufc.pargo.hpe.backend
 							      ref IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow, 
 								  ref IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system,
 			                      ref IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task,
-			                      ref IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts_in_platform,
-			                      ref IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping_in_platform,
 			                      ref IList<string> platform_list)
 		{
 			app_name = workflow_architecture.application_name;
-			workflow_component_name = workflow_architecture.workflow.name;
-			application_component_name = workflow_architecture.application.name;
+			workflow_component_name = workflow_architecture.workflow.id_component;
+			application_component_name = workflow_architecture.application.id_component;
 
 			bindings_application = new List<Tuple<string, string, EnvironmentPortType, string>> ();
 			bindings_workflow = new List<Tuple<string, string, EnvironmentPortType, string>> ();
 			bindings_system = new List<Tuple<string, Tuple<string, string,int>[]>> ();
-			contracts_in_platform = new Dictionary<string,Instantiator.ComponentFunctorApplicationType> ();
 			platform_list = new List<string> ();
 			//platform_list.Add ("platform_SAFe");
 
-			SAFeSWL.Component application_component = workflow_architecture.application;
-			SAFeSWL.Component workflow_component = workflow_architecture.workflow;
+			SAFeSWL_Component application_component = workflow_architecture.application;
+			SAFeSWL_Component workflow_component = workflow_architecture.workflow;
 
-			IDictionary<int, string> uses_port_ownership = new Dictionary<int, string> ();
-			IDictionary<int, string> prov_port_ownership = new Dictionary<int, string> ();
-			IDictionary<int, string> task_port_ownership = new Dictionary<int, string> ();
+			IDictionary<string, string> uses_port_ownership = new Dictionary<string, string> ();
+			IDictionary<string, string> prov_port_ownership = new Dictionary<string, string> ();
+			IDictionary<string, string> task_port_ownership = new Dictionary<string, string> ();
 
-			IDictionary<string,SAFeSWL.Component> components = getComponentsOfArchitectureByName (workflow_architecture);
+			IDictionary<string,SAFeSWL_Component> components = getComponentsOfArchitectureByName (workflow_architecture);
 
-			foreach (SAFeSWL.Component c in components.Values) 
+			foreach (SAFeSWL_Component c in components.Values) 
 			{
-				string cRef = c.name;
+				string cRef = c.id_component;
 
-				if (c is SAFeSWL.Platform)
+				if (c is SAFeSWL_Platform)
 					platform_list.Add (cRef);
 						
-				SAFeSWL.PortEnvironmentUses[] uses_port_list = c.uses_port;
-				SAFeSWL.PortEnvironmentProvides[] prov_port_list = c.provides_port; 
-				SAFeSWL.PortTask[] task_port_list = c is SAFeSWL.Worker ? ((SAFeSWL.Worker)c).task_port : null; 
+				SAFeSWL_PortEnvironmentUser[] uses_port_list = c.user_port;
+				SAFeSWL_PortEnvironmentProvider[] prov_port_list = c.provider_port; 
+				SAFeSWL_PortAction[] task_port_list = c is SAFeSWL_Workflow ? ((SAFeSWL_Workflow)c).action_port : null; 
 
 				if (uses_port_list != null)
-					foreach (SAFeSWL.PortEnvironmentUses p in uses_port_list)
-						uses_port_ownership.Add (p.id, cRef);
+					foreach (SAFeSWL_PortEnvironmentUser p in uses_port_list)
+						uses_port_ownership.Add (p.id_port, cRef);
 
 				if (prov_port_list != null)
-					foreach (SAFeSWL.PortEnvironmentProvides p in prov_port_list)
-						prov_port_ownership.Add (p.id, cRef);
+					foreach (SAFeSWL_PortEnvironmentProvider p in prov_port_list)
+						prov_port_ownership.Add (p.id_port, cRef);
 
 				if (task_port_list != null)
-					foreach (SAFeSWL.PortTask p in task_port_list)
-						task_port_ownership.Add (p.id, cRef);
+					foreach (SAFeSWL_PortAction p in task_port_list)
+						task_port_ownership.Add (p.id_port, cRef);
 			}
 
-			SAFeSWL.BindingEnvironment[] env_bindings = workflow_architecture.env_binding;
-			foreach (SAFeSWL.BindingEnvironment e in env_bindings)
+			SAFeSWL_BindingService[] env_bindings = workflow_architecture.service_binding;
+			foreach (SAFeSWL_BindingService e in env_bindings)
 			{
 				EnvironmentPortType role;
-				if (e.uses_port.id_component == application_component.id) 
+				if (e.user_port.id_component == application_component.id_component) 
 				{
-					role = platform_list.Contains(prov_port_ownership [e.provides_port.id]) ? EnvironmentPortType.platform_user : EnvironmentPortType.user;
-					string cRef = prov_port_ownership [e.provides_port.id];
-					string pRef = e.provides_port.name;    
-					string pRefApp = e.uses_port.name; 
+					role = platform_list.Contains(prov_port_ownership [e.provider_port.id_port]) ? EnvironmentPortType.platform_user : EnvironmentPortType.user;
+					string cRef = prov_port_ownership [e.provider_port.id_port];
+					string pRef = e.provider_port.id_port;    
+					string pRefApp = e.user_port.id_port; 
 					bindings_application.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
 				} 
-				else if (e.provides_port.id_component == application_component.id) 
+				else if (e.provider_port.id_component == application_component.id_component) 
 				{					
 					role = EnvironmentPortType.provider;
-					string cRef = uses_port_ownership [e.uses_port.id];
-					string pRef = e.uses_port.name;    
-					string pRefApp = e.provides_port.name;
+					string cRef = uses_port_ownership [e.user_port.id_port];
+					string pRef = e.user_port.id_port;    
+					string pRefApp = e.provider_port.id_port;
 					bindings_application.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
 				} 
-				else if (e.uses_port.id_component == workflow_component.id) 
+				else if (e.user_port.id_component == workflow_component.id_component) 
 				{
-					role = platform_list.Contains(prov_port_ownership [e.provides_port.id]) ? EnvironmentPortType.platform_user : EnvironmentPortType.user;
-					string cRef = prov_port_ownership [e.provides_port.id];
-					string pRef = e.provides_port.name;    
-					string pRefApp = e.uses_port.name; 
+					role = platform_list.Contains(prov_port_ownership [e.provider_port.id_port]) ? EnvironmentPortType.platform_user : EnvironmentPortType.user;
+					string cRef = prov_port_ownership [e.provider_port.id_port];
+					string pRef = e.provider_port.id_port;    
+					string pRefApp = e.user_port.id_port; 
 					bindings_workflow.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
 				} 
-				else if (e.provides_port.id_component == workflow_component.id) 
+				else if (e.provider_port.id_component == workflow_component.id_component) 
 				{
 					role = EnvironmentPortType.provider;
-					string cRef = uses_port_ownership [e.uses_port.id];
-					string pRef = e.uses_port.name;
-					string pRefApp = e.provides_port.name; 
+					string cRef = uses_port_ownership [e.user_port.id_port];
+					string pRef = e.user_port.id_port;
+					string pRefApp = e.provider_port.id_port; 
 					bindings_workflow.Add (new Tuple<string, string, EnvironmentPortType, string> (cRef, pRef, role, pRefApp));
 				} 
 				else  // binding entre dois componentes de solução ... 
 				{
 					string id_binding = e.name;
-					string cRefUser = uses_port_ownership[e.uses_port.id];
-					string pRefUser = e.uses_port.name;
-					int facetUser = e.uses_port.facet;
-					string cRefProvider = prov_port_ownership[e.provides_port.id];
-					string pRefProvider = e.provides_port.name;
-					int facetProvider = e.provides_port.facet;
+					string cRefUser = uses_port_ownership[e.user_port.id_port];
+					string pRefUser = e.user_port.id_port;
+					int facetUser = e.user_port.facet;
+					string cRefProvider = prov_port_ownership[e.provider_port.id_port];
+					string pRefProvider = e.provider_port.id_port;
+					int facetProvider = e.provider_port.facet;
 					Tuple<string, string,int>[] peers = new Tuple<string, string, int>[2];
 					peers [0] = new Tuple<string, string, int> (cRefUser, pRefUser, facetUser);
 					peers [1] = new Tuple<string, string, int> (cRefProvider, pRefProvider, facetProvider);
@@ -2194,13 +2187,13 @@ namespace br.ufc.pargo.hpe.backend
 		
 			bindings_task = new List<Tuple<string, Tuple<string, string,int>[]>>();
 
-			foreach (SAFeSWL.BindingTask bt in workflow_architecture.task_binding) 
+			foreach (SAFeSWL_BindingAction bt in workflow_architecture.action_binding) 
 			{
 				IList<Tuple<string, string, int>> peer_list = new List<Tuple<string, string, int>> ();
-				foreach (SAFeSWL.PortTask pt in bt.peer) 
+				foreach (SAFeSWL_PortAction pt in bt.peer) 
 				{
-					string cRef = task_port_ownership[pt.id];
-					string pRef = pt.name;
+					string cRef = task_port_ownership[pt.id_port];
+					string pRef = pt.id_port;
 					int facet = pt.facet;
 					//if (cs.Contains (cRef)) 
 					peer_list.Add (new Tuple<string, string, int> (cRef, pRef, facet));
@@ -2211,15 +2204,10 @@ namespace br.ufc.pargo.hpe.backend
 				bindings_task.Add (new Tuple<string, Tuple<string, string, int>[]> (bt.name, peers));
 			}
 
-			unit_mapping_in_platform = new Dictionary<string, Instantiator.UnitMappingType[]> ();
-
-			unit_mapping_in_platform = unit_mapping;
-			contracts_in_platform = contracts;
-
 		}
 
 	/*	public static void readArchitecture2
-		(SAFeSWL.Architecture workflow_architecture,
+		(SAFeSWL_Architecture workflow_architecture,
 			string platform_ref,
 			IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts,
 			IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping,
@@ -2242,19 +2230,19 @@ namespace br.ufc.pargo.hpe.backend
 			bindings_system = new List<Tuple<string, Tuple<string, string,int>[]>> ();
 			contracts_in_platform = new Dictionary<string,Instantiator.ComponentFunctorApplicationType> ();
 
-			SAFeSWL.Component application_component = workflow_architecture.application;
-			SAFeSWL.Component workflow_component = workflow_architecture.workflow;
+			SAFeSWL_Component application_component = workflow_architecture.application;
+			SAFeSWL_Component workflow_component = workflow_architecture.workflow;
 
 			IDictionary<int, string> uses_port_ownership = new Dictionary<int, string> ();
 			IDictionary<int, string> prov_port_ownership = new Dictionary<int, string> ();
 			IDictionary<int, string> task_port_ownership = new Dictionary<int, string> ();
 
-			//IList<SAFeSWL.Component> components = new List<SAFeSWL.Component> (workflow_architecture.body);
+			//IList<SAFeSWL_Component> components = new List<SAFeSWL_Component> (workflow_architecture.body);
 			//components.Add (workflow_architecture.application);
 			//components.Add (workflow_architecture.workflow);
 
 			IDictionary<string,int[]> cs_ = componentsInPlatform (workflow_architecture, platform_ref);
-			IDictionary<string,SAFeSWL.Component> components = getComponentsOfArchitectureByName (workflow_architecture);
+			IDictionary<string,SAFeSWL_Component> components = getComponentsOfArchitectureByName (workflow_architecture);
 
 			string[] cs = new string[cs_.Keys.Count + 2];
 			cs_.Keys.CopyTo (cs, 2);
@@ -2264,30 +2252,30 @@ namespace br.ufc.pargo.hpe.backend
 			foreach (string cRef in cs) 
 				if (components.ContainsKey(cRef))
 				{
-					SAFeSWL.Component c = components [cRef];
+					SAFeSWL_Component c = components [cRef];
 					if (contracts.ContainsKey(cRef))
 						contracts_in_platform [cRef] = contracts [cRef];
 
-					SAFeSWL.PortEnvironmentUses[] uses_port_list = c.uses_port;
-					SAFeSWL.PortEnvironmentProvides[] prov_port_list = c.provides_port; 
-					SAFeSWL.PortTask[] task_port_list = c is SAFeSWL.Worker ? ((SAFeSWL.Worker) c).task_port : null; 
+					SAFeSWL_PortEnvironmentUser[] uses_port_list = c.uses_port;
+					SAFeSWL_PortEnvironmentProvider[] prov_port_list = c.provides_port; 
+					SAFeSWL_PortAction[] task_port_list = c is SAFeSWL_Workflow ? ((SAFeSWL_Workflow) c).task_port : null; 
 
 					if (uses_port_list != null)
-						foreach (SAFeSWL.PortEnvironmentUses p in uses_port_list) 
+						foreach (SAFeSWL_PortEnvironmentUser p in uses_port_list) 
 							uses_port_ownership.Add (p.id, cRef);
 
 					if (prov_port_list != null)
-						foreach (SAFeSWL.PortEnvironmentProvides p in prov_port_list) 
+						foreach (SAFeSWL_PortEnvironmentProvider p in prov_port_list) 
 							prov_port_ownership.Add (p.id, cRef);
 
 					if (task_port_list != null)
-						foreach (SAFeSWL.PortTask p in task_port_list)
+						foreach (SAFeSWL_PortAction p in task_port_list)
 							task_port_ownership.Add (p.id, cRef);
 				}
 
 
-			SAFeSWL.BindingEnvironment[] env_bindings = workflow_architecture.env_binding;
-			foreach (SAFeSWL.BindingEnvironment e in env_bindings)
+			SAFeSWL_BindingService[] env_bindings = workflow_architecture.env_binding;
+			foreach (SAFeSWL_BindingService e in env_bindings)
 				if (cs.Contains(e.name))
 				{
 					EnvironmentPortType role;
@@ -2343,11 +2331,11 @@ namespace br.ufc.pargo.hpe.backend
 
 			bindings_task = new List<Tuple<string, Tuple<string, string,int>[]>>();
 
-			foreach (SAFeSWL.BindingTask bt in workflow_architecture.task_binding) 
+			foreach (SAFeSWL_BindingAction bt in workflow_architecture.task_binding) 
 				if (cs.Contains(bt.name))
 				{
 					IList<Tuple<string, string, int>> peer_list = new List<Tuple<string, string, int>> ();
-					foreach (SAFeSWL.PortTask pt in bt.peer) 
+					foreach (SAFeSWL_PortAction pt in bt.peer) 
 					{
 						string cRef = task_port_ownership[pt.id];
 						string pRef = pt.name;

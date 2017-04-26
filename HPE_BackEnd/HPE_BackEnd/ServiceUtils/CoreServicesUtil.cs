@@ -23,23 +23,23 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 		#region processing SAFeSWL
 
-		public static SAFeSWL.Architecture readArchitecture (string arch_desc_xml)
+		public static SAFeSWL_Architecture readArchitecture (string arch_desc_xml)
 		{
 			string filename = System.IO.Path.GetTempFileName ();
 			File.WriteAllText (filename, arch_desc_xml);
-			SAFeSWL.Architecture arch_desc = CoreServicesUtil.DeserializeArchitecture_SAFeSWL(filename);
+			SAFeSWL_Architecture arch_desc = CoreServicesUtil.DeserializeArchitecture_SAFeSWL(filename);
 			return arch_desc;
 		}
 
-		private static SAFeSWL.Architecture DeserializeArchitecture_SAFeSWL(string filename)
+		private static SAFeSWL_Architecture DeserializeArchitecture_SAFeSWL(string filename)
 		{
 			// Declare an object variable of the type to be deserialized.
-			SAFeSWL.Architecture i = null;
+			SAFeSWL_Architecture i = null;
 			FileStream fs = null;
 			try
 			{
 				// Create an instance of the XmlSerializer specifying type and namespace.
-				XmlSerializer serializer = new XmlSerializer(typeof(SAFeSWL.Architecture));
+				XmlSerializer serializer = new XmlSerializer(typeof(SAFeSWL_Architecture));
 
 				// A FileStream is needed to read the XML document.
 				fs = new FileStream(filename, FileMode.Open);
@@ -47,7 +47,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 				XmlReader reader = new XmlTextReader(fs);
 
 				// Use the Deserialize method to restore the object's state.
-				i = (SAFeSWL.Architecture)serializer.Deserialize(reader);
+				i = (SAFeSWL_Architecture)serializer.Deserialize(reader);
 			}
 			catch (Exception e)
 			{
@@ -64,33 +64,33 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 		}
 
-		public static bool checkIsPlatform (SAFeSWL.Architecture arch_desc, string arch_ref)
+		public static bool checkIsPlatform (SAFeSWL_Architecture arch_desc, string arch_ref)
 		{
-			SAFeSWL.Component[] cs = arch_desc.body;
-			foreach (SAFeSWL.Component c in cs) 
+			SAFeSWL_Component[] cs = arch_desc.solution;
+			foreach (SAFeSWL_Component c in cs) 
 			{
-				if (c.name.Equals (arch_ref) && c is SAFeSWL.Platform)
+				if (c.id_component.Equals (arch_ref) && c is SAFeSWL_Platform)
 					return true;
 			}
 
 			return false;
 		}
 
-		public static IDictionary<string,string> readPlatformAddresses (SAFeSWL.Architecture arch_desc)
+		public static IDictionary<string,string> readPlatformAddresses (SAFeSWL_Architecture arch_desc)
 		{
 			IDictionary<string,string> result = new Dictionary<string, string> ();
 
-			SAFeSWL.Component[] cs = arch_desc.body;
-			foreach (SAFeSWL.Component c in cs) 
+			SAFeSWL_Component[] cs = arch_desc.solution;
+			foreach (SAFeSWL_Component c in cs) 
 			{
-				if (c is SAFeSWL.Platform)
-					result.Add(c.name,((SAFeSWL.Platform)c).platform_address);
+				if (c is SAFeSWL_Platform)
+					result.Add(c.id_component,((SAFeSWL_Platform)c).platform_address);
 			}
 
 			return result;
 		}
 
-		public static string determineSystemComponentRef(SAFeSWL.Architecture arch_desc)
+		public static string determineSystemComponentRef(SAFeSWL_Architecture arch_desc)
 		{
 			return arch_desc.application_name;
 		}
@@ -175,10 +175,8 @@ namespace br.ufc.mdcc.hpcshelf.core
 		}
 
 
-		public static void invokeDeployPlatform (SAFeSWL.Architecture arch_desc, 
+		public static void invokeDeployPlatform (SAFeSWL_Architecture arch_desc, 
 												 string arch_ref, 
-			                                     IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
-												 IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping, 
 												 string platform_address, 
 												 ComponentType appplication_abstract,
 												 ComponentType application_concrete,
@@ -189,10 +187,10 @@ namespace br.ufc.mdcc.hpcshelf.core
 		{
 		//	invokeDeployContracts (arch_desc, arch_ref, contracts, platform_address);
 
-			invokeDeploySystem (arch_desc, arch_ref, contracts, unit_mapping, platform_address, appplication_abstract, application_concrete, workflow_abstract, workflow_concrete, system_abstract, system_concrete);
+			invokeDeploySystem (arch_desc, arch_ref, platform_address, appplication_abstract, application_concrete, workflow_abstract, workflow_concrete, system_abstract, system_concrete);
 		}
 
-		public static void invokeDeployContracts (SAFeSWL.Architecture arch_desc, 
+		public static void invokeDeployContracts (SAFeSWL_Architecture arch_desc, 
 			                                      string arch_ref, 
 			                                      IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
 			                                      string platform_address)
@@ -260,9 +258,9 @@ namespace br.ufc.mdcc.hpcshelf.core
 		        Tuple<Tuple<ComponentType,ComponentType>,   // application component (abstract + concrete)
 				      Tuple<ComponentType,ComponentType>,   // workflow component (abstract + concrete)
 				      Tuple<ComponentType,ComponentType>>
-					createSystem(SAFeSWL.Architecture arch_desc, 
-							 	 IDictionary<string,Instantiator.ComponentFunctorApplicationType> all_contracts, 
-								 IDictionary<string,Instantiator.UnitMappingType[]> all_unit_mapping,
+					createSystem(SAFeSWL_Architecture arch_desc, 
+							 	 IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
+								 IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping,
 								 ref IList<string> platforms)
 		{
 			
@@ -273,21 +271,15 @@ namespace br.ufc.mdcc.hpcshelf.core
 			IList<Tuple<string, string, EnvironmentPortType, string>> bindings_workflow = null; 
 			IList<Tuple<string, Tuple<string, string,int>[]>> bindings_system = null; 
 			IList<Tuple<string, Tuple<string, string,int>[]>> bindings_task = null; 
-			IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts = null;
-			IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping = null;
 
-			LoaderSystem.readArchitecture (arch_desc, 
-				all_contracts, 
-				all_unit_mapping,
+			LoaderSystem.readArchitecture (arch_desc,
 				ref app_name, 
 				ref application_component_name, 
 				ref workflow_component_name, 
 				ref bindings_application, 
 				ref bindings_workflow, 
 				ref bindings_system, 
-				ref bindings_task, 
-				ref contracts,
-				ref unit_mapping,
+				ref bindings_task,
 				ref platforms);
 
 			// Take the configuration files of components of the system.
@@ -296,10 +288,8 @@ namespace br.ufc.mdcc.hpcshelf.core
 			return system;
 		}
 			
-		public static void invokeDeploySystem (SAFeSWL.Architecture arch_desc, 
+		public static void invokeDeploySystem (SAFeSWL_Architecture arch_desc, 
 			                                   string arch_ref, 
-			                                   IDictionary<string,Instantiator.ComponentFunctorApplicationType> all_contracts, 
-											   IDictionary<string,Instantiator.UnitMappingType[]> all_unit_mapping, 
 			                                   string platform_address, 
 											   ComponentType c_appplication_abstract,
 											   ComponentType c_application_concrete,
@@ -316,28 +306,18 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 				string application_abstract = LoaderApp.serialize<ComponentType>(c_appplication_abstract);
 				string application_concrete = LoaderApp.serialize<ComponentType>(c_application_concrete);
-				string workflow_abstract = LoaderApp.serialize<ComponentType>(c_workflow_abstract);
-				string workflow_concrete = LoaderApp.serialize<ComponentType>(c_workflow_concrete);
-				string system_abstract = LoaderApp.serialize<ComponentType>(c_system_abstract);
-				string system_concrete = LoaderApp.serialize<ComponentType>(c_system_concrete);
+				string workflow_abstract    = LoaderApp.serialize<ComponentType>(c_workflow_abstract   );
+				string workflow_concrete    = LoaderApp.serialize<ComponentType>(c_workflow_concrete   );
+				string system_abstract      = LoaderApp.serialize<ComponentType>(c_system_abstract     );
+				string system_concrete      = LoaderApp.serialize<ComponentType>(c_system_concrete     );
 
-				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"Application/Application.hpe", application_abstract);
-				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"Workflow/Workflow.hpe", workflow_abstract);
-				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"System/System.hpe", system_abstract);
+				Console.Error.WriteLine(platform_access.deploy (application_abstract));
+				Console.Error.WriteLine(platform_access.deploy (workflow_abstract));
+				Console.Error.WriteLine(platform_access.deploy (system_abstract));
 
-				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.ApplicationImpl/ApplicationImpl.hpe", application_concrete);
-				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.WorkflowImpl/WorkflowImpl.hpe", workflow_concrete);
-				File.WriteAllText ("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-MapReduce/mapreduce." + /*arch_ref + */"impl.SystemImpl/SystemImpl.hpe", system_concrete);
-
-			//	Console.Error.WriteLine(platform_access.deploy (application_abstract));
-			//	Console.Error.WriteLine(platform_access.deploy (workflow_abstract));
-			//	Console.Error.WriteLine(platform_access.deploy (system_abstract));
-
- 			//	Console.Error.WriteLine(platform_access.deploy (application_concrete));
-			//	Console.Error.WriteLine(platform_access.deploy (workflow_concrete));
-			//	Console.Error.WriteLine(platform_access.deploy (system_concrete));
-
-				//return platform_access.getNumberOfNodes();
+ 				Console.Error.WriteLine(platform_access.deploy (application_concrete));
+				Console.Error.WriteLine(platform_access.deploy (workflow_concrete));
+				Console.Error.WriteLine(platform_access.deploy (system_concrete));
 			}
 			catch(Exception e) 
 			{

@@ -41,21 +41,6 @@ namespace TestService
 				"Splitter.cc",
 				"Shuffler.cc"
 			};
-			string[] p_unit_mappings = new string[5] {
-				"PlatformSAFe.um",
-				"PlatformDataSource.um",
-				"PlatformDataSink.um",
-				"PlatformMap.um",
-				"PlatformReduce.um"
-			};
-			string[] c_unit_mappings = new string[6] {
-				"DataSource.um",
-				"DataSink.um",
-				"Mapper.um",
-				"Reducer.um",
-				"Splitter.um",
-				"Shuffler.um"
-			};
 			string[] b_ids = new string[12] {
 				"task_reduce",
 				"intermediate_pairs_global",
@@ -83,8 +68,7 @@ namespace TestService
 				for (int i = 0; i < p_ids.Length; i++) 
 				{
 					string contract_content = File.ReadAllText(p_contracts [i]);
-					string unit_mapping_content = File.ReadAllText(p_unit_mappings [i]);
-					core_service.registerContract (workflow_handle, p_ids [i], contract_content, unit_mapping_content);
+					core_service.registerContract (workflow_handle, p_ids [i], contract_content);
 				}
 
 				for (int i = 0; i < c_ids.Length; i++) 

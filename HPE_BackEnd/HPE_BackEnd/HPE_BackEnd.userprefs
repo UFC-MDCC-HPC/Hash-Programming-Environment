@@ -1,9 +1,12 @@
 ﻿<Properties StartupItem="ManagerService/ManagerService.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ServiceUtils/Web References/PlatformServices/Reference.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/WorkflowKind.cs">
     <Files>
-      <File FileName="ServiceUtils/CoreServicesUtil.cs" Line="1" Column="1" />
-      <File FileName="ServiceUtils/Web References/PlatformServices/Reference.cs" Line="197" Column="1" />
+      <File FileName="../DGAC/base/WorkflowKind.cs" Line="47" Column="10" />
+      <File FileName="../DGAC/base/TaskBindingKind.cs" Line="31" Column="19" />
+      <File FileName="../DGAC/base/SAFe_workflow_V6.cs" Line="25" Column="50" />
+      <File FileName="../DGAC/SAFe_architecture_V6.cs" Line="765" Column="65" />
+      <File FileName="../DGAC/FileUtil.cs" Line="196" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

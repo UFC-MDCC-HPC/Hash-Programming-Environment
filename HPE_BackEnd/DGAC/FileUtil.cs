@@ -191,6 +191,47 @@ public class FileUtil{
 
   }
 
+		public static T readXML<T> (string arch_desc_xml)
+		{
+			string filename = Path.GetTempFileName ();
+			File.WriteAllText (filename, arch_desc_xml);
+			T arch_desc = FileUtil.DeserializeXML<T>(filename);
+			return arch_desc;
+		}
+
+		public static T DeserializeXML<T>(string filename)
+		{
+			// Declare an object variable of the type to be deserialized.
+			T i = default(T);
+			FileStream fs = null;
+			try
+			{
+				// Create an instance of the XmlSerializer specifying type and namespace.
+				XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+				// A FileStream is needed to read the XML document.
+				fs = new FileStream(filename, FileMode.Open);
+
+				XmlReader reader = new XmlTextReader(fs);
+
+				// Use the Deserialize method to restore the object's state.
+				i = (T)serializer.Deserialize(reader);
+			}
+			catch (Exception e)
+			{
+				Console.Error.WriteLine (e.Message);
+				Console.WriteLine(e.StackTrace);
+			}
+			finally
+			{
+				if (fs != null)
+					fs.Close();
+			}
+
+			return i;
+
+		}
+
 }//fileutil
 
 }//namespace

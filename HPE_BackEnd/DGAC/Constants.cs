@@ -75,6 +75,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
             }
 		}
 
+		public static string SYSTEM_COMPONENT_PATH = "SYSTEM_COMPONENT_PATH";
+
 		public static string DIRECTORY_NAME_BINDING_WEB_SERVICES;
 
 	    public static int WORKER_PORT = 4865;

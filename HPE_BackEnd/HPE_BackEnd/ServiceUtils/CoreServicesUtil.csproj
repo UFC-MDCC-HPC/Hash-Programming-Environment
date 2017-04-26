@@ -33,9 +33,6 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Web.Services" />
-    <Reference Include="DGAC">
-      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2\lib\mono\DGAC\DGAC.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,5 +88,11 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

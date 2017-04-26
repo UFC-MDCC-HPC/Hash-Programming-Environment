@@ -67,6 +67,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="mscorlib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -455,9 +456,6 @@
     <Compile Include="..\..\DGAC\base\SystemKind.cs">
       <Link>base\SystemKind.cs</Link>
     </Compile>
-    <Compile Include="..\..\DGAC\SAFe_architecture_V5.cs">
-      <Link>deploy\SAFe_architecture_V5.cs</Link>
-    </Compile>
     <Compile Include="..\..\DGAC\component_ref_instantiator.cs">
       <Link>component_ref\component_ref_instantiator.cs</Link>
     </Compile>
@@ -472,6 +470,18 @@
     </Compile>
     <Compile Include="..\..\DGAC\base\TacticalKind.cs">
       <Link>base\TacticalKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\SAFe_architecture_V6.cs">
+      <Link>deploy\SAFe_architecture_V6.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\WorkflowKind.cs">
+      <Link>base\WorkflowKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\TaskBindingKind.cs">
+      <Link>base\TaskBindingKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\SAFe_workflow_V6.cs">
+      <Link>base\SAFe_workflow_V6.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

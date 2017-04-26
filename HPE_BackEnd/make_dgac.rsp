@@ -34,7 +34,7 @@ DGAC/ManagerServicesImpl.cs
 DGAC/GoPortImpl.cs
 DGAC/InitializePortImpl.cs
 DGAC/ReconfigurationAdvicePortImpl.cs
-DGAC/SAFe_architecture_V5.cs
+DGAC/SAFe_architecture_V6.cs
 DGAC/component_ref_instantiator.cs
 DGAC/connector/*.cs
 DGAC/connector/config/*.cs

@@ -210,7 +210,54 @@ public class InterfaceDAO{
         return iList;
     }
 
-    internal void setInterfaceSuperTop(int id_abstract, string id_interface, string id_interface_super_top)
+		public IList<Interface> listByFacet(int id_abstract, int facet)
+		{
+
+			IList<Interface> iList = new List<Interface>();
+			IDbConnection dbcon = Connector.DBcon;
+			IDbCommand dbcmd = dbcon.CreateCommand();
+			string sql =
+				"SELECT id_interface, facet, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+				"FROM interface " +
+				"WHERE id_abstract=" + id_abstract + " and facet ='" + facet + "' ORDER BY `order`";
+			dbcmd.CommandText = sql;
+			Console.WriteLine (sql);
+			IDataReader reader = dbcmd.ExecuteReader();
+			while (reader.Read())
+			{
+				Interface i = new Interface();
+				i.Id_interface = (string)reader["id_interface"];
+				i.Facet = (int)reader["facet"];
+				i.Id_abstract = (int)reader["id_abstract"];
+				i.Assembly_string = (string)reader["assembly_string"];
+				i.Is_parallel = ((int)reader["is_parallel"]) != 0;
+				if (reader["id_interface_super_top"].ToString().Equals(""))
+				{
+					i.Id_interface_super_top = null;
+				} 
+				else {
+					i.Id_interface_super_top = (string)reader["id_interface_super_top"];
+				}
+
+				i.Id_interface_super = (string)reader["id_interface_super"];
+
+				i.Class_name = (string)reader["class_name"];
+				i.Class_nargs = (int)reader["class_nargs"];
+				i.URI_Source = (string)reader["uri_source"];
+				i.Order = (int)reader["order"];
+				iList.Add(i);
+			}
+
+			// clean up
+			reader.Close();
+			reader = null;
+			dbcmd.Dispose();
+			dbcmd = null;
+			return iList;
+		}
+
+
+		internal void setInterfaceSuperTop(int id_abstract, string id_interface, string id_interface_super_top)
     {
         String sql =
             "UPDATE interface SET id_interface_super_top = '" + id_interface_super_top + "' " +
