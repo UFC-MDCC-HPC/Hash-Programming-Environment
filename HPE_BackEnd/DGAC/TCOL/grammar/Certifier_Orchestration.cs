@@ -447,8 +447,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.TCOL.grammar {
     public partial class selectoperComplexTypeChoice : XMLCertifierBase {
         
         public string comp_idField;
-        
+		public string port_idField;
         public string action_idField;
+
         
         public XMLCertifierOperation operationField2;
         
@@ -463,6 +464,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC.TCOL.grammar {
             }
         }
         
+		[System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+		public string port_id {
+			get {
+				return this.port_idField;
+			}
+			set {
+				this.port_idField = value;
+			}
+		}
+
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public string action_id {
@@ -474,6 +485,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.TCOL.grammar {
             }
         }
         
+
+
         /// <remarks/>
         public XMLCertifierOperation operation {
             get {
@@ -518,6 +531,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.TCOL.grammar {
         public ActionType actionField;
         
         public string comp_idField1;
+
+		public string port_idField1;
         
         public string action_idField1;
         
@@ -543,6 +558,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC.TCOL.grammar {
             }
         }
         
+
+		/// <remarks/>
+		[System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+		public string port_id {
+			get {
+				return this.port_idField1;
+			}
+			set {
+				this.port_idField1 = value;
+			}
+		}
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public string action_id {

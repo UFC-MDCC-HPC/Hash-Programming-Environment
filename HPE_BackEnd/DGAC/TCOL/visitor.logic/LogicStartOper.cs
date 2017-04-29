@@ -21,7 +21,9 @@ public class LogicStartOper : AbstractCertifierElementLogic{
 		public override int logic(CertifierOrchestrationElement element) {
 		
 		String handle_id = null;
+			String port_id = null;
 			String action_id = null;
+
 		String  comp_id = null; //action_id or component_id
 		String action_oper = null;
 		
@@ -36,6 +38,7 @@ public class LogicStartOper : AbstractCertifierElementLogic{
 				if( typeof(XMLCertifierAction).IsInstanceOfType(child.getElement())){
 				XMLCertifierAction certifier_action = (XMLCertifierAction)child.getElement();
 					comp_id = certifier_action.comp_id;
+					port_id = certifier_action.port_id;
 					action_id = certifier_action.action_id;
 					//action_oper = certifier_action..value();
 					action_oper = certifier_action.action.ToString();
@@ -45,7 +48,7 @@ public class LogicStartOper : AbstractCertifierElementLogic{
 		if(action_oper.Equals("instantiate")){
 				this.instantiateOper(comp_id,handle_id);
 		}else if(action_oper.Equals("compute")){
-				this.computeOper(comp_id, action_id,handle_id);
+				this.computeOper(comp_id, port_id, action_id,handle_id);
 		}/*else if(action_oper.Equals("compute")){
 			this.computeOper(subject_id);
 		}*/
@@ -108,18 +111,18 @@ public class LogicStartOper : AbstractCertifierElementLogic{
 
 	}*/
 	
-		private void computeOper(String compId, string action_id, string handle_id){
+		private void computeOper(String compId, string port_id, string action_id, string handle_id){
 	/*	ArchAction archAction = HPCStormObjectRepository.getWorkflowEngine().getArchActionId(Integer.parseInt(actionId));
 		System.out.println("start compute=> archAction: ["+archAction.getId()+"]" + archAction.getName());
 	*/
-			CertifierConsoleLogger.write("start compute => " + " CompID " + compId + " actionId " + action_id);
+			CertifierConsoleLogger.write("start compute => " + " CompID " + compId + " portid " + port_id + "actionId " + action_id);
 		
 		
 		LogicActionCompute l;
 		if(!Certifier.ComputeActions.ContainsKey(compId)){
 			
 			//if (compId.Equals("1")){// call alt-ergo
-				l =  new LogicActionCompute(compId, action_id,handle_id);
+				l =  new LogicActionCompute(compId, port_id, action_id,handle_id);
 			//else{// call z3
 				
 		//			l =  new LogicActionCompute(compId, action_id, Certifier.tacticalCommand2);
@@ -138,7 +141,7 @@ public class LogicStartOper : AbstractCertifierElementLogic{
 				
 				
 			//	if (compId.Equals("1")){ // call alt-ergo
-				l =  new LogicActionCompute(compId, action_id,handle_id);
+				l =  new LogicActionCompute(compId, port_id, action_id,handle_id);
 			//		else{// call z3
 						
 			//			l =  new LogicActionCompute(compId, action_id, Certifier.tacticalCommand2);

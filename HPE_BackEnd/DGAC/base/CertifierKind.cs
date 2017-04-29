@@ -35,7 +35,7 @@ namespace br.ufc.pargo.hpe.kinds
 		public static TypeRegistry variables = new TypeRegistry();
 		public static MultiKeyConcurrentDictionary <string,string, bool> formal_properties = new MultiKeyConcurrentDictionary <string, string, bool>();
 		public static Dictionary <int, ITaskBindingKind> verify_actions;
-
+		public static gov.cca.Services services;
 		public enum CerificationResult {Conclusive, Inconclusive};
 
 		public abstract void setData ();
@@ -43,11 +43,8 @@ namespace br.ufc.pargo.hpe.kinds
 		public abstract string Orchestration {get; }
 
 		public override void main()
-		{
-
-			//Services.getPort ("");
-			verify_actions.Add (1, Verify1);
-			verify_actions.Add (2, Verify2);
+		{ 
+			services = Services;
 
 
 			Stopwatch sw = new Stopwatch();

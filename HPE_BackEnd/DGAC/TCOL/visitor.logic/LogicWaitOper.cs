@@ -20,6 +20,7 @@ public class LogicWaitOper : AbstractCertifierElementLogic {
 
 		public override int logic(CertifierOrchestrationElement element) {
 		String handle_id = null;
+			String port_id = null; 
 		String action_id = null; // action_id or component_id
 		String action_oper = null;
 		String comp_id = null;
@@ -34,6 +35,7 @@ public class LogicWaitOper : AbstractCertifierElementLogic {
 				if ( typeof(XMLCertifierAction).IsInstanceOfType(child.getElement())) {
 				XMLCertifierAction safe_action = (XMLCertifierAction) child.getElement();
 				comp_id = safe_action.comp_id;
+					port_id = safe_action.port_id;
 					action_id = safe_action.action_id;
 				action_oper = safe_action.action.ToString();
 			}

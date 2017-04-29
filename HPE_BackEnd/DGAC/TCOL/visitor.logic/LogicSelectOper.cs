@@ -19,6 +19,7 @@ public class LogicSelectOper : AbstractCertifierElementLogic{
 			for(int i=element.getChildren().Count-1;i>=0;i--){
 				CertifierOrchestrationElement select = element.getChildren()[i];
 				selectoperComplexTypeChoice choice_oper = (selectoperComplexTypeChoice)select.getElement();
+				String port_id = choice_oper.port_id;
 				String action_id = choice_oper.action_id;
 				//navegar no select
 				if (string.Equals(action_id, chosen, StringComparison.OrdinalIgnoreCase)) {

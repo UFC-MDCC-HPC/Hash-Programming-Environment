@@ -23,9 +23,11 @@ public class LogicPerformOper : AbstractCertifierElementLogic{
 			Console.WriteLine (" element children 0 operation " + element.getElement().GetType());
 		
 			XMLCertifierAction action  = (XMLCertifierAction)element.getElement();
+			String port_id = null; // action_id or component_id
 		String action_id = null; // action_id or component_id
 		String action_oper = null;
 			string comp_id = null;
+			port_id = action.port_id;
 		action_id = action.action_id;
 
 		//action_oper = action..getAction().value();
@@ -37,7 +39,7 @@ public class LogicPerformOper : AbstractCertifierElementLogic{
 
 
 			comp_id = action.comp_id;
-			Console.WriteLine (" LogicPerformOper action id " + action_id 
+			Console.WriteLine (" LogicPerformOper port id " + port_id  + "action id " + action_id 
 			+  " comp id " +
 				comp_id+ " action oper " + 
 				action_oper );
@@ -45,7 +47,7 @@ public class LogicPerformOper : AbstractCertifierElementLogic{
 		if (action_oper.Equals("instantiate")) {
 			this.instatiateOper(comp_id);
 		} else if (action_oper.Equals("compute")) {
-			this.computeOper(comp_id, action_id);
+			this.computeOper(comp_id, port_id, action_id);
 		} /*else if (action_oper.Equals("compute")) {
 			this.computeOper(subject_id);
 		}*/
@@ -88,17 +90,17 @@ public class LogicPerformOper : AbstractCertifierElementLogic{
 
 	}*/
 
-	private void computeOper(String compId, string actionId) {
+	private void computeOper(String compId, string portId, string actionId) {
 		/*ArchAction archAction = HPCStormObjectRepository.getWorkflowEngine()
 				.getArchActionId(Integer.parseInt(actionId));
 		System.out.println("invoke compute=> archAction: ["+archAction.getId()+"]" + archAction.getName());
 		
-	*/string handle_fake = "handle perform " + compId + " " + actionId;
-			CertifierConsoleLogger.write("perform compute => " + "CompID " + compId + " actId " + actionId);
+	*/string handle_fake = "handle perform " + compId + " " + portId + " " + actionId;
+			CertifierConsoleLogger.write("perform compute => " + "CompID " + compId + " portId " + portId + " actId " + actionId);
 		LogicActionCompute l;
 		//	if(!Certifier.ComputeActions.ContainsKey(handle_fake)){
 			//if (compId.Equals("79")){ // call alt-ergo
-				l =  new LogicActionCompute(compId, actionId,handle_fake);
+				l =  new LogicActionCompute(compId, portId, actionId,handle_fake);
 			//	else{// call z3
 					
 			//		l =  new LogicActionCompute(compId, actionId, Certifier.tacticalCommand2);

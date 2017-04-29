@@ -8,6 +8,7 @@ public enum CertifierOrchestrationOperation {
 	ACTION, ID,
 	OPERATION,
 	RESOLVE, DEPLOY, INSTANTIATE, RELEASE, COMPUTE,
+		PORTID,
 	ACTIONID,
 	CHOICE,
 }

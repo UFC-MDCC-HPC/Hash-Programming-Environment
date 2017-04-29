@@ -5,6 +5,6 @@
 
 			
 	
-					<tns:perform_oper action="compute" comp_id="TacticalmCRL2" action_id="verify_perform"/>
+					<tns:perform_oper action="compute" comp_id="TacticalmCRL2" port_id="verify1" action_id="verify_perform"/>
 	
 </tns:orchestration>

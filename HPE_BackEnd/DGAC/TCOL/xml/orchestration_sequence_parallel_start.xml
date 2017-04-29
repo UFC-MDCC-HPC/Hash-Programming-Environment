@@ -21,12 +21,12 @@
 			<tns:parallel_oper>
 				<tns:operation>
 					<tns:start_oper handle_id="0">
-						<tns:action action="compute" comp_id ="0" action_id="verify_perform"/>	
+						<tns:action action="compute" comp_id ="0" port_id="verify1" action_id="verify_perform"/>	
 					</tns:start_oper>
 				</tns:operation>
 				<tns:operation>
 					<tns:start_oper handle_id="1">
-						<tns:action action="compute" comp_id ="1" action_id="verify_perform"/>	
+						<tns:action action="compute" comp_id ="1" port_id="verify2" action_id="verify_perform"/>	
 					</tns:start_oper>
 				</tns:operation>
 			</tns:parallel_oper>
