@@ -1,10 +1,11 @@
 ﻿<Properties StartupItem="ManagerService/ManagerService.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/WorkflowKind.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/CertifierKind.cs">
     <Files>
-      <File FileName="../DGAC/base/WorkflowOrchestrator.cs" Line="231" Column="9" />
-      <File FileName="../DGAC/base/WorkflowKind.cs" Line="11" Column="9" />
-      <File FileName="TestService/Program.cs" Line="83" Column="48" />
+      <File FileName="../DGAC/base/WorkflowOrchestrator.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/base/WorkflowKind.cs" Line="1" Column="1" />
+      <File FileName="TestService/Program.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/base/CertifierKind.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

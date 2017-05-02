@@ -495,10 +495,9 @@
     <Compile Include="..\..\DGAC\base\WorkflowOrchestrator.cs">
       <Link>base\WorkflowOrchestrator.cs</Link>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Web References\WorkflowCoreServices\Reference.cs">
       <DependentUpon>Reference.map</DependentUpon>
-=======
+    </Compile>
     <Compile Include="..\..\DGAC\TCOL\action.logic\LogicAction.cs">
       <Link>TCOL\action.logic\LogicAction.cs</Link>
     </Compile>
@@ -585,7 +584,6 @@
     </Compile>
     <Compile Include="..\..\DGAC\TCOL\action.logic\LogicActionCompute.cs">
       <Link>TCOL\action.logic\LogicActionCompute.cs</Link>
->>>>>>> 3043129e05c56c2216508cab7829b0c9ad325e27
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -642,11 +640,10 @@
     <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base">
       <Link>connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base</Link>
     </None>
-<<<<<<< HEAD
     <None Include="Web References\WorkflowCoreServices\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-=======
+    </None>
     <None Include="..\..\DGAC\TCOL\xml\Certifier_Orchestration.xsd">
       <Link>TCOL\xml\Certifier_Orchestration.xsd</Link>
     </None>
@@ -658,7 +655,6 @@
     </None>
     <None Include="..\..\DGAC\TCOL\xml\orchestration_swc2.xml">
       <Link>TCOL\xml\orchestration_swc2.xml</Link>
->>>>>>> 3043129e05c56c2216508cab7829b0c9ad325e27
     </None>
   </ItemGroup>
   <ItemGroup>
