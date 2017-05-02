@@ -14,3 +14,11 @@
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/DGAC.dll.mdb
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/MPI.dll
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/MySql.Data.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/IConnector.dll.mdb
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/IConnector.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/obj/Debug/IConnector.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/obj/Debug/IConnector.dll.mdb
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/DGAC.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/DGAC.dll.mdb
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/MPI.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/MySql.Data.dll

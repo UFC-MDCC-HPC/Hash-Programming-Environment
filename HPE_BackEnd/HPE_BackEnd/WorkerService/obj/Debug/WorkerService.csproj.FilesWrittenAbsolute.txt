@@ -6,3 +6,12 @@
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/DGAC.dll
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/DGAC.dll.mdb
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/MySql.Data.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/obj/Debug/Back_End_Worker_Service.ProjectInstaller.resources
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/Back-End Worker Service.exe.mdb
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/Back-End Worker Service.exe
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/obj/Debug/Back-End Worker Service.exe
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/obj/Debug/Back-End Worker Service.exe.mdb
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/MPI.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/DGAC.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/DGAC.dll.mdb
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/MySql.Data.dll
