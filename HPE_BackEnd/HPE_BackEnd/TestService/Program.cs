@@ -3,6 +3,8 @@ using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Collections.Generic;
 using System.Threading;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using SAFeSWL;
 
 namespace TestService
 {
@@ -10,6 +12,10 @@ namespace TestService
 	{
 		public static void Main (string[] args)
 		{
+		//	string arch_wkf_xml = File.ReadAllText("/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/Run-MapReduce/CountWords.xml");
+	//		SAFeSWL_OperationAnyType yyy = FileUtil.readXML<SAFeSWL_OperationAnyType> (arch_wkf_xml);
+
+
 			string arch_desc_xml = File.ReadAllText("../../shelf_mapreduce.xml");
 			string[] p_ids = new string[5] {
 				"platform_SAFe",
@@ -74,8 +80,7 @@ namespace TestService
 				for (int i = 0; i < c_ids.Length; i++) 
 				{
 					string contract_content = File.ReadAllText(c_contracts [i]);
-					string unit_mapping_content = File.ReadAllText(c_unit_mappings [i]);
-					core_service.registerContract (workflow_handle, c_ids [i], contract_content, unit_mapping_content);
+					core_service.registerContract (workflow_handle, c_ids [i], contract_content);
 				}
 
 				// RESOLVE

@@ -194,10 +194,10 @@ namespace br.ufc.mdcc.hpcshelf.core
 				if (!system_platform_facet_mapping.ContainsKey (binding.provider_port.id_component)) // ignore placement bindings
 				{
 					if (connector_bindings.ContainsKey (binding.user_port.id_component)) 
-						check_facet_aligment (connector_bindings, binding.user_port, binding.provider_port);
+						check_facet_aligment (connector_bindings, binding.user_port, binding.provider_port, system_platform_facet_mapping, placement);
 					
 					if (connector_bindings.ContainsKey (binding.provider_port.id_component)) 
-						check_facet_aligment (connector_bindings, binding.provider_port, binding.user_port);
+						check_facet_aligment (connector_bindings, binding.provider_port, binding.user_port, system_platform_facet_mapping, placement);
 				}
 			
 			foreach (SAFeSWL_BindingAction binding in arch_desc.action_binding)
@@ -205,7 +205,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 					foreach (SAFeSWL_Port other_peer in binding.peer)
 						if (peer != other_peer)
 							if (connector_bindings.ContainsKey (peer.id_component)) 
-									check_facet_aligment (connector_bindings, peer, other_peer);
+							check_facet_aligment (connector_bindings, peer, other_peer, system_platform_facet_mapping, placement);
 			
 			foreach (KeyValuePair<string, IDictionary<int,int>> kv in connector_bindings)
 			{

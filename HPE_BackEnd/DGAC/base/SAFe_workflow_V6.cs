@@ -20,8 +20,8 @@ namespace SAFeSWL {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
-    [System.Xml.Serialization.XmlRootAttribute("workflow", Namespace="http://www.example.org/SAFe_workflow_V4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
+    [System.Xml.Serialization.XmlRootAttribute("workflow", Namespace="http://www.example.org/SAFe_workflow_V6", IsNullable=false)]
     public partial class SAFeSWL_OperationAnyType : SAFeSWL_OperationBaseType {
         
         private object itemField;
@@ -69,7 +69,7 @@ namespace SAFeSWL {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
     public partial class SAFeSWL_OperationPrimitiveType : SAFeSWL_OperationBaseType {
     }
     
@@ -84,7 +84,7 @@ namespace SAFeSWL {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
     public partial class SAFeSWL_OperationBaseType {
         
         private int orderField;
@@ -184,8 +184,8 @@ namespace SAFeSWL {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="SAFeSWL_OperationChoiceType", Namespace="http://www.example.org/SAFe_workflow_V4")]
-    public partial class SAFeSWL_OperationChoiceType1 {
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="SAFeSWL_OperationChoiceType", Namespace="http://www.example.org/SAFe_workflow_V6")]
+    public partial class SAFeSWL_OperationChoiceType {
         
         private SAFeSWL_SelectionGuardType[] selectField;
         
@@ -206,7 +206,7 @@ namespace SAFeSWL {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
     public partial class SAFeSWL_SelectionGuardType : SAFeSWL_OperationAnyType {
         
         private SAFeSWL_OperationAnyType branchField;
@@ -247,35 +247,13 @@ namespace SAFeSWL {
             }
         }
     }
-    
+        
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
-    public partial class SAFeSWL_OperationChoiceType {
-        
-        private SAFeSWL_SelectionGuardType[] selectField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("select")]
-        public SAFeSWL_SelectionGuardType[] select {
-            get {
-                return this.selectField;
-            }
-            set {
-                this.selectField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
     public partial class SAFeSWL_OperationManyType : SAFeSWL_OperationBaseType {
         
         private object[] itemsField;
@@ -285,7 +263,7 @@ namespace SAFeSWL {
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("break", typeof(SAFeSWL_OperationPrimitiveType))]
         [System.Xml.Serialization.XmlElementAttribute("cancel", typeof(SAFeSWL_OperationPrimitiveInvokeActionAsyncType))]
-        [System.Xml.Serialization.XmlElementAttribute("choice", typeof(SAFeSWL_OperationChoiceType1))]
+        [System.Xml.Serialization.XmlElementAttribute("choice", typeof(SAFeSWL_OperationChoiceType))]
         [System.Xml.Serialization.XmlElementAttribute("continue", typeof(SAFeSWL_OperationPrimitiveType))]
         [System.Xml.Serialization.XmlElementAttribute("invoke", typeof(SAFeSWL_OperationPrimitiveInvokeActionType))]
         [System.Xml.Serialization.XmlElementAttribute("iterate", typeof(SAFeSWL_OperationAnyType))]
@@ -322,7 +300,7 @@ namespace SAFeSWL {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
     public partial class SAFeSWL_OperationPrimitiveInvokeActionAsyncType : SAFeSWL_OperationPrimitiveInvokeActionType {
         
         private string handle_idField;
@@ -345,7 +323,7 @@ namespace SAFeSWL {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
     public partial class SAFeSWL_OperationPrimitiveInvokeActionType : SAFeSWL_OperationPrimitiveType {
         
         private string id_portField;
@@ -378,7 +356,7 @@ namespace SAFeSWL {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4", IncludeInSchema=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6", IncludeInSchema=false)]
     public enum ItemsChoiceType {
         
         /// <remarks/>
@@ -418,7 +396,7 @@ namespace SAFeSWL {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V4", IncludeInSchema=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6", IncludeInSchema=false)]
     public enum ItemChoiceType {
         
         /// <remarks/>

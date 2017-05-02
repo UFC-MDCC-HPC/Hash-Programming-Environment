@@ -492,6 +492,9 @@
     <Compile Include="..\..\DGAC\base\WorkflowOrchestrator.cs">
       <Link>base\WorkflowOrchestrator.cs</Link>
     </Compile>
+    <Compile Include="Web References\WorkflowCoreServices\Reference.cs">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -547,6 +550,10 @@
     <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base">
       <Link>connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base</Link>
     </None>
+    <None Include="Web References\WorkflowCoreServices\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -579,4 +586,14 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <WebReferences Include="Web References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://127.0.0.1:8080/WorkflowCoreServices.asmx?wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WorkflowCoreServices</RelPath>
+      <UpdateFromURL>http://127.0.0.1:8080/WorkflowCoreServices.asmx?wsdl</UpdateFromURL>
+    </WebReferenceUrl>
+  </ItemGroup>
 </Project>

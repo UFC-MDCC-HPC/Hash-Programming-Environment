@@ -164,6 +164,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string PARAMETER_PORT_TYPE = "gov.cca.ports.ParameterPort";
         public const string PARAMETER_PORT_NAME = "parameter";
 
+
+		public const string LIFECYCLE_INSTANTIATE = "instantiate";
+		public const string LIFECYCLE_DEPLOY = "deploy";
+		public const string LIFECYCLE_RESOLVE = "resolve";
+		public const string LIFECYCLE_CERTIFY = "certify";
+
 		public const int KIND_UNRECOGNIZED = -1;
 		public const int KIND_APPLICATION = 0;
 		public const int KIND_COMPUTATION = 1;

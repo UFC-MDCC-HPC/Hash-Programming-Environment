@@ -2,11 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/WorkflowKind.cs">
     <Files>
-      <File FileName="../DGAC/base/WorkflowKind.cs" Line="47" Column="10" />
-      <File FileName="../DGAC/base/TaskBindingKind.cs" Line="31" Column="19" />
-      <File FileName="../DGAC/base/SAFe_workflow_V6.cs" Line="25" Column="50" />
-      <File FileName="../DGAC/SAFe_architecture_V6.cs" Line="765" Column="65" />
-      <File FileName="../DGAC/FileUtil.cs" Line="196" Column="46" />
+      <File FileName="../DGAC/base/WorkflowOrchestrator.cs" Line="231" Column="9" />
+      <File FileName="../DGAC/base/WorkflowKind.cs" Line="11" Column="9" />
+      <File FileName="TestService/Program.cs" Line="83" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -15,7 +13,7 @@
       <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs" line="956" column="33" />
       <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" line="22" column="27" />
       <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" line="19" column="22" />
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" line="149" column="26" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" line="148" column="26" />
       <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" line="13" column="21" />
       <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/BackendServices.asmx.cs" line="62" column="19" />
     </BreakpointStore>

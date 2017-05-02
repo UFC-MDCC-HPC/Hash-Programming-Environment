@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System;
+using System.Diagnostics;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using br.ufc.hpe.backend.DGAC.WorkflowCoreServices;
 
 namespace br.ufc.pargo.hpe.kinds
 {
@@ -21,14 +24,18 @@ namespace br.ufc.pargo.hpe.kinds
 		T visit(SWLWorkflowChoice<T>       node);
 		T visit(SWLWorkflowIterate<T>      node);
 	}
-
+		
 	public class SWLVisitorOrchestrate : SWLVisitor<bool>
 	{
 		private gov.cca.Services services;
+		int workflow_handle;
+		private WorkflowCoreServices core_services;
 
-		public SWLVisitorOrchestrate(gov.cca.Services services)
+		public SWLVisitorOrchestrate(gov.cca.Services services, int workflow_handle, WorkflowCoreServices core_services)
 		{
 			this.services = services;
+			this.workflow_handle = workflow_handle;
+			this.core_services = core_services;
 		}
 
 		public bool visit(SWLWorkflowSkip<bool> node)
@@ -105,15 +112,58 @@ namespace br.ufc.pargo.hpe.kinds
 			string port_name = node.port_name;
 			string action_name = node.action_name;
 
+			Console.WriteLine ("BEGIN INVOKE {0} {1}",port_name, action_name);
+
 			ITaskBindingKind action_port = port (port_name);
 
-			action_port.invoke (action_name);
+			switch (action_name) 
+			{
+			case Constants.LIFECYCLE_RESOLVE:
+				perform_resolve (port_name);
+				break;
+			case Constants.LIFECYCLE_CERTIFY:
+				try_certify (port_name);
+				break;
+			case Constants.LIFECYCLE_DEPLOY:
+				perform_deploy (port_name);
+				break;
+			case Constants.LIFECYCLE_INSTANTIATE:
+				perform_instantiate (port_name);
+				break;
+			default:
+				action_port.invoke (action_name);
+				break;
+			}
+
+			Console.WriteLine ("END INVOKE {0} {1}",port_name, action_name);
 
 			return true;
 		}
 
+		private void perform_resolve(string instance_name)
+		{
+			core_services.resolve (this.workflow_handle, instance_name);	
+		}
+
+		private void try_certify(string instance_name)
+		{
+			// CERTIFICATION PROTOCOL: TODO !!!
+		}
+
+		private void perform_deploy(string instance_name)
+		{
+			core_services.deploy (this.workflow_handle, instance_name);	
+		}
+
+		private void perform_instantiate(string instance_name)
+		{
+			core_services.instantiate (this.workflow_handle, instance_name);	
+		}
+
 		public bool visit(SWLWorkflowSequence<bool> node)
 		{
+			Console.WriteLine ("SEQUENCE {0}", node.action_list.Length);
+
 			bool result = true;
 
 			foreach (SWLWorkflow<bool> action in node.action_list)
@@ -124,6 +174,8 @@ namespace br.ufc.pargo.hpe.kinds
 
 		public bool visit(SWLWorkflowParallel<bool> node)
 		{
+			Console.WriteLine ("PARALLEL {0}", node.action_list.Length);
+
 			IList<Thread> t_list = new List<Thread> ();
 
 			foreach (SWLWorkflow<bool> action in node.action_list)
@@ -168,6 +220,10 @@ namespace br.ufc.pargo.hpe.kinds
 
 		public bool visit(SWLWorkflowIterate<bool> node)
 		{
+			Console.WriteLine ("ITERATE");
+			Debug.Assert(node!=null); Console.WriteLine(node!=null);
+			Debug.Assert(node.iterate_action!=null); Console.WriteLine(node.iterate_action!=null);
+
 			bool breaking_flag = false;
 
 			while (!breaking_flag) 
@@ -200,7 +256,9 @@ namespace br.ufc.pargo.hpe.kinds
 			ITaskBindingKind port_return;
 
 			if (!dict_ports.TryGetValue (port_name, out port_return)) 
-				dict_ports [port_name] = (ITaskBindingKind) services.getPort (port_name);
+				dict_ports [port_name] = port_return = (ITaskBindingKind) services.getPort (port_name);
+
+			Console.WriteLine ("***** port ---- {0} {1}", port_name, port_return != null);
 
 			return port_return;
 		}

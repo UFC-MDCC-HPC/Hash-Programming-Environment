@@ -43,6 +43,18 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WorkflowCoreServices" />
+  </ItemGroup>
+  <ItemGroup>
     <WebReferences Include="Web References" />
   </ItemGroup>
   <ItemGroup>
@@ -57,11 +69,5 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DGAC\DGAC.csproj">
-      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
-      <Name>DGAC</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

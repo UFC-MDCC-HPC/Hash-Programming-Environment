@@ -55,21 +55,19 @@ namespace TestService.WorkflowCoreServices {
         
         /// CodeRemarks
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/registerContract", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void registerContract(int workflow_handle, string c_ref, string contract, string unit_mapping) {
+        public void registerContract(int workflow_handle, string c_ref, string contract) {
             this.Invoke("registerContract", new object[] {
                         workflow_handle,
                         c_ref,
-                        contract,
-                        unit_mapping});
+                        contract});
         }
         
         /// CodeRemarks
-        public System.IAsyncResult BeginregisterContract(int workflow_handle, string c_ref, string contract, string unit_mapping, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult BeginregisterContract(int workflow_handle, string c_ref, string contract, System.AsyncCallback callback, object asyncState) {
             return this.BeginInvoke("registerContract", new object[] {
                         workflow_handle,
                         c_ref,
-                        contract,
-                        unit_mapping}, callback, asyncState);
+                        contract}, callback, asyncState);
         }
         
         /// CodeRemarks

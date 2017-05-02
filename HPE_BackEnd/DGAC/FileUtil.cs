@@ -219,7 +219,8 @@ public class FileUtil{
 			}
 			catch (Exception e)
 			{
-				Console.Error.WriteLine (e.Message);
+				Console.Error.WriteLine ("EXCEPTION: " + e.Message);
+				Console.Error.WriteLine ("INNER EXCEPTION: " + e.InnerException.Message);
 				Console.WriteLine(e.StackTrace);
 			}
 			finally
