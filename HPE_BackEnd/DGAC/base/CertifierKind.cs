@@ -46,7 +46,6 @@ namespace br.ufc.pargo.hpe.kinds
 		{ 
 			services = Services;
 
-
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 

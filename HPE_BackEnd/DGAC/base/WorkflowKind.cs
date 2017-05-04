@@ -21,22 +21,13 @@ namespace br.ufc.pargo.hpe.kinds
 
     public interface IWorkflowKind : IActivateKind, GoPort
 	{
-		string SWLArchitecture { set; }
 		string SWLOrchestration { set; }
-		void registerContract (string cid, string contract);
+		int WorkflowHandle { set; }
+		WorkflowCoreServices CoreServices { set; }
 	}
 
 	public abstract class Workflow : Activate, IWorkflowKind 
 	{	 
-		private string arch_desc_xml;
-
-		public string SWLArchitecture 
-		{ 
-			set 
-			{
-				arch_desc_xml = value;
-			} 
-		}
 
 		private SWLWorkflow<bool> w_tree = null;
 
@@ -50,25 +41,28 @@ namespace br.ufc.pargo.hpe.kinds
 		}
 
 		private WorkflowCoreServices core_services;
+		public WorkflowCoreServices CoreServices 
+		{ 
+			set 
+			{
+				this.core_services = value;
+			} 
+		}
+
 		private int workflow_handle;
+		public int WorkflowHandle 
+		{ 
+			set 
+			{
+				this.workflow_handle = value;
+			} 
+		}
 
 		public override void main()
 		{
-			WorkflowCoreServices core_services = core_services = new WorkflowCoreServices ();
-			core_services.Timeout = int.MaxValue;
-
-			int workflow_handle = workflow_handle = core_services.openWorkflowSession (arch_desc_xml);
-
 			w_tree.accept (new SWLVisitorOrchestrate (this.Services, workflow_handle, core_services));
-
-			core_services.closeWorkflowSession (workflow_handle);
 		}
-
-		public void registerContract (string cid, string contract)
-		{
-			core_services.registerContract (workflow_handle, cid, contract);
-		}
-
+			
 	}
 		
 }

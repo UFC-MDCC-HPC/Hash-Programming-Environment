@@ -46,7 +46,6 @@ namespace br.ufc.mdcc.hpcshelf.core
         #region Service Methods
 
 		private static IDictionary<int,IDictionary<string,Instantiator.ComponentFunctorApplicationType>> workflow_contract = new Dictionary<int, IDictionary<string, Instantiator.ComponentFunctorApplicationType>> ();
-		//private static IDictionary<int,IDictionary<string,string>> workflow_unit_mapping = new Dictionary<int, IDictionary<string, string>> ();
 		private static IDictionary<int,IDictionary<string,string[]>> workflow_resolution = new Dictionary<int, IDictionary<string, string[]>> ();
 		private static IDictionary<int,IDictionary<string,string>> workflow_platform_address = new Dictionary<int, IDictionary<string, string>> ();
 		private static IDictionary<int,IDictionary<string,int>> workflow_base_binding_port = new Dictionary<int, IDictionary<string, int>> ();
@@ -120,10 +119,10 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 				string application_abstract = LoaderApp.serialize<ComponentType>(c_appplication_abstract);
 				string application_concrete = LoaderApp.serialize<ComponentType>(c_application_concrete);
-				string workflow_abstract = LoaderApp.serialize<ComponentType>(c_workflow_abstract);
-				string workflow_concrete = LoaderApp.serialize<ComponentType>(c_workflow_concrete);
-				string system_abstract = LoaderApp.serialize<ComponentType>(c_system_abstract);
-				string system_concrete = LoaderApp.serialize<ComponentType>(c_system_concrete);
+				string workflow_abstract    = LoaderApp.serialize<ComponentType>(c_workflow_abstract);
+				string workflow_concrete    = LoaderApp.serialize<ComponentType>(c_workflow_concrete);
+				string system_abstract      = LoaderApp.serialize<ComponentType>(c_system_abstract);
+				string system_concrete      = LoaderApp.serialize<ComponentType>(c_system_concrete);
 
 				string system_dir = System.Environment.GetEnvironmentVariable (Constants.SYSTEM_COMPONENT_PATH) + Path.DirectorySeparatorChar + workflow_handle + Path.DirectorySeparatorChar;
 
@@ -311,7 +310,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 		[WebMethod]
 		public string deploy (int workflow_handle,   // código SAFeSWL arquitetural.
-			string arch_ref        // referência do componente no código arquitetural.
+						      string arch_ref        // referência do componente no código arquitetural.
 		)   
 		{
 			Console.WriteLine ("DEPLOYING " + workflow_handle);
@@ -321,22 +320,16 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 			bool is_platform = CoreServicesUtil.checkIsPlatform (arch_desc, arch_ref);
 
-			//IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts = new Dictionary<string, Instantiator.ComponentFunctorApplicationType> ();
-			//IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping = new Dictionary<string, Instantiator.UnitMappingType[]> ();
 			IDictionary<string,string> choices = new Dictionary<string, string> ();
 			IDictionary<string,string> addresses = new Dictionary<string, string> ();
 
 			for (int i = 0; i < c_ids.Length; i++) 
 			{
 				string cid = c_ids [i]; 
-				//if (workflow_contract.ContainsKey(workflow_handle) && workflow_contract[workflow_handle].ContainsKey(cid))
-				//	contracts [cid] = LoaderApp.deserialize<Instantiator.ComponentFunctorApplicationType> (workflow_contract[workflow_handle][cid]);
 				if (workflow_resolution.ContainsKey(workflow_handle) && workflow_resolution[workflow_handle].ContainsKey(cid))
 					choices [cid] = LoaderApp.deserialize<ComponentReference.ComponentReference> (workflow_resolution[workflow_handle][cid][0]).component_ref;
 				if (workflow_platform_address.ContainsKey(workflow_handle) && workflow_platform_address[workflow_handle].ContainsKey(cid))
 					addresses [c_ids [i]] = workflow_platform_address[workflow_handle][cid];
-				//if (workflow_unit_mapping.ContainsKey(workflow_handle) && workflow_unit_mapping[workflow_handle].ContainsKey(cid))
-				//	unit_mapping [c_ids [i]] = LoaderApp.deserialize<Instantiator.UnitMappingDescriptionType> (workflow_unit_mapping[workflow_handle][cid]).unit;
 			}
 
 			string result = null;
@@ -349,7 +342,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 				workflow_base_binding_port [workflow_handle].Add (arch_ref, platform_info.Item3);
 			}
 			else
-				result = deployComponent (arch_desc, arch_ref/*, contracts*/, choices, addresses);
+				result = deployComponent (arch_desc, arch_ref, choices, addresses);
 
 			workflow_platform_address [workflow_handle].Add (arch_ref, result);
 
@@ -514,13 +507,11 @@ namespace br.ufc.mdcc.hpcshelf.core
 			workflow_platform_address.Remove (workflow_handle);
 			workflow_base_binding_port.Remove (workflow_handle);
 			workflow_nodes.Remove (workflow_handle);
-			//workflow_unit_mapping.Remove (workflow_handle);
 			workflow_system.Remove (workflow_handle);
 		}
 
 		private string[] resolve (Instantiator.ComponentFunctorApplicationType contextual_type)
         {
-			//Instantiator.ComponentFunctorApplicationType contextual_type = LoaderApp.deserialize<Instantiator.ComponentFunctorApplicationType> (contract);
 			AbstractComponentFunctorApplication acfaRef = BackEnd.loadACFAFromInstantiator(contextual_type);
 
 			string[] cdesc_list = null;
@@ -593,11 +584,9 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 			
 		private static Tuple<string,int,int> 
-								deployPlatform(SAFeSWL_Architecture arch_desc, 
+					   deployPlatform(SAFeSWL_Architecture arch_desc, 
 									  string arch_ref, 
-			                          //IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
 			                          IDictionary<string,string> choices, 
-								     // IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping,
 		                              int workflow_handle)
 		{
 			string component_ref = choices [arch_ref];
@@ -623,9 +612,8 @@ namespace br.ufc.mdcc.hpcshelf.core
 		private static IList<string> platforms = null;
 
 		private static string deployComponent(SAFeSWL_Architecture arch_desc, string arch_ref, 
-			                          // IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
-			                           IDictionary<string,string> choices, 
-			                           IDictionary<string,string> platform_address_list)
+			                                  IDictionary<string,string> choices, 
+			                                  IDictionary<string,string> platform_address_list)
 		{
 			try 
 			{
@@ -635,9 +623,6 @@ namespace br.ufc.mdcc.hpcshelf.core
 				IDictionary<string,Tuple<int,string>[]> platform_placement_list = LoaderSystem.placementOfComponents (arch_desc);
 				// determinar quais as plataformas para o componente identificado como arch_ref no código arquitetural.
 				Tuple<int,string>[] platform_placement = platform_placement_list [arch_ref];
-
-				// determinar os endereços dos serviços Platform de cada plataforma.
-				//IDictionary<string,string> platform_address_list = CoreServiceUtils.readPlatformAddresses (arch_desc);
 
 				for (int facet_instance = 0; facet_instance < platform_placement.Length; facet_instance++) 
 				{
@@ -735,7 +720,6 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 				string cref_string = LoaderApp.serialize<ComponentReference.ComponentReference> (cref);
 
-				//Tuple<string,string> cDesc = new Tuple<string,string> (c.Library_path, contract_string);
 				cDescList.Add (cref_string);
 			}
 

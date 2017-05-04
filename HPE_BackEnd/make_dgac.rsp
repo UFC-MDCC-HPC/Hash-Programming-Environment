@@ -1,4 +1,10 @@
 "HPE_BackEnd/DGAC/Web References/WorkflowCoreServices/Reference.cs"
+DGAC/TCOL/action.logic/*.cs  
+DGAC/TCOL/grammar/*.cs
+DGAC/TCOL/util/*.cs
+DGAC/TCOL/visitor/*.cs
+DGAC/TCOL/visitor.logic/*.cs  
+DGAC/TCOL/xml/*.cs
 DGAC/LoaderApp.cs 
 DGAC/LoaderComponent.cs 
 DGAC/LoaderAbstractComponent.cs 
@@ -56,6 +62,7 @@ DGAC/connector/wrapper/*.cs
 -debug+
 -define:DEBUG;TRACE
 
+-r:bin/ExpressionEvaluator.dll
 -r:System.Data
 -r:/opt/mono-4.2.2/lib/mono/MySql.Data/MySql.Data.dll
 -r:System.Runtime.Remoting
