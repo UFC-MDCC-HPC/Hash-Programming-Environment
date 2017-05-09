@@ -15,3 +15,5 @@
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/DGAC.dll
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/DGAC.dll.mdb
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/MySql.Data.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/ExpressionEvaluator.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/WorkerService/bin/Debug/Antlr3.Runtime.dll

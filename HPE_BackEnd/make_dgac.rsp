@@ -64,11 +64,11 @@ DGAC/connector/wrapper/*.cs
 
 -r:bin/ExpressionEvaluator.dll
 -r:System.Data
--r:/opt/mono-4.2.2/lib/mono/MySql.Data/MySql.Data.dll
+-r:/home/allberson/Dropbox/MySql.Data.dll
 -r:System.Runtime.Remoting
 -r:System.Xml
 -r:System.Web.Services
--r:/opt/mono-4.2.2/lib/mono/MPI/MPI.dll
+-r:/home/allberson/Dropbox/mpi.net/MPI/MPI.dll
 -r:System.ServiceModel
 -r:System.Runtime.Serialization
 -out:bin/DGAC.dll

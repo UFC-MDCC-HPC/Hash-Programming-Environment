@@ -18,3 +18,5 @@
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestWrapperGenerator/bin/Debug/DGAC.dll.mdb
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestWrapperGenerator/bin/Debug/MPI.dll
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestWrapperGenerator/bin/Debug/MySql.Data.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestWrapperGenerator/bin/Debug/ExpressionEvaluator.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestWrapperGenerator/bin/Debug/Antlr3.Runtime.dll

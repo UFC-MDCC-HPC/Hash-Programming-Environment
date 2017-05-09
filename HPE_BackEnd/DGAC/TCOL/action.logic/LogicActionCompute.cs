@@ -8,8 +8,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.TCOL.action.logic{
 public  class LogicActionCompute : LogicAction{
 
 		String port_id;
-	String action_id;
-
+	    String action_id;
+        public CerificationResult result;
 
 		//ITaskPort<IVerifyPortType> v;
 		public LogicActionCompute( String compId, String port_id, String action_id, String handleId){
@@ -62,9 +62,9 @@ public  class LogicActionCompute : LogicAction{
 			v.invoke ("verify_inconclusive", out future_inconclusive);
 			future_iteration.addAction (future_inconclusive);
 
-		future_iteration.waitAny ();
+		    IActionFuture r = future_iteration.waitAny ();
 
-			
+			result = r == future_conclusive ? CerificationResult.Conclusive : CerificationResult.Inconclusive;
 			}
 
 				

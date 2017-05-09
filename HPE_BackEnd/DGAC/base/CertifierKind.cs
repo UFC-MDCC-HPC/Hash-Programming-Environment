@@ -25,7 +25,7 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 		void setData ();
 	}
-
+    public enum CerificationResult {Conclusive, Inconclusive};
 	//[Serializable]
 	public abstract class Certifier : Activate, ICertifierKind
 	{   
@@ -36,7 +36,7 @@ namespace br.ufc.pargo.hpe.kinds
 		public static MultiKeyConcurrentDictionary <string,string, bool> formal_properties = new MultiKeyConcurrentDictionary <string, string, bool>();
 		public static Dictionary <int, ITaskBindingKind> verify_actions;
 		public static gov.cca.Services services;
-		public enum CerificationResult {Conclusive, Inconclusive};
+		
 
 		public abstract void setData ();
 
@@ -67,7 +67,7 @@ namespace br.ufc.pargo.hpe.kinds
 			CertifierConsoleLogger.write(parser.getOrchestration().toString()); 
 
 			variables.Add ("formal_properties", formal_properties);
-
+			CerificationResult result = CerificationResult.Conclusive;
 
 			parser.getOrchestration().run(); //
 
@@ -83,11 +83,14 @@ namespace br.ufc.pargo.hpe.kinds
 			{
 				if (entry.Value._thread != null) {
 					entry.Value._thread.Join();
+					if (entry.Value.result == CerificationResult.Inconclusive) 
+					result = CerificationResult.Inconclusive;
 				}
 
-			}
 
-			throw new Exception ("TODO perform_certify");
+			}
+			return  result;
+
 		}
 
 
@@ -96,3 +99,4 @@ namespace br.ufc.pargo.hpe.kinds
 
 	}
 }
+

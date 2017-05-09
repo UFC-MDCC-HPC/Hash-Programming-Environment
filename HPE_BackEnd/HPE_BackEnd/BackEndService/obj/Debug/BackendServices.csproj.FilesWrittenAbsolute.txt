@@ -7,3 +7,5 @@
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/bin/DGAC.dll.mdb
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/bin/MPI.dll
 /home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/bin/MySql.Data.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/bin/ExpressionEvaluator.dll
+/home/allberson/Dropbox/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/bin/Antlr3.Runtime.dll
