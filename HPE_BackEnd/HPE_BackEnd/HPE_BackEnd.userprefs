@@ -19,7 +19,7 @@
       <File FileName="SAFePlatformServices/SAFePlatformServices.cs" Line="249" Column="40" />
       <File FileName="BackEndService/BackendServices.asmx.cs" Line="82" Column="38" />
       <File FileName="../ws/BackEndWS.asmx.cs" Line="65" Column="28" />
-      <File FileName="TestSAFe/Program.cs" Line="15" Column="20" />
+      <File FileName="TestSAFe/Program.cs" Line="15" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

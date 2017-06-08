@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://tempuri.org/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="openWorkflowSession">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="arch_desc_xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="openWorkflowSessionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="openWorkflowSessionResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="registerContract">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="workflow_handle" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="c_ref" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contract" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="registerContractResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="resolve">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="workflow_handle" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="c_ref" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="resolveResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="deploy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="workflow_handle" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="arch_ref" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deployResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="deployResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="instantiate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="workflow_handle" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="arch_ref" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="instantiateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="instantiateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="run">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="workflow_handle" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="arch_ref" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="runResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="wait">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="workflow_handle" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="waitResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="closeWorkflowSession">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="workflow_handle" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="closeWorkflowSessionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="int" type="s:int" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="openWorkflowSessionSoapIn">
+    <wsdl:part name="parameters" element="tns:openWorkflowSession" />
+  </wsdl:message>
+  <wsdl:message name="openWorkflowSessionSoapOut">
+    <wsdl:part name="parameters" element="tns:openWorkflowSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="registerContractSoapIn">
+    <wsdl:part name="parameters" element="tns:registerContract" />
+  </wsdl:message>
+  <wsdl:message name="registerContractSoapOut">
+    <wsdl:part name="parameters" element="tns:registerContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="resolveSoapIn">
+    <wsdl:part name="parameters" element="tns:resolve" />
+  </wsdl:message>
+  <wsdl:message name="resolveSoapOut">
+    <wsdl:part name="parameters" element="tns:resolveResponse" />
+  </wsdl:message>
+  <wsdl:message name="deploySoapIn">
+    <wsdl:part name="parameters" element="tns:deploy" />
+  </wsdl:message>
+  <wsdl:message name="deploySoapOut">
+    <wsdl:part name="parameters" element="tns:deployResponse" />
+  </wsdl:message>
+  <wsdl:message name="instantiateSoapIn">
+    <wsdl:part name="parameters" element="tns:instantiate" />
+  </wsdl:message>
+  <wsdl:message name="instantiateSoapOut">
+    <wsdl:part name="parameters" element="tns:instantiateResponse" />
+  </wsdl:message>
+  <wsdl:message name="runSoapIn">
+    <wsdl:part name="parameters" element="tns:run" />
+  </wsdl:message>
+  <wsdl:message name="runSoapOut">
+    <wsdl:part name="parameters" element="tns:runResponse" />
+  </wsdl:message>
+  <wsdl:message name="waitSoapIn">
+    <wsdl:part name="parameters" element="tns:wait" />
+  </wsdl:message>
+  <wsdl:message name="waitSoapOut">
+    <wsdl:part name="parameters" element="tns:waitResponse" />
+  </wsdl:message>
+  <wsdl:message name="closeWorkflowSessionSoapIn">
+    <wsdl:part name="parameters" element="tns:closeWorkflowSession" />
+  </wsdl:message>
+  <wsdl:message name="closeWorkflowSessionSoapOut">
+    <wsdl:part name="parameters" element="tns:closeWorkflowSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="openWorkflowSessionHttpGetIn">
+    <wsdl:part name="arch_desc_xml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="openWorkflowSessionHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="registerContractHttpGetIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="c_ref" type="s:string" />
+    <wsdl:part name="contract" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="registerContractHttpGetOut" />
+  <wsdl:message name="resolveHttpGetIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="c_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="resolveHttpGetOut" />
+  <wsdl:message name="deployHttpGetIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deployHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpGetIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpGetIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpGetOut" />
+  <wsdl:message name="waitHttpGetIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="waitHttpGetOut" />
+  <wsdl:message name="closeWorkflowSessionHttpGetIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="closeWorkflowSessionHttpGetOut" />
+  <wsdl:message name="openWorkflowSessionHttpPostIn">
+    <wsdl:part name="arch_desc_xml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="openWorkflowSessionHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="registerContractHttpPostIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="c_ref" type="s:string" />
+    <wsdl:part name="contract" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="registerContractHttpPostOut" />
+  <wsdl:message name="resolveHttpPostIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="c_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="resolveHttpPostOut" />
+  <wsdl:message name="deployHttpPostIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deployHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpPostIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpPostIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpPostOut" />
+  <wsdl:message name="waitHttpPostIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="waitHttpPostOut" />
+  <wsdl:message name="closeWorkflowSessionHttpPostIn">
+    <wsdl:part name="workflow_handle" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="closeWorkflowSessionHttpPostOut" />
+  <wsdl:portType name="WorkflowCoreServicesSoap">
+    <wsdl:operation name="openWorkflowSession">
+      <wsdl:input message="tns:openWorkflowSessionSoapIn" />
+      <wsdl:output message="tns:openWorkflowSessionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="registerContract">
+      <wsdl:input message="tns:registerContractSoapIn" />
+      <wsdl:output message="tns:registerContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="resolve">
+      <wsdl:input message="tns:resolveSoapIn" />
+      <wsdl:output message="tns:resolveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <wsdl:input message="tns:deploySoapIn" />
+      <wsdl:output message="tns:deploySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <wsdl:input message="tns:instantiateSoapIn" />
+      <wsdl:output message="tns:instantiateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <wsdl:input message="tns:runSoapIn" />
+      <wsdl:output message="tns:runSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wait">
+      <wsdl:input message="tns:waitSoapIn" />
+      <wsdl:output message="tns:waitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="closeWorkflowSession">
+      <wsdl:input message="tns:closeWorkflowSessionSoapIn" />
+      <wsdl:output message="tns:closeWorkflowSessionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WorkflowCoreServicesHttpGet">
+    <wsdl:operation name="openWorkflowSession">
+      <wsdl:input message="tns:openWorkflowSessionHttpGetIn" />
+      <wsdl:output message="tns:openWorkflowSessionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="registerContract">
+      <wsdl:input message="tns:registerContractHttpGetIn" />
+      <wsdl:output message="tns:registerContractHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="resolve">
+      <wsdl:input message="tns:resolveHttpGetIn" />
+      <wsdl:output message="tns:resolveHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <wsdl:input message="tns:deployHttpGetIn" />
+      <wsdl:output message="tns:deployHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <wsdl:input message="tns:instantiateHttpGetIn" />
+      <wsdl:output message="tns:instantiateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <wsdl:input message="tns:runHttpGetIn" />
+      <wsdl:output message="tns:runHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wait">
+      <wsdl:input message="tns:waitHttpGetIn" />
+      <wsdl:output message="tns:waitHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="closeWorkflowSession">
+      <wsdl:input message="tns:closeWorkflowSessionHttpGetIn" />
+      <wsdl:output message="tns:closeWorkflowSessionHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WorkflowCoreServicesHttpPost">
+    <wsdl:operation name="openWorkflowSession">
+      <wsdl:input message="tns:openWorkflowSessionHttpPostIn" />
+      <wsdl:output message="tns:openWorkflowSessionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="registerContract">
+      <wsdl:input message="tns:registerContractHttpPostIn" />
+      <wsdl:output message="tns:registerContractHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="resolve">
+      <wsdl:input message="tns:resolveHttpPostIn" />
+      <wsdl:output message="tns:resolveHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <wsdl:input message="tns:deployHttpPostIn" />
+      <wsdl:output message="tns:deployHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <wsdl:input message="tns:instantiateHttpPostIn" />
+      <wsdl:output message="tns:instantiateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <wsdl:input message="tns:runHttpPostIn" />
+      <wsdl:output message="tns:runHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wait">
+      <wsdl:input message="tns:waitHttpPostIn" />
+      <wsdl:output message="tns:waitHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="closeWorkflowSession">
+      <wsdl:input message="tns:closeWorkflowSessionHttpPostIn" />
+      <wsdl:output message="tns:closeWorkflowSessionHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WorkflowCoreServicesSoap" type="tns:WorkflowCoreServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="openWorkflowSession">
+      <soap:operation soapAction="http://tempuri.org/openWorkflowSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerContract">
+      <soap:operation soapAction="http://tempuri.org/registerContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resolve">
+      <soap:operation soapAction="http://tempuri.org/resolve" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <soap:operation soapAction="http://tempuri.org/deploy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <soap:operation soapAction="http://tempuri.org/instantiate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <soap:operation soapAction="http://tempuri.org/run" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wait">
+      <soap:operation soapAction="http://tempuri.org/wait" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="closeWorkflowSession">
+      <soap:operation soapAction="http://tempuri.org/closeWorkflowSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WorkflowCoreServicesSoap12" type="tns:WorkflowCoreServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="openWorkflowSession">
+      <soap12:operation soapAction="http://tempuri.org/openWorkflowSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerContract">
+      <soap12:operation soapAction="http://tempuri.org/registerContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resolve">
+      <soap12:operation soapAction="http://tempuri.org/resolve" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <soap12:operation soapAction="http://tempuri.org/deploy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <soap12:operation soapAction="http://tempuri.org/instantiate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <soap12:operation soapAction="http://tempuri.org/run" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wait">
+      <soap12:operation soapAction="http://tempuri.org/wait" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="closeWorkflowSession">
+      <soap12:operation soapAction="http://tempuri.org/closeWorkflowSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WorkflowCoreServicesHttpGet" type="tns:WorkflowCoreServicesHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="openWorkflowSession">
+      <http:operation location="/openWorkflowSession" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerContract">
+      <http:operation location="/registerContract" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="resolve">
+      <http:operation location="/resolve" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <http:operation location="/deploy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <http:operation location="/instantiate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <http:operation location="/run" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="wait">
+      <http:operation location="/wait" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="closeWorkflowSession">
+      <http:operation location="/closeWorkflowSession" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WorkflowCoreServicesHttpPost" type="tns:WorkflowCoreServicesHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="openWorkflowSession">
+      <http:operation location="/openWorkflowSession" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerContract">
+      <http:operation location="/registerContract" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="resolve">
+      <http:operation location="/resolve" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <http:operation location="/deploy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <http:operation location="/instantiate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <http:operation location="/run" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="wait">
+      <http:operation location="/wait" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="closeWorkflowSession">
+      <http:operation location="/closeWorkflowSession" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WorkflowCoreServices">
+    <wsdl:port name="WorkflowCoreServicesSoap" binding="tns:WorkflowCoreServicesSoap">
+      <soap:address location="http://127.0.0.1:8080/WorkflowCoreServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WorkflowCoreServicesSoap12" binding="tns:WorkflowCoreServicesSoap12">
+      <soap12:address location="http://127.0.0.1:8080/WorkflowCoreServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WorkflowCoreServicesHttpGet" binding="tns:WorkflowCoreServicesHttpGet">
+      <http:address location="http://127.0.0.1:8080/WorkflowCoreServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WorkflowCoreServicesHttpPost" binding="tns:WorkflowCoreServicesHttpPost">
+      <http:address location="http://127.0.0.1:8080/WorkflowCoreServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

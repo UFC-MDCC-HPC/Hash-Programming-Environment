@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D408A173-F358-4BF4-A053-EE81FDD85329}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TestSAFe</RootNamespace>
+    <AssemblyName>TestSAFe</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="br.ufc.mdcc.hpcshelf.workflow.environment.SWLPortType.ISWLPortType">
+      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2\lib\mono\br.ufc.mdcc.hpcshelf.workflow.environment.SWLPortType\br.ufc.mdcc.hpcshelf.workflow.environment.SWLPortType.ISWLPortType.dll</HintPath>
+    </Reference>
+    <Reference Include="br.ufc.mdcc.hpcshelf.workflow.environment.SWLWorkflowBinding.ISWLWorkflowBinding">
+      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2\lib\mono\br.ufc.mdcc.hpcshelf.workflow.environment.SWLWorkflowBinding\br.ufc.mdcc.hpcshelf.workflow.environment.SWLWorkflowBinding.ISWLWorkflowBinding.dll</HintPath>
+    </Reference>
+    <Reference Include="br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentPortTypeSinglePartner.IEnvironmentPortTypeSinglePartner">
+      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2\lib\mono\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentPortTypeSinglePartner\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentPortTypeSinglePartner.IEnvironmentPortTypeSinglePartner.dll</HintPath>
+    </Reference>
+    <Reference Include="br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentPortType.IEnvironmentPortType">
+      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2\lib\mono\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentPortType\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentPortType.IEnvironmentPortType.dll</HintPath>
+    </Reference>
+    <Reference Include="br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBaseDirect.IBindingDirect">
+      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2-safe\lib\mono\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBaseDirect\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBaseDirect.IBindingDirect.dll</HintPath>
+    </Reference>
+    <Reference Include="br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBase.IClientBase">
+      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2-safe\lib\mono\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBase\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBase.IClientBase.dll</HintPath>
+    </Reference>
+    <Reference Include="br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBase.IServerBase">
+      <HintPath>..\..\..\..\..\..\..\..\..\opt\mono-4.2.2-safe\lib\mono\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBase\br.ufc.mdcc.hpc.storm.binding.environment.EnvironmentBindingBase.IServerBase.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\SAFe\SAFe.csproj">
+      <Project>{B597F917-788A-439C-A086-6FE92EE9BF2C}</Project>
+      <Name>SAFe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DGAC - SAFe\DGAC - SAFe.csproj">
+      <Project>{8AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC - SAFe</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

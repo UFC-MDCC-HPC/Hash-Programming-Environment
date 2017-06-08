@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:architecture application_name="mapreduce.countwords" xmlns:tns="http://www.example.org/SAFe_architecture_V5" xmlns:tns1="http://www.example.org/instantiator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/SAFe_architecture_V5 SAFe_architecture_V5.xsd ">
+  <tns:application id_component="application" xsi:type="tns:SAFeSWL_Component">
+   <tns:user_port id_port="platform_SAFe"/>
+  </tns:application>
+  <tns:workflow id_component="workflow" xsi:type="tns:SAFeSWL_Workflow">
+    <tns:user_port id_port="platform_SAFe"/>
+    <tns:action_port id_port="task_map">
+	    <tns:action name="READ_CHUNK"/>
+	    <tns:action name="PERFORM"/>
+	    <tns:action name="CHUNK_READY"/>
+    </tns:action_port>
+    <tns:action_port d_port="task_reduce">
+	    <tns:action name="READ_CHUNK"/>
+	    <tns:action name="PERFORM"/>
+	    <tns:action name="CHUNK_READY"/>
+    </tns:action_port>
+    <tns:action_port id_port="task_split_input_perform">
+    	<tns:action name="PERFORM"></tns:action>
+    </tns:action_port>
+    <tns:action_port id_port="task_split_input_read_chunk">
+    	<tns:action name="READ_CHUNK"/>
+    </tns:action_port>
+    <tns:action_port id_port="task_split_input_chunk_ready">
+    	<tns:action name="CHUNK_READY"/>
+    </tns:action_port>
+    <tns:action_port id_port="task_split_output_perform">
+    	<tns:action name="PERFORM"></tns:action>
+    </tns:action_port>
+    <tns:action_port id_port="task_split_output_read_chunk">
+    	<tns:action name="READ_CHUNK"/>
+    </tns:action_port>
+    <tns:action_port id_port="task_split_output_chunk_ready">
+    	<tns:action name="CHUNK_READY"/>
+    </tns:action_port>
+    <tns:action_port id_port="task_shuffle_perform">
+    	<tns:action name="PERFORM"/>
+    </tns:action_port>
+    <tns:action_port id_port="task_shuffle_read_chunk">
+    	<tns:action name="READ_CHUNK"/>
+    </tns:action_port>
+    <tns:action_port id_port="task_shuffle_chunk_ready">
+    	<tns:action name="CHUNK_READY"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-mapper">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-reducer">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-splitter_input">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-shuffler">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-splitter_output">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-data_source">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-data_sink">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-platform_map">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-platform_reduce">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-platform_data_source">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-platform_data_sink">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+    <tns:action_port id_port="life_cycle-platform_SAFe">
+	    <tns:action name="RESOLVE"></tns:action>
+	    <tns:action name="DEPLOY"/>
+	    <tns:action name="INSTANTIATE"/>
+    </tns:action_port>
+  </tns:workflow>
+  <tns:solution>
+    <tns:computation id_component="mapper">    
+	    <tns:user_port id_port="collect_pairs"/>
+	    <tns:user_port id_port="platform_map"/>
+	    <tns:provider_port id_port="feed_pairs"/>
+	    <tns:action_port id_port="task_map">
+		    <tns:action name="READ_CHUNK"/>
+		    <tns:action name="PERFORM"/>
+		    <tns:action name="CHUNK_READY"/>
+	    </tns:action_port>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:computation>
+    <tns:computation id_component="reducer">
+	    <tns:user_port id_port="collect_pairs"/>
+	    <tns:user_port id_port="platform_reduce"/>
+	    <tns:provider_port id_port="feed_pairs"/>
+	    <tns:action_port id_port="task_reduce">
+		    <tns:action name="READ_CHUNK"></tns:action>
+		    <tns:action name="PERFORM"/>
+		    <tns:action name="CHUNK_READY"/>
+	    </tns:action_port>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:computation>
+    <tns:connector id_component="splitter_input">
+	    <tns:user_port facet="0" id_port="collect_pairs"/>
+	    <tns:provider_port facet="1" id_port="feed_pairs"/>
+	    <tns:action_port facet="0" id_port="task_binding_split_perform">
+		    <tns:action name="PERFORM"/>
+	    </tns:action_port>
+	    <tns:action_port facet="0" id_port="task_binding_split_read_chunk">
+		    <tns:action name="READ_CHUNK"/>
+	    </tns:action_port>
+	    <tns:action_port facet="1" id_port="task_binding_split_chunk_ready">
+		    <tns:action name="CHUNK_READY"/>
+	    </tns:action_port>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:connector>
+    <tns:connector id_component="splitter_output">
+	    <tns:user_port facet="0" id_port="collect_pairs"/>
+	    <tns:provider_port facet="1" id_port="feed_pairs"/>
+	    <tns:action_port facet="0" id_port="task_binding_split_perform">
+		    <tns:action name="PERFORM"/>
+	    </tns:action_port>
+	    <tns:action_port facet="0" id_port="task_binding_split_read_chunk">
+		    <tns:action name="READ_CHUNK"/>
+	    </tns:action_port>
+	    <tns:action_port facet="1" id_port="task_binding_split_chunk_ready">
+		    <tns:action name="CHUNK_READY"/>
+	    </tns:action_port>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:connector>
+    <tns:connector id_component="shuffler">
+	    <tns:user_port facet="1"  id_port="collect_pairs"/>
+	    <tns:provider_port facet="0"  id_port="feed_pairs"/>
+	    <tns:action_port facet="0" id_port="task_binding_shuffle_perform">
+		    <tns:action name="PERFORM"/>
+	    </tns:action_port>
+	    <tns:action_port facet="1" id_port="task_binding_shuffle_read_chunk">
+		    <tns:action name="READ_CHUNK"/>
+	    </tns:action_port>
+	    <tns:action_port facet="0" id_port="task_binding_shuffle_chunk_ready">
+		    <tns:action name="CHUNK_READY"/>
+	    </tns:action_port>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:connector>
+    <tns:computation id_component="source">
+	    <tns:user_port id_port="platform_data_source"/>
+	    <tns:provider_port id_port="input_data"/>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:computation>
+    <tns:computation id_component="sink">
+	    <tns:user_port id_port="platform_data_sink"/>
+	    <tns:user_port id_port="output_data"/>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:computation>
+    <tns:platform id_component="platform_SAFe">
+	    <tns:provider_port id_port="platform"/>
+    </tns:platform> 
+    <tns:platform id_component="platform_data_source">
+	    <tns:provider_port id_port="platform"/>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:platform> 
+    <tns:platform id_component="platform_map">
+	    <tns:provider_port id_port="platform"/>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:platform> 
+    <tns:platform id_component="platform_reduce">
+	    <tns:provider_port id_port="platform"/>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:platform> 
+    <tns:platform id_component="platform_data_sink">
+	    <tns:provider_port id_port="platform"/>
+	    <tns:action_port id_port="life_cycle">
+		    <tns:action name="RESOLVE"></tns:action>
+		    <tns:action name="DEPLOY"/>
+		    <tns:action name="INSTANTIATE"/>
+	    </tns:action_port>
+    </tns:platform> 
+  </tns:solution>
+  <tns:service_binding name="source_placement">  
+    <tns:user_port               id_component="source" id_port="platform"/>
+    <tns:provider_port           id_component="platform_data_source" id_port="platform"/>
+  </tns:service_binding>
+  <tns:service_binding name="sink_placement">  
+    <tns:user_port               id_component="sink" id_port="platform"/>
+    <tns:provider_port           id_component="platform_data_sink" id_port="platform"/>
+  </tns:service_binding>
+  <tns:service_binding name="mapper_placement">  
+    <tns:user_port               id_component="mapper" id_port="platform"/>
+    <tns:provider_port           id_component="platform_map" id_port="platform"/>
+  </tns:service_binding>
+  <tns:service_binding name="reducer_placement">
+    <tns:user_port               id_component="reducer" id_port="platform"/>
+    <tns:provider_port           id_component="platform_reduce" id_port="platform"/>
+  </tns:service_binding>
+  <tns:service_binding name="workflow_placement">
+    <tns:user_port               id_component="workflow" id_port="platform_SAFe"/>
+    <tns:provider_port           id_component="platform_SAFe" id_port="platform"/>
+  </tns:service_binding>
+  <tns:service_binding name="application_placement">
+    <tns:user_port               id_component="application" id_port="platform_SAFe"/>
+    <tns:provider_port           id_component="platform_SAFe" id_port="platform"/>
+  </tns:service_binding>
+   <tns:service_binding name="input_pairs_source">
+    <tns:provider_port           id_component="source" id_port="input_data"/>
+    <tns:user_port facet="0"     id_component="splitter_input" id_port="collect_pairs"/>
+  </tns:service_binding>
+   <tns:service_binding name="input_pairs_map">
+    <tns:provider_port facet="1" id_component="splitter_input" id_port="feed_pairs"/>
+    <tns:user_port               id_component="mapper" id_port="collect_pairs"/>
+  </tns:service_binding>
+  <tns:service_binding name="intermediate_pairs_local">
+    <tns:provider_port           id_component="mapper" id_port="feed_pairs"/>
+    <tns:user_port     facet="1" id_component="shuffler" id_port="collect_pairs"/>
+  </tns:service_binding>
+   <tns:service_binding name="intermediate_pairs_global">
+    <tns:provider_port facet="0" id_component="shuffler" id_port="feed_pairs"/>
+    <tns:user_port               id_component="reducer" id_port="collect_pairs"/>
+  </tns:service_binding>
+  <tns:service_binding name="output_pairs_reduce">
+    <tns:provider_port           id_component="reducer" id_port="feed_pairs"/>
+    <tns:user_port     facet="0" id_component="splitter_output" id_port="collect_pairs"/>
+  </tns:service_binding>
+  <tns:service_binding name="output_pairs_sink">
+    <tns:provider_port facet="1" id_component="splitter_output" id_port="feed_pairs"/>
+    <tns:user_port               id_component="sink" id_port="output_data"/>
+  </tns:service_binding>
+  <tns:action_binding name="task_map">
+    <tns:peer           id_component="workflow" id_port="task_map"/>
+    <tns:peer           id_component="mapper" id_port="task_map"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_reduce">
+    <tns:peer           id_component="workflow" id_port="task_reduce"/>
+    <tns:peer           id_component="reducer" id_port="task_reduce"></tns:peer>
+  </tns:action_binding>
+  <tns:action_binding name="task_split_input_perform">
+    <tns:peer           id_component="workflow" id_port="task_split_input_perform"/>
+    <tns:peer facet="0" id_component="splitter_input" id_port="task_binding_split_perform"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_split_input_read_chunk">
+    <tns:peer           id_component="workflow" id_port="task_split_input_read_chunk"/>
+    <tns:peer facet="0" id_component="splitter_input" id_port="task_binding_split_read_chunk"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_split_input_chunk_ready">
+    <tns:peer           id_component="workflow" id_port="task_split_input_chunk_ready"/>
+    <tns:peer facet="0" id_component="splitter_input" id_port="task_binding_split_chunk_ready"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_split_output_perform">
+    <tns:peer           id_component="workflow" id_port="task_split_output_perform"/>
+    <tns:peer facet="0" id_component="splitter_output" id_port="task_binding_split_perform"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_split_output_read_chunk">
+    <tns:peer           id_component="workflow" id_port="task_split_output_read_chunk"/>
+    <tns:peer facet="0" id_component="splitter_output" id_port="task_binding_split_read_chunk"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_split_output_chunk_ready">
+    <tns:peer           id_component="workflow" id_port="task_split_output_chunk_ready"/>
+    <tns:peer facet="0" id_component="splitter_output" id_port="task_binding_split_chunk_ready"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_shuffle_perform">
+    <tns:peer           id_component="workflow" id_port="task_shuffle_perform"/>
+    <tns:peer facet="0" id_component="shuffler" id_port="task_binding_shuffle_perform"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_shuffle_read_chunk">
+    <tns:peer           id_component="workflow" id_port="task_shuffle_read_chunk"/>
+    <tns:peer facet="0" id_component="shuffler" id_port="task_binding_shuffle_read_chunk"/>
+  </tns:action_binding>
+  <tns:action_binding name="task_shuffle_chunk_ready">
+    <tns:peer           id_component="workflow" id_port="task_shuffle_chunk_ready"/>
+    <tns:peer facet="0" id_component="shuffler" id_port="task_binding_shuffle_chunk_ready"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-mapper">
+    <tns:peer           id_component="workflow" id_port="life-cycle-mapper"/>
+    <tns:peer           id_component="mapper" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-reducer">
+    <tns:peer           id_component="workflow" id_port="life-cycle-reducer"/>
+    <tns:peer           id_component="reducer" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-data_source">
+    <tns:peer           id_component="workflow" id_port="life-cycle-data_source"/>
+    <tns:peer           id_component="source" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-data_sink">
+    <tns:peer           id_component="workflow" id_port="life-cycle-data_sink"/>
+    <tns:peer           id_component="sink" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-splitter_input">
+    <tns:peer           id_component="workflow" id_port="life-cycle-splitter_input"/>
+    <tns:peer           id_component="splitter_input" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-splitter_output">
+    <tns:peer           id_component="workflow" id_port="life-cycle-splitter_output"/>
+    <tns:peer           id_component="splitter_output" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-shuffler">
+    <tns:peer           id_component="workflow" id_port="life-cycle-shuffler"/>
+    <tns:peer           id_component="shuffler" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-platform_data_source">
+    <tns:peer           id_component="workflow" id_port="life-cycle-platform_data_source"/>
+    <tns:peer           id_component="platform_data_source" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-platform_data_sink">
+    <tns:peer           id_component="workflow" id_port="life-cycle-platform_data_sinkr"/>
+    <tns:peer           id_component="platform_data_sink" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-platform_map">
+    <tns:peer           id_component="workflow" id_port="life-cycle-platform_map"/>
+    <tns:peer           id_component="platform_map" id_port="life-cycle"/>
+  </tns:action_binding>
+  <tns:action_binding name="life_cycle-platform_reduce">
+    <tns:peer           id_component="workflow" id_port="life-cycle-platform_reduce"/>
+    <tns:peer           id_component="platform_reducer" id_port="life-cycle"/>
+  </tns:action_binding>
+ </tns:architecture>

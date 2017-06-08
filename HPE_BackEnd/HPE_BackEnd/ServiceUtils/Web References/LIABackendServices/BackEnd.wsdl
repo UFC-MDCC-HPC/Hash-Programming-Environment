@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mdcc.ufc.br/hpcshelf/backend/" xmlns:types="http://www.mdcc.ufc.br/hpcshelf/backend/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="BackEnd" targetNamespace="http://www.mdcc.ufc.br/hpcshelf/backend/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.mdcc.ufc.br/hpcshelf/backend/types/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.mdcc.ufc.br/hpcshelf/backend/types/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:element name="deploy_contract_callback_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Error">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="platforms">
+        <xsd:sequence>
+          <xsd:element name="platform_id" nillable="true" type="xsd:string" />
+          <xsd:element name="profile_id" nillable="true" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="platform_deployment_status_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="destroy_platform">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="platform_id" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="available_profiles_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="types:profiles_idsList" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="get_platform_endpoint">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="platform_id" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="destroy">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="endpoint" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="platform_deployment_status">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="platform_id" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deploy">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="profile_id" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="available_platforms_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="types:platformsList" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="platformsList">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="item" type="types:platforms" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="available_profiles">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="available_platforms">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="profiles_ids">
+        <xsd:sequence>
+          <xsd:element name="profile_id" nillable="true" type="xsd:int" />
+          <xsd:element name="profile_name" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="profiles_idsList">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="item" type="types:profiles_ids" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="destroy_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deploy_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="get_platform_endpoint_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="destroy_platform_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deploy_contract">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="contract" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deploy_contract_callback">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="profile_id" nillable="true" type="xsd:string" />
+            <xsd:element name="core_session_id" nillable="true" type="xsd:string" />
+            <xsd:element name="remote_ip" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deploy_contract_result">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://www.mdcc.ufc.br/hpcshelf/backend/">
+      <xsd:import namespace="http://www.mdcc.ufc.br/hpcshelf/backend/types/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="error">
+    <wsdl:part name="fault" element="types:Error" />
+  </wsdl:message>
+  <wsdl:message name="platform_deployment_status">
+    <wsdl:part name="parameters" element="types:platform_deployment_status" />
+  </wsdl:message>
+  <wsdl:message name="platform_deployment_status_result">
+    <wsdl:part name="parameters" element="types:platform_deployment_status_result" />
+  </wsdl:message>
+  <wsdl:message name="destroy_platform">
+    <wsdl:part name="parameters" element="types:destroy_platform" />
+  </wsdl:message>
+  <wsdl:message name="destroy_platform_result">
+    <wsdl:part name="parameters" element="types:destroy_platform_result" />
+  </wsdl:message>
+  <wsdl:message name="deploy">
+    <wsdl:part name="parameters" element="types:deploy" />
+  </wsdl:message>
+  <wsdl:message name="deploy_result">
+    <wsdl:part name="parameters" element="types:deploy_result" />
+  </wsdl:message>
+  <wsdl:message name="available_profiles">
+    <wsdl:part name="parameters" element="types:available_profiles" />
+  </wsdl:message>
+  <wsdl:message name="available_profiles_result">
+    <wsdl:part name="parameters" element="types:available_profiles_result" />
+  </wsdl:message>
+  <wsdl:message name="deploy_contract">
+    <wsdl:part name="parameters" element="types:deploy_contract" />
+  </wsdl:message>
+  <wsdl:message name="deploy_contract_result">
+    <wsdl:part name="parameters" element="types:deploy_contract_result" />
+  </wsdl:message>
+  <wsdl:message name="available_platforms">
+    <wsdl:part name="parameters" element="types:available_platforms" />
+  </wsdl:message>
+  <wsdl:message name="available_platforms_result">
+    <wsdl:part name="parameters" element="types:available_platforms_result" />
+  </wsdl:message>
+  <wsdl:message name="deploy_contract_callback">
+    <wsdl:part name="parameters" element="types:deploy_contract_callback" />
+  </wsdl:message>
+  <wsdl:message name="deploy_contract_callback_result">
+    <wsdl:part name="parameters" element="types:deploy_contract_callback_result" />
+  </wsdl:message>
+  <wsdl:message name="get_platform_endpoint">
+    <wsdl:part name="parameters" element="types:get_platform_endpoint" />
+  </wsdl:message>
+  <wsdl:message name="get_platform_endpoint_result">
+    <wsdl:part name="parameters" element="types:get_platform_endpoint_result" />
+  </wsdl:message>
+  <wsdl:message name="destroy">
+    <wsdl:part name="parameters" element="types:destroy" />
+  </wsdl:message>
+  <wsdl:message name="destroy_result">
+    <wsdl:part name="parameters" element="types:destroy_result" />
+  </wsdl:message>
+  <wsdl:portType name="BackEndPortType">
+    <wsdl:operation name="platform_deployment_status">
+      <wsdl:documentation>
+    The deploy will take time, even in a public cloud. This method returns the
+    state of the deployment.
+    Input: The ID of the platform.
+    Output: Status. This can be BUILDING, FAILED or NULL.
+    </wsdl:documentation>
+      <wsdl:input message="tns:platform_deployment_status" />
+      <wsdl:output message="tns:platform_deployment_status_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="destroy_platform">
+      <wsdl:documentation>
+    Just destroy the platform.
+    Input: The ID of the platform.
+    Output: SUCCESS or NULL if nonexistent platform.
+    </wsdl:documentation>
+      <wsdl:input message="tns:destroy_platform" />
+      <wsdl:output message="tns:destroy_platform_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <wsdl:documentation>
+    This is for synchronous deployment.
+    Input: the ID of the profile.
+    Output: the endpoint of the platform.
+    </wsdl:documentation>
+      <wsdl:input message="tns:deploy" />
+      <wsdl:output message="tns:deploy_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="available_profiles">
+      <wsdl:documentation>
+    Returns the available profiles for this backend.
+    Input: no need for input
+    Output: a dictionary with the profiles.
+    </wsdl:documentation>
+      <wsdl:input message="tns:available_profiles" />
+      <wsdl:output message="tns:available_profiles_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy_contract">
+      <wsdl:documentation>
+    It receives a string containing the contract. This contract is in XML format.
+    It will extract the profile ID from the contract and will create the corresponding
+    platform.
+    Input: An XML string representing the contract
+    Output: An ID for the platform to be created. If it can't be created, the value
+    will be 0.
+    </wsdl:documentation>
+      <wsdl:input message="tns:deploy_contract" />
+      <wsdl:output message="tns:deploy_contract_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="available_platforms">
+      <wsdl:documentation>
+    Lists the platforms currently instantiated.
+    Input: there is no need for input.
+    Output: A list of platform id's.
+    </wsdl:documentation>
+      <wsdl:input message="tns:available_platforms" />
+      <wsdl:output message="tns:available_platforms_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy_contract_callback">
+      <wsdl:input message="tns:deploy_contract_callback" />
+      <wsdl:output message="tns:deploy_contract_callback_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="get_platform_endpoint">
+      <wsdl:documentation>
+    After the deployment is completed, the endpoints to the platform are made
+    available.
+    Input: The ID of the platform.
+    Output: A string with the endpoint or NULL if nonexistent platform.
+    </wsdl:documentation>
+      <wsdl:input message="tns:get_platform_endpoint" />
+      <wsdl:output message="tns:get_platform_endpoint_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+    <wsdl:operation name="destroy">
+      <wsdl:documentation>
+    This is for synchronous destroy.
+    Input: the endpoint of the platform.
+    Output: None.
+    </wsdl:documentation>
+      <wsdl:input message="tns:destroy" />
+      <wsdl:output message="tns:destroy_result" />
+      <wsdl:fault name="error" message="tns:error" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BackEndBinding" type="tns:BackEndPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="platform_deployment_status">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/platform_deployment_status" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="destroy_platform">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/destroy_platform" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/deploy" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="available_profiles">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/available_profiles" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deploy_contract">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/deploy_contract" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="available_platforms">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/available_platforms" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deploy_contract_callback">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/deploy_contract_callback" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="get_platform_endpoint">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/get_platform_endpoint" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="destroy">
+      <soap:operation soapAction="http://www.mdcc.ufc.br/hpcshelf/backend/destroy" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault use="literal" name="error" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BackEndService">
+    <wsdl:port name="BackEndPort" binding="tns:BackEndBinding">
+      <soap:address location="http://200.19.177.89:8001/backendservices/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

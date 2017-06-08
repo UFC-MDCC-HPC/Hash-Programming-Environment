@@ -1,0 +1,12 @@
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/br.ufc.hpe.backend.DGAC.Properties.Resources.resources
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC_SAFe.dll.config
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC_SAFe.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC_SAFe.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/DGAC_SAFe.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/DGAC_SAFe.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC.dll.config
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/DGAC.dll.mdb

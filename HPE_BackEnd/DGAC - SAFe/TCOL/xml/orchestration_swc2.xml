@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:orchestration xmlns:tns="http://www.example.org/Certifier_Orchestration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/Certifier_Orchestration Certifier_Orchestration.xsd ">
+
+			
+	
+					<tns:perform_oper action="compute" comp_id="TacticalmCRL2" port_id="verify1" action_id="verify_perform"/>
+	
+</tns:orchestration>

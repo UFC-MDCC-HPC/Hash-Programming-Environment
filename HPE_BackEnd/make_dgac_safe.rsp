@@ -1,0 +1,76 @@
+"HPE_BackEnd/DGAC - SAFe/Web References/WorkflowCoreServices/Reference.cs"
+"DGAC - SAFe/TCOL/action.logic/*.cs"  
+"DGAC - SAFe/TCOL/grammar/*.cs"
+"DGAC - SAFe/TCOL/util/*.cs"
+"DGAC - SAFe/TCOL/visitor/*.cs"
+"DGAC - SAFe/TCOL/visitor.logic/*.cs"  
+"DGAC - SAFe/TCOL/xml/*.cs"
+"DGAC - SAFe/LoaderApp.cs" 
+"DGAC - SAFe/LoaderComponent.cs" 
+"DGAC - SAFe/LoaderAbstractComponent.cs" 
+"DGAC - SAFe/LoaderConcreteComponent.cs" 
+"DGAC - SAFe/database/model/*.cs" 
+"DGAC - SAFe/database/dao/*.cs" 
+"DGAC - SAFe/tree/*.cs"
+"DGAC - SAFe/base/*.cs"
+"DGAC - SAFe/HashComponent.cs" 
+"DGAC - SAFe/CommandLineUtil.cs"
+"DGAC - SAFe/Constants.cs"
+"DGAC - SAFe/FileUtil.cs"
+"DGAC - SAFe/DGAC.cs"
+"DGAC - SAFe/IWorkflowServices.cs"
+"DGAC - SAFe/instantiator.cs"
+"DGAC - SAFe/catalog.cs"
+"DGAC - SAFe/CCA.cs"
+"DGAC - SAFe/WorkerComponentIDImpl.cs"
+"DGAC - SAFe/LoaderSystem.cs"
+"DGAC - SAFe/ManagerComponentIDImpl.cs"
+"DGAC - SAFe/ManagerIgnoredComponentIDImpl.cs"
+"DGAC - SAFe/ManagerConnectionIDImpl.cs"
+"DGAC - SAFe/WorkerServicesImpl.cs"
+"DGAC - SAFe/WorkerConnectionIDImpl.cs"
+"DGAC - SAFe/ManagerComponentClassDescriptionImpl.cs"
+"DGAC - SAFe/WorkerComponentClassDescriptionImpl.cs"
+"DGAC - SAFe/TypeMapImpl.cs"
+"DGAC - SAFe/TypeMapImplWS.cs"
+"DGAC - SAFe/ManagerObject.cs"
+"DGAC - SAFe/WorkerObject.cs"
+"DGAC - SAFe/BackEndEnvironment.cs"
+"DGAC - SAFe/externalreferences.cs"
+"DGAC - SAFe/CCAExceptionImpl.cs"
+"DGAC - SAFe/ManagerServicesImpl.cs"
+"DGAC - SAFe/GoPortImpl.cs"
+"DGAC - SAFe/InitializePortImpl.cs"
+"DGAC - SAFe/ReconfigurationAdvicePortImpl.cs"
+"DGAC - SAFe/SAFe_architecture_V6.cs"
+"DGAC - SAFe/IPlatformServices.cs"
+"DGAC - SAFe/component_ref_instantiator.cs"
+"DGAC - SAFe/connector/*.cs"
+"DGAC - SAFe/connector/config/*.cs"
+"DGAC - SAFe/connector/config/reconfig/*.cs"
+"DGAC - SAFe/connector/config/monitoring/*.cs"
+"DGAC - SAFe/connector/load/*.cs"
+"DGAC - SAFe/connector/meta/*.cs"
+"DGAC - SAFe/connector/run/*.cs"
+"DGAC - SAFe/connector/component/*.cs"
+"DGAC - SAFe/connector/wrapper/*.cs"
+
+-target:library
+
+-keyfile:"DGAC - SAFe/DGAC.snk
+
+-optimize+
+
+-debug+
+-define:DEBUG;TRACE
+
+-r:bin/ExpressionEvaluator.dll
+-r:System.Data
+-r:/opt/mono-4.2.2/lib/mono/MySql.Data/MySql.Data.dll
+-r:System.Runtime.Remoting
+-r:System.Xml
+-r:System.Web.Services
+-r:/opt/mono-4.2.2/lib/mono/MPI/MPI.dll
+-r:System.ServiceModel
+-r:System.Runtime.Serialization
+-out:"bin/DGAC.dll"

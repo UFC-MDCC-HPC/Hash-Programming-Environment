@@ -1,0 +1,13 @@
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/DGAC_SAFe.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/DGAC_SAFe.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/MPI.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/ExpressionEvaluator.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/MySql.Data.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/Antlr3.Runtime.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/SAFePlatformServices.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/SAFePlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/obj/Debug/SAFePlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/obj/Debug/SAFePlatformServices.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/bin/Debug/DGAC.dll.mdb

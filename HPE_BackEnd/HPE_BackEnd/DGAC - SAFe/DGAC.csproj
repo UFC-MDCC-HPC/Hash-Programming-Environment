@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7AC86AB9-255A-480C-B891-C64179B48A83}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>br.ufc.hpe.backend.DGACSAFe</RootNamespace>
+    <AssemblyName>DGACSAFe</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\DGAC - SAFe\DGAC.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Xml" />
+    <Reference Include="MPI">
+      <HintPath>\usr\lib\mono\MPI\MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\DGAC - SAFe\database\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="mscorlib" />
+    <Reference Include="ExpressionEvaluator">
+      <HintPath>..\..\bin\ExpressionEvaluator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\BackEndEnvironment.cs">
+      <Link>deploy\BackEndEnvironment.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\ApplicationKind.cs">
+      <Link>base\ApplicationKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\ArchitectureKind.cs">
+      <Link>base\PlatformKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\ComputationKind.cs">
+      <Link>base\ComputationKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\DataKind.cs">
+      <Link>base\DataKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\DomainKind.cs">
+      <Link>base\DomainKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\EnvironmentKind.cs">
+      <Link>base\EnvironmentKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\FacetKind.cs">
+      <Link>base\FacetKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\QualifierKind.cs">
+      <Link>base\QualifierKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\SynchronizerKind.cs">
+      <Link>base\SynchronizerKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\Unit.cs">
+      <Link>base\Unit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\UnitImpl.cs">
+      <Link>base\UnitImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\CommandLineUtil.cs">
+      <Link>utils\CommandLineUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ManagerServicesImpl.cs">
+      <Link>manager\ManagerServicesImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TypeMapImplWS.cs">
+      <Link>cca\TypeMapImplWS.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\WorkerComponentClassDescriptionImpl.cs">
+      <Link>worker\WorkerComponentClassDescriptionImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ManagerComponentClassDescriptionImpl.cs">
+      <Link>manager\ManagerComponentClassDescriptionImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\WorkerConnectionIDImpl.cs">
+      <Link>worker\WorkerConnectionIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ManagerConnectionIDImpl.cs">
+      <Link>manager\ManagerConnectionIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\Constants.cs">
+      <Link>utils\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\AbstractComponentFunctorApplicationDAO.cs">
+      <Link>database\dao\AbstractComponentFunctorApplicationDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\AbstractComponentFunctorDAO.cs">
+      <Link>database\dao\AbstractComponentFunctorDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\AbstractComponentFunctorParameterDAO.cs">
+      <Link>database\dao\AbstractComponentFunctorParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\ComponentDAO.cs">
+      <Link>database\dao\ComponentDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\Connector.cs">
+      <Link>database\dao\Connector.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\InnerComponentDAO.cs">
+      <Link>database\dao\InnerComponentDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\InnerComponentExposedDAO.cs">
+      <Link>database\dao\InnerComponentExposedDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\InterfaceDAO.cs">
+      <Link>database\dao\InterfaceDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\InterfaceParameterDAO.cs">
+      <Link>database\dao\InterfaceParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\SliceDAO.cs">
+      <Link>database\dao\SliceDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\SliceExposedDAO.cs">
+      <Link>database\dao\SliceExposedDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\SourceCodeDAO.cs">
+      <Link>database\dao\SourceCodeDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\SourceCodeReferenceDAO.cs">
+      <Link>database\dao\SourceCodeReferenceDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\SupplyParameterComponentDAO.cs">
+      <Link>database\dao\SupplyParameterComponentDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\SupplyParameterDAO.cs">
+      <Link>database\dao\SupplyParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\SupplyParameterParameterDAO.cs">
+      <Link>database\dao\SupplyParameterParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\UnitDAO.cs">
+      <Link>database\dao\UnitDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\AbstractComponentFunctor.cs">
+      <Link>database\model\AbstractComponentFunctor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\AbstractComponentFunctorApplication.cs">
+      <Link>database\model\AbstractComponentFunctorApplication.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\AbstractComponentFunctorParameter.cs">
+      <Link>database\model\AbstractComponentFunctorParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\Component.cs">
+      <Link>database\model\Component.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\HashComponent.cs">
+      <Link>database\model\HashComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\InnerComponent.cs">
+      <Link>database\model\InnerComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\InnerComponentExposed.cs">
+      <Link>database\model\InnerComponentExposed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\Interface.cs">
+      <Link>database\model\Interface.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\InterfaceParameter.cs">
+      <Link>database\model\InterfaceParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\Slice.cs">
+      <Link>database\model\Slice.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\SliceExposed.cs">
+      <Link>database\model\SliceExposed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\SourceCode.cs">
+      <Link>database\model\SourceCode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\SourceCodeReference.cs">
+      <Link>database\model\SourceCodeReference.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\SupplyParameter.cs">
+      <Link>database\model\SupplyParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\SupplyParameterComponent.cs">
+      <Link>database\model\SupplyParameterComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\SupplyParameterParameter.cs">
+      <Link>database\model\SupplyParameterParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\Unit.cs">
+      <Link>database\model\Unit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\DGAC.cs" />
+    <Compile Include="..\..\DGAC - SAFe\externalreferences.cs">
+      <Link>deploy\externalreferences.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\FileUtil.cs">
+      <Link>utils\FileUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\HashComponent.cs">
+      <Link>deploy\HashComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\LoaderAbstractComponent.cs">
+      <Link>deploy\LoaderAbstractComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\LoaderApp.cs">
+      <Link>deploy\LoaderApp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\LoaderComponent.cs">
+      <Link>deploy\LoaderComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\LoaderConcreteComponent.cs">
+      <Link>deploy\LoaderConcreteComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ManagerObject.cs">
+      <Link>manager\ManagerObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\tree\GenerateTree.cs">
+      <Link>tree\GenerateTree.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\tree\Resolution.cs">
+      <Link>tree\Resolution.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\tree\TreeNode.cs">
+      <Link>tree\TreeNode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\WorkerComponentIDImpl.cs">
+      <Link>worker\WorkerComponentIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\WorkerObject.cs">
+      <Link>worker\WorkerObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\WorkerServicesImpl.cs">
+      <Link>worker\WorkerServicesImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\CCA.cs">
+      <Link>cca\CCA.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TypeMapImpl.cs">
+      <Link>cca\TypeMapImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\CCAExceptionImpl.cs">
+      <Link>cca\CCAExceptionImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\TopologyKind.cs">
+      <Link>base\TopologyKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\GoPortImpl.cs">
+      <Link>manager\GoPortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\ConfigurationPort.cs">
+      <Link>connector\ConfigurationPort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\IObservable.cs">
+      <Link>connector\IObservable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\IObserver.cs">
+      <Link>connector\IObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\MonitorEvent.cs">
+      <Link>connector\MonitorEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\MonitorPort.cs">
+      <Link>connector\MonitorPort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\Configuration.cs">
+      <Link>connector\config\Configuration.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\ConfigurationManager.cs">
+      <Link>connector\config\ConfigurationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\ExecutionAction.cs">
+      <Link>connector\config\ExecutionAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\IConfigurationManager.cs">
+      <Link>connector\config\IConfigurationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\Transition.cs">
+      <Link>connector\config\Transition.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\monitoring\IMonitor.cs">
+      <Link>connector\config\monitoring\IMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\monitoring\IMonitorable.cs">
+      <Link>connector\config\monitoring\IMonitorable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\monitoring\Monitor.cs">
+      <Link>connector\config\monitoring\Monitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\monitoring\MonitorEvent.cs">
+      <Link>connector\config\monitoring\MonitorEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\BehavioralChange.cs">
+      <Link>connector\config\reconfig\BehavioralChange.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\BehavioralReconfigurationRequest.cs">
+      <Link>connector\config\reconfig\BehavioralReconfigurationRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\ExecutionStateEvaluation.cs">
+      <Link>connector\config\reconfig\ExecutionStateEvaluation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\Interval.cs">
+      <Link>connector\config\reconfig\Interval.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\ReconfigurationRequest.cs">
+      <Link>connector\config\reconfig\ReconfigurationRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\SecurityAnalyzer.cs">
+      <Link>connector\config\reconfig\SecurityAnalyzer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\StructuralChange.cs">
+      <Link>connector\config\reconfig\StructuralChange.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\config\reconfig\StructuralReconfigurationRequest.cs">
+      <Link>connector\config\reconfig\StructuralReconfigurationRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\load\IdGenerator.cs">
+      <Link>connector\load\IdGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\load\XmlFormatValidator.cs">
+      <Link>connector\load\XmlFormatValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\load\XmlLoadUtil.cs">
+      <Link>connector\load\XmlLoadUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\load\XmlLoader.cs">
+      <Link>connector\load\XmlLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\Condition.cs">
+      <Link>connector\meta\Condition.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\MetaAction.cs">
+      <Link>connector\meta\MetaAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\MetaHashComponent.cs">
+      <Link>connector\meta\MetaHashComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\MetaHashEntity.cs">
+      <Link>connector\meta\MetaHashEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\MetaInnerComponent.cs">
+      <Link>connector\meta\MetaInnerComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\MetaParameter.cs">
+      <Link>connector\meta\MetaParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\MetaSlice.cs">
+      <Link>connector\meta\MetaSlice.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\meta\MetaUnit.cs">
+      <Link>connector\meta\MetaUnit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\run\BranchInterpreter.cs">
+      <Link>connector\run\BranchInterpreter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\run\IInterpreter.cs">
+      <Link>connector\run\IInterpreter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\run\Interpreter.cs">
+      <Link>connector\run\Interpreter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\run\StateControl.cs">
+      <Link>connector\run\StateControl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ParameterPortImpl.cs">
+      <Link>manager\ParameterPortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\component\IConnectorImpl.cs">
+      <Link>connector\component\IConnectorImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\connector\wrapper\WrapperGenerator.cs">
+      <Link>connector\wrapper\WrapperGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\dao\InterfaceActionDAO.cs">
+      <Link>database\dao\InterfaceActionDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\database\model\InterfaceAction.cs">
+      <Link>database\model\InterfaceAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\InitializePortImpl.cs">
+      <Link>manager\InitializePortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\ReconfigurationAdvicePort.cs">
+      <Link>base\ReconfigurationAdvicePort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ReconfigurationAdvicePortImpl.cs">
+      <Link>manager\ReconfigurationAdvicePortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\InitializePort.cs">
+      <Link>base\InitializePort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\catalog.cs">
+      <Link>catalog.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\instantiator.cs">
+      <Link>instantiator\instantiator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\BindingKind.cs">
+      <Link>base\ActivateKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\ActivateKind.cs">
+      <Link>base\BindingKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\LoaderSystem.cs">
+      <Link>deploy\LoaderSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\SystemKind.cs">
+      <Link>base\SystemKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\component_ref_instantiator.cs">
+      <Link>component_ref\component_ref_instantiator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ManagerComponentIDImpl.cs">
+      <Link>manager\ManagerComponentIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\ManagerIgnoredComponentIDImpl.cs">
+      <Link>manager\ManagerIgnoredComponentIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\CertifierKind.cs">
+      <Link>base\CertifierKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\TacticalKind.cs">
+      <Link>base\TacticalKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\SAFe_architecture_V6.cs">
+      <Link>deploy\SAFe_architecture_V6.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\WorkflowKind.cs">
+      <Link>base\WorkflowKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\TaskBindingKind.cs">
+      <Link>base\TaskBindingKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\SAFe_workflow_V6.cs">
+      <Link>base\SAFe_workflow_V6.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\WorkflowParser.cs">
+      <Link>base\WorkflowParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\WorkflowAST.cs">
+      <Link>base\WorkflowAST.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\base\WorkflowOrchestrator.cs">
+      <Link>base\WorkflowOrchestrator.cs</Link>
+    </Compile>
+    <Compile Include="Web References\WorkflowCoreServices\Reference.cs">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\action.logic\LogicAction.cs">
+      <Link>TCOL\action.logic\LogicAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\action.logic\LogicActionInstantiate.cs">
+      <Link>TCOL\action.logic\LogicActionInstantiate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\grammar\CertifierOrchestration.cs">
+      <Link>TCOL\grammar\CertifierOrchestration.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\grammar\CertifierOrchestrationElement.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationElement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\grammar\CertifierOrchestrationOperation.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationOperation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\grammar\CertifierOrchestrationParser.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\grammar\CertifierOrchestrationValidator.cs">
+      <Link>TCOL\grammar\CertifierOrchestrationValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\grammar\Certifier_Orchestration.cs">
+      <Link>TCOL\grammar\Certifier_Orchestration.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\grammar\ObjectFactory.cs">
+      <Link>TCOL\grammar\ObjectFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\util\CertifierConsoleLogger.cs">
+      <Link>TCOL\util\CertifierConsoleLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\util\CertifierConstants.cs">
+      <Link>TCOL\util\CertifierConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\util\MultikeyConcurrentDictionary.cs">
+      <Link>TCOL\util\MultikeyConcurrentDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor\AbstractCertifierElementLogic.cs">
+      <Link>TCOL\visitor\AbstractCertifierElementLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor\CertifierVisitorImpl.cs">
+      <Link>TCOL\visitor\CertifierVisitorImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor\ICertifierVisitor.cs">
+      <Link>TCOL\visitor\ICertifierVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicBreakOper.cs">
+      <Link>TCOL\visitor.logic\LogicBreakOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicCancelOper.cs">
+      <Link>TCOL\visitor.logic\LogicCancelOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicContinueOper.cs">
+      <Link>TCOL\visitor.logic\LogicContinueOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicParallelOper.cs">
+      <Link>TCOL\visitor.logic\LogicParallelOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicPerformOper.cs">
+      <Link>TCOL\visitor.logic\LogicPerformOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicRepeatOper.cs">
+      <Link>TCOL\visitor.logic\LogicRepeatOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicSelectOper.cs">
+      <Link>TCOL\visitor.logic\LogicSelectOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicSequenceOper.cs">
+      <Link>TCOL\visitor.logic\LogicSequenceOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicSkipOper.cs">
+      <Link>TCOL\visitor.logic\LogicSkipOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicStartOper.cs">
+      <Link>TCOL\visitor.logic\LogicStartOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicSwitchOper.cs">
+      <Link>TCOL\visitor.logic\LogicSwitchOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\LogicWaitOper.cs">
+      <Link>TCOL\visitor.logic\LogicWaitOper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\visitor.logic\ParallelJob.cs">
+      <Link>TCOL\visitor.logic\ParallelJob.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC - SAFe\TCOL\action.logic\LogicActionCompute.cs">
+      <Link>TCOL\action.logic\LogicActionCompute.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\monitoring\.svn\all-wcprops">
+      <Link>connector\config\monitoring\.svn\all-wcprops</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\monitoring\.svn\entries">
+      <Link>connector\config\monitoring\.svn\entries</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\monitoring\.svn\text-base\IMonitor.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\IMonitor.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\monitoring\.svn\text-base\IMonitorable.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\IMonitorable.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\monitoring\.svn\text-base\Monitor.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\Monitor.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\monitoring\.svn\text-base\MonitorEvent.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\MonitorEvent.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\all-wcprops">
+      <Link>connector\config\reconfig\.svn\all-wcprops</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\entries">
+      <Link>connector\config\reconfig\.svn\entries</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\BehavioralChange.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\BehavioralChange.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\BehavioralReconfigurationRequest.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\BehavioralReconfigurationRequest.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\ExecutionStateEvaluation.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\ExecutionStateEvaluation.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\Interval.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\Interval.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\ReconfigurationRequest.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\ReconfigurationRequest.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\SecurityAnalyzer.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\SecurityAnalyzer.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\StructuralChange.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\StructuralChange.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base</Link>
+    </None>
+    <None Include="Web References\WorkflowCoreServices\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="..\..\DGAC - SAFe\TCOL\xml\Certifier_Orchestration.xsd">
+      <Link>TCOL\xml\Certifier_Orchestration.xsd</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\TCOL\xml\orchestration_sequence_parallel_start.xml">
+      <Link>TCOL\xml\orchestration_sequence_parallel_start.xml</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\TCOL\xml\orchestration_sequence_parallel_switch.xml">
+      <Link>TCOL\xml\orchestration_sequence_parallel_switch.xml</Link>
+    </None>
+    <None Include="..\..\DGAC - SAFe\TCOL\xml\orchestration_swc2.xml">
+      <Link>TCOL\xml\orchestration_swc2.xml</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="instantiator\" />
+    <Folder Include="component_ref\" />
+    <Folder Include="TCOL\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <WebReferences Include="Web References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://127.0.0.1:8080/WorkflowCoreServices.asmx?wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WorkflowCoreServices</RelPath>
+      <UpdateFromURL>http://127.0.0.1:8080/WorkflowCoreServices.asmx?wsdl</UpdateFromURL>
+    </WebReferenceUrl>
+  </ItemGroup>
+</Project>

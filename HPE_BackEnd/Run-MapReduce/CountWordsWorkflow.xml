@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:workflow xmlns:tns="http://www.example.org/SAFe_workflow_V6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/SAFe_workflow_V6 SAFe_workflow_V6.xsd " xsi:type="tns:SAFeSWL_OperationAnyType">
+  <tns:sequence>
+      <tns:invoke id_port="platform_data_source" action="resolve"/>
+      <tns:invoke id_port="platform_map"         action="resolve"/>
+      <tns:invoke id_port="platform_reduce"      action="resolve"/>
+      <tns:invoke id_port="platform_data_sink"   action="resolve"/>
+      <tns:invoke id_port="source"               action="resolve"/>
+      <tns:invoke id_port="splitter_input"       action="resolve"/>
+      <tns:invoke id_port="splitter_output"      action="resolve"/>
+      <tns:invoke id_port="mapper"               action="resolve"/>
+      <tns:invoke id_port="shuffler"             action="resolve"/>
+      <tns:invoke id_port="reducer"              action="resolve"/>
+      <tns:invoke id_port="sink"                 action="resolve"/>
+      <tns:invoke id_port="platform_data_source" action="deploy"/>
+      <tns:invoke id_port="platform_map"         action="deploy"/>
+      <tns:invoke id_port="platform_reduce"      action="deploy"/>
+      <tns:invoke id_port="platform_data_sink"   action="deploy"/>
+      <tns:invoke id_port="source"               action="deploy"/>
+      <tns:invoke id_port="splitter_input"       action="deploy"/>
+      <tns:invoke id_port="splitter_output"      action="deploy"/>
+      <tns:invoke id_port="mapper"               action="deploy"/>
+      <tns:invoke id_port="shuffler"             action="deploy"/>
+      <tns:invoke id_port="reducer"              action="deploy"/>
+      <tns:invoke id_port="sink"                 action="deploy"/>
+      
+      <tns:invoke id_port="platform_data_source" action="instantiate"/>
+      <tns:invoke id_port="platform_map"         action="instantiate"/>
+      <tns:invoke id_port="platform_reduce"      action="instantiate"/>
+      <tns:invoke id_port="platform_data_sink"   action="instantiate"/>
+      
+      <tns:invoke id_port="input_pairs_source"        action="instantiate"/>
+      <tns:invoke id_port="input_pairs_map"           action="instantiate"/>
+      <tns:invoke id_port="local_intermediate_pairs"  action="instantiate"/>
+      <tns:invoke id_port="global_intermediate_pairs" action="instantiate"/>
+      <tns:invoke id_port="output_pairs_reduce"       action="instantiate"/>
+      <tns:invoke id_port="output_pairs_sink"         action="instantiate"/>
+
+      <tns:invoke id_port="task_split_input_read_chunk"   action="instantiate"/>
+      <tns:invoke id_port="task_split_input_perform"      action="instantiate"/>
+      <tns:invoke id_port="task_split_input_chunk_ready"  action="instantiate"/>
+      <tns:invoke id_port="task_map"                      action="instantiate"/>
+      <tns:invoke id_port="task_shuffle_read_chunk"       action="instantiate"/>
+      <tns:invoke id_port="task_shuffle_perform"          action="instantiate"/>
+      <tns:invoke id_port="task_shuffle_chunk_ready"      action="instantiate"/>
+      <tns:invoke id_port="task_reduce"                   action="instantiate"/>
+      <tns:invoke id_port="task_split_output_read_chunk"  action="instantiate"/>
+      <tns:invoke id_port="task_split_output_perform"     action="instantiate"/>
+      <tns:invoke id_port="task_split_output_chunk_ready" action="instantiate"/>      
+      
+      <tns:invoke id_port="source"          action="instantiate"/>
+      <tns:invoke id_port="splitter_input"  action="instantiate"/>
+      <tns:invoke id_port="splitter_output" action="instantiate"/>
+      <tns:invoke id_port="mapper"          action="instantiate"/>
+      <tns:invoke id_port="shuffler"        action="instantiate"/>
+      <tns:invoke id_port="reducer"         action="instantiate"/>
+      <tns:invoke id_port="sink"            action="instantiate"/>
+
+      <tns:invoke id_port="source"          action="run"/>
+      <tns:invoke id_port="splitter_input"  action="run"/>
+      <tns:invoke id_port="splitter_output" action="run"/>
+      <tns:invoke id_port="mapper"          action="run"/>
+      <tns:invoke id_port="shuffler"        action="run"/>
+      <tns:invoke id_port="reducer"         action="run"/>
+      <tns:invoke id_port="sink"            action="run"/>
+      
+	  <tns:parallel>
+	  	<tns:iterate>
+		  	<tns:sequence>
+		  		<tns:invoke id_port="task_split_input_read_chunk" action="READ_CHUNK" />
+		  		<tns:invoke id_port="task_split_input_perform" action="PERFORM" />
+		  	</tns:sequence>
+	  	</tns:iterate>
+	  	<tns:iterate>
+		  	<tns:sequence>
+		  		<tns:invoke id_port="task_split_input_chunk_ready" action="CHUNK_READY" />
+		  		<tns:invoke id_port="task_map" action="READ_CHUNK" />
+		  		<tns:start id_port="task_map" action="PERFORM" handle_id="h1" />
+		  	</tns:sequence>
+	  	</tns:iterate>
+	  	<tns:iterate>
+		  	<tns:sequence>
+		  		<tns:invoke id_port="task_map" action="CHUNK_READY" />
+		  		<tns:invoke id_port="task_shuffle_read_chunk" action="READ_CHUNK" ></tns:invoke>
+		  		<tns:start id_port="task_shuffle_perform" action="PERFORM" handle_id="h2" />
+		  	</tns:sequence>
+	  	</tns:iterate>
+	  	<tns:iterate>
+		  	<tns:sequence>
+		  		<tns:invoke id_port="task_shuffle_chunk_ready" action="CHUNK_READY" />
+		  		<tns:invoke id_port="task_reduce" action="READ_CHUNK" />
+		  		<tns:start id_port="task_reduce" action="PERFORM" handle_id="h3" />
+		  	</tns:sequence>
+	  	</tns:iterate>
+	  	<tns:iterate>
+		  	<tns:sequence>
+		  		<tns:invoke id_port="task_reduce" action="CHUNK_READY" />
+		  		<tns:invoke id_port="task_split_output_read_chunk" action="READ_CHUNK" />
+		  		<tns:start id_port="task_split_output_perform" action="PERFORM" handle_id="h4" />
+		  	</tns:sequence>
+	  	</tns:iterate>
+	  	<tns:iterate>
+	  		<tns:invoke id_port="task_split_output_chunk_ready" action="CHUNK_READY" />
+	  	</tns:iterate>
+  	</tns:parallel>
+  </tns:sequence>
+</tns:workflow>
