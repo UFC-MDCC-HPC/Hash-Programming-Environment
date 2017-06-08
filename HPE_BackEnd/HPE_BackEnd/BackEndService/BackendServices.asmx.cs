@@ -119,7 +119,7 @@ namespace br.ufc.mdcc.hpcshelf.backend
 			string path_worker = config.Item1;
 			string filename = config.Item2;
 			Tuple<string,string>[] environment = config.Item3;
-			var proc = CommandLineUtil.runCommandStart ("/usr/bin/mpirun", "--configfile " + filename, path_worker, environment);
+			var proc = CommandLineUtil.runCommandStart ("/usr/local/bin/mpirun", "--configfile " + filename, path_worker, environment);
 			proc_w.Add (proc);
 
 			try

@@ -10,6 +10,8 @@ using System.Xml.Serialization;
 using System.Xml;
 using br.ufc.pargo.hpe.backend;
 using System.Threading;
+using ServiceUtils.PlatformServices;
+using br.ufc.mdcc.hpcshelf.backend.platform;
 
 namespace br.ufc.mdcc.hpcshelf.core
 {
@@ -152,11 +154,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 			IBackendServices backend_access = (IBackendServices) Activator.CreateInstance(Type.GetType(backend_services [backend_address]), new string[1] {backend_address});
 
-
 			string platform_address = backend_access.deploy (config[1]);
-
-
-
 
 			Console.WriteLine ("PLATFORM ADDRESS (" + arch_ref + "): " + platform_address);
 
@@ -177,7 +175,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 		public static void invokeDeployPlatform (SAFeSWL_Architecture arch_desc, 
 												 string arch_ref, 
-												 string platform_address, 
+												 object platform_address, 
 												 ComponentType appplication_abstract,
 												 ComponentType application_concrete,
 												 ComponentType workflow_abstract,
@@ -187,15 +185,29 @@ namespace br.ufc.mdcc.hpcshelf.core
 		{
 		//	invokeDeployContracts (arch_desc, arch_ref, contracts, platform_address);
 
+		
 			invokeDeploySystem (arch_desc, arch_ref, platform_address, appplication_abstract, application_concrete, workflow_abstract, workflow_concrete, system_abstract, system_concrete);
 		}
 
 		public static void invokeDeployContracts (SAFeSWL_Architecture arch_desc, 
 			                                      string arch_ref, 
 			                                      IDictionary<string,Instantiator.ComponentFunctorApplicationType> contracts, 
-			                                      string platform_address)
+			                                      object platform_address)
 		{
 			br.ufc.pargo.hpe.backend.DGAC.database.Connector.openConnection ();
+
+			IPlatformServices platform_access = null;
+			if (platform_address is string)
+			{
+				// Deploy the components of the system.
+				ServiceUtils.PlatformServices.PlatformServices platform_access_ = new ServiceUtils.PlatformServices.PlatformServices ((string)platform_address);
+				platform_access_.Timeout = int.MaxValue;
+				platform_access = (IPlatformServices) platform_access_;
+			}
+			else if (platform_address is IPlatformServices)
+			{
+				platform_access = (IPlatformServices) platform_address;
+			}
 
 			IDictionary<string, int[]> cs = LoaderSystem.componentsInPlatform (arch_desc, arch_ref);			
 
@@ -211,8 +223,6 @@ namespace br.ufc.mdcc.hpcshelf.core
 						string config_filename = Constants.PATH_TEMP_WORKER + cRef + ".hpe";
 						string config_contents = File.ReadAllText (config_filename);
 
-						ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices (platform_address);
-						platform_access.Timeout = int.MaxValue;
 						platform_access.deploy (config_contents);
 					}
 				}
@@ -283,14 +293,16 @@ namespace br.ufc.mdcc.hpcshelf.core
 				ref platforms);
 
 			// Take the configuration files of components of the system.
-			var system = LoaderSystem.createSystemComponent (app_name, application_component_name, workflow_component_name, contracts, unit_mapping, bindings_application, bindings_workflow, bindings_system, bindings_task, platforms);
+			Tuple<Tuple<ComponentType, ComponentType>,   
+				  Tuple<ComponentType, ComponentType>,   
+				  Tuple<ComponentType, ComponentType>> system = null; //LoaderSystem.createSystemComponent (app_name, application_component_name, workflow_component_name, contracts, unit_mapping, bindings_application, bindings_workflow, bindings_system, bindings_task, platforms);
 
 			return system;
 		}
 			
 		public static void invokeDeploySystem (SAFeSWL_Architecture arch_desc, 
 			                                   string arch_ref, 
-			                                   string platform_address, 
+			                                   object platform_address, 
 											   ComponentType c_appplication_abstract,
 											   ComponentType c_application_concrete,
 											   ComponentType c_workflow_abstract,
@@ -300,9 +312,18 @@ namespace br.ufc.mdcc.hpcshelf.core
 		{
 			try
 			{				
-				// Deploy the components of the system.
-				ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices (platform_address);
-				platform_access.Timeout = int.MaxValue;
+				IPlatformServices platform_access = null;
+				if (platform_address is string)
+				{
+					// Deploy the components of the system.
+					ServiceUtils.PlatformServices.PlatformServices platform_access_ = new ServiceUtils.PlatformServices.PlatformServices ((string)platform_address);
+					platform_access_.Timeout = int.MaxValue;
+					platform_access = (IPlatformServices) platform_access_;
+				}
+				else if (platform_address is IPlatformServices)
+				{
+					platform_access = (IPlatformServices) platform_address;
+				}
 
 				string application_abstract = LoaderApp.serialize<ComponentType>(c_appplication_abstract);
 				string application_concrete = LoaderApp.serialize<ComponentType>(c_application_concrete);
@@ -333,10 +354,21 @@ namespace br.ufc.mdcc.hpcshelf.core
 		}
 				
 
-		public static void invokeDeployComponent (string platform_address, string component)
+		public static void invokeDeployComponent (object platform_address, string component)
 		{
-			ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices (platform_address);
-			platform_access.Timeout = int.MaxValue;
+			IPlatformServices platform_access = null;
+			if (platform_address is string)
+			{
+				// Deploy the components of the system.
+				ServiceUtils.PlatformServices.PlatformServices platform_access_ = new ServiceUtils.PlatformServices.PlatformServices ((string)platform_address);
+				platform_access_.Timeout = int.MaxValue;
+				platform_access = (IPlatformServices) platform_access_;
+			}
+			else if (platform_address is IPlatformServices)
+			{
+				platform_access = (IPlatformServices) platform_address;
+			}
+
 			platform_access.deploy (component);
 		}
 			

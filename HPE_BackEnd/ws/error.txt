@@ -1,4 +1,0 @@
-Duplicate entry '52-task_split_input_perform-splitter_input' for key 'PRIMARY' ---   at MySql.Data.MySqlClient.MySqlStream.OpenPacket () <0x41544a70 + 0x00137> in <filename unknown>:0 
-  at MySql.Data.MySqlClient.NativeDriver.ReadResult (System.UInt64& affectedRows, System.Int64& lastInsertId) <0x41550f10 + 0x0005b> in <filename unknown>:0 
-  at MySql.Data.MySqlClient.MySqlDataReader.GetResultSet () <0x41550c30 + 0x0005a> in <filename unknown>:0 
-  at MySql.Data.MySqlClient.MySqlDataReader.NextResult () <0x41550500 + 0x000bf> in <filename unknown>:0 

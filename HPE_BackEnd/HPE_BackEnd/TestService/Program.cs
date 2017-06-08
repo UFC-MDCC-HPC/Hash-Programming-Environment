@@ -24,12 +24,13 @@ namespace TestService
 				"platform_map",
 				"platform_reduce"
 			};
-			string[] c_ids = new string[6] {
+			string[] c_ids = new string[7] {
 				"data_source",
 				"data_sink",
 				"mapper",
 				"reducer",
-				"splitter",
+				"splitter_input",
+				"splitter_output",
 				"shuffler"
 			};
 			string[] p_contracts = new string[5] {
@@ -44,7 +45,8 @@ namespace TestService
 				"DataSink.cc",
 				"Mapper.cc",
 				"Reducer.cc",
-				"Splitter.cc",
+				"SplitterInput.cc",
+				"SplitterOutput.cc",
 				"Shuffler.cc"
 			};
 			string[] b_ids = new string[12] {

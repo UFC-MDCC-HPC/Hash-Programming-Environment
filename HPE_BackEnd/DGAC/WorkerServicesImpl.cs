@@ -56,7 +56,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private string mkPortName(string portName)
         {
-			Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
+			//Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
             return this.instanceName + ":" + portName.Trim();
         }
 
@@ -66,13 +66,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
         public Port getPort(string portName)
         {
-			Console.WriteLine ("WorkerServicesImpl 1 - getPort(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Console.WriteLine ("WorkerServicesImpl 2 - getPort(" + portName + ")");
 			if (port == null) 
 			{
 				port = framework.getPort (mkPortName(portName));
-				Console.WriteLine ("WorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
 			}
 			return port;
         }
@@ -80,15 +77,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
         public Port getPortNonblocking(string portName)
         {
-			Console.WriteLine ("WorkerServicesImpl 1 - getPortNonBlocking(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Console.WriteLine ("WorkerServicesImpl 2 - getPortNonBlocking(" + portName + ")");
 			if (port==null) 
 			{
-				Console.WriteLine ("WorkerServicesImpl 3 - getPortNonBlocking(" + portName + ")");
 				port = framework.getPortNonblocking (mkPortName (portName));
 			}
-			Console.WriteLine ("WorkerServicesImpl 4 - getPortNonBlocking(" + portName + ") " + port.GetType());
 			return port;
         }
 
@@ -167,13 +160,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
 		public Port getPort(string portName)
 		{
-			Console.WriteLine ("RemoteWorkerServicesImpl 1 - getPort(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Console.WriteLine ("RemoteWorkerServicesImpl 2 - getPort(" + portName + ")");
 			if (port == null) 
 			{
 				port = framework.getPort (mkPortName(portName));
-				Console.WriteLine ("RemoteWorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
 			}
 			return port;
 		}
@@ -181,15 +171,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[ServiceKnownType(typeof(GoPortWrapper))]
 		public Port getPortNonblocking(string portName)
 		{
-			Console.WriteLine ("RemoteWorkerServicesImpl 1 - getPortNonBlocking(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName));
-			Console.WriteLine ("RemoteWorkerServicesImpl 2 - getPortNonBlocking(" + portName + ")");
 			if (port==null) 
 			{
-				Console.WriteLine ("RemoteWorkerServicesImpl 3 - getPortNonBlocking(" + portName + ")");
 				port = framework.getPortNonblocking (mkPortName (portName));
 			}
-			Console.WriteLine ("RemoteWorkerServicesImpl 4 - getPortNonBlocking(" + portName + ") " + port.GetType());
 			return port;
 		}
 
@@ -206,9 +192,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public void registerUsesPort(string portName, string type, TypeMap properties)
 		{
-			Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 1 - " + portName);
+		//	Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 1 - " + portName);
 			framework.registerUsesPort(mkPortName(portName), type, properties);
-			Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 2 - " + portName);
+		//	Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 2 - " + portName);
 		}
 
 		public void unregisterUsesPort(string portName)
@@ -246,7 +232,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		private string mkPortName(string portName)
 		{
-			Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
+			//Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
 			return this.instanceName + ":" + portName.Trim();
 		}
 	}
@@ -269,10 +255,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public int go()
 		{
-			//return framework.perform_go (id);
-			IAsyncResult res = framework.BeginPerformGo (id, null, null);
-			res.AsyncWaitHandle.WaitOne ();
-			return framework.EndPerformGo (res);
+			return framework.perform_go (id);
+			//IAsyncResult res = framework.BeginPerformGo (id, null, null);
+			//res.AsyncWaitHandle.WaitOne ();
+			//return framework.EndPerformGo (res);
 		}
 	}
 

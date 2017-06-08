@@ -26,27 +26,28 @@ namespace br.ufc.hpe.backend.DGAC
 		public int go ()
 		{
             IDictionary<Thread, GoThread> thread_list = new Dictionary<Thread,GoThread>();
-            for (int i=0; i<wgo_ports.Length; i++)
-            {		       
-				GoThread thread = new GoThread((GoPort) wgo_ports[i]);
+            for (int i = 0; i < wgo_ports.Length; i++)
+            {
+                GoThread thread = new GoThread((GoPort)wgo_ports[i]);
                 Thread t = new Thread(thread.Run);
-                thread_list.Add(t,thread);
+                thread_list.Add(t, thread);
                 t.Start();
             }
-            foreach (KeyValuePair<Thread,GoThread> t in thread_list)
+
+            foreach (KeyValuePair<Thread, GoThread> t in thread_list)
             {
-                try 
+                try
                 {
-					t.Key.Join();
-                   Console.Error.WriteLine("Worker thread arrived : " + session_id_string);
-                  // outputs[t.Value.Node] = t.Value.Output;
-                } 
+                    t.Key.Join();
+                    Console.WriteLine("Worker thread arrived GO : " + session_id_string);
+                    // outputs[t.Value.Node] = t.Value.Output;
+                }
                 catch (Exception e)
                 {
-                   Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                    Console.WriteLine("Worker failed GO : " + session_id_string + ". error =" + e.Message);
                 }
             }			
-            Console.Error.WriteLine("Joined Threads : " + session_id_string);
+            Console.Error.WriteLine("Joined Threads GO: " + session_id_string);
             
             return 0;			
 			

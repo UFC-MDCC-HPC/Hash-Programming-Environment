@@ -9,12 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPERun", "HPERun\HPERun.csproj", "{155636B3-5B63-4C41-B44B-0069922AE514}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "connector", "connector", "{C87843F7-AA1C-4D1D-AED5-EC65BFA49E58}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.ufc.pargo.hpe.Connector", "..\connector\br.ufc.pargo.hpe.Connector\br.ufc.pargo.hpe.Connector.csproj", "{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.ufc.pargo.hpe.ConnectorImpl", "..\connector\br.ufc.pargo.hpe.ConnectorImpl\br.ufc.pargo.hpe.ConnectorImpl.csproj", "{540B4992-14F4-4756-BB28-4B82D4C0D5FC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWrapperGenerator", "TestWrapperGenerator\TestWrapperGenerator.csproj", "{BEF63F8B-8C1B-40FA-A5B3-254ACECD66D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowCoreServices", "CoreService\WorkflowCoreServices.csproj", "{60DECBB2-D981-4DF5-B139-F17F834246DF}"
@@ -33,6 +27,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teste", "Teste\Teste.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAFe", "SAFe\SAFe.csproj", "{B597F917-788A-439C-A086-6FE92EE9BF2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGAC - SAFe", "DGAC - SAFe\DGAC - SAFe.csproj", "{8AC86AB9-255A-480C-B891-C64179B48A83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAFePlatformServices", "SAFePlatformServices\SAFePlatformServices.csproj", "{3E994983-9D37-4F4B-9F61-3310D7E4F9E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSAFe", "TestSAFe\TestSAFe.csproj", "{D408A173-F358-4BF4-A053-EE81FDD85329}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +43,10 @@ Global
 		{155636B3-5B63-4C41-B44B-0069922AE514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{155636B3-5B63-4C41-B44B-0069922AE514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{155636B3-5B63-4C41-B44B-0069922AE514}.Release|Any CPU.Build.0 = Release|Any CPU
-		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E994983-9D37-4F4B-9F61-3310D7E4F9E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E994983-9D37-4F4B-9F61-3310D7E4F9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E994983-9D37-4F4B-9F61-3310D7E4F9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E994983-9D37-4F4B-9F61-3310D7E4F9E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5559A401-927A-4B4D-B845-DE88130BD0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5559A401-927A-4B4D-B845-DE88130BD0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5559A401-927A-4B4D-B845-DE88130BD0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,10 +67,6 @@ Global
 		{62880B39-0E05-493A-A4AF-B94870FB3E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62880B39-0E05-493A-A4AF-B94870FB3E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62880B39-0E05-493A-A4AF-B94870FB3E99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7631FA6B-9094-4087-9D67-FABEFD846965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7631FA6B-9094-4087-9D67-FABEFD846965}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7631FA6B-9094-4087-9D67-FABEFD846965}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,6 +75,10 @@ Global
 		{7AC86AB9-255A-480C-B891-C64179B48A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AC86AB9-255A-480C-B891-C64179B48A83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC86AB9-255A-480C-B891-C64179B48A83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC86AB9-255A-480C-B891-C64179B48A83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC86AB9-255A-480C-B891-C64179B48A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC86AB9-255A-480C-B891-C64179B48A83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC86AB9-255A-480C-B891-C64179B48A83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9AC0969C-133D-4B4B-A9DF-927AE9D3A90F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9AC0969C-133D-4B4B-A9DF-927AE9D3A90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AC0969C-133D-4B4B-A9DF-927AE9D3A90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,6 +91,10 @@ Global
 		{BEF63F8B-8C1B-40FA-A5B3-254ACECD66D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEF63F8B-8C1B-40FA-A5B3-254ACECD66D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEF63F8B-8C1B-40FA-A5B3-254ACECD66D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D408A173-F358-4BF4-A053-EE81FDD85329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D408A173-F358-4BF4-A053-EE81FDD85329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D408A173-F358-4BF4-A053-EE81FDD85329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D408A173-F358-4BF4-A053-EE81FDD85329}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DF1139F4-9C2E-460B-B1D2-DC0952D98764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF1139F4-9C2E-460B-B1D2-DC0952D98764}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF1139F4-9C2E-460B-B1D2-DC0952D98764}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -101,10 +105,5 @@ Global
 		{F9D81CB1-0145-474C-85F8-020A89EC6CDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05} = {C87843F7-AA1C-4D1D-AED5-EC65BFA49E58}
-		{540B4992-14F4-4756-BB28-4B82D4C0D5FC} = {C87843F7-AA1C-4D1D-AED5-EC65BFA49E58}
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = HPERun\HPERun.csproj
 	EndGlobalSection
 EndGlobal

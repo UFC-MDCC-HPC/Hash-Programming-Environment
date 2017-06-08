@@ -1,23 +1,54 @@
-﻿<Properties StartupItem="HPERun/HPERun.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/CertifierKind.cs">
+﻿<Properties StartupConfiguration="{D408A173-F358-4BF4-A053-EE81FDD85329}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestSAFe/Program.cs">
     <Files>
-      <File FileName="../DGAC/base/WorkflowOrchestrator.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/base/WorkflowKind.cs" Line="1" Column="1" />
-      <File FileName="TestService/Program.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/base/CertifierKind.cs" Line="9" Column="21" />
+      <File FileName="../DGAC/DGAC.cs" Line="2625" Column="25" />
+      <File FileName="../DGAC - SAFe/DGAC.cs" Line="2579" Column="1" />
+      <File FileName="../DGAC - SAFe/ManagerObject.cs" Line="890" Column="41" />
+      <File FileName="../DGAC - SAFe/InitializePortImpl.cs" Line="37" Column="46" />
+      <File FileName="../DGAC - SAFe/WorkerObject.cs" Line="364" Column="49" />
+      <File FileName="../DGAC/WorkerObject.cs" Line="476" Column="17" />
+      <File FileName="../DGAC - SAFe/base/UnitImpl.cs" Line="104" Column="35" />
+      <File FileName="../DGAC/base/UnitImpl.cs" Line="274" Column="27" />
+      <File FileName="../DGAC/base/SystemKind.cs" Line="22" Column="20" />
+      <File FileName="../DGAC - SAFe/base/SystemKind.cs" Line="22" Column="21" />
+      <File FileName="../DGAC - SAFe/base/WorkflowOrchestrator.cs" Line="294" Column="24" />
+      <File FileName="../DGAC/base/WorkflowOrchestrator.cs" Line="261" Column="24" />
+      <File FileName="CoreService/WorkflowCoreServices.asmx.cs" Line="496" Column="41" />
+      <File FileName="SAFe/HShelfApplication.cs" Line="12" Column="1" />
+      <File FileName="PlatformService/PlatformServices.asmx.cs" Line="148" Column="26" />
+      <File FileName="SAFePlatformServices/SAFePlatformServices.cs" Line="249" Column="40" />
+      <File FileName="BackEndService/BackendServices.asmx.cs" Line="82" Column="38" />
+      <File FileName="../ws/BackEndWS.asmx.cs" Line="65" Column="28" />
+      <File FileName="TestSAFe/Program.cs" Line="15" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/DGAC.cs" line="2065" column="18" />
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs" line="956" column="33" />
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" line="22" column="27" />
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" line="19" column="22" />
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" line="148" column="26" />
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" line="13" column="21" />
-      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/BackendServices.asmx.cs" line="62" column="19" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/DGAC.cs" line="2097" column="18" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs" line="954" column="33" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" relfile="Teste/Program.cs" line="22" column="27" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/Teste/Program.cs" relfile="Teste/Program.cs" line="19" column="22" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" relfile="TestService/Program.cs" line="148" column="26" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/TestService/Program.cs" relfile="TestService/Program.cs" line="13" column="21" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/WorkerObject.cs" line="1208" column="1" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/ServiceUtils/CoreServicesUtil.cs" relfile="ServiceUtils/CoreServicesUtil.cs" line="296" column="34" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/LoaderSystem.cs" line="61" column="57" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/LoaderSystem.cs" line="76" column="29" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/LoaderSystem.cs" line="74" column="43" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/LoaderSystem.cs" line="85" column="32" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/LoaderSystem.cs" line="2582" column="40" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFe/HShelfApplication.cs" relfile="SAFe/HShelfApplication.cs" line="70" column="1" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/SAFePlatformServices.cs" relfile="SAFePlatformServices/SAFePlatformServices.cs" line="124" column="31" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/SAFePlatformServices.cs" relfile="SAFePlatformServices/SAFePlatformServices.cs" line="194" column="37" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/SAFePlatformServices.cs" relfile="SAFePlatformServices/SAFePlatformServices.cs" line="214" column="21" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/SAFePlatformServices/SAFePlatformServices.cs" relfile="SAFePlatformServices/SAFePlatformServices.cs" line="166" column="30" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/ManagerObject.cs" line="1197" column="26" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC - SAFe/ManagerObject.cs" line="1304" column="49" />
+      <Breakpoint file="/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/BackEndService/BackendServices.asmx.cs" relfile="BackEndService/BackendServices.asmx.cs" line="62" column="31" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.TestSAFe PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

@@ -12,17 +12,6 @@ using System.Threading;
 
 namespace br.ufc.mdcc.hpcshelf.backend.platform
 {
-	public interface IPlatformServices 
-	{
-		int    getNumberOfNodes   ();
-		int    getBaseBindingPort ();
-		string deploy             (string config_contents);
-		void   setPlatformRef     (string arch_ref);
-		string getPlatformRef     ();
-		string instantiate        (string app_name, string component_ref, int facet_instance, int[] facet, string[] facet_address, int[] nodes);
-		void   run                (string component_ref);
-		string getStatus          ();
-	}
 
 	public class PlatformServices : System.Web.Services.WebService, IPlatformServices
 	{
@@ -42,6 +31,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 
 			return size - 1;
 		}
+
 
 		[WebMethod]
 		public int getBaseBindingPort()
@@ -65,36 +55,36 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 			return base_binding_port;
 		}
 
-		[WebMethod]
-		public string deploy(string config_contents)
-		{
-			int res = -1;
-			try
-			{
-				string filename = Path.GetTempFileName();
-				File.WriteAllText(filename,config_contents);
+        [WebMethod]
+        public string deploy(string config_contents)
+        {
+            int res = -1;
+            try
+            {
+                string filename = Path.GetTempFileName();
+                File.WriteAllText(filename, config_contents);
 
-				ComponentType c = LoaderApp.DeserializeObject(filename);
-				if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
-					res = BackEnd.registerConcreteComponentTransaction(c, null, null, "");
-				else
-					res = BackEnd.registerAbstractComponentTransaction(c, null, null, "");
+                ComponentType c = LoaderApp.DeserializeObject(filename);
+                if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
+                    res = BackEnd.registerConcreteComponentTransaction(c, null, null, "");
+                else
+                    res = BackEnd.registerAbstractComponentTransaction(c, null, null, "");
 
-				if (res>=0) 
-				{
-					string component_reference = c.header.packagePath + "." + c.header.name;
-					File.Copy(filename,Constants.PATH_TEMP_WORKER + component_reference + ".hpe",true);
-				}
+                if (res >= 0)
+                {
+                    string component_reference = c.header.packagePath + "." + c.header.name;
+                    File.Copy(filename, Constants.PATH_TEMP_WORKER + component_reference + ".hpe", true);
+                }
 
-			} 
-			catch (Exception e) 
-			{
-				Console.Error.WriteLine(e.Message);
-				return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
-			}
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
+            }
 
-			return "deployed " + res;
-		}
+            return "deployed " + res;
+        }
 
 		private static string platform_ref = null;
 
@@ -125,12 +115,14 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 				for (int i = 0; i < facet_address.Length; i++)
 					facet_address_list [i] = new Tuple<int, string> (facet [i], facet_address [i]);	
 
-				Console.WriteLine("INSTANTIATE -- " + platform_ref + " / " + component_ref + " / " + facet_address[facet_instance]);
+				Console.WriteLine("INSTANTIATE 2 -- " + platform_ref + " / " + component_ref + " / " + facet_address[facet_instance]);
 
-				if (platform_ref.Equals(component_ref))
-					instantiateSystemComponent (app_name, facet_instance, facet_address_list, nodes);
+                if (platform_ref.Equals(component_ref))
+                    instantiateSystemComponent(app_name, facet_instance, facet_address_list, nodes);
+                else
+                    Console.WriteLine("INSTANTIATE 2 -- no system component -- {0} {1}", platform_ref, component_ref);
 
-				instantiateSolutionComponent (component_ref);
+                instantiateSolutionComponent (app_name, component_ref, facet_instance, facet_address_list, nodes);
 
 				Connector.closeConnection ();
 			} 
@@ -160,8 +152,8 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 				//gov.cca.Services frwServices = session.Services;
 
 				// INSTANTIATE THE APPLICATION
-				Console.WriteLine("Creating an instance of the application");
-				app_cid = (ManagerComponentID) BackEnd.createSystemComponentInstance ("app", instantiator_string, session_id_string);
+                Console.WriteLine("Creating an instance of the application " + platform_ref);
+				app_cid = (ManagerComponentID) BackEnd.createSystemComponentInstance (app_name, instantiator_string, session_id_string);
 
 			} 
 			catch (Exception e) 
@@ -218,7 +210,9 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 				instantiator.facet_address [i].facetSpecified = true;
 				instantiator.facet_address [i].facet = instantiator.facet_address [i].facet_instance;
 
-				Uri uri = new Uri (facet_address_list [i].Item2);
+				string platform_address = facet_address_list[i].Item2 != null ? facet_address_list[i].Item2 : "http://127.0.0.1:100";
+
+				Uri uri = new Uri(platform_address);
 
 				instantiator.facet_address [i].address = uri.Host;
 				instantiator.facet_address [i].portSpecified = true;
@@ -236,10 +230,14 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 		*    which is indexed by component_ref. In fact, it executes the procedure of instantiating an inner component
 		*    of the <app_name>.System component instance (including connection and initialization.
 		*/
-		private void instantiateSolutionComponent(string component_ref)
+		private void instantiateSolutionComponent(string app_name, string component_ref, int facet_instance, Tuple<int, string>[] facet_address_list, int[] nodes)
 		{
-			int count = BackEnd.instantiateSolutionComponent (component_ref);
-			Console.WriteLine ("instantiateSolutionComponent COUNTER=" + count);
+			string instantiator_string = buildInstantiatorStringOfSystem(app_name + ".System", facet_instance, facet_address_list, nodes);
+			Console.WriteLine(instantiator_string);
+
+			Console.WriteLine("BEGIN instantiateSolutionComponent 2 {0}", component_ref);
+            int count = BackEnd.instantiateSolutionComponent (component_ref, instantiator_string, facet_instance, facet_address_list);
+            Console.WriteLine ("END instantiateSolutionComponent 2 {0} COUNTER=" + count, component_ref);
 			status += (count + ":" + component_ref + "/");
 		}
 			

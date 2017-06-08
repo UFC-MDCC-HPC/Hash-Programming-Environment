@@ -75,30 +75,30 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		void Services.releasePort (string portName)
 		{
-			Console.WriteLine ("RELEASE PORT 1.0 " + portName + "/" + mkPortName(portName) + " --- " + cid.getInstanceName());
+		//	Console.WriteLine ("RELEASE PORT 1.0 " + portName + "/" + mkPortName(portName) + " --- " + cid.getInstanceName());
 			ComponentID cid_inner = frw.getComponentID (mkPortName(portName));
-			Console.WriteLine ("RELEASE PORT 1.1 " + portName +  " --- " + (cid_inner == null ? "NULL" : cid_inner.getInstanceName()));
+		//	Console.WriteLine ("RELEASE PORT 1.1 " + portName +  " --- " + (cid_inner == null ? "NULL" : cid_inner.getInstanceName()));
 			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
 				int[] nodes = cid.WorkerNodes;
 				for (int i=0; i<nodes.Length; i++)
 				{
-					Console.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
+			//		Console.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
 					gov.cca.Services ws = WorkerServices[nodes[i]];
 					try {
 						ws.releasePort(portName);
 					}
 					catch (Exception e)
 				    {
-						Console.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
+			//			Console.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
 						//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
 						//	throw e;
 					}
 				}
 			}
-			Console.WriteLine ("RELEASE PORT 4 " + portName);
+		//	Console.WriteLine ("RELEASE PORT 4 " + portName);
 			frw.releasePort(mkPortName(portName));
-			Console.WriteLine ("RELEASE PORT 5 " + portName);
+		//	Console.WriteLine ("RELEASE PORT 5 " + portName);
 		}
 
 		gov.cca.TypeMap Services.createTypeMap ()
@@ -114,11 +114,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				int[] nodes = cid.WorkerNodes;
 				for (int i=0; i<nodes.Length; i++)
 				{
-					Console.WriteLine ("registerUsesPort 1 - " + nodes[i]);
 					gov.cca.Services ws = WorkerServices[nodes[i]];
-					Console.WriteLine ("registerUsesPort 2 - " + nodes[i]);
 					ws.registerUsesPort(portName, type, properties);
-					Console.WriteLine ("registerUsesPort 3 - " + nodes[i]);
 				}
 			}
 			frw.registerUsesPort(mkPortName(portName), type, properties);

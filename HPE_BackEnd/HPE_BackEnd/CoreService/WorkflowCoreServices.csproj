@@ -57,9 +57,13 @@
       <Project>{5559A401-927A-4B4D-B845-DE88130BD0D2}</Project>
       <Name>CoreServicesUtil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DGAC\DGAC.csproj">
-      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
-      <Name>DGAC</Name>
+    <ProjectReference Include="..\DGAC - SAFe\DGAC - SAFe.csproj">
+      <Project>{8AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC - SAFe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SAFePlatformServices\SAFePlatformServices.csproj">
+      <Project>{3E994983-9D37-4F4B-9F61-3310D7E4F9E1}</Project>
+      <Name>SAFePlatformServices</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

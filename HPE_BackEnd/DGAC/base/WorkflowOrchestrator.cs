@@ -3,7 +3,7 @@ using System.Threading;
 using System;
 using System.Diagnostics;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
-using br.ufc.hpe.backend.DGAC.WorkflowCoreServices;
+using br.ufc.mdcc.hpcshelf.core;
 
 namespace br.ufc.pargo.hpe.kinds
 {
@@ -29,9 +29,9 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 		private gov.cca.Services services;
 		int workflow_handle;
-		private WorkflowCoreServices core_services;
+		private IWorkflowServices core_services;
 
-		public SWLVisitorOrchestrate(gov.cca.Services services, int workflow_handle, WorkflowCoreServices core_services)
+		public SWLVisitorOrchestrate(gov.cca.Services services, int workflow_handle, IWorkflowServices core_services)
 		{
 			this.services = services;
 			this.workflow_handle = workflow_handle;

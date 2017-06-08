@@ -399,68 +399,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         #region BuilderService Members
 
-
-        //[MethodImpl(MethodImplOptions.Synchronized)]
-        public ComponentID createInstance(string instanceName,
-                                          string className,    // unit name (data)
-                                          TypeMap properties)
-        {
-			Console.WriteLine("CREATE INSTANCE");
-			Console.WriteLine(my_global_rank + ": createInstance --- " + properties.getString(Constants.KIND_KEY, "") + " " + instanceName + " --- " + className);
-            ComponentID cid = null;
-
-            Connector.openConnection();
-
-   			int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
-
-            switch (kind)
-            {
-				case Constants.KIND_SYSTEM:
-				case Constants.KIND_APPLICATION: cid = createInstanceForApplications(instanceName, className, properties); break;
-                case Constants.KIND_COMPUTATION:
-                case Constants.KIND_DATASTRUCTURE:
-                case Constants.KIND_ENVIRONMENT:
-                case Constants.KIND_PLATFORM:
-                case Constants.KIND_QUALIFIER:
-			    case Constants.KIND_BINDING:
-				case Constants.KIND_TACTICAL:
-				case Constants.KIND_CERTIFIER:
-                case Constants.KIND_SYNCHRONIZER: cid = createInstanceBaseForAllKinds(instanceName, className, properties); break;
-				default:
-					Console.WriteLine ("Unrecognized component kind: " + kind);
-					throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
-            }
-
-            // REGISTER CREATESLICES PORT
-            
-
-            Connector.closeConnection();
-
-            return cid;
-        }
-
-
-        private ComponentID createInstanceForApplications(string instanceName, string class_name, TypeMap properties)
-        {
-            try
-            {
-                ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
-
-				IUnit unit_slice;
-                unitInstances.TryGetValue(cid_app.getInstanceName(), out unit_slice);
-                br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind)unit_slice;
-
-                return cid_app;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-                throw e;
-            }
-
-        }
-
+ 
 		void configure_facet_address (IBindingRootKind unit_slice, string[] ip_address_facets, int[] port_facets)
 		{
 			foreach (KeyValuePair<int,int[]> facet in unit_slice.FacetIndexes) 
@@ -472,18 +411,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					Console.WriteLine ("ADDING FACET TO UNIT SLICE - fact=" + i + ", address = " + ip_address_facets [i] + ", port = " + port_facets [i]);
 				}
 			}
-
-//			for (int i=0; i<ip_address_facets.Length; i++)
-//			{
-//				FacetAccess facet_access = new FacetAccess(ip_address_facets[i], port_facets[i]);
-//				unit_slice.addFacetAccessInfo(i, facet_access);
-//				Console.WriteLine ("ADDING FACET TO UNIT SLICE - fact=" + i + ", address = " + ip_address_facets[i] + ", port = " + port_facets[i]);
-//			}
 		}
 
-        private ComponentID createInstanceBaseForAllKinds(string instanceName, string class_name, TypeMap properties)
+        public ComponentID createInstance(string instanceName, string class_name, TypeMap properties)
         {
-            ComponentID cid = new WorkerComponentIDImpl(instanceName);
+			Console.WriteLine("CREATE INSTANCE");
+			Console.WriteLine(my_global_rank + ": createInstance --- " + properties.getString(Constants.KIND_KEY, "") + " " + instanceName + " --- " + class_name);
+
+			Connector.openConnection();
+
+			ComponentID cid = new WorkerComponentIDImpl(instanceName);
 			try {
 				Console.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 1 " + instanceName);
 	            unitProperties.Add(cid, properties);
@@ -584,6 +521,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				Console.WriteLine(my_global_rank +  ": INNER EXCEPTION MESSAGE -" + e.InnerException.Message);
 				throw e;
 			}
+
+			Connector.closeConnection();
             return cid;
         }
 
@@ -1107,14 +1046,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		public RemoteGoPort getRemoteGoPortNonBlocking(string portName)
 		{
 			GoPort go_port = (GoPort) this.getPortNonblocking (portName);
+            Console.WriteLine("getRemoteGoPortNonBlocking 1 {0} -- {1}", portName, go_port == null);
 
 			if (remote_ports_dict == null)
 				remote_ports_dict = new Dictionary<int, Port> ();
 
+			Console.WriteLine("getRemoteGoPortNonBlocking 2" + portName);
+
 			int id = go_port.GetHashCode ();
 
+			Console.WriteLine("getRemoteGoPortNonBlocking 3" + portName);
+
 			RemoteGoPort remote_go_port = new RemoteGoPort (id);
+			Console.WriteLine("getRemoteGoPortNonBlocking 4" + portName);
 			remote_ports_dict.Add (id, go_port);
+			Console.WriteLine("getRemoteGoPortNonBlocking 5" + portName);
 
 			return remote_go_port;
 		}
@@ -1126,7 +1072,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				int res = ((GoPort)remote_ports_dict[id]).go();
 			}));
 			t.Start ();
-			t.Join ();
+			//t.Join ();
 			Console.WriteLine ("END PERFORM GO -  WORKER OBJECT " + this.GetHashCode());
 			return 0;
 		}
@@ -1238,15 +1184,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
-			Console.WriteLine("registering port 0 " + portName );
-			
 			if (usesPortNamesInv.ContainsKey(portName))
 			{
 				Console.WriteLine("throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);");
 				throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);
 			}
-
-			Console.WriteLine("registering port 1 " + portName );
 
 			HPETypeMap hpe_properties = (HPETypeMap) properties;
 
@@ -1256,8 +1198,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             string id_inner;
             readPortName(portName, out instanceName, out id_inner);
 
-			Console.WriteLine("registering port 2 " + portName + " --- " + instanceName + "/" + id_inner);
-
 			ComponentID cid;
             if (componentIDs.ContainsKey(instanceName))
             {
@@ -1265,21 +1205,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             }
             else
             {
-				Console.WriteLine ("BadInstanceName 1 : " + instanceName + "componentIDs.Count = " + componentIDs.Count + " this = " + this.GetHashCode());
-				foreach (string key in ComponentIDs.Keys)
-					Console.WriteLine (key);
-				Console.WriteLine ("BadInstanceName 2 : " + instanceName);
 				throw new CCAExceptionImpl("Bad Instance Name: " + instanceName);
             }
 				
-			Console.WriteLine("registering port 3 " + portName );
-
 			this.registerUsesPortInfo(cid, portName, type, properties);
 
-			Console.WriteLine("registering port 4 " + portName );
-
 			Connector.closeConnection();            
-			Console.WriteLine("registering port 5 " + portName);
 		}
 
         private void readPortName(string portName, out string instanceName, out string innerName)
@@ -1300,7 +1231,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void unregisterUsesPort(string portName)
         {
-			Console.WriteLine("Trying to unregister port #1" + portName);
+			//Console.WriteLine("Trying to unregister port #1" + portName);
 			
             if (connByUserPort.ContainsKey(portName))
             {
@@ -1311,7 +1242,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             if (usesPortNamesInv.ContainsKey(portName))
             {
-				Console.WriteLine ("Trying to unregister port #2" + portName);
+			//	Console.WriteLine ("Trying to unregister port #2" + portName);
                 ComponentID cid;
                 usesPortNamesInv.TryGetValue(portName, out cid);
                 usesPortNamesInv.Remove(portName);

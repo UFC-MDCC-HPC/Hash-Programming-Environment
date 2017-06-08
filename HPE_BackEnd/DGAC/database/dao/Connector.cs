@@ -68,7 +68,7 @@ public class Connector {
     {       
         //lock(slock) {  
 	        r--;
-	        if (r == 0) {
+	        if (r == 0 && dbcon != null) {
 	           dbcon.Close();
 	           dbcon = null;
 	        }

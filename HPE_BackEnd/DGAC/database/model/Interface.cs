@@ -75,20 +75,20 @@ public class Interface {
     {
         get 
 		{
-				Console.WriteLine("Id_interface_super_top ... BEGIN");
+			//	Console.WriteLine("Id_interface_super_top ... BEGIN");
             if (id_interface_super_top == null) 
 			{
                 if (id_interface_super.Equals("")) 
 				{
-						Console.WriteLine ("Id_interface_super_top 1: " + id_interface);
+					//	Console.WriteLine ("Id_interface_super_top 1: " + id_interface);
                     id_interface_super_top = id_interface;
                 } 
 				else 
 				{
-						Console.WriteLine ("Id_interface_super_top 2.1: " + id_interface_super + " / " + id_abstract);
+					//	Console.WriteLine ("Id_interface_super_top 2.1: " + id_interface_super + " / " + id_abstract);
 					string[] id_interface_super_list_ = Interface.splitIDs(Id_interface_super);
                     AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
-						Console.WriteLine ("Id_interface_super_top 2.2: " + acf.Id_functor_app_supertype);
+					//	Console.WriteLine ("Id_interface_super_top 2.2: " + acf.Id_functor_app_supertype);
                     if (acf.Id_functor_app_supertype != 0)
                     {
                         AbstractComponentFunctorApplication acfaSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
@@ -102,10 +102,10 @@ public class Interface {
 								for (int j = 1; j < id_interface_super_list_.Length; j++) 
 								{
 									string id_interface_super_2 = id_interface_super_list_[j];
-									Console.WriteLine ("Id_interface_super_top 3.1: " + id_interface_super_2);
+							//		Console.WriteLine ("Id_interface_super_top 3.1: " + id_interface_super_2);
 									Interface iSuper2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve (acfaSuper.Id_abstract, id_interface_super_2);
 									id_interface_super_top += "+" + iSuper2.Id_interface_super_top;
-									Console.WriteLine ("Id_interface_super_top 3.2: " + id_interface_super_top);
+							//		Console.WriteLine ("Id_interface_super_top 3.2: " + id_interface_super_top);
 								}
 							}
                     }
@@ -115,7 +115,7 @@ public class Interface {
                     }
                 }
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, id_interface_super_top);
-					Console.WriteLine("Id_interface_super_top ... END ");
+				//	Console.WriteLine("Id_interface_super_top ... END ");
 			    return id_interface_super_top;
             } 
 			else 

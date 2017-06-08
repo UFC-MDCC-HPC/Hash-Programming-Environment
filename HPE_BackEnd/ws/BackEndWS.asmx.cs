@@ -58,7 +58,7 @@ namespace Back_End_WS
          * esse array é salvo em "path" e lido por AppLoader gerando um objeto Component Type,
          * passado ao DGAC 
          */
-        public string deployHashComponent(byte[] data, string userName, string password, string curDir)
+        public string deployHashComponent(byte[] data, string userName, string password, string curDir, bool flag_compile)
         {
             try
             {
@@ -70,9 +70,9 @@ namespace Back_End_WS
 					ComponentType c = LoaderApp.DeserializeObject(filename);
 					int res;
                     if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
-                        res = BackEnd.registerConcreteComponentTransaction(c, userName, password, curDir);
+                        res = BackEnd.registerConcreteComponentTransaction(c, userName, password, curDir, flag_compile);
                     else
-                        res = BackEnd.registerAbstractComponentTransaction(c, userName, password, curDir);
+                        res = BackEnd.registerAbstractComponentTransaction(c, userName, password, curDir, flag_compile);
 
 					if (res>=0) 
 					{
@@ -96,7 +96,7 @@ namespace Back_End_WS
          * esse array é salvo em "path" e lido por AppLoader gerando um objeto Component Type,
          * passado ao DGAC 
          */
-        public string deployHashConfiguration(byte[] data, byte[] hcl_data, string userName, string password, string curDir)
+        public string deployHashConfiguration(byte[] data, byte[] hcl_data, string userName, string password, string curDir, bool flag_compile)
         {
 			Console.WriteLine ("deployHashConfiguration");
 			Console.WriteLine("hcl_data is null ? {0} ! {1}", hcl_data == null, data == null);
@@ -109,7 +109,7 @@ namespace Back_End_WS
                 {
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
-                    int id_abstract = BackEnd.registerAbstractComponent(c, userName, password, curDir);
+                    int id_abstract = BackEnd.registerAbstractComponent(c, userName, password, curDir, flag_compile);
 					BackEnd.updateConfiguration(id_abstract, hcl_data);
                 }
             } catch (Exception e) {
@@ -216,7 +216,7 @@ namespace Back_End_WS
 			 		   string instance_name,         // Name of the component instance in the application.
 			           string instantiator_string)   // Description of the component and its placement.
 		{
-			BackEnd.createSystemComponentInstance (null, instance_name, instantiator_string, session_id_string);
+			BackEnd.createSystemComponentInstance (instance_name, instantiator_string, session_id_string);
 		}
 
 

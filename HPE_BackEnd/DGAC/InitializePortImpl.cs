@@ -39,15 +39,15 @@ namespace br.ufc.hpe.backend.DGAC
                 try 
                 {
 					t.Key.Join();
-                   Console.Error.WriteLine("Worker thread arrived : " + session_id_string);
+                   Console.Error.WriteLine("Worker thread arrived INIT 1: " + session_id_string);
                   // outputs[t.Value.Node] = t.Value.Output;
                 } 
                 catch (Exception e)
                 {
-                   Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                   Console.WriteLine("Worker failed INIT 1: " + session_id_string + ". error =" + e.Message);
                 }
             }			
-            Console.Error.WriteLine("Joined Threads : " + session_id_string);
+            Console.Error.WriteLine("Joined Threads INIT 1: " + session_id_string);
             
 			
 		}
@@ -92,15 +92,15 @@ namespace br.ufc.hpe.backend.DGAC
                 try 
                 {
 					t.Key.Join();
-                   Console.Error.WriteLine("Worker thread arrived : " + session_id_string);
+                   Console.Error.WriteLine("Worker thread arrived INIT 2: " + session_id_string);
                   // outputs[t.Value.Node] = t.Value.Output;
                 } 
                 catch (Exception e)
                 {
-                   Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                   Console.WriteLine("Worker failed INIT 2: " + session_id_string + ". error =" + e.Message);
                 }
             }			
-            Console.Error.WriteLine("Joined Threads : " + session_id_string);
+            Console.Error.WriteLine("Joined Threads INIT 2: " + session_id_string);
 		}
 		#endregion
 

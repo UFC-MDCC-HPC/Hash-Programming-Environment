@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
-using br.ufc.hpe.backend.DGAC.WorkflowCoreServices;
+using br.ufc.mdcc.hpcshelf.core;
 
 namespace br.ufc.pargo.hpe.kinds
 {
@@ -23,7 +23,7 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 		string SWLOrchestration { set; }
 		int WorkflowHandle { set; }
-		WorkflowCoreServices CoreServices { set; }
+		IWorkflowServices CoreServices { set; }
 	}
 
 	public abstract class Workflow : Activate, IWorkflowKind 
@@ -40,8 +40,8 @@ namespace br.ufc.pargo.hpe.kinds
 			} 
 		}
 
-		private WorkflowCoreServices core_services;
-		public WorkflowCoreServices CoreServices 
+		private IWorkflowServices core_services;
+		public IWorkflowServices CoreServices 
 		{ 
 			set 
 			{

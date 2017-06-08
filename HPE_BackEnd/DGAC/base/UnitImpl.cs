@@ -182,12 +182,14 @@ namespace br.ufc.pargo.hpe.basic
 		[MethodImpl(MethodImplOptions.Synchronized)]
         virtual public void on_initialize()
         {
+            Console.WriteLine("VIRTUAL ON INITIALIZE");
         }
         
 		[MethodImpl(MethodImplOptions.Synchronized)]
         virtual public void after_initialize()
         {
-        }
+			Console.WriteLine("VIRTUAL AFTER INITIALIZE");
+		}
 		
         private Intracommunicator global_comm = null;        
         public Intracommunicator WorldComm {get { return global_comm; } set { this.global_comm = value; }}
@@ -271,7 +273,7 @@ namespace br.ufc.pargo.hpe.basic
 		}
 		public void configure_facet_topology(int[] facet_topology, Instantiator.UnitMappingType[] unit_mapping)
 		{
-			Console.WriteLine ("configure_facet_topology 1 - " + facet_topology.Length);
+            Console.WriteLine ("{1} - facet_instance={0}, configure_facet_topology 1 - " + facet_topology.Length, this_facet_instance, this.GetHashCode());
 			foreach (int f in facet_topology)
 				Trace.Write (f + ",");
 			Console.WriteLine (".");
@@ -293,7 +295,7 @@ namespace br.ufc.pargo.hpe.basic
 				}
 			}
 
-			Console.WriteLine ("configure_facet_topology 2 - " + facet_instances_list.Count);
+			Console.WriteLine ("{1} - facet_instance={0}, configure_facet_topology 2 - " + facet_instances_list.Count, this_facet_instance, this.GetHashCode());
 
 			foreach (KeyValuePair<int,IList<int>> f in facet_instances_list) 
 			{
@@ -307,7 +309,7 @@ namespace br.ufc.pargo.hpe.basic
 
 			foreach (KeyValuePair<int,int[]> kv in FacetIndexes) 
 			{
-				Trace.Write ("configure_facet_topology - facet=" + kv.Key + ": ");
+				Console.Write ("{1} - facet_instance={0}, configure_facet_topology - facet=" + kv.Key + ": ", this_facet_instance, this.GetHashCode());
 				foreach (int v in kv.Value)
 					Trace.Write (v + " ");
 				Console.WriteLine (".");
@@ -315,7 +317,7 @@ namespace br.ufc.pargo.hpe.basic
 
 			foreach (KeyValuePair<int,int> kv in FacetMultiplicity) 
 			{
-				Console.WriteLine ("configure_facet_topology - facet=" + kv.Key + " - size=" + kv.Value);
+				Console.WriteLine ("{1} - facet_instance={0}, configure_facet_topology - facet=" + kv.Key + " - size=" + kv.Value, this_facet_instance, this.GetHashCode());
 			}
 
 
@@ -326,7 +328,7 @@ namespace br.ufc.pargo.hpe.basic
 				string unit_id = unit_mapping_item.unit_id;
 				int size = unit_mapping_item.node.Length;
 				IDictionary<string,int> dict;
-				Console.WriteLine ("configure_facet_topology --- facet_instance="+facet_instance + " / unit_id="+unit_id + " / size=" + size);
+                Console.WriteLine("{1} - facet_instance={0}, configure_facet_topology --- facet_instance=" + facet_instance + " / unit_id=" + unit_id + " / size=" + size, this_facet_instance, this.GetHashCode());
 				if (!UnitSizeInFacet.TryGetValue(facet_instance, out dict))
 				{   dict = new Dictionary<string, int> ();
 					UnitSizeInFacet [facet_instance] = dict; 
@@ -336,8 +338,8 @@ namespace br.ufc.pargo.hpe.basic
 
 			foreach (KeyValuePair<int,IDictionary<string,int>> r in UnitSizeInFacet) 
 				foreach(KeyValuePair<string,int> s in r.Value)
-					Console.WriteLine (this.GlobalRank + ": UnitSizeInFacet: facet_instance = " + r.Key + " --  unit_id = " + s.Key + " -- size = " + s.Value);
-		}
+					Console.WriteLine ("{1} - facet_instance={0}, " + this.GlobalRank + ": UnitSizeInFacet: facet_instance = " + r.Key + " --  unit_id = " + s.Key + " -- size = " + s.Value, this_facet_instance, this.GetHashCode());
+		} 
 			
         private ComponentID cid = null;
 

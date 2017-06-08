@@ -1,4 +1,3 @@
-"HPE_BackEnd/DGAC/Web References/WorkflowCoreServices/Reference.cs"
 DGAC/TCOL/action.logic/*.cs  
 DGAC/TCOL/grammar/*.cs
 DGAC/TCOL/util/*.cs
@@ -12,6 +11,7 @@ DGAC/LoaderConcreteComponent.cs
 DGAC/database/model/*.cs 
 DGAC/database/dao/*.cs 
 DGAC/tree/*.cs
+DGAC/IWorkflowServices.cs
 DGAC/base/*.cs
 DGAC/HashComponent.cs 
 DGAC/CommandLineUtil.cs
@@ -64,11 +64,11 @@ DGAC/connector/wrapper/*.cs
 
 -r:bin/ExpressionEvaluator.dll
 -r:System.Data
--r:/home/allberson/Dropbox/MySql.Data.dll
+-r:/opt/mono-4.2.2/lib/mono/MySql.Data/MySql.Data.dll
 -r:System.Runtime.Remoting
 -r:System.Xml
 -r:System.Web.Services
--r:/home/allberson/Dropbox/mpi.net/MPI/MPI.dll
+-r:/opt/mono-4.2.2/lib/mono/MPI/MPI.dll
 -r:System.ServiceModel
 -r:System.Runtime.Serialization
 -out:bin/DGAC.dll

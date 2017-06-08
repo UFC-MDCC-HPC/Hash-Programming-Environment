@@ -12,7 +12,6 @@
     <AssemblyName>DGAC</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\DGAC\DGAC.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>false</DelaySign>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -448,7 +447,7 @@
       <Link>instantiator\instantiator.cs</Link>
     </Compile>
     <Compile Include="..\..\DGAC\base\BindingKind.cs">
-      <Link>base\ActivateKind.cs</Link>
+      <Link>base\BindingKind.cs</Link>
     </Compile>
     <Compile Include="..\..\DGAC\base\ActivateKind.cs">
       <Link>base\ActivateKind.cs</Link>
@@ -585,6 +584,12 @@
     <Compile Include="..\..\DGAC\TCOL\action.logic\LogicActionCompute.cs">
       <Link>TCOL\action.logic\LogicActionCompute.cs</Link>
     </Compile>
+    <Compile Include="..\..\DGAC\IPlatformServices.cs">
+      <Link>platform_services\IPlatformServices.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\IWorkflowServices.cs">
+      <Link>IWorkflowServices.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -680,6 +685,7 @@
     <Folder Include="instantiator\" />
     <Folder Include="component_ref\" />
     <Folder Include="TCOL\" />
+    <Folder Include="platform_services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

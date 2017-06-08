@@ -15,6 +15,8 @@ using br.ufc.pargo.hpe.backend;
 using System.Threading;
 using System.Diagnostics;
 using SAFeSWL;
+using br.ufc.mdcc.hpcshelf.backend.platform;
+using br.ufc.pargo.hpe.basic;
 
 
 namespace br.ufc.mdcc.hpcshelf.core
@@ -29,16 +31,6 @@ namespace br.ufc.mdcc.hpcshelf.core
     // [System.Web.Script.Services.ScriptService]
     //[System.Xml.Serialization.XmlInclude(typeof(ConcreteComponentDescriptionImpl))]
 
-	public interface IWorkflowServices
-	{
-		int    openWorkflowSession  (string arch_desc_xml);
-		void   registerContract     (int workflow_handle, string arch_ref, string contract);
-		void   resolve              (int workflow_handle, string arch_ref);
-		string deploy               (int workflow_handle, string arch_ref);
-		string instantiate          (int workflow_handle, string arch_ref);
-		void   run                  (int workflow_handle, string arch_ref);
-		void   closeWorkflowSession (int workflow_handle);
-	}
 
 	public class WorkflowCoreServices : System.Web.Services.WebService, IWorkflowServices
     {
@@ -56,6 +48,18 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 		private IDictionary<int, IList<string>> delayed_contracts = new Dictionary<int, IList<string>>();
 
+		private SAFePlatformServices platform_SAFe;
+
+		public int openWorkflowSession (string arch_desc_xml, SAFePlatformServices platform_SAFe)
+		{
+			this.platform_SAFe = platform_SAFe;
+			return openWorkflowSession (arch_desc_xml);
+		}
+
+		public string getAppName(int workflow_handle) 
+		{			
+			return active_workflows[workflow_handle].application_name; 
+		}
 
 		[WebMethod]
 		public int openWorkflowSession (string arch_desc_xml)
@@ -80,8 +84,10 @@ namespace br.ufc.mdcc.hpcshelf.core
 				else // there is no contract (c.contract==null)	
 					delayed_contracts [workflow_handle].Add(c.id_component);	
 
+			// TODO: using the manually built and deployed system componentes ..
 			// CREATE SYSTEM COMPONENTS IF ALL CONTRACTS ARE AVAILABLE.
-			tryCreateSystem (workflow_handle);
+			 tryCreateSystem (workflow_handle);
+
 
 			return workflow_handle;
 		}
@@ -101,6 +107,8 @@ namespace br.ufc.mdcc.hpcshelf.core
 		{
 			if (delayed_contracts [workflow_handle].Count == 0) 
 			{
+                Connector.openConnection();
+
 				SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle];
 
 				IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping;
@@ -108,31 +116,36 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 				Tuple<Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>> system = null;
 				system = CoreServicesUtil.createSystem (active_workflows[workflow_handle], workflow_contract[workflow_handle], unit_mapping, ref platforms);
-				workflow_system.Add (workflow_handle, system);
 
-				ComponentType c_appplication_abstract =system.Item1.Item1;
-				ComponentType c_application_concrete =system.Item1.Item2;
-				ComponentType c_workflow_abstract =system.Item2.Item1;
-				ComponentType c_workflow_concrete =system.Item2.Item2;
-				ComponentType c_system_abstract =system.Item3.Item1;
-				ComponentType c_system_concrete=system.Item3.Item2;
+                if (system != null)
+                {
+                    workflow_system.Add(workflow_handle, system);
 
-				string application_abstract = LoaderApp.serialize<ComponentType>(c_appplication_abstract);
-				string application_concrete = LoaderApp.serialize<ComponentType>(c_application_concrete);
-				string workflow_abstract    = LoaderApp.serialize<ComponentType>(c_workflow_abstract);
-				string workflow_concrete    = LoaderApp.serialize<ComponentType>(c_workflow_concrete);
-				string system_abstract      = LoaderApp.serialize<ComponentType>(c_system_abstract);
-				string system_concrete      = LoaderApp.serialize<ComponentType>(c_system_concrete);
+                    ComponentType c_appplication_abstract = system.Item1.Item1;
+                    ComponentType c_application_concrete = system.Item1.Item2;
+                    ComponentType c_workflow_abstract = system.Item2.Item1;
+                    ComponentType c_workflow_concrete = system.Item2.Item2;
+                    ComponentType c_system_abstract = system.Item3.Item1;
+                    ComponentType c_system_concrete = system.Item3.Item2;
 
-				string system_dir = System.Environment.GetEnvironmentVariable (Constants.SYSTEM_COMPONENT_PATH) + Path.DirectorySeparatorChar + workflow_handle + Path.DirectorySeparatorChar;
+                    string application_abstract = LoaderApp.serialize<ComponentType>(c_appplication_abstract);
+                    string application_concrete = LoaderApp.serialize<ComponentType>(c_application_concrete);
+                    string workflow_abstract = LoaderApp.serialize<ComponentType>(c_workflow_abstract);
+                    string workflow_concrete = LoaderApp.serialize<ComponentType>(c_workflow_concrete);
+                    string system_abstract = LoaderApp.serialize<ComponentType>(c_system_abstract);
+                    string system_concrete = LoaderApp.serialize<ComponentType>(c_system_concrete);
 
-				File.WriteAllText (system_dir + arch_desc.application_name + ".Application/Application.hpe", application_abstract);
-				File.WriteAllText (system_dir + arch_desc.application_name + ".Workflow/Workflow.hpe", workflow_abstract);
-				File.WriteAllText (system_dir + arch_desc.application_name + ".System/System.hpe", system_abstract);
+                    string system_dir = System.Environment.GetEnvironmentVariable(Constants.SYSTEM_COMPONENT_PATH) + Path.DirectorySeparatorChar + workflow_handle + Path.DirectorySeparatorChar;
 
-				File.WriteAllText (system_dir + arch_desc.application_name + ".impl.ApplicationImpl/ApplicationImpl.hpe", application_concrete);
-				File.WriteAllText (system_dir + arch_desc.application_name + ".impl.WorkflowImpl/WorkflowImpl.hpe", workflow_concrete);
-				File.WriteAllText (system_dir + arch_desc.application_name + ".impl.SystemImpl/SystemImpl.hpe", system_concrete);
+                    File.WriteAllText(system_dir + arch_desc.application_name + ".Application/Application.hpe", application_abstract);
+                    File.WriteAllText(system_dir + arch_desc.application_name + ".Workflow/Workflow.hpe", workflow_abstract);
+                    File.WriteAllText(system_dir + arch_desc.application_name + ".System/System.hpe", system_abstract);
+
+                    File.WriteAllText(system_dir + arch_desc.application_name + ".impl.ApplicationImpl/ApplicationImpl.hpe", application_concrete);
+                    File.WriteAllText(system_dir + arch_desc.application_name + ".impl.WorkflowImpl/WorkflowImpl.hpe", workflow_concrete);
+                    File.WriteAllText(system_dir + arch_desc.application_name + ".impl.SystemImpl/SystemImpl.hpe", system_concrete);
+                }
+                Connector.closeConnection();
 			}
 		}
 
@@ -174,13 +187,33 @@ namespace br.ufc.mdcc.hpcshelf.core
 					traverse_component (workflow_handle, c, peer_index_of_c, unit_mapping);
 				}
 
-			// WORKFLOW COMPONENT
-			int peer_index_of_w = system_platform_facet_mapping [placement [arch_desc.workflow.id_component]]; 
-			traverse_component (workflow_handle, arch_desc.workflow, peer_index_of_w, unit_mapping);
+            Instantiator.UnitMappingType um;
+			
+            // WORKFLOW COMPONENT
+			int peer_index_of_w = system_platform_facet_mapping [placement [arch_desc.workflow.id_component]];
+		    um = new Instantiator.UnitMappingType();
+			um.facet = 0;
+			um.facetSpecified = true;
+			um.facet_instance = 0;
+			um.facet_instanceSpecified = true;
+			um.unit_id = arch_desc.workflow.id_component;
+			um.unit_index = 0;
+			um.node = new int[1];
+			um.node[0] = peer_index_of_w;
+            unit_mapping.Add(arch_desc.workflow.id_component, new Instantiator.UnitMappingType[1] {um});
 
 			// APPLICATION COMPONENT
-			int peer_index_of_a = system_platform_facet_mapping [placement [arch_desc.application.id_component]]; 
-			traverse_component (workflow_handle, arch_desc.application, peer_index_of_a, unit_mapping);
+			int peer_index_of_a = system_platform_facet_mapping [placement [arch_desc.application.id_component]];
+			um = new Instantiator.UnitMappingType();
+			um.facet = 0;
+			um.facetSpecified = true;
+			um.facet_instance = 0;
+			um.facet_instanceSpecified = true;
+			um.unit_id = arch_desc.application.id_component;
+			um.unit_index = 0;
+			um.node = new int[1];
+			um.node[0] = peer_index_of_a;
+            unit_mapping.Add(arch_desc.application.id_component, new Instantiator.UnitMappingType[1] { um });
 
 			IDictionary<string, IDictionary<int,int>> connector_bindings = new Dictionary<string, IDictionary<int,int>> ();
 
@@ -204,16 +237,16 @@ namespace br.ufc.mdcc.hpcshelf.core
 					foreach (SAFeSWL_Port other_peer in binding.peer)
 						if (peer != other_peer)
 							if (connector_bindings.ContainsKey (peer.id_component)) 
-							check_facet_aligment (connector_bindings, peer, other_peer, system_platform_facet_mapping, placement);
+							    check_facet_aligment (connector_bindings, peer, other_peer, system_platform_facet_mapping, placement);
 			
 			foreach (KeyValuePair<string, IDictionary<int,int>> kv in connector_bindings)
 			{
+				IList<Instantiator.UnitMappingType> um_list = new List<Instantiator.UnitMappingType>();
 				string c_id = kv.Key;
 				IDictionary<int,int> c_ports = kv.Value;
 
 				foreach (KeyValuePair<int,int> connector_facet in c_ports) 
 				{
-					IList<Instantiator.UnitMappingType> um_list = new List<Instantiator.UnitMappingType> ();
 
 					string cRef = workflow_contract [workflow_handle] [c_id].component_ref;
 
@@ -223,21 +256,21 @@ namespace br.ufc.mdcc.hpcshelf.core
 					// single unit expected here, called "node".
 					foreach (Interface unit in unit_list) 
 					{
-						Instantiator.UnitMappingType um = new Instantiator.UnitMappingType ();
-						um.facet = connector_facet.Key;
-						um.facetSpecified = true;
-						um.facet_instance = connector_facet.Key;
-						um.facet_instanceSpecified = true;
-						um.unit_id = unit.Id_interface;
-						um.unit_index = 0;
-						um.node = new int[1];
-						um.node [0] = connector_facet.Value;
+						Instantiator.UnitMappingType umb = new Instantiator.UnitMappingType ();
+						umb.facet = connector_facet.Key;
+						umb.facetSpecified = true;
+						umb.facet_instance = connector_facet.Key;
+						umb.facet_instanceSpecified = true;
+						umb.unit_id = unit.Id_interface;
+						umb.unit_index = 0;
+						umb.node = new int[1];
+						umb.node [0] = connector_facet.Value;
 
-						um_list.Add (um);
+						um_list.Add (umb);
 					}
 
-					unit_mapping.Add (c_id, um_list.ToArray ());
 				}
+				unit_mapping.Add(c_id, um_list.ToArray());
 			}
 
 			return unit_mapping;
@@ -251,8 +284,8 @@ namespace br.ufc.mdcc.hpcshelf.core
 				connector_bindings [port_connector.id_component] [port_connector.facet] = new_host_facet;
 			else
 				host_facet = connector_bindings [port_connector.id_component] [port_connector.facet];
-			if (new_host_facet != host_facet)
-				throw new Exception ("Incompatible facets");			
+            if (new_host_facet != host_facet)
+                Console.WriteLine("INDIRECT BINDING {0}.{1} - {2}.{3}", port_connector.id_component, port_connector.id_port, port_computation.id_component, port_computation.id_port);			
 		}
 
 		void traverse_component (int workflow_handle, SAFeSWL_Component c, int peer_index_of_c, IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping)
@@ -313,94 +346,127 @@ namespace br.ufc.mdcc.hpcshelf.core
 						      string arch_ref        // referência do componente no código arquitetural.
 		)   
 		{
-			Console.WriteLine ("DEPLOYING " + workflow_handle);
+			Console.WriteLine ("DEPLOYING 0 - " + workflow_handle);
+			string result = null;
 
 			SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
-			string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();
 
-			bool is_platform = CoreServicesUtil.checkIsPlatform (arch_desc, arch_ref);
+			string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();
 
 			IDictionary<string,string> choices = new Dictionary<string, string> ();
 			IDictionary<string,string> addresses = new Dictionary<string, string> ();
 
-			for (int i = 0; i < c_ids.Length; i++) 
-			{
-				string cid = c_ids [i]; 
-				if (workflow_resolution.ContainsKey(workflow_handle) && workflow_resolution[workflow_handle].ContainsKey(cid))
-					choices [cid] = LoaderApp.deserialize<ComponentReference.ComponentReference> (workflow_resolution[workflow_handle][cid][0]).component_ref;
+            for (int i = 0; i < c_ids.Length; i++)
+            {
+                string cid = c_ids[i];
+                if (workflow_resolution.ContainsKey(workflow_handle) && workflow_resolution[workflow_handle].ContainsKey(cid))
+                    if (workflow_resolution[workflow_handle][cid].Length > 0)
+                        choices[cid] = LoaderApp.deserialize<ComponentReference.ComponentReference>(workflow_resolution[workflow_handle][cid][0]).component_ref;
 				if (workflow_platform_address.ContainsKey(workflow_handle) && workflow_platform_address[workflow_handle].ContainsKey(cid))
-					addresses [c_ids [i]] = workflow_platform_address[workflow_handle][cid];
+					addresses [cid] = workflow_platform_address[workflow_handle][cid];
 			}
 
-			string result = null;
+			bool is_platform = CoreServicesUtil.checkIsPlatform (arch_desc, arch_ref);
 
 			if (is_platform) 
 			{   
-				Tuple<string, int, int> platform_info = deployPlatform (arch_desc, arch_ref/*, contracts*/, choices/*, unit_mapping*/, workflow_handle);
-				result = platform_info.Item1;
-				workflow_nodes [workflow_handle].Add (arch_ref, platform_info.Item2);
-				workflow_base_binding_port [workflow_handle].Add (arch_ref, platform_info.Item3);
+				if (!arch_ref.Equals ("platform_SAFe")) 
+				{
+					Tuple<string, int, int> platform_info = deployPlatform (arch_desc, arch_ref, choices, workflow_handle);
+					result = platform_info.Item1;
+					workflow_nodes [workflow_handle] [arch_ref] = platform_info.Item2;
+					workflow_base_binding_port [workflow_handle] [arch_ref] = platform_info.Item3;
+				} 
+				else 
+				{
+					deployPlatform (arch_desc, arch_ref, workflow_handle, platform_SAFe);
+					result = ((SAFePlatformServices)platform_SAFe).Address;
+					workflow_nodes [workflow_handle] [arch_ref] = 1;
+					workflow_base_binding_port [workflow_handle] [arch_ref] = platform_SAFe.getBaseBindingPort();
+				}
+
+				workflow_platform_address[workflow_handle][arch_ref] = result;
+
+				if (delayed_instantiations.ContainsKey(arch_ref))
+	                foreach (Thread t in delayed_instantiations[arch_ref])
+	                {
+						t.Start(platforms.IndexOf(arch_ref));
+						t.Join();
+					}
 			}
 			else
 				result = deployComponent (arch_desc, arch_ref, choices, addresses);
 
-			workflow_platform_address [workflow_handle].Add (arch_ref, result);
-
 			return result;
 		}
+
+        private IDictionary<string, IList<Thread>> delayed_instantiations = new Dictionary<string, IList<Thread>>();
 
 		[WebMethod]
 		public string instantiate (int workflow_handle, string arch_ref)
 		{
 			try 
 			{				
-				SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle];
+				SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
+
 				string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();
 
 				IDictionary<string,string> platform_address_list = new Dictionary<string, string> ();
-				for (int i = 0; i < c_ids.Length; i++) 
-				{
-					string cid = c_ids [i]; 
-					if (workflow_platform_address.ContainsKey(workflow_handle) && workflow_platform_address[workflow_handle].ContainsKey(cid))
-						platform_address_list [c_ids [i]] = workflow_platform_address[workflow_handle][cid];
-				}
 
-				int[] facet = new int[platforms.Count];
-				string[] facet_address = new string[platforms.Count];
-				int[] nodes = new int[platforms.Count];
-				for (int i = 0; i < platforms.Count; i++) 
-				{
-					facet [i] = i;
-					int base_binding_port = workflow_base_binding_port [workflow_handle] [platforms [i]];
-					string a = workflow_platform_address [workflow_handle] [platforms [i]];
-					Uri uri_a = new Uri (a);
-					facet_address [i] = "http://" + uri_a.Host + ":" + base_binding_port;
-					nodes [i] = workflow_nodes [workflow_handle].ContainsKey (platforms [i]) ? workflow_nodes [workflow_handle] [platforms [i]] : 0;
-				}
+ 				IList<Thread> bag_of_threads = new List<Thread>();
+				
+                for (int i = 0; i < platforms.Count; i++)
+                {
+                    string platform_ref = platforms[i];
+					Thread t = new Thread(new ParameterizedThreadStart(delegate (object o)
+                        {
+	                        int facet_instance = (int)o;
+	                        platform_ref = platforms[facet_instance];
+	                        string platform_address = workflow_platform_address[workflow_handle][platform_ref];
 
-				// Efetuar a invocação da operação instantiate do componente sistema na plataforma platform_address.
+							int[] facet = new int[platforms.Count];
+							string[] facet_address = new string[platforms.Count];
+							int[] nodes = new int[platforms.Count];
 
-				IList<Thread> bag_of_threads = new List<Thread> ();
-				foreach (KeyValuePair<string, string> platform_info in platform_address_list) 
-				{ 
-					string platform_ref = platform_info.Key;
-					string platform_address = platform_info.Value;
-					int facet_instance = platforms.IndexOf (platform_ref);
-					bool is_platform = CoreServicesUtil.checkIsPlatform (arch_desc, platform_ref);
-					if (is_platform)
-					{
-						Thread t = new Thread(new ThreadStart(delegate() 
+                            for (int j = 0; j < platforms.Count; j++)
+	                        {
+                                int base_binding_port_a = workflow_base_binding_port[workflow_handle].ContainsKey(platforms[j]) ? workflow_base_binding_port[workflow_handle][platforms[j]] : 100;
+                                Uri uri_a = workflow_platform_address[workflow_handle].ContainsKey(platforms[j]) ? new Uri(workflow_platform_address[workflow_handle][platforms[j]]) : new Uri("http://127.0.0.1:100");
+								facet_address[j] = "http://" + uri_a.Host + ":" + base_binding_port_a;
+								nodes[j] = workflow_nodes[workflow_handle].ContainsKey(platforms[j]) ? workflow_nodes[workflow_handle][platforms[j]] : 1;
+                                facet[j] = j;
+							}
+
+							if (!platform_ref.Equals("platform_SAFe"))
 							{
-								ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices (platform_address);
+								ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices(platform_address);
 								platform_access.Timeout = int.MaxValue;
-								platform_access.instantiate (arch_desc.application_name, arch_ref, facet_instance, facet, facet_address, nodes);
-							}));
-						t.Start();
-						bag_of_threads.Add (t);
+                                Console.WriteLine("BEGIN CORE INSTANTIATE {0} on {1}", arch_ref, platform_ref);
+                                platform_access.instantiate(arch_desc.application_name, arch_ref, facet_instance, facet, facet_address, nodes);
+								Console.WriteLine("END CORE INSTANTIATE {0} on {1}", arch_ref, platform_ref);
+							}
+							else
+							{
+								Console.WriteLine("BEGIN CORE INSTANTIATE {0} on {1}", arch_ref, platform_ref);
+								platform_SAFe.instantiate(arch_desc.application_name, arch_ref, facet_instance, facet, facet_address, nodes);
+								Console.WriteLine("END CORE INSTANTIATE {0} on {1}", arch_ref, platform_ref);
+							}
+						}));
+					
+                    if (workflow_platform_address.ContainsKey(workflow_handle) && workflow_platform_address[workflow_handle].ContainsKey(platform_ref))
+                    {
+                        t.Start(platforms.IndexOf(platform_ref));
+						bag_of_threads.Add(t);
 					}
-				}
-
-				// BARRIER (waiting completion)
+                    else 
+                    {
+                        if (!delayed_instantiations.ContainsKey(platform_ref))
+                            delayed_instantiations[platform_ref] = new List<Thread>();
+                        delayed_instantiations[platform_ref].Add(t);   
+                    }
+                }
+				
+                // BARRIER (waiting completion)
 				foreach (Thread t in bag_of_threads) t.Join ();
 
 			}
@@ -422,40 +488,59 @@ namespace br.ufc.mdcc.hpcshelf.core
 		public void run(int workflow_handle, string arch_ref)
 		{
 			try 
-			{				
-				SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle];
-				string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();
+			{
+				SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
 
-				IDictionary<string,string> platform_address_list = new Dictionary<string, string> ();
-				for (int i = 0; i < c_ids.Length; i++) 
+                for (int i = 0; i < platforms.Count; i++)
 				{
-					string cid = c_ids [i]; 
-					if (workflow_platform_address.ContainsKey(workflow_handle) && workflow_platform_address[workflow_handle].ContainsKey(cid))
-						platform_address_list [c_ids [i]] = workflow_platform_address[workflow_handle][cid];
+					string platform_ref = platforms[i];
+                    if (workflow_platform_address[workflow_handle].ContainsKey(platform_ref))
+                    {
+						Console.WriteLine("RUN {0} on {1}", arch_ref, platform_ref);
+						string platform_address = workflow_platform_address[workflow_handle][platform_ref];
+                        if (!platform_ref.Equals("platform_SAFe"))
+                        {
+                            ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices(platform_address);
+                            platform_access.Timeout = int.MaxValue;
+                            platform_access.run(arch_ref);
+                        }
+                        else
+                        {
+                            platform_SAFe.run(arch_ref);
+                        }
+                    }
 				}
+
+
+
+
+
+				//SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle];
+				//string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();
+
+				//IDictionary<string,string> platform_address_list = new Dictionary<string, string> ();
+				//for (int i = 0; i < c_ids.Length; i++) 
+				//{
+				//	string cid = c_ids [i]; 
+				//	if (workflow_platform_address.ContainsKey(workflow_handle) && workflow_platform_address[workflow_handle].ContainsKey(cid))
+				//		platform_address_list [c_ids [i]] = workflow_platform_address[workflow_handle][cid];
+				//}
 					
-				//IList<Thread> bag = new List<Thread>();
+				////IList<Thread> bag = new List<Thread>();
 
-				foreach (KeyValuePair<string, string> platform_info in platform_address_list) 
-				{ 
-					string platform_ref = platform_info.Key;
-					string platform_address = platform_info.Value;
-					bool is_platform = CoreServicesUtil.checkIsPlatform (arch_desc, platform_ref);
-					if (is_platform)
-					{
-						//Thread t = new Thread(new ThreadStart(delegate() 
-						//	{
-								ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices (platform_address);
-								platform_access.Timeout = int.MaxValue;
-								platform_access.run (arch_ref);
-						//	}));
-						//bag.Add(t);
-						//t.Start();
-					}
-				}
+				//foreach (KeyValuePair<string, string> platform_info in platform_address_list) 
+				//{ 
+				//	string platform_ref = platform_info.Key;
+				//	string platform_address = platform_info.Value;
+				//	bool is_platform = CoreServicesUtil.checkIsPlatform (arch_desc, platform_ref);
+				//	if (is_platform)
+				//	{
+				//		ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices (platform_address);
+				//		platform_access.Timeout = int.MaxValue;
+				//		platform_access.run (arch_ref);
+				//	}
+				//}
 
-				//foreach (Thread t_join in bag)
-				//	t_join.Join();
 
 			}
 			catch (Exception e) 
@@ -508,6 +593,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 			workflow_base_binding_port.Remove (workflow_handle);
 			workflow_nodes.Remove (workflow_handle);
 			workflow_system.Remove (workflow_handle);
+
 		}
 
 		private string[] resolve (Instantiator.ComponentFunctorApplicationType contextual_type)
@@ -596,17 +682,32 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 			string backend_address = config[0];
 
-			// criar a plataforma
-			Tuple<string,int,int> platform_address = CoreServicesUtil.invokeBackEndDeploy (arch_ref, backend_address, config);   
-
 			Tuple<Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>> system = null;
-
 			workflow_system.TryGetValue (workflow_handle, out system);
 
+			// criar a plataforma
+			Tuple<string,int,int> platform_address = CoreServicesUtil.invokeBackEndDeploy (arch_ref, backend_address, config);
+
 			// Deploy component contracts and system component.
-			CoreServicesUtil.invokeDeployPlatform (arch_desc, arch_ref, platform_address.Item1, system.Item1.Item1, system.Item1.Item2, system.Item2.Item1, system.Item2.Item2, system.Item3.Item1, system.Item3.Item2);
+			//CoreServicesUtil.invokeDeployPlatform (arch_desc, arch_ref, platform_address.Item1, system.Item1.Item1, system.Item1.Item2, system.Item2.Item1, system.Item2.Item2, system.Item3.Item1, system.Item3.Item2);
 
 			return new Tuple<string,int,int> (platform_address.Item1, platform_address.Item3, platform_address.Item2);
+		}
+
+		private static void 
+		deployPlatform(SAFeSWL_Architecture arch_desc, 
+			string arch_ref, 
+			int workflow_handle,
+			IPlatformServices platform_SAFe)
+		{
+	
+			Tuple<Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>, Tuple<ComponentType,ComponentType>> system = null;
+			workflow_system.TryGetValue (workflow_handle, out system);
+
+			// TODO: using the manually built and deployed system componentes ...
+			// Deploy component contracts and system component.
+			// CoreServicesUtil.invokeDeployPlatform (arch_desc, arch_ref, platform_SAFe, system.Item1.Item1, system.Item1.Item2, system.Item2.Item1, system.Item2.Item2, system.Item3.Item1, system.Item3.Item2);
+
 		}
 
 		private static IList<string> platforms = null;

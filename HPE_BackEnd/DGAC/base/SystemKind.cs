@@ -19,7 +19,7 @@ namespace br.ufc.pargo.hpe.kinds
     }
 	
 	//[Serializable]
-    public class System : Application, ISystemKind
+    public abstract class System : Application, ISystemKind
     {
 		public override void main ()
 		{
