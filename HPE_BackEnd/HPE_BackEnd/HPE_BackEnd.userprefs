@@ -1,24 +1,7 @@
 ﻿<Properties StartupConfiguration="{D408A173-F358-4BF4-A053-EE81FDD85329}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="TestSAFe/Program.cs">
     <Files>
-      <File FileName="../DGAC/DGAC.cs" Line="2625" Column="25" />
-      <File FileName="../DGAC - SAFe/DGAC.cs" Line="2579" Column="1" />
-      <File FileName="../DGAC - SAFe/ManagerObject.cs" Line="890" Column="41" />
-      <File FileName="../DGAC - SAFe/InitializePortImpl.cs" Line="37" Column="46" />
-      <File FileName="../DGAC - SAFe/WorkerObject.cs" Line="364" Column="49" />
-      <File FileName="../DGAC/WorkerObject.cs" Line="476" Column="17" />
-      <File FileName="../DGAC - SAFe/base/UnitImpl.cs" Line="104" Column="35" />
-      <File FileName="../DGAC/base/UnitImpl.cs" Line="274" Column="27" />
-      <File FileName="../DGAC/base/SystemKind.cs" Line="22" Column="20" />
-      <File FileName="../DGAC - SAFe/base/SystemKind.cs" Line="22" Column="21" />
-      <File FileName="../DGAC - SAFe/base/WorkflowOrchestrator.cs" Line="294" Column="24" />
-      <File FileName="../DGAC/base/WorkflowOrchestrator.cs" Line="261" Column="24" />
-      <File FileName="CoreService/WorkflowCoreServices.asmx.cs" Line="496" Column="41" />
-      <File FileName="SAFe/HShelfApplication.cs" Line="12" Column="1" />
-      <File FileName="PlatformService/PlatformServices.asmx.cs" Line="148" Column="26" />
-      <File FileName="SAFePlatformServices/SAFePlatformServices.cs" Line="249" Column="40" />
-      <File FileName="BackEndService/BackendServices.asmx.cs" Line="82" Column="38" />
-      <File FileName="../ws/BackEndWS.asmx.cs" Line="65" Column="28" />
+      <File FileName="SAFe/HShelfApplication.cs" Line="60" Column="18" />
       <File FileName="TestSAFe/Program.cs" Line="15" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>

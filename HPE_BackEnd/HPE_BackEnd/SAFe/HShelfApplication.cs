@@ -63,28 +63,22 @@ namespace br.ufc.mdcc.hpc.shelf.SAFe
 				workflow_handle = core_services.openWorkflowSession (architectural_code, platform_services);
 				this.app_name = core_services.getAppName(workflow_handle);
 
- core_services.registerContract(workflow_handle,"application","");
+                core_services.registerContract(workflow_handle,"application","");
 				core_services.registerContract(workflow_handle, "workflow","");
 				provide_contracts ();
 
 				core_services.deploy (workflow_handle,"platform_SAFe");
 
-				Console.WriteLine("HShelFramework 0 !!!!");
-
-     core_services.instantiate (workflow_handle, "platform_SAFe");
+	            core_services.instantiate (workflow_handle, "platform_SAFe");
 				core_services.instantiate (workflow_handle, "swl_port");
 				core_services.instantiate (workflow_handle, "application");
 				core_services.instantiate (workflow_handle, "workflow");
-
-				Console.WriteLine("HShelFramework 1 !!!!");
 				
-     baseFramework = (WorkerObject)((ManagerObject)platform_services.Session.Framework).WorkerFramework;
+                baseFramework = (WorkerObject)((ManagerObject)platform_services.Session.Framework).WorkerFramework;
 				Console.WriteLine(this.app_name + "-workflow");
 				foreach (string k in baseFramework.UnitOf.Keys)
 					Console.WriteLine("UnitOf[{0}] !", k);
 				((IWorkflowKind)(baseFramework.UnitOf[this.app_name + "-workflow"])).CoreServices = core_services;
-
-				Console.WriteLine("HShelFramework 2 !!!!");
 
 				Thread run = new Thread(new ThreadStart(delegate
                 {
@@ -92,9 +86,7 @@ namespace br.ufc.mdcc.hpc.shelf.SAFe
                     core_services.run(workflow_handle, "workflow");
                 }));
 
-     run.Start();
-
-				Console.WriteLine("HShelFramework 3 !!!!");
+                run.Start();
 
 			}
 
