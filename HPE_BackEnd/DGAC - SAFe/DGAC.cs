@@ -389,7 +389,7 @@ namespace br.ufc.pargo.hpe.backend
 				{
 					Console.Error.Write("Compiling sources ...");
 
-					ManagerObject manager = (ManagerObject)getFrameworkInstance(/*out ch*/);
+					SourceDeployer manager = new SourceDeployer(); // (ManagerObject)getFrameworkInstance(/*out ch*/);
 
 					ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
 					sendToCompile(manager, sharedLibraryCompile, userName, password, curDir, exists);
@@ -441,7 +441,7 @@ namespace br.ufc.pargo.hpe.backend
 				return res;
 			}
 
-			public static void sendToCompile(ManagerObject manager, ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
+            public static void sendToCompile(SourceDeployer deployer, ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
 			{
 
 				Console.WriteLine("sendToCompile " + infoCompile);
@@ -462,7 +462,7 @@ namespace br.ufc.pargo.hpe.backend
 
 					string publicKey = sendCompileCommandToWorker(library_path,
 																  moduleName,
-																  manager,
+																  deployer,
 																  sourceContents,
 																  unitToCompile.references,
 																  outputType,
@@ -560,7 +560,7 @@ namespace br.ufc.pargo.hpe.backend
 				{
 					Console.Error.Write("Compiling sources ...");
 
-					ManagerObject manager = (ManagerObject)getFrameworkInstance(/*out ch*/);
+					SourceDeployer manager = new SourceDeployer(); // (ManagerObject)getFrameworkInstance(/*out ch*/);
 
 					ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
 					sendToCompile(manager, sharedLibraryCompile, userName, password, curDir, exists);
@@ -613,9 +613,9 @@ namespace br.ufc.pargo.hpe.backend
 				return res;
 			}
 
-			private static string sendCompileCommandToWorker(string library_path, string moduleName, ManagerObject worker, Tuple<string,string>[] sourceContents, string[] refs, int outFile, string userName, string password, String curDir)
+            private static string sendCompileCommandToWorker(string library_path, string moduleName, SourceDeployer deployer, Tuple<string,string>[] sourceContents, string[] refs, int outFile, string userName, string password, String curDir)
             {
-                return worker.compileClass(library_path, moduleName, sourceContents, refs, outFile, userName, password, curDir);
+                return deployer.compileClass(library_path, moduleName, sourceContents, refs, outFile, userName, password, curDir);
             }
 
 			#endregion DEPLOY

@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{D408A173-F358-4BF4-A053-EE81FDD85329}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TestSAFe/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC - SAFe/SourceDeployer.cs">
     <Files>
-      <File FileName="SAFe/HShelfApplication.cs" Line="60" Column="18" />
-      <File FileName="TestSAFe/Program.cs" Line="15" Column="4" />
+      <File FileName="../DGAC - SAFe/DGAC.cs" Line="444" Column="49" />
+      <File FileName="../DGAC - SAFe/SourceDeployer.cs" Line="8" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

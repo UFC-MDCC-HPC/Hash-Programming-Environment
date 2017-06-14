@@ -590,6 +590,9 @@
     <Compile Include="..\..\DGAC\IWorkflowServices.cs">
       <Link>IWorkflowServices.cs</Link>
     </Compile>
+    <Compile Include="..\..\DGAC\SourceDeployer.cs">
+      <Link>deploy\SourceDeployer.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -473,6 +473,9 @@
     <Compile Include="..\..\DGAC - SAFe\IWorkflowServices.cs">
       <Link>IWorkflowServices.cs</Link>
     </Compile>
+    <Compile Include="..\..\DGAC - SAFe\SourceDeployer.cs">
+      <Link>deploy\SourceDeployer.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
