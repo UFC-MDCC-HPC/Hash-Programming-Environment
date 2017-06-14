@@ -1,3 +1,22 @@
+DROP TABLE abstractcomponentfunctor           ;
+DROP TABLE abstractcomponentfunctorapplication;
+DROP TABLE abstractcomponentfunctorparameter  ;
+DROP TABLE component                          ;
+DROP TABLE innercomponent                     ;
+DROP TABLE innercomponentexposed              ;
+DROP TABLE interface                          ;
+DROP TABLE interfaceaction                    ;
+DROP TABLE interfaceparameters                ;
+DROP TABLE sessions                           ;
+DROP TABLE slice                              ;
+DROP TABLE sliceexposed                       ;
+DROP TABLE sourcecode                         ;
+DROP TABLE sourcecode_references              ;
+DROP TABLE supplyparameter                    ;
+DROP TABLE supplyparametercomponent           ;
+DROP TABLE supplyparameterparameter           ;
+DROP TABLE unit                               ;
+
 CREATE TABLE `abstractcomponentfunctor` (
   `id_functor_app_supertype` int(11) DEFAULT NULL,
   `library_path` varchar(150) DEFAULT NULL,
