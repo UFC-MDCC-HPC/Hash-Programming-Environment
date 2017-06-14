@@ -100,6 +100,10 @@ public class HPEResourceNavigator extends ResourceNavigator {
 										    	break;
 									    	else if (!strLine.startsWith("#"))
 										    {	
+									    		boolean compile_flag = strLine.lastIndexOf('*') < 0;
+									    		if (!compile_flag)
+									    			strLine = strLine.substring(0,strLine.lastIndexOf('*'));									    		
+									    		
 										        int i = strLine.lastIndexOf('.');
 										        String p = strLine + Path.SEPARATOR + strLine.substring(i+1) + ".hpe";
 										    	
@@ -109,7 +113,7 @@ public class HPEResourceNavigator extends ResourceNavigator {
 												HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false).get(0);
 												factory.saveComponent(c,file2,null);
 												
-											    HPEPlatform.deployByPath(p);
+											    HPEPlatform.deployByPath(p, compile_flag);
 											    System.out.println("finished: deploying " + p);
 										    } 
 										    

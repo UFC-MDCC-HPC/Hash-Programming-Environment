@@ -44,17 +44,23 @@ public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
     return backEnd_WSSoap;
   }
   
-  public java.lang.String deployHashComponent(byte[] data, java.lang.String userName, java.lang.String password, java.lang.String curDir) throws java.rmi.RemoteException{
+  public java.lang.String getSiteName() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
-    return backEnd_WSSoap.deployHashComponent(data, userName, password, curDir);
+    return backEnd_WSSoap.getSiteName();
   }
   
-  public java.lang.String deployHashConfiguration(byte[] data, byte[] hcl_data, java.lang.String userName, java.lang.String password, java.lang.String curDir) throws java.rmi.RemoteException{
-	    if (backEnd_WSSoap == null)
-	      _initBackEnd_WSSoapProxy();
-	    return backEnd_WSSoap.deployHashConfiguration(data, hcl_data, userName, password, curDir);
-	  }
+  public java.lang.String deployHashComponent(byte[] data, java.lang.String userName, java.lang.String password, java.lang.String curDir, boolean flag_compile) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.deployHashComponent(data, userName, password, curDir, flag_compile);
+  }
+  
+  public java.lang.String deployHashConfiguration(byte[] data, byte[] hcl_data, java.lang.String userName, java.lang.String password, java.lang.String curDir, boolean flag_compile) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.deployHashConfiguration(data, hcl_data, userName, password, curDir, flag_compile);
+  }
   
   public byte[] readEnvironment() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
@@ -62,16 +68,46 @@ public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
     return backEnd_WSSoap.readEnvironment();
   }
   
-  public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls, java.lang.String userName, java.lang.String password, java.lang.String curDir) throws java.rmi.RemoteException{
+  public java.lang.String readCatalog() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
-    return backEnd_WSSoap.runApplication(id_concrete, eIds, eVls, userName, password, curDir);
+    return backEnd_WSSoap.readCatalog();
   }
   
   public java.lang.String hosts() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
     return backEnd_WSSoap.hosts();
+  }
+  
+  public java.lang.String openSession(java.lang.String session_id) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.openSession(session_id);
+  }
+  
+  public java.lang.String[] getPorts(java.lang.String session_id, java.lang.String instance_id) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.getPorts(session_id, instance_id);
+  }
+  
+  public void closeSession(java.lang.String session_id) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    backEnd_WSSoap.closeSession(session_id);
+  }
+  
+  public java.lang.String[] runApplication(java.lang.String instantiator_string, java.lang.String session) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.runApplication(instantiator_string, session);
+  }
+  
+  public void createApplicationInstance(java.lang.String session_id_string, java.lang.String instance_name, java.lang.String instantiator_string) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    backEnd_WSSoap.createApplicationInstance(session_id_string, instance_name, instantiator_string);
   }
   
   

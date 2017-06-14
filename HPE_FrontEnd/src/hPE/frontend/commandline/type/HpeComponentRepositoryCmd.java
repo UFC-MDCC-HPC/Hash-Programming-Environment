@@ -468,7 +468,7 @@ public class HpeComponentRepositoryCmd implements HpeGenericCmd{
 
 			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true).get(0);
 		
-			String message = HPEPlatform.deploy(location.toString(), c, user_name, password, dir);
+			String message = HPEPlatform.deploy(location.toString(), c, user_name, password, dir,true);
 			
 			if (message != null) {
 			   HpePrinter.out(message);

@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.URI;
 
 public class HPEPlatform {
 	
-	public static String deploy(String urlWS, HComponent c, String userName, String password, String curDir) throws IOException, ServiceException 
+	public static String deploy(String urlWS, HComponent c, String userName, String password, String curDir, boolean compile) throws IOException, ServiceException 
 	{
 		String fileName = c.getLocalLocation();
 		
@@ -51,7 +51,7 @@ public class HPEPlatform {
 		//if (t_hcl != null)
 		//	result = backend.deployHashConfiguration(t, t_hcl, userName, password, curDir);
 		//else
-			result = backend.deployHashComponent(t, userName, password, curDir);
+			result = backend.deployHashComponent(t, userName, password, curDir, compile);
 
 		return result;
 			
@@ -66,7 +66,7 @@ public class HPEPlatform {
 		BackEnd_WSSoap backend;
 		backend = server.getBackEnd_WSSoap();				
 				
-		result = backend.runApplication(cid, enumerators, enumValuation, userName, password, curdir);			
+		result = backend.runApplication("","");			
 
 		return result;
 	}
@@ -85,21 +85,22 @@ public class HPEPlatform {
 		return c;
 	}
 
-	public static void deployByPath(String pathIn) throws Exception 
+	public static void deployByPath(String pathIn, boolean compile_flag) throws Exception 
 	{
 		String password = null;
 		String curDir = "";
 		String userName = null;
 		 //String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
-		 String urlWS = "http://localhost:8081/BackEndWS.asmx";
+		// String urlWS = "http://localhost:8081/BackEndWS.asmx";
 		//String urlWS = "http://200.19.177.96:8081/BackEndWS.asmx";
+		 String urlWS = "http://200.19.177.101:8080/BackEndWS.asmx";
 		
 //		BrowseAndRunBackEndDialog.getCurrentEditor().doSave(null);
 		
 		URI uri = URI.createFileURI(pathIn);
 		HComponent c = HPEPlatform.getConfiguration(uri);
 
-		String result = HPEPlatform.deploy(urlWS, c, userName, password, curDir);
+		String result = HPEPlatform.deploy(urlWS, c, userName, password, curDir, compile_flag);
 		
 		if (result != null)
 		    throw new Exception(result); //JOptionPane.showMessageDialog(null, result);

@@ -22,7 +22,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
     }
 
     // Use to get a proxy class for BackEnd_WSSoap
-    private java.lang.String BackEnd_WSSoap_address = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
+    private java.lang.String BackEnd_WSSoap_address = "http://127.0.0.1:8081/BackEndWS.asmx";
 
     public java.lang.String getBackEnd_WSSoapAddress() {
         return BackEnd_WSSoap_address;
@@ -65,51 +65,6 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         BackEnd_WSSoap_address = address;
     }
 
-
-    // Use to get a proxy class for BackEnd_WSSoap12
-    private java.lang.String BackEnd_WSSoap12_address = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
-
-    public java.lang.String getBackEnd_WSSoap12Address() {
-        return BackEnd_WSSoap12_address;
-    }
-
-    // The WSDD service name defaults to the port name.
-    private java.lang.String BackEnd_WSSoap12WSDDServiceName = "BackEnd_WSSoap12";
-
-    public java.lang.String getBackEnd_WSSoap12WSDDServiceName() {
-        return BackEnd_WSSoap12WSDDServiceName;
-    }
-
-    public void setBackEnd_WSSoap12WSDDServiceName(java.lang.String name) {
-        BackEnd_WSSoap12WSDDServiceName = name;
-    }
-
-    public hPE.backend.BackEnd_WSSoap12 getBackEnd_WSSoap12() throws javax.xml.rpc.ServiceException {
-       java.net.URL endpoint;
-        try {
-            endpoint = new java.net.URL(BackEnd_WSSoap12_address);
-        }
-        catch (java.net.MalformedURLException e) {
-            throw new javax.xml.rpc.ServiceException(e);
-        }
-        return getBackEnd_WSSoap12(endpoint);
-    }
-
-    public hPE.backend.BackEnd_WSSoap12 getBackEnd_WSSoap12(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
-        try {
-            hPE.backend.BackEnd_WSSoap12Stub _stub = new hPE.backend.BackEnd_WSSoap12Stub(portAddress, this);
-            _stub.setPortName(getBackEnd_WSSoap12WSDDServiceName());
-            return _stub;
-        }
-        catch (org.apache.axis.AxisFault e) {
-            return null;
-        }
-    }
-
-    public void setBackEnd_WSSoap12EndpointAddress(java.lang.String address) {
-        BackEnd_WSSoap12_address = address;
-    }
-
     /**
      * For the given interface, get the stub implementation.
      * If this service has no port for the given interface,
@@ -120,11 +75,6 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
             if (hPE.backend.BackEnd_WSSoap.class.isAssignableFrom(serviceEndpointInterface)) {
                 hPE.backend.BackEnd_WSSoapStub _stub = new hPE.backend.BackEnd_WSSoapStub(new java.net.URL(BackEnd_WSSoap_address), this);
                 _stub.setPortName(getBackEnd_WSSoapWSDDServiceName());
-                return _stub;
-            }
-            if (hPE.backend.BackEnd_WSSoap12.class.isAssignableFrom(serviceEndpointInterface)) {
-                hPE.backend.BackEnd_WSSoap12Stub _stub = new hPE.backend.BackEnd_WSSoap12Stub(new java.net.URL(BackEnd_WSSoap12_address), this);
-                _stub.setPortName(getBackEnd_WSSoap12WSDDServiceName());
                 return _stub;
             }
         }
@@ -147,9 +97,6 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         if ("BackEnd_WSSoap".equals(inputPortName)) {
             return getBackEnd_WSSoap();
         }
-        else if ("BackEnd_WSSoap12".equals(inputPortName)) {
-            return getBackEnd_WSSoap12();
-        }
         else  {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
             ((org.apache.axis.client.Stub) _stub).setPortName(portName);
@@ -167,7 +114,6 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         if (ports == null) {
             ports = new java.util.HashSet();
             ports.add(new javax.xml.namespace.QName("http://backend.hPE/", "BackEnd_WSSoap"));
-            ports.add(new javax.xml.namespace.QName("http://backend.hPE/", "BackEnd_WSSoap12"));
         }
         return ports.iterator();
     }
@@ -179,10 +125,6 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         
 if ("BackEnd_WSSoap".equals(portName)) {
             setBackEnd_WSSoapEndpointAddress(address);
-        }
-        else 
-if ("BackEnd_WSSoap12".equals(portName)) {
-            setBackEnd_WSSoap12EndpointAddress(address);
         }
         else 
 { // Unknown Port Name

@@ -619,7 +619,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			String password = backEndInfo.password;
 			String curDir = backEndInfo.curdir != null ? backEndInfo.curdir.toString() : null;
 			
-			String result = HPEPlatform.deploy(urlWS, this.getCurrentComponent(), userName, password, curDir);
+			String result = HPEPlatform.deploy(urlWS, this.getCurrentComponent(), userName, password, curDir, jCheckBoxQualifier.isEnabled());
 			
 			if (result != null)
 			    JOptionPane.showMessageDialog(rootPane, result);
