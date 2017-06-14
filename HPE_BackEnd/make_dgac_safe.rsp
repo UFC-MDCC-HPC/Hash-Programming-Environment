@@ -7,6 +7,7 @@
 "DGAC - SAFe/TCOL/xml/*.cs"
 "DGAC - SAFe/LoaderApp.cs" 
 "DGAC - SAFe/LoaderComponent.cs" 
+"DGAC - SAFe/SourceDeployer.cs"
 "DGAC - SAFe/LoaderAbstractComponent.cs" 
 "DGAC - SAFe/LoaderConcreteComponent.cs" 
 "DGAC - SAFe/database/model/*.cs" 

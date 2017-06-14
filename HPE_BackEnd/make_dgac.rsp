@@ -5,6 +5,7 @@ DGAC/TCOL/visitor/*.cs
 DGAC/TCOL/visitor.logic/*.cs  
 DGAC/TCOL/xml/*.cs
 DGAC/LoaderApp.cs 
+DGAC/SourceDeployer.cs
 DGAC/LoaderComponent.cs 
 DGAC/LoaderAbstractComponent.cs 
 DGAC/LoaderConcreteComponent.cs 
