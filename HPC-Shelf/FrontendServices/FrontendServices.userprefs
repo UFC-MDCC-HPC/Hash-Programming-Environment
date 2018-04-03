@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="RootPlatformServices/RootPlatformServices.cs">
+    <Files>
+      <File FileName="DGAC/DGAC.cs" Line="2826" Column="25" />
+      <File FileName="DGAC/manager/ManagerObject.cs" Line="201" Column="30" />
+      <File FileName="DGAC/manager/ManagerIgnoredComponentIDImpl.cs" Line="134" Column="24" />
+      <File FileName="DGAC/utils/Constants.cs" Line="132" Column="55" />
+      <File FileName="CoreServices/CoreServices.cs" Line="586" Column="30" />
+      <File FileName="RootPlatformServices/RootPlatformServices.cs" Line="178" Column="18" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <AuthorInfo Name="Francisco Heron de Carvalho Junior" Email="heron@lia.ufc.br" Copyright="" Company="Universidade Federal do Ceará" Trademark="" />
+  <MultiItemStartupConfigurations />
+</Properties>

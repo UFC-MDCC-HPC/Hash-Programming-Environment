@@ -1,0 +1,12 @@
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/CoreCacheServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/CoreCacheServices.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/PlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/MPI.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/MySql.Data.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/PlatformServices.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/bin/Debug/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/obj/Debug/CoreCacheServices.csprojResolveAssemblyReference.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/obj/Debug/CoreCacheServices.csproj.CoreCompileInputs.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/obj/Debug/CoreCacheServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/CoreCacheServices/obj/Debug/CoreCacheServices.pdb

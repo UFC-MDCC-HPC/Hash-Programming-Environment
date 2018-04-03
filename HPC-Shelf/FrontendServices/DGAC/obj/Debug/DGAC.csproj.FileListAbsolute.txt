@@ -1,0 +1,17 @@
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/DGAC/bin/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/DGAC/bin/Debug/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/DGAC/bin/Debug/MPI.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/DGAC/bin/Debug/MySql.Data.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/DGAC/obj/Debug/DGAC.csproj.CoreCompileInputs.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/DGAC/obj/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/SAFe/SAFe/DGAC/obj/Debug/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/DGAC/bin/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/DGAC/bin/Debug/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/DGAC/obj/Debug/DGAC.csprojResolveAssemblyReference.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/DGAC/obj/Debug/DGAC.csproj.CoreCompileInputs.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/DGAC/obj/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/DGAC/obj/Debug/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/DGAC/obj/Debug/DGAC.csprojResolveAssemblyReference.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/DGAC/obj/Debug/DGAC.csproj.CoreCompileInputs.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/DGAC/obj/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/DGAC/obj/Debug/DGAC.pdb

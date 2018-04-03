@@ -1,0 +1,25 @@
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/bin/Debug/PlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/bin/Debug/PlatformServices.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/bin/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/bin/Debug/MPI.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/bin/Debug/MySql.Data.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/bin/Debug/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/obj/Debug/RootPlatformServices.csprojResolveAssemblyReference.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/obj/Debug/RootPlatformServices.csproj.CoreCompileInputs.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/obj/Debug/PlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/PlatformServices/obj/Debug/PlatformServices.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/bin/Debug/PlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/bin/Debug/PlatformServices.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/bin/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/bin/Debug/DGAC.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/obj/Debug/RootPlatformServices.csprojResolveAssemblyReference.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/obj/Debug/RootPlatformServices.csproj.CoreCompileInputs.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/obj/Debug/PlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC Shelf/FrontendServices/RootPlatformServices/obj/Debug/PlatformServices.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/RootPlatformServices/bin/Debug/PlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/RootPlatformServices/bin/Debug/PlatformServices.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/RootPlatformServices/bin/Debug/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/RootPlatformServices/bin/Debug/DGAC.dll.mdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/RootPlatformServices/obj/Debug/RootPlatformServices.csproj.CoreCompileInputs.cache
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/RootPlatformServices/obj/Debug/PlatformServices.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPC-Shelf/FrontendServices/RootPlatformServices/obj/Debug/PlatformServices.pdb

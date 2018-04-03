@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s1="http://tempuri.org/AbstractTypes" xmlns:tns="http://tempuri.org/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:element name="getNumberOfNodes">
+        <s:complexType />
+      </s:element>
+      <s:element name="getNumberOfNodesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getNumberOfNodesResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBaseBindingPort">
+        <s:complexType />
+      </s:element>
+      <s:element name="getBaseBindingPortResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getBaseBindingPortResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deploy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="config_contents" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deployResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="deployResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setPlatformRef">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="arch_ref" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setPlatformRefResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="getPlatformRef">
+        <s:complexType />
+      </s:element>
+      <s:element name="getPlatformRefResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPlatformRefResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="instantiate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="app_name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="component_ref" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="facet_instance" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="facet" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="facet_address" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="nodes" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="instantiateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="instantiateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getStatus">
+        <s:complexType />
+      </s:element>
+      <s:element name="getStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="run">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="component_ref" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="runResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="int" type="s:int" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+    <s:schema targetNamespace="http://tempuri.org/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getNumberOfNodesSoapIn">
+    <wsdl:part name="parameters" element="tns:getNumberOfNodes" />
+  </wsdl:message>
+  <wsdl:message name="getNumberOfNodesSoapOut">
+    <wsdl:part name="parameters" element="tns:getNumberOfNodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="getBaseBindingPortSoapIn">
+    <wsdl:part name="parameters" element="tns:getBaseBindingPort" />
+  </wsdl:message>
+  <wsdl:message name="getBaseBindingPortSoapOut">
+    <wsdl:part name="parameters" element="tns:getBaseBindingPortResponse" />
+  </wsdl:message>
+  <wsdl:message name="deploySoapIn">
+    <wsdl:part name="parameters" element="tns:deploy" />
+  </wsdl:message>
+  <wsdl:message name="deploySoapOut">
+    <wsdl:part name="parameters" element="tns:deployResponse" />
+  </wsdl:message>
+  <wsdl:message name="setPlatformRefSoapIn">
+    <wsdl:part name="parameters" element="tns:setPlatformRef" />
+  </wsdl:message>
+  <wsdl:message name="setPlatformRefSoapOut">
+    <wsdl:part name="parameters" element="tns:setPlatformRefResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPlatformRefSoapIn">
+    <wsdl:part name="parameters" element="tns:getPlatformRef" />
+  </wsdl:message>
+  <wsdl:message name="getPlatformRefSoapOut">
+    <wsdl:part name="parameters" element="tns:getPlatformRefResponse" />
+  </wsdl:message>
+  <wsdl:message name="instantiateSoapIn">
+    <wsdl:part name="parameters" element="tns:instantiate" />
+  </wsdl:message>
+  <wsdl:message name="instantiateSoapOut">
+    <wsdl:part name="parameters" element="tns:instantiateResponse" />
+  </wsdl:message>
+  <wsdl:message name="getStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:getStatus" />
+  </wsdl:message>
+  <wsdl:message name="getStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:getStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="runSoapIn">
+    <wsdl:part name="parameters" element="tns:run" />
+  </wsdl:message>
+  <wsdl:message name="runSoapOut">
+    <wsdl:part name="parameters" element="tns:runResponse" />
+  </wsdl:message>
+  <wsdl:message name="getNumberOfNodesHttpGetIn" />
+  <wsdl:message name="getNumberOfNodesHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="getBaseBindingPortHttpGetIn" />
+  <wsdl:message name="getBaseBindingPortHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="deployHttpGetIn">
+    <wsdl:part name="config_contents" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deployHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="setPlatformRefHttpGetIn">
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setPlatformRefHttpGetOut" />
+  <wsdl:message name="getPlatformRefHttpGetIn" />
+  <wsdl:message name="getPlatformRefHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpGetIn">
+    <wsdl:part name="app_name" type="s:string" />
+    <wsdl:part name="component_ref" type="s:string" />
+    <wsdl:part name="facet_instance" type="s:string" />
+    <wsdl:part name="facet" type="s1:StringArray" />
+    <wsdl:part name="facet_address" type="s1:StringArray" />
+    <wsdl:part name="nodes" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="getStatusHttpGetIn" />
+  <wsdl:message name="getStatusHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpGetIn">
+    <wsdl:part name="component_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpGetOut" />
+  <wsdl:message name="getNumberOfNodesHttpPostIn" />
+  <wsdl:message name="getNumberOfNodesHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="getBaseBindingPortHttpPostIn" />
+  <wsdl:message name="getBaseBindingPortHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="deployHttpPostIn">
+    <wsdl:part name="config_contents" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deployHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="setPlatformRefHttpPostIn">
+    <wsdl:part name="arch_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setPlatformRefHttpPostOut" />
+  <wsdl:message name="getPlatformRefHttpPostIn" />
+  <wsdl:message name="getPlatformRefHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpPostIn">
+    <wsdl:part name="app_name" type="s:string" />
+    <wsdl:part name="component_ref" type="s:string" />
+    <wsdl:part name="facet_instance" type="s:string" />
+    <wsdl:part name="facet" type="s1:StringArray" />
+    <wsdl:part name="facet_address" type="s1:StringArray" />
+    <wsdl:part name="nodes" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="instantiateHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="getStatusHttpPostIn" />
+  <wsdl:message name="getStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpPostIn">
+    <wsdl:part name="component_ref" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="runHttpPostOut" />
+  <wsdl:portType name="PlatformServicesSoap">
+    <wsdl:operation name="getNumberOfNodes">
+      <wsdl:input message="tns:getNumberOfNodesSoapIn" />
+      <wsdl:output message="tns:getNumberOfNodesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBaseBindingPort">
+      <wsdl:input message="tns:getBaseBindingPortSoapIn" />
+      <wsdl:output message="tns:getBaseBindingPortSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <wsdl:input message="tns:deploySoapIn" />
+      <wsdl:output message="tns:deploySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setPlatformRef">
+      <wsdl:input message="tns:setPlatformRefSoapIn" />
+      <wsdl:output message="tns:setPlatformRefSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformRef">
+      <wsdl:input message="tns:getPlatformRefSoapIn" />
+      <wsdl:output message="tns:getPlatformRefSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <wsdl:input message="tns:instantiateSoapIn" />
+      <wsdl:output message="tns:instantiateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getStatus">
+      <wsdl:input message="tns:getStatusSoapIn" />
+      <wsdl:output message="tns:getStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <wsdl:input message="tns:runSoapIn" />
+      <wsdl:output message="tns:runSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PlatformServicesHttpGet">
+    <wsdl:operation name="getNumberOfNodes">
+      <wsdl:input message="tns:getNumberOfNodesHttpGetIn" />
+      <wsdl:output message="tns:getNumberOfNodesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBaseBindingPort">
+      <wsdl:input message="tns:getBaseBindingPortHttpGetIn" />
+      <wsdl:output message="tns:getBaseBindingPortHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <wsdl:input message="tns:deployHttpGetIn" />
+      <wsdl:output message="tns:deployHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setPlatformRef">
+      <wsdl:input message="tns:setPlatformRefHttpGetIn" />
+      <wsdl:output message="tns:setPlatformRefHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformRef">
+      <wsdl:input message="tns:getPlatformRefHttpGetIn" />
+      <wsdl:output message="tns:getPlatformRefHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <wsdl:input message="tns:instantiateHttpGetIn" />
+      <wsdl:output message="tns:instantiateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getStatus">
+      <wsdl:input message="tns:getStatusHttpGetIn" />
+      <wsdl:output message="tns:getStatusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <wsdl:input message="tns:runHttpGetIn" />
+      <wsdl:output message="tns:runHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PlatformServicesHttpPost">
+    <wsdl:operation name="getNumberOfNodes">
+      <wsdl:input message="tns:getNumberOfNodesHttpPostIn" />
+      <wsdl:output message="tns:getNumberOfNodesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBaseBindingPort">
+      <wsdl:input message="tns:getBaseBindingPortHttpPostIn" />
+      <wsdl:output message="tns:getBaseBindingPortHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <wsdl:input message="tns:deployHttpPostIn" />
+      <wsdl:output message="tns:deployHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setPlatformRef">
+      <wsdl:input message="tns:setPlatformRefHttpPostIn" />
+      <wsdl:output message="tns:setPlatformRefHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformRef">
+      <wsdl:input message="tns:getPlatformRefHttpPostIn" />
+      <wsdl:output message="tns:getPlatformRefHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <wsdl:input message="tns:instantiateHttpPostIn" />
+      <wsdl:output message="tns:instantiateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getStatus">
+      <wsdl:input message="tns:getStatusHttpPostIn" />
+      <wsdl:output message="tns:getStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <wsdl:input message="tns:runHttpPostIn" />
+      <wsdl:output message="tns:runHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PlatformServicesSoap" type="tns:PlatformServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getNumberOfNodes">
+      <soap:operation soapAction="http://tempuri.org/getNumberOfNodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBaseBindingPort">
+      <soap:operation soapAction="http://tempuri.org/getBaseBindingPort" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <soap:operation soapAction="http://tempuri.org/deploy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setPlatformRef">
+      <soap:operation soapAction="http://tempuri.org/setPlatformRef" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformRef">
+      <soap:operation soapAction="http://tempuri.org/getPlatformRef" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <soap:operation soapAction="http://tempuri.org/instantiate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStatus">
+      <soap:operation soapAction="http://tempuri.org/getStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <soap:operation soapAction="http://tempuri.org/run" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlatformServicesSoap12" type="tns:PlatformServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getNumberOfNodes">
+      <soap12:operation soapAction="http://tempuri.org/getNumberOfNodes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBaseBindingPort">
+      <soap12:operation soapAction="http://tempuri.org/getBaseBindingPort" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <soap12:operation soapAction="http://tempuri.org/deploy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setPlatformRef">
+      <soap12:operation soapAction="http://tempuri.org/setPlatformRef" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformRef">
+      <soap12:operation soapAction="http://tempuri.org/getPlatformRef" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <soap12:operation soapAction="http://tempuri.org/instantiate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStatus">
+      <soap12:operation soapAction="http://tempuri.org/getStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <soap12:operation soapAction="http://tempuri.org/run" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlatformServicesHttpGet" type="tns:PlatformServicesHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="getNumberOfNodes">
+      <http:operation location="/getNumberOfNodes" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBaseBindingPort">
+      <http:operation location="/getBaseBindingPort" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <http:operation location="/deploy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setPlatformRef">
+      <http:operation location="/setPlatformRef" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformRef">
+      <http:operation location="/getPlatformRef" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <http:operation location="/instantiate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStatus">
+      <http:operation location="/getStatus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <http:operation location="/run" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlatformServicesHttpPost" type="tns:PlatformServicesHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="getNumberOfNodes">
+      <http:operation location="/getNumberOfNodes" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBaseBindingPort">
+      <http:operation location="/getBaseBindingPort" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deploy">
+      <http:operation location="/deploy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setPlatformRef">
+      <http:operation location="/setPlatformRef" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformRef">
+      <http:operation location="/getPlatformRef" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="instantiate">
+      <http:operation location="/instantiate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStatus">
+      <http:operation location="/getStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="run">
+      <http:operation location="/run" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlatformServices">
+    <wsdl:port name="PlatformServicesSoap" binding="tns:PlatformServicesSoap">
+      <soap:address location="http://127.0.0.1:8082/PlatformServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlatformServicesSoap12" binding="tns:PlatformServicesSoap12">
+      <soap12:address location="http://127.0.0.1:8082/PlatformServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlatformServicesHttpGet" binding="tns:PlatformServicesHttpGet">
+      <http:address location="http://127.0.0.1:8082/PlatformServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlatformServicesHttpPost" binding="tns:PlatformServicesHttpPost">
+      <http:address location="http://127.0.0.1:8082/PlatformServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
