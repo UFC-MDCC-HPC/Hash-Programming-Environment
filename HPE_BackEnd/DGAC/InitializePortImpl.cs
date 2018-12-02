@@ -10,7 +10,34 @@ using System.Diagnostics;
 
 namespace br.ufc.hpe.backend.DGAC
 {
-	public class InitializePortImpl : InitializePort
+    public class MultipleInitializePortImpl : MultipleInitializePort
+    {
+        private IList<InitializePort> ports = new List<InitializePort>();
+
+        public void addPort(InitializePort port)
+        {
+            ports.Add(port);
+        }
+
+        public void after_initialize()
+        {
+            foreach (InitializePort port in ports)
+                port.after_initialize();
+        }
+
+ 
+        public  void on_initialize()
+        {
+			foreach (InitializePort port in ports)
+				port.on_initialize();
+		}
+
+    }
+
+
+
+
+    public class InitializePortImpl : InitializePort
 	{
 		private ManagerComponentID mcid = null;
 		private string session_id_string = null;
@@ -28,10 +55,10 @@ namespace br.ufc.hpe.backend.DGAC
 		{			
             IDictionary<Thread, InitializeThread> thread_list = new Dictionary<Thread,InitializeThread>();
 			foreach (Port port in w_initialize_port)
-            {		       
-				InitializeThread thread = new InitializeThread((InitializePort) port);
+            {
+                InitializeThread thread = new InitializeThread((InitializePort)port);
                 Thread t = new Thread(thread.Run);
-                thread_list.Add(t,thread);
+                thread_list.Add(t, thread);
                 t.Start();
             }
             foreach (KeyValuePair<Thread,InitializeThread> t in thread_list)

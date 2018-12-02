@@ -9,23 +9,24 @@ using System.Collections.Generic;
 namespace TestSAFe
 {
     // MainClass will make the role of the Application component.
-	class MainClass : HShelfApplication
+	class MainClass3 : HShelfApplication
 	{
-		public static void Main (string[] args)
+		public static void Main3 (string[] args)
 		{
-			string path = "/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/Run-MapReduce/";
+            string path_contracts = "/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/Run-Gust-TC/";
+            string path_architecture_file = Environment.GetEnvironmentVariable("SWL_ARCHITECTURE_FILE_LOCATION");
 			
             // The contracts will be provided by explicit files. However, it is possible to put
 			// the contracts inside the architectural code, or even infom a URL for download.
 			IDictionary<string, string> contracts = new Dictionary<string, string> ();
 
 			for (int i = 0; i < p_ids.Length; i++) 
-				contracts [p_ids[i]] = File.ReadAllText(path + p_contracts[i]); 
+				contracts [p_ids[i]] = File.ReadAllText(path_contracts + p_contracts[i]); 
 
 			for (int i = 0; i < c_ids.Length; i++) 
-				contracts [c_ids[i]] = File.ReadAllText(path + c_contracts[i]);
+				contracts [c_ids[i]] = File.ReadAllText(path_contracts + c_contracts[i]);
 
-			string solution_architecture_xml = File.ReadAllText(path + "CountWordsArchitecture.xml");
+			string solution_architecture_xml = File.ReadAllText(path_architecture_file);
 			
             AbstractFramework frw = new HShelfFramework (solution_architecture_xml, contracts);
 			// 1. After the framework creation, the Workflow and Application components are instantiated. 
@@ -56,40 +57,46 @@ namespace TestSAFe
 			}
 		}
 
-		static string[] p_ids = new string[5] {
+		static string[] p_ids = new string[6] {
 			"platform_SAFe",
 			"platform_data_source",
-			"platform_map",
-			"platform_reduce",
+			"platform_reduce_0",
+			"platform_reduce_1",
+			"platform_reduce_2",
 			"platform_data_sink"
 		};
 
-		static string[] c_ids = new string[7] {
+		static string[] c_ids = new string[9] {
 			"source",
 			"sink",
-			"mapper",
-			"reducer",
-			"splitter_input",
-			"splitter_output",
-			"shuffler"
+			"reducer_0",
+			"reducer_1",
+			"reducer_2",
+			"shuffler_0",
+			"shuffler_1",
+   		    "shuffler_2",
+            "splitter_output"
 		};
 
-		static string[] p_contracts = new string[5] {
+		static string[] p_contracts = new string[6] {
 			"PlatformSAFe.cc",
 			"PlatformDataSource.cc",
-			"PlatformMap.cc",
-			"PlatformReduce.cc",
+			"PlatformReduce_0.cc",
+			"PlatformReduce_1.cc",
+			"PlatformReduce_2.cc",
 			"PlatformDataSink.cc"
 		};
 
-		static string[] c_contracts = new string[7] {
+		static string[] c_contracts = new string[9] {
 			"DataSource.cc",
 			"DataSink.cc",
-			"Mapper.cc",
-			"Reducer.cc",
-			"SplitterInput.cc",
-			"SplitterOutput.cc",
-			"Shuffler.cc"
+			"Reducer_0.cc",
+			"Reducer_1.cc",
+			"Reducer_2.cc",
+			"Shuffler_0.cc",
+			"Shuffler_1.cc",
+			"Shuffler_2.cc",
+			"SplitterOutput.cc"
 		};
 
 	}

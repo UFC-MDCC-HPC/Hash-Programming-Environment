@@ -38,7 +38,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin</OutputPath>
+    <OutputPath>..\..\..\..\HPC-Shelf-Gust\lib-safe</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,7 +46,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin</OutputPath>
+    <OutputPath>..\..\..\..\HPC-Shelf-Gust\lib-safe</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -69,6 +69,9 @@
     <Reference Include="mscorlib" />
     <Reference Include="ExpressionEvaluator">
       <HintPath>..\..\bin\ExpressionEvaluator.dll</HintPath>
+    </Reference>
+    <Reference Include="MPI">
+      <HintPath>..\..\bin\MPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -476,6 +479,7 @@
     <Compile Include="..\..\DGAC - SAFe\SourceDeployer.cs">
       <Link>deploy\SourceDeployer.cs</Link>
     </Compile>
+    <Compile Include="ICoreServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

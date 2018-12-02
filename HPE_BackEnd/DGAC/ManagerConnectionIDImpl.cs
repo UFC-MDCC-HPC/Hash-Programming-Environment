@@ -109,7 +109,7 @@ namespace gov
 
             #region properties (for serialization purposes)
 
-            public int[] Nodes { get { return nodes; } set { this.nodes = value; } }
+            //public int[] Nodes { get { return nodes; } set { this.nodes = value; } }
 
             #endregion
             
@@ -120,11 +120,11 @@ namespace gov
 			                                 string providesPortName, 
 			                                 ComponentID user, 
 			                                 string usesPortName, 
-			                                 int[] nodes, 
+			                                 //int[] nodes, 
 			                                 WorkerConnectionID[] worker_connections) 
                 :  base(provider, providesPortName,user,usesPortName, worker_connections)
             {
-                this.nodes = nodes;
+               //this.nodes = nodes;
 				this.ignore = false;
             }
 

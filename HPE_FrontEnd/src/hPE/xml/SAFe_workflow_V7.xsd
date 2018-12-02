@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.example.org/SAFe_workflow_V6"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/SAFe_workflow_V6">
+
+    <element name="workflow" type="tns:SAFeSWL_OperationAnyType"></element>
+
+    <complexType name="SAFeSWL_OperationManyType">
+    	<complexContent>
+    		<extension base="tns:SAFeSWL_OperationBaseType">
+    			<choice maxOccurs="unbounded" minOccurs="1">
+    				<element name="skip"
+    					type="tns:SAFeSWL_OperationPrimitiveType">
+    				</element>
+    				<element name="break"
+    					type="tns:SAFeSWL_OperationPrimitiveType">
+    				</element>
+    				<element name="continue"
+    					type="tns:SAFeSWL_OperationPrimitiveType">
+    				</element>
+    				<element name="start"
+    					type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType">
+    				</element>
+    				<element name="wait"
+    					type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType">
+    				</element>
+    				<element name="cancel"
+    					type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType">
+    				</element>
+    				<element name="invoke"
+    					type="tns:SAFeSWL_OperationPrimitiveInvokeActionType">
+    				</element>
+    				<element name="sequence"
+    					type="tns:SAFeSWL_OperationManyType">
+    				</element>
+    				<element name="parallel"
+    					type="tns:SAFeSWL_OperationManyType">
+    				</element>
+    				<element name="choice"
+    					type="tns:SAFeSWL_OperationChoiceType">
+    				</element>
+    				<element name="iterate"
+    					type="tns:SAFeSWL_IterateType">
+    				</element>
+    			</choice>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+
+
+    <complexType name="SAFeSWL_OperationBaseType">
+    	<attribute name="order" type="int" use="optional"></attribute>
+    	<attribute name="value" type="string" use="optional"></attribute>
+    	<attribute name="oper_name" type="string" use="optional"></attribute>
+    	<attribute name="level" type="int" use="optional"></attribute>
+    	<attribute name="base_label" type="string" use="optional"></attribute>
+    	<attribute name="tracing" type="boolean" use="optional" default="false"></attribute>
+    </complexType>
+
+    <complexType
+		name="SAFeSWL_OperationPrimitiveInvokeActionType">
+		<complexContent>
+			<extension
+				base="tns:SAFeSWL_OperationPrimitiveType">
+				<attribute name="port" type="string"></attribute>
+				<attribute name="action" type="string" use="required">
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType
+		name="SAFeSWL_OperationPrimitiveInvokeActionAsyncType">
+		<complexContent>
+			<extension
+				base="tns:SAFeSWL_OperationPrimitiveInvokeActionType">
+				<attribute name="handle_id" type="string"
+					use="optional">
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+
+	<complexType name="SAFeSWL_OperationAnyType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_OperationBaseType">
+				<choice maxOccurs="1" minOccurs="0" >
+					<element name="skip" type="tns:SAFeSWL_OperationPrimitiveType">	</element>
+					<element name="break" type="tns:SAFeSWL_OperationPrimitiveType"> </element>
+					<element name="continue" type="tns:SAFeSWL_OperationPrimitiveType">	</element>
+					<element name="start" type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType"> </element>
+					<element name="wait" type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType"> </element>
+					<element name="cancel" type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType"> </element>
+					<element name="invoke" type="tns:SAFeSWL_OperationPrimitiveInvokeActionType">	</element>
+					<element name="sequence" type="tns:SAFeSWL_OperationManyType"> </element>
+					<element name="parallel" type="tns:SAFeSWL_OperationManyType"> </element>
+					<element name="choice" type="tns:SAFeSWL_OperationChoiceType"> </element>
+					<element name="iterate" type="tns:SAFeSWL_IterateType">	</element>
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_OperationChoiceType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_OperationBaseType">
+				<sequence>
+					<element name="select" type="tns:SAFeSWL_SelectionGuardType"
+						maxOccurs="unbounded" minOccurs="1">
+					</element>
+				</sequence>
+				<attribute name="port" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_SelectionGuardType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_OperationAnyType">
+
+				<attribute name="action" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_OperationPrimitiveType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_OperationBaseType"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_ConditionType">
+		<sequence>
+			<element name="condition" type="tns:SAFeSWL_OperationPrimitiveInvokeActionType" maxOccurs="unbounded" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SAFeSWL_IterateType">
+		<annotation>
+			<documentation>
+* essa gramática é flexível para suportar "iterate" com   múltiplos "branch" OU (exclusivo) múltiplos "select" OU sem "branch" e sem "select". 
+
+* Nesse ultimo caso,   espera-se que exista uma ação (composta ou primitiva). 
+
+*  Os atributos id_port, loop e until são todos  desnecessários no primeiro caso. 
+
+* Os atributos loop e  until são desnecessários no segundo caso. Porém, id_port é obrigatório, já que os nomes das açoes alternativas estarão em cada elemento "select".
+			</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="tns:SAFeSWL_OperationAnyType">
+				<choice maxOccurs="1" minOccurs="0">
+					<element name="branch" type="tns:SAFeSWL_BranchType"
+						maxOccurs="unbounded" minOccurs="1">
+					</element>
+					<element name="select"
+						type="tns:SAFeSWL_SelectionGuardType" maxOccurs="unbounded"
+						minOccurs="1">
+					</element>
+				</choice>
+				<attribute name="port" type="string" use="optional"></attribute>
+				<attribute name="loop" type="string" use="optional"></attribute>
+				<attribute name="until" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_BranchType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_OperationAnyType">
+				<sequence>
+					<element name="select" type="tns:SAFeSWL_SelectionGuardType" maxOccurs="unbounded" minOccurs="0"></element>
+				</sequence>
+				<attribute name="port" type="string"></attribute>
+				<attribute name="loop" type="string" use="optional">
+					<annotation>
+						<documentation>Esse atributo (enter) só é usado quando não existe select, 
+ou seja,  "branch" só tem uma escolha default. É o equivalente 
+a usar um único "select" no branch. </documentation>
+					</annotation></attribute>
+				<attribute name="until" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>

@@ -90,7 +90,8 @@ namespace br.ufc.pargo.hpe.kinds
 			IActionFuture future_handle;
 			action_port.invoke (action_name, out future_handle);
 
-			dict_async_invocations [handle] = future_handle;
+            if (handle != null)
+			    dict_async_invocations [handle] = future_handle;
 
 			return true;
 		}
@@ -255,10 +256,12 @@ namespace br.ufc.pargo.hpe.kinds
 		{
 			ITaskBindingKind port_return;
 
-			if (!dict_ports.TryGetValue (port_name, out port_return)) 
+			 Console.WriteLine("***** port 1 ---- {0}", port_name);
+
+            if (!dict_ports.TryGetValue (port_name, out port_return)) 
 				dict_ports [port_name] = port_return = (ITaskBindingKind) services.getPort (port_name);
 
-			Console.WriteLine ("***** port ---- {0} {1}", port_name, port_return != null);
+			Console.WriteLine ("***** port 2 ---- {0} {1}", port_name, port_return != null);
 
 			return port_return;
 		}

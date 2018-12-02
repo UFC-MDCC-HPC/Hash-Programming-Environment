@@ -136,15 +136,14 @@ namespace HPE_DGAC_LoadDB
         {
             IList<InnerComponentType> includeAsInner = new List<InnerComponentType>();
 
-            importInnerComponentsOfSuper(absC, includeAsInner);
-
             IDictionary<string, InnerComponentType> innersByVarName= new Dictionary<string, InnerComponentType>();
 
             if (parameter != null) foreach (ParameterType ir in parameter)
             {
                 InnerComponentType ic = this.lookForInnerComponent(ir.componentRef);
-				if (!innersByVarName.ContainsKey(ir.varName))
-					innersByVarName.Add(ir.varName, ic);
+				if (ic == null) Console.WriteLine("LOOK FOR INNER COMPONENT RETURNED NULL " + ir.componentRef);
+					if (!innersByVarName.ContainsKey(ir.varName))
+					innersByVarName[ir.varName] = ic;
 				else
 					Console.WriteLine("ALREADY EXISTS - key=" + ir.varName + ", value=" + ic.localRef);
             }
@@ -153,12 +152,14 @@ namespace HPE_DGAC_LoadDB
             {
                 InnerComponentType ic = this.lookForInnerComponent(ir.cRef);
 				if (!innersByVarName.ContainsKey(ir.varName))
-					innersByVarName.Add(ir.varName, ic);
+					innersByVarName[ir.varName] = ic;
 				else
 					Console.WriteLine("ALREADY EXISTS - key=" + ir.varName + ", value=" + ic.localRef);
             }
 
-            if (inner != null)
+			importInnerComponentsOfSuper(absC, includeAsInner);
+
+			if (inner != null)
             {
                 foreach (InnerComponentType c in inner)
                 {
@@ -224,9 +225,12 @@ namespace HPE_DGAC_LoadDB
 									Console.WriteLine("loadInnerComponent - STEP 3 " + varName);
 									foreach (KeyValuePair<string, InnerComponentType> iii in innersByVarName) 
 									{
-										Console.WriteLine("loadInnerComponent " + iii.Key + " --- " + iii.Value.localRef + " , " + c.package + "." + c.name);
+										Console.WriteLine("loadInnerComponent x " + iii.Key);
+                                        Console.WriteLine("loadInnerComponent y " + (iii.Value == null));
+										Console.WriteLine("loadInnerComponent z " + c.package);
+										Console.WriteLine("loadInnerComponent w " + c.name);
 									}
-                                    innersByVarName.TryGetValue(varName, out port_replace);
+                                    port_replace = innersByVarName[varName];
 								} else
 									Console.WriteLine("loadInnerComponent - STEP 3 ");
 
@@ -357,7 +361,7 @@ namespace HPE_DGAC_LoadDB
 				Console.WriteLine ("importInnerComponentsOfSuper: " + iss.Count + " - acfa.Id_abstract=" + acfa.Id_abstract);
 				foreach (InnerComponent i in iss) //if (!i.IsPublic)
                 {
-					Console.WriteLine ("importInnerComponentsOfSupper 1: " + i.Id_inner + " , " + i.Id_functor_app + " , " + (i.Parameter_top));
+					Console.WriteLine ("[importInnerComponentsOfSupper 1: " + i.Id_inner + " , " + i.Id_functor_app + " , " + (i.Parameter_top));
 
                     InnerComponent iNew = new InnerComponent();
 					if (i.Parameter_top != null && i.Parameter_top != "")
@@ -399,7 +403,7 @@ namespace HPE_DGAC_LoadDB
                                     varName = pr.varName;
                                     ParameterType parameter = this.lookForParameterByVarName(varName);
                                     InnerComponentType cReplace = lookForInnerComponent(parameter.componentRef);
-                                    cReplace.localRef = i.Id_inner;
+                                    //cReplace.localRef = i.Id_inner;
                                     cReplace.exposed = i.IsPublic;
 									cReplace.multiple = i.Multiple;
                                     includeAsInner.Add(cReplace);
@@ -435,98 +439,101 @@ namespace HPE_DGAC_LoadDB
 
 
 
-        // NOT YET TESTED
-        private int liftFunctorApp(int id_functor_app, IDictionary<string, SupplyParameter> parsSuper)
-        {
-            AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app);
+		// NOT YET TESTED
+		private int liftFunctorApp(int id_functor_app, IDictionary<string, SupplyParameter> parsSuper)
+		{
+			AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app);
 
-            AbstractComponentFunctorApplication acfaNew = new AbstractComponentFunctorApplication();
-            acfaNew.Id_abstract = acfa.Id_abstract;
-            br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(acfaNew);
+			AbstractComponentFunctorApplication acfaNew = new AbstractComponentFunctorApplication();
+			acfaNew.Id_abstract = acfa.Id_abstract;
+			br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(acfaNew);
 
-            IList<SupplyParameter> supplyList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(id_functor_app);
-            foreach (SupplyParameter sp in supplyList)
-            {
-                if (sp is SupplyParameterComponent)
-                {
-                    SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                    SupplyParameterComponent spcNew = new SupplyParameterComponent();
-                    spcNew.Id_functor_app = acfaNew.Id_functor_app;
-                    spcNew.Id_functor_app_actual = liftFunctorApp(spc.Id_functor_app_actual, parsSuper);
-                    spcNew.Id_abstract = spc.Id_abstract;
-                    spcNew.Id_parameter = spc.Id_parameter;
+			IList<SupplyParameter> supplyList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(id_functor_app);
+			foreach (SupplyParameter sp in supplyList)
+			{
+				SupplyParameter spNew = null;
+				if (sp is SupplyParameterComponent)
+				{
+					SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+					SupplyParameterComponent spcNew = new SupplyParameterComponent();
+					spNew = spcNew;
+					spcNew.Id_functor_app = acfaNew.Id_functor_app;
+					spcNew.Id_functor_app_actual = liftFunctorApp(spc.Id_functor_app_actual, parsSuper);
+					spcNew.Id_abstract = spc.Id_abstract;
+					spcNew.Id_parameter = spc.Id_parameter;
+				}
+				else if (sp is SupplyParameterParameter)
+				{
+					SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+					SupplyParameter spSuper = null;
 
-                }
-                else if (sp is SupplyParameterParameter)
-                {
-                    SupplyParameterParameter spp = (SupplyParameterParameter)sp;
-                    SupplyParameter spNew = null;
-                    SupplyParameter spSuper = null;
-
-					if (parsSuper.Count >0) {
+					if (parsSuper.Count > 0)
+					{
 						foreach (KeyValuePair<string, SupplyParameter> p in parsSuper)
 						{
 							Console.WriteLine("Key=" + p.Key + ", Value=" + p.Value.Id_abstract);
-						} 
+						}
 					}
 					else Console.WriteLine("parSupers EMPTY !!!!!!");
 
-                    if (parsSuper.TryGetValue(spp.Id_argument, out spSuper))
+					if (parsSuper.TryGetValue(spp.Id_argument, out spSuper))
 					{
-	                    if (spSuper is SupplyParameterComponent)
-	                    {
-	                        SupplyParameterComponent spcSuper = (SupplyParameterComponent)spSuper;
-	                        spNew = new SupplyParameterComponent();
-							Console.WriteLine("liftFunctorApp: 1" + (spNew==null));
-	                        SupplyParameterComponent spcNew = (SupplyParameterComponent)spNew;
-	
-							AbstractComponentFunctorApplication acfa_spcSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve (spcSuper.Id_functor_app_actual);
+						if (spSuper is SupplyParameterComponent)
+						{
+							SupplyParameterComponent spcSuper = (SupplyParameterComponent)spSuper;
+							SupplyParameterComponent spcNew = new SupplyParameterComponent();
+							spNew = spcNew;
+							Console.WriteLine("liftFunctorApp: 1" + (spNew == null));
+
+							AbstractComponentFunctorApplication acfa_spcSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spcSuper.Id_functor_app_actual);
 
 							spcNew.Id_functor_app = acfaNew.Id_functor_app;
 							spcNew.Id_abstract = acfa_spcSuper.Id_abstract;
-	                        spcNew.Id_parameter = spp.Id_parameter;
+							spcNew.Id_parameter = spp.Id_parameter;
 							spcNew.Id_functor_app_actual = spcSuper.Id_functor_app_actual;
-							Console.WriteLine("liftFunctorApp: 2" + (spcNew==null));
-	                    }
-	                    else if (spSuper is SupplyParameterParameter)
-	                    {
-								Console.WriteLine("liftFunctorApp: 3" + (spNew==null));
-	                        SupplyParameterParameter sppSuper = (SupplyParameterParameter)spSuper;
-	                        spNew = new SupplyParameterParameter();
-	                        SupplyParameterParameter sppNew = (SupplyParameterParameter)spNew;
-	
-	                        sppNew.Id_functor_app = acfaNew.Id_functor_app;
-	                        sppNew.Id_abstract = spSuper.Id_abstract;
-	                        sppNew.Id_parameter = spp.Id_argument;
-	                        sppNew.Id_argument = sppSuper.Id_argument;
-	                        sppNew.FreeVariable = spp.FreeVariable;
-								Console.WriteLine("liftFunctorApp: 4" + (sppNew==null));
-	                    }
-						else {
-								Console.WriteLine("liftFunctorApp: 5 " + (spp.Id_argument));
+							Console.WriteLine("liftFunctorApp: 2" + (spcNew == null));
+						}
+						else if (spSuper is SupplyParameterParameter)
+						{
+							SupplyParameterParameter sppSuper = (SupplyParameterParameter)spSuper;
+							SupplyParameterParameter sppNew = new SupplyParameterParameter();
+							spNew = sppNew;
+							Console.WriteLine("liftFunctorApp: 3 " + (spNew == null) + " spp.Id_argument=" + spp.Id_argument + ", spp.Id_parameter=" + spp.Id_parameter);
+
+							sppNew.Id_functor_app = acfaNew.Id_functor_app;
+							sppNew.Id_abstract = spSuper.Id_abstract;
+							sppNew.Id_parameter = spp.Id_parameter;
+							sppNew.Id_argument = sppSuper.Id_argument;
+							sppNew.FreeVariable = spp.FreeVariable;
+							Console.WriteLine("liftFunctorApp: 4" + (sppNew == null));
+						}
+						else
+						{
+							Console.WriteLine("liftFunctorApp: 5 " + (spp.Id_argument));
 						}
 					}
-					else 
+					else
 					{
-                        SupplyParameterParameter sppSuper = (SupplyParameterParameter)spSuper;
-                        spNew = new SupplyParameterParameter();
-                        SupplyParameterParameter sppNew = (SupplyParameterParameter)spNew;
+						Console.WriteLine("liftFunctorApp: 5 ");
+						SupplyParameterParameter sppSuper = (SupplyParameterParameter)spSuper;
+						SupplyParameterParameter sppNew = new SupplyParameterParameter();
+						spNew = sppNew;
 
 						sppNew.Id_argument = spp.Id_argument;
 						sppNew.FreeVariable = spp.FreeVariable;
-                        sppNew.Id_functor_app = acfaNew.Id_functor_app;
-                        sppNew.Id_abstract = acfaNew.Id_abstract;
-                        sppNew.Id_parameter = spp.Id_argument;
-                        //sppNew.Id_parameter_actual = sppSuper.Id_parameter_actual;
-                        //sppNew.FreeVariable = spp.FreeVariable;
+						sppNew.Id_functor_app = acfaNew.Id_functor_app;
+						sppNew.Id_abstract = acfaNew.Id_abstract;
+						sppNew.Id_parameter = spp.Id_parameter;
+						//sppNew.Id_parameter_actual = sppSuper.Id_parameter_actual;
+						//sppNew.FreeVariable = spp.FreeVariable;
 					}
-                    br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.insert(spNew);
-                }
-            }
-            return acfaNew.Id_functor_app;
-        }
+				}
+				br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.insert(spNew);
+			}
+			return acfaNew.Id_functor_app;
+		}
 
-        private ParameterType lookForParameterByParameterId(string parId)
+		private ParameterType lookForParameterByParameterId(string parId)
         {
             if (parameter != null)
             {
@@ -737,11 +744,11 @@ namespace HPE_DGAC_LoadDB
                             string sliceName = uS.sliceName;
                             if (mP.Contains(sliceName) && !m.ContainsKey(sliceName))
                             {   
-                                m.Add(sliceName, uS);
+                                 m.Add(sliceName, uS);
                             }
                         }
 
-					Console.Error.WriteLine("STEP 5.7");
+					Console.Error.WriteLine("STEP 5.7 ---");
                         // 3rd PASS:
                         foreach (UnitSliceType uS in u.slices)
                         {

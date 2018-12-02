@@ -26,14 +26,17 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
     	return unit;
     }
 	
+    private int facet = -1;
+    
 	@Override
-	public int getFacet() {
-		return this.getActualUnit().getFacet();
+	public int getFacet() 
+	{
+		return facet;
 	}
 
 	@Override
 	public void setFacet(int facet) {
-		this.getActualUnit().setFacet(facet);		
+		this.facet = facet;		
 	}
 
 	@Override
@@ -57,7 +60,10 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 		super();
 		listeners = new PropertyChangeSupport(this);
         this.unit = unit;
+        this.setLinkToInterface(unit.getLinkToInterface());
         this.originalName = unit.getName2();
+        this.name = unit.getName2();
+        this.setFacet(unit.getFacet());
         
         /* this.setConfiguration(configuration); */
 	}
@@ -70,6 +76,9 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 		}
 		
 		this.configuration = c;
+		for (HPrimUnitStub u_clone : this.stub_clones)
+			u_clone.configuration = c;
+		
 		configuration.newUnit((IHUnit)this);	
 		
 	}
@@ -81,8 +90,15 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 		return super.getBounds();
 	}
 	
+	private String name = "";
+
+	/* (non-Javadoc)
+	 * @see hPE.model.IHPrimUnit#getName()
+	 */
 	public String getName2() {
-		return unit.getName2();
+		if (name == null)
+			return "<unamed>";
+		return name;
 	}
 
 	public String getBaseName() {
@@ -106,8 +122,9 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 
 	}
 
-	public void setName(String name) {
-		unit.setName(name);
+	public void setName(String name) 
+	{
+		this.name = name;
 		listeners.firePropertyChange("labelContents", null, name); //$NON-NLS-2$//$NON-NLS-1$
 	}
 
@@ -201,13 +218,24 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 		return unit.matchForAttachment(i);
 	}
 
+	/**
+	 * @uml.property   name="linkToInterface"
+	 * @uml.associationEnd   inverse="hUnit:hPE.base.model.HLinkToInterface"
+	 */
+	private HLinkToInterface linkToInterface;
+
+	/* (non-Javadoc)
+	 * @see hPE.model.IHPrimUnit#getLinkToInterface()
+	 */
 	public HLinkToInterface getLinkToInterface() {
-		return unit.getLinkToInterface();
+		return linkToInterface;
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see hPE.model.IHPrimUnit#setLinkToInterface(hPE.model.HLinkToInterface)
+	 */
 	public void setLinkToInterface(HLinkToInterface linkToInterface) {
-		unit.setLinkToInterface(linkToInterface);
-
+		this.linkToInterface = linkToInterface;
 	}
 
 	public IInterface getInterface() {
@@ -215,17 +243,25 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 	}
 
 	public boolean visibleInterface() {
-		return unit.visibleInterface();
+		if (this.getLinkToInterface() != null) 
+		    return this.getLinkToInterface().visibleInterface();
+		else 
+			return false;
 	}
 
-	public void showInterface() {
-        unit.showInterface();
+	public void showInterface() 
+	{
+		if (this.getLinkToInterface() != null) 
+			   this.getLinkToInterface().show_interface();
+			
 		listeners.firePropertyChange(INTERFACE_SHOW, null, getName2()); //$NON-NLS-2$//$NON-NLS-1$  
 	}
 
 	public void hideInterface() {
-		unit.hideInterface(); 
-		listeners.firePropertyChange(INTERFACE_HIDE, null, getName2()); //$NON-NLS-2$//$NON-NLS-1$  
+		if (this.getLinkToInterface() != null) 
+	   		   this.getLinkToInterface().hide_interface();
+
+			listeners.firePropertyChange(INTERFACE_HIDE, null, getName2()); //$NON-NLS-2$//$NON-NLS-1$  
 	}
 
 	public void setInterface(HInterface which_interface) {
@@ -233,10 +269,18 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 
 	}
 
-	public List<IHPrimUnit> getClones() {
-		List<IHPrimUnit> ucs = new ArrayList<IHPrimUnit>();
+	private List<HPrimUnitStub> stub_clones = new ArrayList<HPrimUnitStub>();
+	
+	public void addStubClone(HPrimUnitStub stub_unit)
+	{
+		stub_clones.add(stub_unit);
+	}
+	
+	public List<IHPrimUnit> getClones() 
+	{
+		List<IHPrimUnit> ucs = new ArrayList<IHPrimUnit>(stub_clones);
 			// return unit.getClones();
-		ucs.add(this);
+		ucs.add(0,this);
 		
 		return ucs; 
 	}

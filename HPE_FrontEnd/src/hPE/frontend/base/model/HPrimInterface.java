@@ -15,13 +15,16 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 
-public abstract class HPrimInterface extends HVisualElement implements Serializable, HNamed, IHasColor {
+public abstract class HPrimInterface extends HVisualElement implements Serializable, HNamed, IHasColor, Cloneable {
 
 	public final static String PROPERTY_COLOR = "interface_color";
 	
 	static final long serialVersionUID = 1;
 
-
+	@Override
+	 public Object clone() throws CloneNotSupportedException {
+	 return super.clone();
+	 }
 	/**
 	 * @uml.property   name="configuration"
 	 * @uml.associationEnd   readOnly="true" multiplicity="(1 1)" inverse="interfaces:hPE.base.model.HComponent"

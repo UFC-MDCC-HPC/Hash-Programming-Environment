@@ -354,14 +354,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 				if (properties.hasKey(Constants.KEY_KEY)) 
 				{
+                    int[] facet_topology = properties.getIntArray(Constants.FACET_TOPOLOGY, new int[0]);
 					int this_facet_instance = properties.getInt(Constants.FACET_INSTANCE, 0);
 					int this_facet = properties.getInt(Constants.FACET, 0);
 					unit_slice.ThisFacetInstance = this_facet_instance;
-					unit_slice.ThisFacet = this_facet;
+					unit_slice.ThisFacet = facet_topology[this_facet_instance];
 
 					Console.WriteLine("createInstanceBaseForAllKinds - 7 - PASSOU DIRETO");
 
-					unit_slice.configure_facet_topology(properties.getIntArray(Constants.FACET_TOPOLOGY,new int[0]), unit_mapping);
+					unit_slice.configure_facet_topology(facet_topology, unit_mapping);
 
 					if (kind == Constants.KIND_BINDING)
 					{
@@ -896,7 +897,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public void perform_after_initialize(int id)
 		{
+			Console.WriteLine("PERFORM_AFTER_INITIALIZE BEGIN " + id);
 			((InitializePort)remote_ports_dict[id]).after_initialize();
+			Console.WriteLine("PERFORM_AFTER_INITIALIZE END " + id);
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
@@ -923,34 +926,47 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
-			if (usesPortNamesInv.ContainsKey(portName))
-			{
-				Console.WriteLine("throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);");
-				throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);
-			}
-
-			HPETypeMap hpe_properties = (HPETypeMap) properties;
-
-			Connector.openConnection();
-
-			string instanceName; 
-            string id_inner;
-            readPortName(portName, out instanceName, out id_inner);
-
-			ComponentID cid;
-            if (componentIDs.ContainsKey(instanceName))
+            try
             {
-                componentIDs.TryGetValue(instanceName, out cid);
-            }
-            else
+
+                if (usesPortNamesInv.ContainsKey(portName))
+                {
+                    Console.WriteLine("throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);");
+                    throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);
+                }
+
+                HPETypeMap hpe_properties = (HPETypeMap)properties;
+
+                Connector.openConnection();
+
+                string instanceName;
+                string id_inner;
+                readPortName(portName, out instanceName, out id_inner);
+
+                ComponentID cid;
+                if (componentIDs.ContainsKey(instanceName))
+                {
+                    componentIDs.TryGetValue(instanceName, out cid);
+                }
+                else
+                {
+                    Console.WriteLine("throw new CCAExceptionImpl: Bad Instance Name " + instanceName);
+                    throw new CCAExceptionImpl("Bad Instance Name: " + instanceName);
+                }
+
+
+                this.registerUsesPortInfo(cid, portName, type, properties);
+
+                Connector.closeConnection();
+
+            } catch (Exception e)
             {
-				throw new CCAExceptionImpl("Bad Instance Name: " + instanceName);
+                Console.WriteLine("EXCEPTION: {0}", e.Message);
+                if (e.InnerException != null)
+                    Console.WriteLine("INNER EXCEPTION: {0}",e.InnerException.Message);
+                Console.WriteLine("STACK TRACE:D {0}", e.StackTrace);
+                //throw e;
             }
-				
-
-			this.registerUsesPortInfo(cid, portName, type, properties);
-
-			Connector.closeConnection();            
 		}
 
         private void readPortName(string portName, out string instanceName, out string innerName)

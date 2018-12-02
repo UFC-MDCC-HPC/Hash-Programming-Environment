@@ -5,12 +5,6 @@
 <argument parameter_id="input_value_type" xmlns="http://www.example.org/instantiator">
 	<type component_ref="br.ufc.mdcc.common.String" />
 </argument>
-<argument parameter_id="output_key_type" xmlns="http://www.example.org/instantiator">
-	<type component_ref="br.ufc.mdcc.common.String" />
-</argument>
-<argument parameter_id="output_value_type" xmlns="http://www.example.org/instantiator">
-	<type component_ref="br.ufc.mdcc.common.Integer" />
-</argument>
 <argument parameter_id="bin_function" xmlns="http://www.example.org/instantiator">
 	<type component_ref="br.ufc.mdcc.hpcshelf.mapreduce.custom.PartitionFunction">
   		<argument parameter_id="input_key">

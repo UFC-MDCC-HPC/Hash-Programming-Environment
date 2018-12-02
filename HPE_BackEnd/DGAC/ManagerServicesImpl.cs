@@ -38,13 +38,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private IDictionary<int, WorkerServices> worker_services_list = new Dictionary<int, WorkerServices>();
 
         public void registerWorkerService(int i, WorkerServices worker_services)
-		{   
-			Console.WriteLine ("REGISTER WORKER SERVICES 0 " + (worker_services == null));
-			var cidxxx = worker_services.getComponentID ();
-			Console.WriteLine ("REGISTER WORKER SERVICES ------------------- " + (cidxxx == null));
+		{
+            Console.WriteLine("REGISTER WORKER SERVICES {0} ", i);
+            if (!worker_services_list.ContainsKey(i))
+                worker_services_list[i] = worker_services;
+            else
+                throw new Exception("registerWorkerService: worker_services[" + i + "] already exists !");
 
-            this.worker_services_list.Add(i, worker_services);
-			this.cid.registerWorkerComponentID(i, (WorkerComponentID) worker_services.getComponentID());
+            this.cid.registerWorkerComponentID(i, (WorkerComponentID) worker_services.getComponentID());
         }
 
 		public IDictionary<int, WorkerServices> WorkerServices {
@@ -81,19 +82,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
 				int[] nodes = cid.WorkerNodes;
-				for (int i=0; i<nodes.Length; i++)
+				//for (int i=0; i<nodes.Length; i++)
+                foreach (int i in WorkerServices.Keys)
 				{
-			//		Console.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
-					gov.cca.Services ws = WorkerServices[nodes[i]];
-					try {
-						ws.releasePort(portName);
-					}
-					catch (Exception e)
-				    {
-			//			Console.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
-						//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
-						//	throw e;
-					}
+                    //		Console.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
+                    gov.cca.Services ws = WorkerServices[i];
+                    ws.releasePort(portName);
 				}
 			}
 		//	Console.WriteLine ("RELEASE PORT 4 " + portName);
@@ -112,9 +106,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
 				int[] nodes = cid.WorkerNodes;
-				for (int i=0; i<nodes.Length; i++)
+                //for (int i=0; i<nodes.Length; i++)
+                foreach (int i in WorkerServices.Keys)
 				{
-					gov.cca.Services ws = WorkerServices[nodes[i]];
+                    gov.cca.Services ws = WorkerServices[i];
 					ws.registerUsesPort(portName, type, properties);
 				}
 			}
@@ -127,18 +122,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
 				int[] nodes = cid.WorkerNodes;
-				for (int i=0; i<nodes.Length; i++)
+				//for (int i=0; i<nodes.Length; i++)
+                foreach (int i in WorkerServices.Keys)
 				{
-					gov.cca.Services ws = WorkerServices[nodes[i]];
-					try
-					{
-						ws.unregisterUsesPort(portName);
-					}
-					catch (Exception e)
-					{
-						//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
-						//	throw e;
-					}
+                    gov.cca.Services ws = WorkerServices[i];
+                    ws.unregisterUsesPort(portName);
 				}
 			}
 			frw.unregisterUsesPort(mkPortName(portName));
@@ -150,9 +138,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
 				int[] nodes = cid.WorkerNodes;
-				for (int i=0; i<nodes.Length; i++)
+				//for (int i=0; i<nodes.Length; i++)
+                foreach (int i in WorkerServices.Keys)
 				{
-					gov.cca.Services ws = WorkerServices[nodes[i]];				
+                    gov.cca.Services ws = WorkerServices[i];				
 					ws.addProvidesPort(inPort, portName, type, properties);
 				}
 			}
@@ -170,18 +159,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			if (!(cid_inner is ManagerIgnoredComponentID))
 			{
 				int[] nodes = cid.WorkerNodes;
-				for (int i=0; i<nodes.Length; i++)
+				//for (int i=0; i<nodes.Length; i++)
+                foreach (int i in WorkerServices.Keys)
 				{
-					gov.cca.Services ws = WorkerServices[nodes[i]];
-					try 
-					{
-						ws.removeProvidesPort(portName);
-					}
-					catch (Exception e)
-					{
-						//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
-						//	throw e;
-					}
+                    gov.cca.Services ws = WorkerServices[i];
+					ws.removeProvidesPort(portName);
 				}
 			}
 			frw.removeProvidesPort(mkPortName(portName));

@@ -51,32 +51,33 @@ public class Connector {
     }
 
     private static int r = 0;
-    private static String slock = "";
+        private static object slock = new object();
 
     public static void openConnection()
     {      
-        //lock (slock) {
+        lock (slock) {
 	        if (r==0) {
 	           dbcon = Connector.getConnection();
 	           dbcon.Open();
 	        }
 	        r++;
-        //}
+        }
     }
 
-    public static void closeConnection()
-    {       
-        //lock(slock) {  
-	        r--;
-	        if (r == 0 && dbcon != null) {
-	           dbcon.Close();
-	           dbcon = null;
-	        }
-        //}
-    }
-    
+		public static void closeConnection()
+		{
+			lock(slock) {  
+			r--;
+			if (r == 0 && dbcon != null && dbcon.State != ConnectionState.Closed)
+			{
+				dbcon.Close();
+				dbcon = null;
+			}
+			}
+		}
 
-    public static int nextKey(String keyField, String tableName)
+
+		public static int nextKey(String keyField, String tableName)
     {
         int lastKey = 0;
 

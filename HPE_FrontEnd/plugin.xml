@@ -186,4 +186,33 @@
             type="component"
             class="org.example.hash.component.util.ComponentResourceFactoryImpl"/>
    </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SAFe_ctree -->
+      <package
+            uri="http://www.example.org/instantiator"
+            class="org.example.instantiator.InstantiatorPackage"
+            genModel="src/hPE/xml/SAFe_ctree.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated SAFe_ctree -->
+      <parser
+            type="instantiator"
+            class="org.example.instantiator.util.InstantiatorResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SAFe_ctree -->
+      <package
+            uri="http://www.example.org/SAFe_ctree"
+            class="org.example.sa.feCtree.FeCtreePackage"
+            genModel="src/hPE/xml/SAFe_ctree.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated SAFe_ctree -->
+      <parser
+            type="fectree"
+            class="org.example.sa.feCtree.util.FeCtreeResourceFactoryImpl"/>
+   </extension>
 </plugin>

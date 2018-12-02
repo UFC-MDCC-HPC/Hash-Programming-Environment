@@ -53,11 +53,6 @@ namespace Back_End_WS
 
 	
         [WebMethod]
-        /*
-         * XML é visto como um array de bytes, chamado data.
-         * esse array é salvo em "path" e lido por AppLoader gerando um objeto Component Type,
-         * passado ao DGAC 
-         */
         public string deployHashComponent(byte[] data, string userName, string password, string curDir, bool flag_compile)
         {
             try

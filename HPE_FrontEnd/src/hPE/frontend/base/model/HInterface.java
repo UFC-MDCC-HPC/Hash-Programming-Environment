@@ -1,22 +1,15 @@
 package hPE.frontend.base.model;
 
-import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.codegen.c_sharp.HBESourceVersionCSharp;
-import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
-import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
 import hPE.frontend.base.settings.HPlatformSettingsFileSet;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,16 +18,16 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -47,8 +40,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	static final long serialVersionUID = 1;
 
-	public HInterface(HComponent configuration, HInterfaceSig signature,
-			IHPrimUnit unit, Point where) {
+	public HInterface(HComponent configuration, HInterfaceSig signature, IHPrimUnit unit, Point where) {
 
 		super(configuration, signature, unit, where);
 
@@ -66,8 +58,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	public void signalUpdateVisual() {
-		getListeners().firePropertyChange(HInterface.PROPERTY_SIGNATURE, null,
-				getName2());
+		getListeners().firePropertyChange(HInterface.PROPERTY_SIGNATURE, null, getName2());
 	}
 
 	public final static String PROPERTY_NEW_MODULE = "PROPERTY_NEW_MODULE";
@@ -132,20 +123,21 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		List<Pair<String, HInterface>> ls = new ArrayList<Pair<String, HInterface>>();
 
 		HComponent c = (HComponent) this.getConfiguration();
-		String typeString = c.getPackagePath() + "." + c.getComponentName()
-				+ "." + this.getPrimName();
+		String typeString = c.getPackagePath() + "." + c.getComponentName()	+ "." + this.getPrimName();
 		lsStr.add(typeString);
 		ls.add(new Pair<String, HInterface>(typeString, this));
 
-		List<Triple<String, HInterface, String>> pars = this
-				.getParameters((HComponent) this.getConfiguration());
+		List<Triple<String, HInterface, String>> pars = this.getParameters((HComponent) this.getConfiguration());
 
-		for (Triple<String, HInterface, String> p : pars) {
+		for (Triple<String, HInterface, String> p : pars) 
+		{
 			HInterface i = p.snd();
 			List<Pair<String, HInterface>> cds = i.getCompilationDependencies();
 
-			for (Pair<String, HInterface> s : cds) {
-				if (!lsStr.contains(s.fst())) {
+			for (Pair<String, HInterface> s : cds) 
+			{
+				if (!lsStr.contains(s.fst())) 
+				{
 					lsStr.add(s.fst());
 					ls.add(s);
 				}
@@ -162,111 +154,128 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return getParameters(cThisI == null ? cThis : cThisI);
 	}
 
-	public List<Triple<String, HInterface, String>> getParameters2(
-			HComponent cThis) {
-
-		List<Triple<String, HInterface, String>> parameters = new ArrayList<Triple<String, HInterface, String>>();
-
-		List<HInterfaceSlice> slices = this.getSlices();
-
-		for (HInterfaceSlice c : slices) {
-			HInterface ic = (HInterface) c.getInterface();
-			List<IHPrimUnit> uList = ic.getCompliantUnits();
-			HComponent cc = (HComponent) uList.get(0).getConfiguration();
-
-			List<Triple<String, HInterface, String>> ic_parameters = ic
-					.getParameters(cThis);
-
-			for (Triple<String, HInterface, String> innerParameter : ic_parameters) {
-				parameters.add(innerParameter);
-			}
-
-			String parId = cc.getParameterIdentifier(cThis);
-
-			if (cc.isParameter() && !parId.equals("type ?")) {
-				String varName = cc.getVariableName(cThis);
-				parameters.add(new Triple<String, HInterface, String>(varName,
-						ic, parId));
-			}
-		}
-
-		return parameters;
-
-	}
 
 	// TODO: TOP LEVEL PARAMETERS ...
 	public List<Triple<String, HInterface, String>> getParameters(HComponent cThis) 
 	{
 		List<Triple<String, HInterface, String>> parameters = new ArrayList<Triple<String, HInterface, String>>();
 
+		HComponent cContext = (HComponent) this.getConfiguration();
+		
 		List<HInterfaceSlice> slices = this.getSlices();
 		for (HInterfaceSlice s : slices) 
 		{
 			HInterface is = (HInterface) s.getInterface();
-			HInterface is_supplier = null;
+			HInterface is_supplier = is;
 			List<IHPrimUnit> uList = is.getCompliantUnits();
-			HComponent c = (HComponent) uList.get(0).getConfiguration();
+			HComponent c = (HComponent) uList.get(0).getConfiguration();			
 			
+			HComponent c_supplier = c.getSupplier();
 			
-			  if (c.isParameter() && c.getSupplier() != null) 
-			  { 
-					Map<String, HComponent> pars = cThis.getParametersByDefinedVarNames(); 
-					String varName = c.getVariableName(); 
-					HComponent c_supplier = (HComponent) c.getSupplier(); 
-					is_supplier = c_supplier.getInterfaceByName(is.getPrimName()); 
-					c = c_supplier;
-					is_supplier = is_supplier == null ? is : is_supplier;
+			String varName = c.getVariableName(cThis); 
 
-					// if (c.isParameter()) {
-					//String varName = old_c.getVariableName(cThis);
-					String parId = c.getParameterIdentifier(cThis.isAbstract() ? cThis : cThis.getWhoItImplements());
-					if (!parId.equals("type ?"))
-						parameters.add(new Triple<String, HInterface, String>(varName,is_supplier, parId));
-					// }
-			  } 
-			  else if (c.isParameter()) 
-			  {
-					HComponent cTop = (HComponent) cThis.getTopConfiguration();
-					Map<String, HComponent> pars = cThis.getParametersByDefinedVarNames();
-					String varName = c.getVariableName(cThis);
-					if (pars.containsKey(varName)) 
-					{
-						HComponent c_parameter = pars.get(varName);
-						is_supplier = c_parameter.getInterfaceByName(is.getPrimName());
-						c = c_parameter;
-					}
+            if (c.isParameter()) 
+			{
+				HComponent old_c_current = null;
+				HComponent c_current = (HComponent) c.getConfiguration();
+				HComponent c_supplier_=null;
+				
+				do
+				{					
+					varName = c.getVariableName(c_current);
+					c_supplier_ = c_current.getParametersByDefinedVarNames2().get(varName);
+                    c_supplier = c_supplier_ != null ? c_supplier_ : c_supplier; 
+					
+					old_c_current = c_current;
+					c_current = (HComponent) c_current.getConfiguration();
+				}
+				while ((old_c_current != cThis && c_supplier_ != null));
+				
+				List<HComponent> c_supplied_by_supplier = null;
+				HComponent c_supplier_ctx = null;
+				
+				if (c_supplier == null || (c_supplied_by_supplier = c_supplier.getWhoISupply()).isEmpty() || cContext.isInnerComponentOf(c_supplier_ctx = c_supplied_by_supplier.get(0).getSupplierContext()) || (cContext == c_supplier_ctx && !cContext.isAbstract()))
+				{
+					is_supplier = c_supplier.getInterfaceByName(is.getPrimName()); 
 					is_supplier = is_supplier == null ? is : is_supplier;
 	
 					// if (c.isParameter()) {
 					//String varName = old_c.getVariableName(cThis);
-					String parId = c.getParameterIdentifier(cThis.isAbstract() ? cThis : cThis.getWhoItImplements());
+					String parId = c.getParameterIdentifier(/*(IComponent) c.getConfiguration()*/cThis.isAbstract() ? cThis : cThis.getWhoItImplements());
 					if (!parId.equals("type ?"))
-						parameters.add(new Triple<String, HInterface, String>(varName,is_supplier, parId));
+						parameters.add(new Triple<String, HInterface, String>(varName, is_supplier, parId));
 					// }
+				}
 			} 
-			else 
-			{
-				is_supplier = is_supplier == null ? is : is_supplier;
-			}
-
-
+	
+	
 			List<Triple<String, HInterface, String>> slice_parameters = is_supplier.getParameters(cThis);
 			for (Triple<String, HInterface, String> spar : slice_parameters) 
 			{
 				String sVarName = spar.fst();
 				HInterface sis = spar.snd();
 				String sParId = spar.trd();
-				List<IHPrimUnit> suList = sis.getCompliantUnits();
-				HComponent sc = (HComponent) suList.get(0).getConfiguration();
-				//if (sc.isParameter()) {
-				if (!sParId.equals("type ?"))
-				   parameters.add(new Triple<String, HInterface, String>(sVarName, sis, sParId));
-				//}
+				HComponent sc = (HComponent) sis.getConfiguration();
+				HComponent sc_supplier = sc.getSupplier();
+				if (sc.isParameter())
+				{
+					HInterface cis_supplier = spar.snd();
+					HComponent old_c_current = null;
+					HComponent c_current = (HComponent) sc.getConfiguration();
+					HComponent sc_supplier_=null;
+					
+					do
+					{					
+						varName = sc.getVariableName(c_current);
+						sc_supplier_ = c_current.getParametersByDefinedVarNames2().get(varName);
+	                    sc_supplier = sc_supplier_ != null ? sc_supplier_ : sc_supplier; 
+						
+						old_c_current = c_current;
+						c_current = (HComponent) c_current.getConfiguration();
+					}
+					while (old_c_current != cThis && sc_supplier_ != null);
+					
+					List<HComponent> sc_supplied_by_supplier = null;
+					HComponent sc_supplier_ctx = null;
+					if (sc_supplier == null || (sc_supplied_by_supplier = sc_supplier.getWhoISupply()).isEmpty() || cContext.isInnerComponentOf(sc_supplier_ctx = sc_supplied_by_supplier.get(0).getSupplierContext()) || (cContext == sc_supplier_ctx && !cContext.isAbstract()))
+					{
+						cis_supplier = sc_supplier.getInterfaceByName(is.getPrimName()); 
+						cis_supplier = cis_supplier == null ? spar.snd() : cis_supplier;
+	
+						String parId = sc.getParameterIdentifier(cThis.isAbstract() ? cThis : cThis.getWhoItImplements());
+						if (!parId.equals("type ?"))
+							parameters.add(new Triple<String, HInterface, String>(varName, cis_supplier, parId));
+					}
+					
+				}
 			}
+			
+		}
+		
+		Comparator<? super Triple<String, HInterface, String>> comparator = new CompareParameterOrders((HComponent) this.getConfiguration());
+		
+		java.util.Collections.sort(parameters,comparator);		
+		
+		return parameters;
+	}
+
+	private class CompareParameterOrders implements Comparator<Triple<String, HInterface, String>>
+	{
+		private HComponent c;
+		
+		public CompareParameterOrders(HComponent c) 
+		{
+			this.c = c;
 		}
 
-		return parameters;
+		@Override
+		public int compare(Triple<String, HInterface, String> arg0, Triple<String, HInterface, String> arg1) {
 
+			int order0 = c.getParameterOrder(arg0.trd());
+			int order1 = c.getParameterOrder(arg1.trd());
+			
+			return order0 - order1;
+		}
 	}
 
 	public String getParameterModifierName2(boolean onlyVariables, List<String> varContext) 
@@ -276,7 +285,9 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 		List<String> vs = new ArrayList<String>();
 
-		for (Triple<String, HInterface, String> triple : this.getParameters()) 
+		List<Triple<String, HInterface, String>> parameters = this.getParameters();
+		
+		for (Triple<String, HInterface, String> triple : parameters) 
 		{
 			HInterface i = triple.snd();
 			String parId = triple.trd();
@@ -301,8 +312,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return nameWithParameters;
 	}
 
-	public String getParameterModifierName(boolean complete,
-			boolean showBounds, int depth) {
+	public String getParameterModifierName(boolean complete, boolean showBounds, int depth) {
 
 		int parameterized = 0;
 		String nameWithParameters = "";
@@ -310,9 +320,10 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		List<String> vs = new ArrayList<String>();
 
 		HComponent topC = (HComponent) ((HComponent) this.getConfiguration()).getTopConfiguration();
-		List<Triple<String, HInterface, String>> parameters = this.getParameters(topC);
+		List<Triple<String, HInterface, String>> parameters = this.getParameters((HComponent) this.getConfiguration());
 
-		for (Triple<String, HInterface, String> triple : parameters) {
+		for (Triple<String, HInterface, String> triple : parameters) 
+		{
 			String varName = triple.fst();
 			HInterface i = triple.snd();
 			String parId = triple.trd();
@@ -320,19 +331,16 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			if (parameterized == 0)
 				nameWithParameters = nameWithParameters.concat("<");
 			parameterized++;
-			if (!vs.contains(varName)) {
+			if (!vs.contains(parId)) {
 				if (parameterized > 1)
 					nameWithParameters += ", ";
-				nameWithParameters = nameWithParameters
-						+ i.getName(false, depth > 0 ? false : showBounds,
-								depth + 1);
+				nameWithParameters = nameWithParameters	+ i.getName(false, depth > 0 ? false : showBounds, depth + 1);
 			}
-			vs.add(varName);
+			vs.add(parId);
 		}
 
-		if (parameterized > 0) {
+		if (parameterized > 0) 
 			nameWithParameters = nameWithParameters.concat(">");
-		}
 
 		return nameWithParameters;
 	}
@@ -347,18 +355,14 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	public String getName(boolean showSuperType, boolean showBounds, int depth) {
 
-		if (this.isParameter()) {
-			HComponent c = (HComponent) this.getCompliantUnits().get(0)
-					.getConfiguration();
+		if (this.isParameter()) 
+		{
+			HComponent c = (HComponent) this.getCompliantUnits().get(0).getConfiguration();
 			String varName = c.getVariableName();
 			String parId = c.getParameterIdentifier();
-			return varName
-					+ (showBounds ? ": "
-							+ this.getNonAbstractName(false, showBounds, depth,
-									false) : "");
+			return varName + (showBounds ? ": " + this.getNonAbstractName(false, showBounds, depth,	false) : "");
 		} else {
-			return this.getNonAbstractName(showSuperType, showBounds, depth,
-					false);
+			return this.getNonAbstractName(showSuperType, showBounds, depth, false);
 		}
 	}
 
@@ -388,9 +392,9 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return this.getPrimName() + this.getParameterModifierName2(onlyVariables,varContext);
 	}
 
-	private String getNonAbstractName(boolean showSuperType,
-			boolean showBounds, int depth, boolean base) {
-		String name = base && !this.baseName.isEmpty() ? this.baseName.get(0): this.getPrimName();
+	private String getNonAbstractName(boolean showSuperType, boolean showBounds, int depth, boolean base) 
+	{
+		String name = base && !this.baseName.isEmpty() ? this.baseName.get(0).getName2(): this.getPrimName();
 		if (this.isAbstract() || base) {
 			return name
 					+ this.getParameterModifierName(showSuperType, showBounds, depth)
@@ -471,9 +475,12 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			return this.sourceVersionList.get(versionID);
 		}
 
-		public boolean noSources() {
-			return getSourceVersionList() == null
-					|| getSourceVersionList().isEmpty();
+		public boolean noSources() 
+		{
+			List<HBESourceVersion> src_version_list = getSourceVersionList();
+		  	
+			
+			return src_version_list == null	|| src_version_list.isEmpty() || (src_version_list.size() == 1 && (src_version_list.get(0).getFiles().size() == 0 || src_version_list.get(0).getFiles() == null)) ;
 		}
 
 		public void cleanSources() {
@@ -763,18 +770,16 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	// Name of the base interface in case of implements or extends;
-	private List<String> baseName = new ArrayList<String>();
+	private List<HInterface> baseName = new ArrayList<HInterface>();
 
-	public void setImplements() {
-		this.baseName.add(0, this.getName2());
-		this.setName(null);
-		this.cleanSources();
+	public void setImplements(HInterface i) 
+	{
+		this.baseName.add(0, i);
 	}
 
-	public void setExtends() {
-		this.baseName.add(0, this.getName2());
-		this.setName(null);
-		this.cleanSources();
+	public void setExtends(HInterface i) 
+	{
+		this.baseName.add(0, i);
 	}
 
 	public boolean isEquivalentTo(HInterface i) {
@@ -822,12 +827,15 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	private String inheritedName = null;
 
-	private void saveInheritedName() {
-		inheritedName = this.getNonAbstractName(false, false, 0, true);
+	private void saveInheritedName() 
+	{
+		if (this.baseName.size() > 0)
+			inheritedName = this.baseName.get(0).getNonAbstractName(false, false, 0, false);
 		// this.setName(null);
 	}
 
-	public String getInheritedName() {
+	public String getInheritedName() 
+	{
 		if (this.inheritedName == null) {
 			this.saveInheritedName();
 		}
@@ -848,7 +856,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		this.setSuperTypeID(this.toString());
 		// this.saveInheritedName();
 		
-		this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
+	//	this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
 		this.setEditable(true);
 		this.setInheritedSlices();
 	}
@@ -857,7 +865,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		superTypeID = null; // REASON: This is the supertype of the abstract
 							// component and not of the concrete component.
 		// this.saveInheritedName();
-		this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
+	//	this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
 		this.setEditable(true);
 		this.setEditableSource(true);
 		// this.setInheritedSlices();
@@ -1032,11 +1040,26 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	public String getPrimBaseName() {
-		return this.baseName.isEmpty() ? null : this.baseName.get(0);
+		return this.baseName.isEmpty() ? null : this.baseName.get(0).getName2();
 	}
 
-	public List<String> getPrimBaseNameAll() {
-		return this.baseName;
+	public List<String> getPrimBaseNameAll() 
+	{
+		List<String> l = new ArrayList<String>();
+
+		Queue<HInterface> q = new LinkedList();
+		
+		q.add(this);
+		
+		while (!q.isEmpty())
+		{
+			HInterface i = q.poll();
+			l.add(i.getName2());
+			
+			for (HInterface ii : i.baseName)
+				q.add(ii);				
+		}
+		return l;
 	}
 
 	public void resetDefaultPortNames() {

@@ -32,13 +32,19 @@
     		<element name="node" type="int" maxOccurs="unbounded"
     			minOccurs="1">
     		</element>
+    		<element name="port_name" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
     	</sequence>
     	<attribute name="facet_instance" type="int"></attribute>
-        <attribute name="facet" type="int"></attribute>
-        <attribute name="unit_id" type="string" use="required"></attribute>
+    	<attribute name="facet" type="int"></attribute>
+    	<attribute name="unit_id" type="string" use="required"></attribute>
     	<attribute name="unit_index" type="int" use="optional"
     		default="0">
     	</attribute>
+    	<attribute name="assembly_string" type="string"></attribute>
+    	<attribute name="class_name" type="string"></attribute>
+    	<attribute name="unit_id_top" type="string"></attribute>
     </complexType>
 
     <attribute name="NewAttribute" type="string"></attribute>

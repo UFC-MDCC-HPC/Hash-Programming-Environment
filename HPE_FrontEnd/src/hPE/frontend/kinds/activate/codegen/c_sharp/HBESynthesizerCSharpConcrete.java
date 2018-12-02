@@ -57,15 +57,15 @@ public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sh
 	    this.p2p = p2p;
 		// fillActivationSlices(i,p2p.getActivations().entrySet());      
 		this.setIsSubclass(i, versionID);
-		boolean subClass = super.getIsSubclass();
-		if (!subClass) {
+		// boolean subClass = super.getIsSubclass();
+		//if (!subClass) {
 			    		
         	// activate method signature
 			String userActivateMethod = "\t\tpublic override void " + ((HActivateInterface)i).getActivateMethodName() + "()\n";
 			userActivateMethod += "\t\t{\n";			
 			userActivateMethod += "\t\t}\n"; // end activate method
     		super.addUserDeclaration(userActivateMethod);
-		}
+		//}
 		
         return super.synthesize(i,versionID);
         		

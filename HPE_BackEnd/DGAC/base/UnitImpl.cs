@@ -6,22 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using br.ufc.pargo.hpe.backend.DGAC.database;
-using br.ufc.pargo.hpe.backend.DGAC;
-using gov.cca;
-using br.ufc.pargo.hpe.backend.DGAC.utils;
-using br.ufc.pargo.hpe.ports;
-using MPI;
-using br.ufc.pargo.hpe.kinds;
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
-using Instantiator;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.ports;
+using gov.cca;
+using MPI;
 
 namespace br.ufc.pargo.hpe.basic
 {
-	[ServiceContract]
+    [ServiceContract]
 	[ServiceBehavior(InstanceContextMode=InstanceContextMode.Single,
 		ConcurrencyMode=ConcurrencyMode.Multiple)]
 	[CallbackBehavior(UseSynchronizationContext = false)] 
@@ -143,8 +139,10 @@ namespace br.ufc.pargo.hpe.basic
         public void setServices(gov.cca.Services services)
         {
             this.services = services;
-			
-			foreach (string portName in PortNames)
+
+			Console.WriteLine("---- BEFORE REGISTERING USES PORT {0} {1} {2}", this.ThisFacet, this.Id_unit, this.CID);
+
+            foreach (string portName in PortNames)
 					services.registerUsesPort(portName, "", new TypeMapImpl());
 
             services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, this.ClassName, new TypeMapImpl());
@@ -240,7 +238,7 @@ namespace br.ufc.pargo.hpe.basic
 		{
 			string[] rank_units = this.Communicator.Allgather<string>(this.Id_unit);
 
-			Console.WriteLine (this.Rank + " ALL GATHER :");
+			Console.WriteLine (this.Rank + "- ALL GATHER :");
 			foreach (string unit_id in rank_units) Trace.Write (unit_id + ",");
 			Console.WriteLine (".");
 			
@@ -273,14 +271,23 @@ namespace br.ufc.pargo.hpe.basic
 		}
 		public void configure_facet_topology(int[] facet_topology, Instantiator.UnitMappingType[] unit_mapping)
 		{
-            Console.WriteLine ("{1} - facet_instance={0}, configure_facet_topology 1 - " + facet_topology.Length, this_facet_instance, this.GetHashCode());
-			foreach (int f in facet_topology)
-				Trace.Write (f + ",");
-			Console.WriteLine (".");
-
 			IDictionary<int,IList<int>> facet_instances_list = new Dictionary<int, IList<int>> ();
 
-			for (int facet_instance = 0; facet_instance < facet_topology.Length; facet_instance++) 
+            foreach (Instantiator.UnitMappingType unit_mapping_item in unit_mapping)
+            {
+                int facet = unit_mapping_item.facet;
+                int facet_instance = unit_mapping_item.facet_instance;
+				IList<int> facet_instance_list = null;
+				if (!facet_instances_list.TryGetValue(facet, out facet_instance_list))
+				{
+					facet_instance_list = new List<int>();
+					facet_instances_list.Add(facet, facet_instance_list);
+				}
+				facet_instance_list.Add(facet_instance);
+			}
+
+
+			/*for (int facet_instance = 0; facet_instance < facet_topology.Length; facet_instance++) 
 			{
 				int facet = facet_topology [facet_instance];
 				if (facet >= 0) 
@@ -293,7 +300,7 @@ namespace br.ufc.pargo.hpe.basic
 					}
 					facet_instance_list.Add (facet_instance);
 				}
-			}
+			}*/
 
 			Console.WriteLine ("{1} - facet_instance={0}, configure_facet_topology 2 - " + facet_instances_list.Count, this_facet_instance, this.GetHashCode());
 
@@ -325,10 +332,11 @@ namespace br.ufc.pargo.hpe.basic
 			foreach (Instantiator.UnitMappingType unit_mapping_item in unit_mapping) 
 			{
 				int facet_instance = unit_mapping_item.facet_instance;
+                int facet = unit_mapping_item.facet;
 				string unit_id = unit_mapping_item.unit_id;
 				int size = unit_mapping_item.node.Length;
 				IDictionary<string,int> dict;
-                Console.WriteLine("{1} - facet_instance={0}, configure_facet_topology --- facet_instance=" + facet_instance + " / unit_id=" + unit_id + " / size=" + size, this_facet_instance, this.GetHashCode());
+                Console.WriteLine("{1} - facet_instance={0}, configure_facet_topology --- facet=" + facet + " / facet_instance=" + facet_instance + " / unit_id=" + unit_id + " / size=" + size, this_facet_instance, this.GetHashCode());
 				if (!UnitSizeInFacet.TryGetValue(facet_instance, out dict))
 				{   dict = new Dictionary<string, int> ();
 					UnitSizeInFacet [facet_instance] = dict; 

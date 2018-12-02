@@ -6,9 +6,30 @@ using System.Collections.Generic;
 using System.Threading;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Diagnostics;
+using br.ufc.pargo.hpe.ports;
 
 namespace br.ufc.hpe.backend.DGAC
 {
+
+	public class MultipleGoPortImpl : MultipleGoPort
+	{
+		private IList<GoPort> ports = new List<GoPort>();
+
+		public void addPort(GoPort port)
+		{
+			ports.Add(port);
+		}
+
+		public int go()
+		{
+			foreach (GoPort port in ports)
+				port.go();
+
+            return 0;
+		}
+	}
+
+
 	public class GoPortImpl : GoPort
 	{
 		private ManagerComponentID mcid = null;
@@ -28,7 +49,8 @@ namespace br.ufc.hpe.backend.DGAC
             IDictionary<Thread, GoThread> thread_list = new Dictionary<Thread,GoThread>();
             for (int i = 0; i < wgo_ports.Length; i++)
             {
-                GoThread thread = new GoThread((GoPort)wgo_ports[i]);
+                Port wgo_port = wgo_ports[i];
+                GoThread thread = new GoThread((GoPort)wgo_port);
                 Thread t = new Thread(thread.Run);
                 thread_list.Add(t, thread);
                 t.Start();

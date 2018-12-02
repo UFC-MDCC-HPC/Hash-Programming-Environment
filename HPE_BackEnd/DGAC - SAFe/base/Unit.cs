@@ -4,14 +4,9 @@
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
 //
 
-using System;
 using System.Collections.Generic;
-using br.ufc.pargo.hpe.kinds;
-using MPI;
-using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
 using br.ufc.pargo.hpe.ports;
-using Instantiator;
 
 namespace br.ufc.pargo.hpe.basic
 {

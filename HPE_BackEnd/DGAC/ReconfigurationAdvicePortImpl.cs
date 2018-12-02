@@ -29,10 +29,11 @@ namespace br.ufc.hpe.backend.DGAC
 			
             IDictionary<Thread, ReconfigureThread> thread_list = new Dictionary<Thread,ReconfigureThread>();
             for (int i=0; i<w_advice_ports.Length; i++)
-            {		       
-				ReconfigureThread thread = new ReconfigureThread(portName, (ReconfigurationAdvicePort) w_advice_ports[i]);
+            {
+                Port w_advice_port = w_advice_ports[i];
+                ReconfigureThread thread = new ReconfigureThread(portName, (ReconfigurationAdvicePort)w_advice_port);
                 Thread t = new Thread(thread.Run);
-                thread_list.Add(t,thread);
+                thread_list.Add(t, thread);
                 t.Start();
             }
             foreach (KeyValuePair<Thread,ReconfigureThread> t in thread_list)

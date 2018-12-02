@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/deploy_arguments" xmlns:tns="http://www.example.org/deploy_arguments" elementFormDefault="qualified">
+
+    <element name="deploy" type="tns:DeployArgumentsType"></element>
+    
+    <complexType name="DeployArgumentsType">
+    	<sequence>
+    		<element name="unit" type="tns:DeployArgumentsUnitType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="DeployArgumentsUnitType">
+    	<sequence>
+    		<element name="references" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="sourceContents" type="tns:SourceContentsFile" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="moduleName" type="string"></attribute>
+    	<attribute name="unitId" type="string"></attribute>
+    	<attribute name="cuid" type="string"></attribute>
+    	<attribute name="library_path" type="string"></attribute>
+    </complexType>
+
+    <complexType name="SourceContentsFile">
+    	<attribute name="fileName" type="string"></attribute>
+    	<attribute name="contents" type="string"></attribute>
+    </complexType>
+
+    <attribute name="NewAttribute" type="string"></attribute>
+
+</schema>

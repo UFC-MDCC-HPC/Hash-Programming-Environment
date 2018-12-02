@@ -1,34 +1,22 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
-using System.Runtime.Remoting;
+using System.Reflection;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
-using System.Collections.Generic;
-using System.Reflection;
-using HPE_DGAC_LoadDB;
-using br.ufc.pargo.hpe.basic;
-using br.ufc.pargo.hpe.backend.DGAC.utils;
-using br.ufc.pargo.hpe.backend.DGAC.database;
-using System.Data;
-using System.Collections;
-using System.Reflection.Emit;
-using MPI;
-using gov.cca;
-using br.ufc.pargo.hpe.ports;
-using gov.cca.ports;
-using System.Runtime.Remoting.Activation;
-using System.Runtime.Remoting.Channels.Tcp;
 using System.Threading;
-using System.Runtime.CompilerServices;
+using br.ufc.pargo.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.ports;
 using Catalog;
-using System.Diagnostics;
+using gov.cca;
+using gov.cca.ports;
+using HPE_DGAC_LoadDB;
 using Instantiator;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Runtime.Serialization;
-using br.ufc.pargo.hpe.kinds;
 
 
 namespace br.ufc.pargo.hpe.backend
@@ -1535,6 +1523,7 @@ namespace br.ufc.pargo.hpe.backend
 				foreach (SupplyParameter sp in sp_list) 
 				{
 					string parameter_id = sp.Id_parameter;
+
 					SupplyParameterComponent spc = (SupplyParameterComponent)sp;
 
 					Instantiator.ContextArgumentType argument_type = new Instantiator.ContextArgumentType ();
@@ -1549,7 +1538,7 @@ namespace br.ufc.pargo.hpe.backend
 				}
 
 				Connector.closeConnection ();
-				
+
 				return contextual_type;
 		}
 				
@@ -1715,8 +1704,29 @@ namespace br.ufc.pargo.hpe.backend
 				                                     gov.cca.ports.BuilderService bsPort, 
 				                                     gov.cca.Services frwServices)
 			{
-									
-				Console.WriteLine("afterInitializeComponent - START - Connecting to the Initialize port - " + cid.InstanceName);
+
+				Dictionary<string, ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();
+				fetchConnectionsAsUser(cid, inner_conn_list, bsPort);
+
+				foreach (KeyValuePair<string, ConnectionID> inner in inner_conn_list /*InnerComponent ic in icList*/)
+				{
+					Console.WriteLine("AFTER INIT - CONNECTION " + inner.Key + ", " + inner.Value.ToString());
+
+					ComponentID inner_cid = inner.Value.getProvider();
+					if (!(inner_cid is ManagerIgnoredComponentID))
+					{
+						if (!after_initialized.ContainsKey(inner_cid))
+						{
+							after_initialized.Add(inner_cid, true);
+							afterInitializeComponent((ManagerComponentID)inner_cid, bsPort, frwServices);
+						}
+					}
+					else
+						Console.WriteLine("afterInitializeComponent: " + inner_cid.getInstanceName());
+				}
+
+
+                Console.WriteLine("afterInitializeComponent - START - Connecting to the Initialize port - " + cid.InstanceName);
 				frwServices.registerUsesPort(Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
 				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.INITIALIZE_PORT_NAME, cid, Constants.INITIALIZE_PORT_NAME);            
 				InitializePort initialize_port = (InitializePort) frwServices.getPort (Constants.INITIALIZE_PORT_NAME);
@@ -1731,25 +1741,6 @@ namespace br.ufc.pargo.hpe.backend
 				bsPort.disconnect(conn_cs,0);	
 				frwServices.unregisterUsesPort(Constants.INITIALIZE_PORT_NAME);
 					
-				Dictionary<string,ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();		
-				fetchConnectionsAsUser(cid, inner_conn_list, bsPort);
-				
-				foreach (KeyValuePair<string, ConnectionID> inner in inner_conn_list /*InnerComponent ic in icList*/)				
-				{					
-					Console.WriteLine ("AFTER INIT - CONNECTION " + inner.Key + ", " + inner.Value.ToString());
-
-					ComponentID inner_cid = inner.Value.getProvider();	
-					if (!(inner_cid is ManagerIgnoredComponentID))
-					{											
-						if (!after_initialized.ContainsKey(inner_cid))
-						{
-							after_initialized.Add(inner_cid,true);
-							afterInitializeComponent((ManagerComponentID)inner_cid, bsPort, frwServices);	
-						}
-					}			
-					else 
-						Console.WriteLine("afterInitializeComponent: " + inner_cid.getInstanceName());
-				}
 					
 			}
 				
@@ -2028,7 +2019,7 @@ namespace br.ufc.pargo.hpe.backend
 					frwServices.registerUsesPort(go_port_name, Constants.GO_PORT_TYPE, new TypeMapImpl());
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 					bsPort.connect(host_cid, go_port_name, s_cid, Constants.GO_PORT_NAME);
-					Console.WriteLine("BEGORE GO PORT " + cRef + " --- " + frwServices.GetHashCode());
+					Console.WriteLine("BEFORE GO PORT " + cRef + " --- " + frwServices.GetHashCode());
 					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (go_port_name);
 					Console.WriteLine("AFTER GO PORT " + cRef + " --- " + frwServices.GetHashCode());
 
@@ -2036,6 +2027,7 @@ namespace br.ufc.pargo.hpe.backend
 				}
 				catch (Exception e) 
 				{
+                    Console.Error.WriteLine("runSolutionComponent (SAFe) -- ERROR WHILE RUNNING {0}", cRef);
 					Console.Error.WriteLine (e.Message);
 					Console.Error.WriteLine (e.StackTrace);
 					if (e.InnerException != null) {
@@ -2066,7 +2058,7 @@ namespace br.ufc.pargo.hpe.backend
 			                                           //string[] binding_access_address,
 			                                           //int[] binding_access_port, 
 													   int facet_instance,
-													   int facet,
+													   IList<int> facet_list,
 													   int[] facet_of_instance,
 													   Tuple<int, string, Tuple<int,string>[]> facet_info,
 													   IList<string> binding_sequentials)
@@ -2083,7 +2075,7 @@ namespace br.ufc.pargo.hpe.backend
 				                        //binding_access_address,
 				                        //binding_access_port,
 				                        facet_instance, 
-					                    facet, 
+					                    facet_list, 
 					                    facet_of_instance,
 				                        facet_info,
 										binding_sequentials);
@@ -2126,7 +2118,6 @@ namespace br.ufc.pargo.hpe.backend
 															Tuple<ManagerComponentID,string> inner_info)
 			{
 				Console.WriteLine ("LATER CONNECTION INSERT " + key);
-				Console.Beep ();
 
 				IList<Tuple<Thread, Tuple<ManagerComponentID, string>>> lc = null;
 				if (!later_connections.TryGetValue (key, out lc)) 
@@ -2162,7 +2153,7 @@ namespace br.ufc.pargo.hpe.backend
 	                            					   IDictionary<string, int> argumentsTop,
 			                                           Instantiator.UnitMappingType[] unit_mapping_enclosing,
 												       int facet_instance, 
-													   int facet,
+													   IList<int> facet_list,
 												       int[] facet_topology,
 				                                       Tuple<int, string, Tuple<int,string>[]> facet_info,
 													   IList<string> binding_sequentials)
@@ -2183,7 +2174,7 @@ namespace br.ufc.pargo.hpe.backend
 				IDictionary<string,ManagerComponentID> inner_cids = new Dictionary<string,ManagerComponentID>();
 				
 				IDictionary<InnerComponent, Instantiator.UnitMappingType[]> icList2 = new Dictionary<InnerComponent,Instantiator.UnitMappingType[]>();
-				IDictionary<InnerComponent,Tuple<int,int,int[]>> icFacetConfig = new Dictionary<InnerComponent, Tuple<int, int, int[]>> ();
+				IDictionary<InnerComponent,Tuple<int,IList<int>,int[]>> icFacetConfig = new Dictionary<InnerComponent, Tuple<int, IList<int>, int[]>> ();
 			
 				IDictionary<string, ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();					
 				if  (curr_cid != null)
@@ -2228,25 +2219,52 @@ namespace br.ufc.pargo.hpe.backend
 								int i = 0;
 								foreach (ManagerComponentID cid_owner in cid_chain) 
 								{
-									InnerComponentExposed ice = icedao.retrieveContainer(id_abstract_owner[i], id_inner_at_owner[i], ic.Id_inner);
-									if (ice != null) 
-									{
-										at_owner = true;
+										/*	InnerComponentExposed ice = icedao.retrieveContainer(id_abstract_owner[i], id_inner_at_owner[i], ic.Id_inner);
+											if (ice != null) 
+											{
+												at_owner = true;
 
-										inner_cid = findInnerComponentInTheHostComponent (cid_owner, ice.Id_inner_rename, bsPort);
+												inner_cid = findInnerComponentInTheHostComponent (cid_owner, ice.Id_inner_rename, bsPort);
 
-										Console.WriteLine ((inner_cid == null ? "inner_cid is null !  " : "inner_cid found !  ") + cid_owner.InstanceName + " / " + portName);
+												Console.WriteLine ((inner_cid == null ? "inner_cid is null !  " : "inner_cid found !  ") + cid_owner.InstanceName + " / " + portName);
 
-										/* if not found, look at the the next parent in the next iteration. Otherwise, finish the loop.	 */
-										if (inner_cid != null)
-											break;
-									} 
-									else 
-									{
-										Console.WriteLine("findInnerComponent (DGAC.cs): " +  ic.Id_inner + " not found in " + id_abstract_owner[i] + "/" + id_inner_at_owner[i]);
-									}
+												if (inner_cid != null)
+													break;
+											} 
+											else 
+											{
+												Console.WriteLine("findInnerComponent (DGAC.cs): " +  ic.Id_inner + " not found in " + id_abstract_owner[i] + "/" + id_inner_at_owner[i]);
+											} 
 
-									i++;
+												i++;
+										*/
+
+
+
+
+
+										IList<InnerComponentExposed> iceList = icedao.retrieveContainerList(id_abstract_owner[i], id_inner_at_owner[i], ic.Id_inner);
+										if (iceList != null && iceList.Count > 0)
+										{
+											Console.WriteLine("createInnerComponentsOf --- iceList.Count={0}", iceList.Count);
+											at_owner = true;
+											foreach (InnerComponentExposed ice in iceList)
+											{
+												inner_cid = findInnerComponentInTheHostComponent(cid_owner, ice.Id_inner_rename, bsPort);
+
+												Console.WriteLine((inner_cid == null ? "inner_cid is null !  " : "inner_cid found ! ignore={0} ") + cid_owner.InstanceName + " / " + portName, inner_cid == null ? "null" : inner_cid.GetType().ToString());
+
+												/* if not found, look at the the next parent in the next iteration. Otherwise, finish the loop.  */
+												if (inner_cid != null /*&& !(inner_cid is ManagerIgnoredComponentID)*/)
+													break;
+											}
+										}
+										else
+										{
+											Console.WriteLine("findInnerComponent (DGAC.cs): " + ic.Id_inner + " not found in " + id_abstract_owner[i] + "/" + id_inner_at_owner[i]);
+										}
+
+										i++;
 								}
 
 								if (inner_cid==null && at_owner) 
@@ -2267,19 +2285,19 @@ namespace br.ufc.pargo.hpe.backend
 										//	Console.WriteLine ("END CONNECT " + cid.getInstanceName () + "." + portName + " to " + inner_cid.getInstanceName ());
 										}));
 
-									int ii=0;
-									foreach (ManagerComponentID cid_owner in cid_chain) 
-									{
-										InnerComponentExposed ice = icedao.retrieveContainer(id_abstract_owner[ii], id_inner_at_owner[ii], ic.Id_inner);
-										if (ice != null)
+										int ii = 0;
+										foreach (ManagerComponentID cid_owner in cid_chain)
 										{
-											string key = cid_owner.InstanceName + "-" + ice.Id_inner_rename;
-											registerForLaterConnection (key, t, new Tuple<ManagerComponentID,string> (cid_owner, ice.Id_inner_rename));
-											break;
+											IList<InnerComponentExposed> iceList = icedao.retrieveContainerList(id_abstract_owner[ii], id_inner_at_owner[ii], ic.Id_inner);
+											foreach (InnerComponentExposed ice in iceList)
+											{
+												string key = cid_owner.InstanceName + "-" + ice.Id_inner_rename;
+												registerForLaterConnection(key, t, new Tuple<ManagerComponentID, string>(cid_owner, ice.Id_inner_rename));
+												break;
+											}
+											ii++;
 										}
-										ii++;
 									}
-								}
 							} 
 							else // it is private in this configuration, but it can be a public inner component of a public inner component.
 							{
@@ -2336,10 +2354,10 @@ namespace br.ufc.pargo.hpe.backend
 							{  
 								/* If the inner component is private and it is not public inner component of another inner public component, create it. */
 								Instantiator.UnitMappingType[] unit_mapping_inner = null;
-								int inner_facet = -1;
+								IList<int> inner_facet_list = new List<int>();
 								int inner_facet_instance = -1;
 								 
-								build_unit_mapping_of_inner (ic, unit_mapping_enclosing, out unit_mapping_inner, facet_instance, facet, ref inner_facet_instance, ref inner_facet);
+								build_unit_mapping_of_inner (ic, unit_mapping_enclosing, out unit_mapping_inner, facet_instance, facet_list, ref inner_facet_instance, ref inner_facet_list);
 								
 								Console.WriteLine("createInnerComponent - AFTER CALLING build_unit_mapping_to_inner id_abstract=" + ic.Id_abstract_owner + " inner = " + ic.Id_inner + " -- " + unit_mapping_enclosing.Length + "," + unit_mapping_inner.Length);
 
@@ -2349,7 +2367,7 @@ namespace br.ufc.pargo.hpe.backend
 								if (unit_mapping_inner.Length == 0)
 								{
 									Console.WriteLine("createInnerComponent-2: This inner component " + ic.Id_abstract_owner + " / " +  ic.Id_inner + " does not have slices in the units of the enclosing component.");
-									return;
+									continue;
 								}
 									
 								int id_functor_app_inner = ic.Id_functor_app;
@@ -2365,7 +2383,7 @@ namespace br.ufc.pargo.hpe.backend
 																  unit_mapping_inner,
 																  facet_address,
 																  inner_facet_instance,
-																  inner_facet,
+																  inner_facet_list,
 																  inner_facet_topology,
 								                                  binding_sequentials,
 																  //inner_facet < 0 /* ignore */,
@@ -2380,7 +2398,7 @@ namespace br.ufc.pargo.hpe.backend
 						
 								Console.WriteLine ("createInnerComponentsOf ***: adding to icFacetConfig and icList2 --- " + ic.Id_abstract_owner + "." + ic.Id_inner );
 
-								icFacetConfig [ic] = new Tuple<int, int, int[]> (inner_facet_instance, inner_facet, inner_facet_topology);
+								icFacetConfig [ic] = new Tuple<int, IList<int>, int[]> (inner_facet_instance, inner_facet_list, inner_facet_topology);
 								icList2 [ic] = unit_mapping_inner;										
 							}
 
@@ -2477,7 +2495,7 @@ namespace br.ufc.pargo.hpe.backend
 						Console.WriteLine ("createInnerComponentsOf: id_abstrac_owner=" + ic.Id_abstract_owner + ", id_inner=" + ic.Id_inner);
 
 						int inner_facet_instance = icFacetConfig[ic].Item1;
-						int inner_facet = icFacetConfig [ic].Item2;
+						IList<int> inner_facet_list = icFacetConfig [ic].Item2;
 						int[] inner_facet_topology = icFacetConfig [ic].Item3;
 
 						Console.WriteLine ("createInnerComponentsOf -------");
@@ -2492,7 +2510,7 @@ namespace br.ufc.pargo.hpe.backend
 							                    argumentsTop, 
 						                        unit_mapping_inner,
 						                        inner_facet_instance,
-						                        inner_facet, 
+						                        inner_facet_list, 
 												inner_facet_topology,
 							                    facet_info,
 												binding_sequentials);
@@ -2571,16 +2589,19 @@ namespace br.ufc.pargo.hpe.backend
 						int facet_instance = facet_info_current.Item1;
 						int facet = facet_address[facet_instance].Item1;
 
+                        IList<int> facet_instance_list = new List<int>();
+                        facet_instance_list.Add(facet_instance);
+
                         string instantiator_string = facet_info_current.Item2;
                         String temp_file_name = Path.GetTempFileName();
                         File.WriteAllText(temp_file_name, instantiator_string);
                         Instantiator.InstanceType instantiator = LoaderApp.DeserializeInstantiator(temp_file_name);
                         Instantiator.UnitMappingType[] unit_mapping_enclosing = instantiator.unit_mapping;
 
-						int inner_facet = -1;
+						IList<int> inner_facet_list = new List<int>();
 						int inner_facet_instance = -1;
 						Instantiator.UnitMappingType[] unit_mapping_inner = null;
-						build_unit_mapping_of_inner(ic, unit_mapping_enclosing, out unit_mapping_inner, facet_instance, facet_instance /*facet*/, ref inner_facet_instance, ref inner_facet);
+						build_unit_mapping_of_inner(ic, unit_mapping_enclosing, out unit_mapping_inner, facet_instance, facet_instance_list /*facet*/, ref inner_facet_instance, ref inner_facet_list);
 
 						Console.WriteLine("createInnerComponent - AFTER CALLING build_unit_mapping_to_inner id_abstract=" + ic.Id_abstract_owner + " inner = " + ic.Id_inner + " -- " + unit_mapping_enclosing.Length + "," + unit_mapping_inner.Length);
 
@@ -2616,7 +2637,7 @@ namespace br.ufc.pargo.hpe.backend
 														  unit_mapping_inner,
 														  facet_address,
 														  inner_facet_instance,
-														  inner_facet,
+														  inner_facet_list,
 														  inner_facet_topology,
 														  binding_sequentials, 
 					                                      id_functor_app_inner);
@@ -2635,7 +2656,7 @@ namespace br.ufc.pargo.hpe.backend
 						List<string> id_inner_at_owner_inner = new List<string> ();
 						id_inner_at_owner_inner.Insert (0, portName);
 
-						bool ignore_connection = inner_facet < 0;
+                        bool ignore_connection = inner_facet_list.Count == 0;
 						connectInnerComponent (cid, portName, inner_cid, bsPort);	
 
 						tryRunLaterConnection(cid.InstanceName + "-" + ic.Id_inner);
@@ -2651,7 +2672,7 @@ namespace br.ufc.pargo.hpe.backend
 								argumentsTop, 
 								unit_mapping_inner,
 								inner_facet_instance,
-								inner_facet, 
+								inner_facet_list, 
 								inner_facet_topology,
 							    facet_info_current,
 								binding_sequentials);
@@ -2725,9 +2746,9 @@ namespace br.ufc.pargo.hpe.backend
 															 Instantiator.UnitMappingType[] unit_mapping_enclosing, 
 															 out Instantiator.UnitMappingType[] unit_mapping_inner,
 															 int enclosing_facet_instance,
-															 int enclosing_facet,
+															 IList<int> enclosing_facet_list,
 															 ref int this_facet_instance,
-															 ref int this_facet)
+															 ref IList<int> this_facet_list)
 			{
 				this_facet_instance = enclosing_facet_instance;
 
@@ -2735,7 +2756,7 @@ namespace br.ufc.pargo.hpe.backend
 				IDictionary<string,IList<Tuple<int,int[],int>>> unit_mapping_dict;
 				BackEnd.copy_unit_mapping_to_dictionary(enclosing_facet_instance, unit_mapping_enclosing, out unit_mapping_dict, out count_nodes);
 
-			//	Console.WriteLine("build_unit_mapping_of_inner -1 - " + ic.Id_abstract_owner + "," + ic.Id_inner);
+				Console.WriteLine("build_unit_mapping_of_inner -1 - " + ic.Id_abstract_owner + "," + ic.Id_inner);
 				IList<Slice> slice_list = BackEnd.sdao.listByInner(ic.Id_abstract_owner, ic.Id_inner);
 
 				IDictionary<string,Instantiator.UnitMappingType> unit_mapping_save = new Dictionary<string,Instantiator.UnitMappingType>();
@@ -2746,7 +2767,7 @@ namespace br.ufc.pargo.hpe.backend
 					int facet_instance;
 					int facet;
 					Interface i_host = BackEnd.idao.retrieve(ic.Id_abstract_owner, slice.Id_interface);
-				//	Console.WriteLine("build_unit_mapping_of_inner 0 - " + i_host.Id_interface_super_top);
+					Console.WriteLine("build_unit_mapping_of_inner 0 - " + i_host.Id_interface_super_top);
 					IList<Tuple<int,int[],int>> info_list = null;
 					if (unit_mapping_dict.TryGetValue (i_host.Id_interface_super_top, out info_list)) 
 					{
@@ -2757,32 +2778,27 @@ namespace br.ufc.pargo.hpe.backend
 							facet = info.Item3;
 							Instantiator.UnitMappingType unit_mapping_slice;
 							Interface i = BackEnd.idao.retrieveSuper (ic.Id_abstract_inner, slice.Id_interface_slice);
-					//		Console.WriteLine ("build_unit_mapping_of_inner: " + ic.Id_abstract_inner + "," + slice.Id_interface_slice + ", i_host.Facet = " + i_host.Facet + ", enclosing_facet = " + enclosing_facet + ", i.Facet = " + i.Facet);
+                            		Console.WriteLine ("build_unit_mapping_of_inner: " + ic.Id_abstract_inner + "," + slice.Id_interface_slice + ", i_host.Facet = " + i_host.Facet + ", enclosing_facet = " + enclosing_facet_instance + ", i.Facet = " + i.Facet);
 
-							// CHECK THIS_FACET
-							if (i_host.Facet == enclosing_facet)
-							{
-								if (this_facet == -1)
-									this_facet = i.Facet;
-								else if (this_facet != i.Facet)
-									throw new Exception ("Wrong facet configuration ! this_facet=" + this_facet + " & i.Facet="+ i.Facet);
-							}
+                            // CHECK THIS_FACET
+                            if (enclosing_facet_list.Contains(i_host.Facet))
+                                this_facet_list.Add(i.Facet);
 
 							if (unit_mapping_save.TryGetValue (i.Id_interface_super_top + facet_instance/*i_host.Facet*/, out unit_mapping_slice)) 
 							{
-						//		Console.WriteLine ("build_unit_mapping_of_inner 1");
+								Console.WriteLine ("build_unit_mapping_of_inner 1");
 								int[] nodes_ = new int[unit_mapping_slice.node.Length + nodes.Length];
 								unit_mapping_slice.node.CopyTo (nodes_, 0);
 								nodes.CopyTo (nodes_, unit_mapping_slice.node.Length);
 								unit_mapping_slice.node = nodes_;
-						//		Console.WriteLine ("build_unit_mapping_of_inner 1: add unit_id=" + unit_mapping_slice.unit_id 
-						//			                                        + ", unit_index=" + unit_mapping_slice.unit_index 
-							//												+ ", facet = " + i_host.Facet
-								//	                                        + ", total nodes" + nodes_.Length);
+								Console.WriteLine ("build_unit_mapping_of_inner 1: add unit_id=" + unit_mapping_slice.unit_id 
+									                                        + ", unit_index=" + unit_mapping_slice.unit_index 
+																			+ ", facet = " + i_host.Facet
+									                                        + ", total nodes" + nodes_.Length);
 							} 
 							else 
 							{
-							//	Console.WriteLine ("build_unit_mapping_of_inner 2 " + (nodes == null));
+								Console.WriteLine ("build_unit_mapping_of_inner 2 " + (nodes == null));
 								unit_mapping_slice = new Instantiator.UnitMappingType ();
 								unit_mapping_slice.facet_instance = facet_instance;
 								unit_mapping_slice.facet = i.Facet;
@@ -2791,11 +2807,11 @@ namespace br.ufc.pargo.hpe.backend
 
 								unit_mapping_save.Add (unit_mapping_slice.unit_id + facet_instance /*i_host.Facet*/, unit_mapping_slice);
 
-							//	Console.WriteLine ("build_unit_mapping_of_inner 2: add unit_id=" + unit_mapping_slice.unit_id + 
-							//		", unit_index=" + unit_mapping_slice.unit_index + 
-								//	", facet = " + this_facet +
-								//	", facet_instance = " + facet_instance +
-								//	", total nodes = " + nodes.Length);
+								Console.WriteLine ("build_unit_mapping_of_inner 2: add unit_id=" + unit_mapping_slice.unit_id + 
+									", unit_index=" + unit_mapping_slice.unit_index + 
+                                    ", facet = " + i.Facet +
+									", facet_instance = " + facet_instance +
+									", total nodes = " + nodes.Length);
 							}
 						}
 					} 
@@ -2841,7 +2857,7 @@ namespace br.ufc.pargo.hpe.backend
 			                                                       Instantiator.UnitMappingType[] unit_mapping_inner,
 				                                                   Tuple<int,string>[] facet_address,
 																   int this_facet_instance,
-				                                                   int this_facet,
+                                                                   IList<int> this_facet_list,
 																   int[] this_facet_topology,
 																   IList<string> binding_sequentials,
 																   int id_functor_app_inner)
@@ -2863,7 +2879,7 @@ namespace br.ufc.pargo.hpe.backend
 				AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app);	//??? parameter_top ???
 					
 				int version = current_inner_cid == null ? 0 : current_inner_cid.Version + 1;
-				string inner_instance_name = cid.getInstanceName() + "-" + ic.Id_inner /*+ "#" + version */;
+                string inner_instance_name = cid.getInstanceName() + "-" + ic.Id_inner /*+ "/" + this_facet_instance*/;
 				ManagerComponentID inner_cid = null;
 				DGAC.database.Component c = null;
 				TypeMapImpl properties = null;
@@ -2913,9 +2929,9 @@ namespace br.ufc.pargo.hpe.backend
 					properties[Constants.ENCLOSING_ARGUMENTS] = arguments;
 					properties[Constants.NODES_KEY] = unit_mapping_inner;
 					properties[Constants.FACET_INSTANCE] = this_facet_instance;
-					properties[Constants.FACET] = this_facet;
+					properties[Constants.FACET] = this_facet_list;
 					properties[Constants.FACET_TOPOLOGY] = this_facet_topology;
-					properties[Constants.IGNORE] = this_facet < 0;
+                    properties[Constants.IGNORE] = this_facet_list.Count == 0;
 					if (kind == Constants.KIND_BINDING) 
 					{ // If it is a binding ... 
 						//foreach (string n in binding_sequentials)
@@ -2962,7 +2978,7 @@ namespace br.ufc.pargo.hpe.backend
 				}
 				catch (FreeVariableException e) 
 				{
-					Console.WriteLine ("FREE VARIABLE FOUND " + acfa.Id_functor_app + ". Component will be bypassed. Ignore=" + (this_facet < 0));
+                    Console.WriteLine("FREE VARIABLE FOUND " + acfa.Id_functor_app + ". Component will be bypassed. Ignore=" + (this_facet_list.Count == 0));
 				}
 					
 			

@@ -79,7 +79,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 		boolean showBounds = true; //component.isDirectSonOfTheTopConfiguration();
 		boolean showParId  = true; //component.isDirectSonOfTheTopConfiguration();
 		
-        if (component.isParameter() && component.getSupplier	()==null) 
+        if (component.isParameter() && component.getSupplier()==null) 
         {
         	/* CHECK NEW BOUND AT TOP CONFIGURATION */
     	    HComponent topC = (HComponent) component.getTopConfiguration();
@@ -102,7 +102,7 @@ public class ComponentEditPart<ModelType extends HComponent,
             name += component.getNameWithParameters(false, showBounds, showParId);
         }
 
-        String name_ = HComponent.breakLines(" " + name + " ");
+        String name_ =  HComponent.breakLines(" " + component.getPackagePath() + "." + name + " ");
         
 		Label ff = new Label(" " + name_ + " ");
 		Font font = new Font(null, "Courier New", 8, SWT.BOLD);

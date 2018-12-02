@@ -5,17 +5,15 @@
 //
 
 using System;
-using br.ufc.pargo.hpe.basic;
-using gov.cca.ports;
-using System.Diagnostics;
 using System.Collections.Generic;
-using MPI;
 using System.Threading;
+using br.ufc.pargo.hpe.basic;
+//using MPI;
 
 namespace br.ufc.pargo.hpe.kinds
 {
 
-	public struct FacetAccess
+    public struct FacetAccess
 	{
 		public FacetAccess(string ip_address_arg, int port_arg)
 		{
@@ -55,12 +53,6 @@ namespace br.ufc.pargo.hpe.kinds
 	public abstract class Binding : Unit, IBindingKind
 	{	    
 
-		private Intercommunicator root_communicator = null;
-
-		public Intercommunicator RootCommunicator {
-			get { return root_communicator;	}
-			set { this.root_communicator = value; }
-		}
 
 		private int this_facet;
 		public int ThisFacet { get { return this_facet; } set {this_facet = value; } }

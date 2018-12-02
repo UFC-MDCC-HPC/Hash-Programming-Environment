@@ -1,19 +1,13 @@
 
 using System;
-using System.Net;
-using System.Runtime.Remoting;
+using System.Diagnostics;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using br.ufc.pargo.hpe.backend.DGAC.utils;
-using System.Collections;
-using MPI;
-using System.Threading;
-using System.Runtime.Remoting.Channels.Http;
-using System.Runtime.Remoting.Channels.Ipc;
-using CommandLine.Utility;
-using System.Diagnostics;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using CommandLine.Utility;
+using MPI;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {

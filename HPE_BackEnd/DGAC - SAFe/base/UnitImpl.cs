@@ -6,18 +6,13 @@
 
 using System;
 using System.Collections.Generic;
-using br.ufc.pargo.hpe.backend.DGAC.database;
-using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using br.ufc.pargo.hpe.ports;
-using MPI;
-using br.ufc.pargo.hpe.kinds;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
-using Instantiator;
 using System.Runtime.Serialization;
-using System.ServiceModel;
+using System.Data;
 
 namespace br.ufc.pargo.hpe.basic
 {
@@ -47,6 +42,8 @@ namespace br.ufc.pargo.hpe.basic
         {
             this.services = services;
 			
+            Console.WriteLine("---- BEFORE REGISTERING USES PORT {0} {1} {2}", this.ThisFacet, this.Id_unit, this.CID);
+
 			foreach (string portName in PortNames)
 					services.registerUsesPort(portName, "", new TypeMapImpl());
 
@@ -118,26 +115,19 @@ namespace br.ufc.pargo.hpe.basic
 
 		public void configure_facet_topology(int[] facet_topology, Instantiator.UnitMappingType[] unit_mapping)
 		{
-			Console.WriteLine ("configure_facet_topology 1 - " + facet_topology.Length);
-			foreach (int f in facet_topology)
-				Trace.Write (f + ",");
-			Console.WriteLine (".");
-
 			IDictionary<int,IList<int>> facet_instances_list = new Dictionary<int, IList<int>> ();
 
-			for (int facet_instance = 0; facet_instance < facet_topology.Length; facet_instance++) 
+			foreach (Instantiator.UnitMappingType unit_mapping_item in unit_mapping)
 			{
-				int facet = facet_topology [facet_instance];
-				if (facet >= 0) 
+				int facet = unit_mapping_item.facet;
+				int facet_instance = unit_mapping_item.facet_instance;
+				IList<int> facet_instance_list = null;
+				if (!facet_instances_list.TryGetValue(facet, out facet_instance_list))
 				{
-					IList<int> facet_instance_list = null;
-					if (!facet_instances_list.TryGetValue (facet, out facet_instance_list)) 
-					{
-						facet_instance_list = new List<int> ();
-						facet_instances_list.Add (facet, facet_instance_list);
-					}
-					facet_instance_list.Add (facet_instance);
+					facet_instance_list = new List<int>();
+					facet_instances_list.Add(facet, facet_instance_list);
 				}
+				facet_instance_list.Add(facet_instance);
 			}
 
 			Console.WriteLine ("configure_facet_topology 2 - " + facet_instances_list.Count);

@@ -133,7 +133,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
         
         HComponent topC = (HComponent) i.getConfiguration().getTopConfiguration();
         
-        List<Triple<String,HInterface,String>> pars = i.getParameters(topC);
+        List<Triple<String,HInterface,String>> pars = i.getParameters();
         
         for (Triple<String,HInterface,String> p : pars) {
 			String varName = p.fst(); 
@@ -161,13 +161,13 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
  		for (Pair<String, HInterface> pair : interface_bounds) {
   		   String varName = pair.fst().split("@")[0];
   		   HInterface bound = pair.snd();
-  		   programTextVarBounds += "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
+  		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
   		}
  		
  		
  		fillPortSlices(i,varContext);
         
-		String procName = i.getName2(true, varContext,null);
+		String procName = i.getName2(false, varContext,null);
 				
 		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
 		String componentName = i.getConfiguration().getComponentName();
@@ -253,7 +253,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		String programTextVarBounds = "";
         List<HInterface> paramBounds = new ArrayList<HInterface>();
         List<String> paramBoundsName = new ArrayList<String>();
- 		for (Triple<String,HInterface,String> p : i.getParameters(topC)) 
+ 		for (Triple<String,HInterface,String> p : i.getParameters()) 
  		{
 			String varName = p.fst(); 
 			VarianceType variance_type = topC.getParameterVariance(p.trd());
@@ -290,7 +290,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
  		fillPortSlices(i,varContext);
         
-		String procName = i.getName2(true, varContext,null);
+		String procName = i.getName2(false, varContext,null);
 				
 		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
 		String componentName = i.getConfiguration().getComponentName();
@@ -599,8 +599,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	
 	public void setIsSubclass(HInterface i, String versionID) {
 		
-        HBESourceVersion superVersion = i.getSourceVersion(versionID);
-        subclass = i.hasSuperType() && superVersion.getFiles().isEmpty();
+       // HBESourceVersion superVersion = i.getSourceVersion(versionID);
+        subclass = i.hasSuperType(); // && superVersion.getFiles().isEmpty();
 
 	}
 	

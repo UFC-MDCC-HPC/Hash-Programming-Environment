@@ -1,19 +1,19 @@
 ﻿using System;
-using br.ufc.mdcc.hpc.shelf.SAFe;
+using System.Collections.Generic;
 using System.IO;
-using gov.cca;
+using br.ufc.mdcc.hpc.shelf.SAFe;
 using br.ufc.mdcc.hpcshelf.workflow.environment.SWLPortType;
 using br.ufc.mdcc.hpcshelf.workflow.environment.SWLWorkflowBinding;
-using System.Collections.Generic;
+using gov.cca;
 
 namespace TestSAFe
 {
     // MainClass will make the role of the Application component.
-	class MainClass : HShelfApplication
+    class MainClass2 : HShelfApplication
 	{
-		public static void Main (string[] args)
+		public static void Main2 (string[] args)
 		{
-            string path_contracts = "/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/Run-Gust-TC/";
+            string path_contracts = "/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/Run-Gust-PR/";
             string path_architecture_file = Environment.GetEnvironmentVariable("SWL_ARCHITECTURE_FILE_LOCATION");
 			
             // The contracts will be provided by explicit files. However, it is possible to put
@@ -57,47 +57,38 @@ namespace TestSAFe
 			}
 		}
 
-		static string[] p_ids = new string[6] {
+		static string[] p_ids = new string[5] {
 			"platform_SAFe",
 			"platform_data_source",
-			"platform_reduce_0",
+			"platform_data_sink",
 			"platform_reduce_1",
-			"platform_reduce_2",
-			"platform_data_sink"
+			"platform_reduce_2"
 		};
 
-		static string[] c_ids = new string[9] {
+		static string[] c_ids = new string[6] {
 			"source",
 			"sink",
-			"reducer_0",
 			"reducer_1",
 			"reducer_2",
-			"shuffler_0",
-			"shuffler_1",
-   		    "shuffler_2",
-            "splitter_output"
+            "flatten_output",
+			"shuffler"
 		};
 
-		static string[] p_contracts = new string[6] {
+		static string[] p_contracts = new string[5] {
 			"PlatformSAFe.cc",
 			"PlatformDataSource.cc",
-			"PlatformReduce_0.cc",
+			"PlatformDataSink.cc",
 			"PlatformReduce_1.cc",
-			"PlatformReduce_2.cc",
-			"PlatformDataSink.cc"
+			"PlatformReduce_2.cc"
 		};
 
-		static string[] c_contracts = new string[9] {
+		static string[] c_contracts = new string[6] {
 			"DataSource.cc",
 			"DataSink.cc",
-			"Reducer_0.cc",
 			"Reducer_1.cc",
 			"Reducer_2.cc",
-			"Shuffler_0.cc",
-			"Shuffler_1.cc",
-			"Shuffler_2.cc",
-			"SplitterOutput.cc"
+            "FlattenOutput.cc",
+			"Shuffler.cc"
 		};
-
 	}
 }

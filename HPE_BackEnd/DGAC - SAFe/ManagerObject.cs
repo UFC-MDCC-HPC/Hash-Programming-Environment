@@ -2,31 +2,21 @@
 
 //Remoting!
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting;
 using System.Collections.Generic;
-using br.ufc.pargo.hpe.backend.DGAC.utils;
-using br.ufc.pargo.hpe.backend.DGAC;
-using MPI;
-using System.Runtime.Remoting.Channels.Tcp;
-using System.IO;
-using System.Runtime.Remoting.Channels;
-using br.ufc.pargo.hpe.backend.DGAC.database;
-using System.Threading;
-using gov.cca;
-using System.Runtime.Remoting.Activation;
-using br.ufc.hpe.backend.DGAC;
-using gov.cca.ports;
 using System.Diagnostics;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using br.ufc.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using gov.cca;
+using gov.cca.ports;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC
-{ 
-	//MANAGER
-	public class ManagerObject : MarshalByRefObject, gov.cca.Services,
+{
+    //MANAGER
+    public class ManagerObject : MarshalByRefObject, gov.cca.Services,
 	                                                 gov.cca.AbstractFramework, 
 	                                                 gov.cca.ports.BuilderService, 
 	                                                 gov.cca.ports.ComponentRepository,
@@ -183,6 +173,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 					if (!ignore)
 					{
+                      
 						this.createInstanceImpl(instanceName, 
 					                            className,
 					                            (TypeMapImpl)properties, 
@@ -1176,7 +1167,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					id_functor_app = (int) properties[Constants.ID_FUNCTOR_APP];  Console.WriteLine("ID_FUNCTOR_APP ok");
 					IDictionary<string,int> arguments = (IDictionary<string,int>) properties[Constants.ENCLOSING_ARGUMENTS];Console.WriteLine("ENCLOSING_ARGUMENTS ok");
 					int this_facet_instance= (int) properties[Constants.FACET_INSTANCE];Console.WriteLine("FACET_INSTANCE ok");
-					int this_facet = (int) properties[Constants.FACET];Console.WriteLine("FACET ok");
+					//int this_facet = (int) properties[Constants.FACET];Console.WriteLine("FACET ok");
 					
 					Console.WriteLine("createInstanceImpl - this_facet_instance = " + this_facet_instance);
 
@@ -1228,7 +1219,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 				    int[] facet_topology = (int[]) properties[Constants.FACET_TOPOLOGY];  Console.WriteLine("FACET_TOPOLOGY ok");
 					worker_properties[Constants.FACET_INSTANCE] = this_facet_instance;
-					worker_properties[Constants.FACET] = this_facet;
+					//worker_properties[Constants.FACET] = this_facet;
 					worker_properties[Constants.FACET_TOPOLOGY] = facet_topology;
 
 					// Inform to the root unit the communication addresses of the other binding facets. 
@@ -1252,13 +1243,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						IList<int> facet_instance_list = new List<int>();
 						Console.WriteLine("CREATE INSTANCE IMPL 3.3 " + facet_topology.Length);
 
-						for (int facet_instance=0; facet_instance < facet_topology.Length; facet_instance++)
-						{
-							Console.WriteLine("CREATE INSTANCE IMPL 3.4 " + facet_instance);
-							int facet = facet_topology[facet_instance];
-							if (facet == this_facet)
-								facet_instance_list.Add(facet_instance);
-						 }
 
 						 // binding_exchange_ports_N(facet_index, facet_instance_list, ref facet_access_address, ref facet_access_port);
 						 int binding_sequential = (int) properties[Constants.BINDING_SEQUENTIAL];

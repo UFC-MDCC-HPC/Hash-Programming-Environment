@@ -198,12 +198,15 @@ namespace br.ufc.pargo.hpe.kinds
 	public class SWLWorkflowIterate<T> : SWLWorkflow<T>
 	{
 		public SWLWorkflow<T> iterate_action;
-		 
-		public SWLWorkflowIterate(SWLWorkflow<T> iterate_action)
+        public /*string[]*/ SAFeSWL.SAFeSWL_OperationPrimitiveInvokeActionType[] exit_clause;
+		public /*string[]*/ SAFeSWL.SAFeSWL_OperationPrimitiveInvokeActionType[] enter_clause;
+
+		public SWLWorkflowIterate(SWLWorkflow<T> iterate_action, SAFeSWL.SAFeSWL_OperationPrimitiveInvokeActionType[] exit_clause, SAFeSWL.SAFeSWL_OperationPrimitiveInvokeActionType[] enter_clause)
 		{
 			this.iterate_action = iterate_action;
+            this.exit_clause = exit_clause;
+			this.enter_clause = enter_clause;
 		}
-
 		public T accept (SWLVisitor<T> visitor)
 		{
 			return visitor.visit (this);

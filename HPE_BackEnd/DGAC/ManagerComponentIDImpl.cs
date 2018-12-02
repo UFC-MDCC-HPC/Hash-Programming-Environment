@@ -13,13 +13,13 @@ namespace gov
             public abstract string InstanceName { get; set; }
 			public abstract string ClassName { get; set; }
             public abstract int[] WorkerNodes { get; set; }
-            public abstract IList<string>[] WorkerUnitNames { get; set; }
+            public abstract string[] WorkerUnitNames { get; set; }
             public abstract int[] WorkerUnitIndexes { get; set; }
 			public abstract int Version {get; set;}
 
            // public abstract WorkerComponentID WorkerComponentID { get; }
-            public abstract WorkerComponentID getWorkerComponentID(int node);
-			public abstract void registerWorkerComponentID(int node, WorkerComponentID wcid);
+            public abstract WorkerComponentID getWorkerComponentID(int i);
+			public abstract void registerWorkerComponentID(int i, WorkerComponentID wcid);
             public abstract int Id_functor_app { get; }
 			public abstract string PortName {get; set;}
             public abstract int Kind { get; }
@@ -32,7 +32,7 @@ namespace gov
             #region attributes
 
             private int[] nodes = null;
-            private IList<string>[] unit_ids = null;
+            private string[] unit_ids = null;
             private int[] indexes = null;
             private string instanceNamePrim = null;
             private string classNamePrim = null;
@@ -52,12 +52,12 @@ namespace gov
             {
                 this.instanceNamePrim = instanceName;
 				this.classNamePrim = className;
-				this.WorkerNodes = nodes;
+				this.nodes = nodes;
                 this.wcids = new Dictionary<int, WorkerComponentID>();
             }
 			
 			// For registering a #-component
-            public ManagerComponentIDImpl(string instanceName, string className, int[] nodes, IList<string>[] unit_ids, int[] indexes, /*WorkerComponentID[] wcids,*/ int id_functor_app, int kind, string portName)
+            public ManagerComponentIDImpl(string instanceName, string className, int[] nodes, string[] unit_ids, int[] indexes, /*WorkerComponentID[] wcids,*/ int id_functor_app, int kind, string portName)
             {
                 this.instanceNamePrim = instanceName;
 				this.classNamePrim = className;
@@ -104,7 +104,7 @@ namespace gov
                 set { this.nodes = value; }
             }
 
-            public override IList<string>[] WorkerUnitNames
+            public override string[] WorkerUnitNames
             {
                 get { return unit_ids; }
                 set { this.unit_ids = value; }
@@ -134,14 +134,20 @@ namespace gov
 
             private IDictionary<int, WorkerComponentID> wcids = new Dictionary<int,WorkerComponentID>();
 			
-			public override void registerWorkerComponentID(int node, WorkerComponentID wcid)
+            public override void registerWorkerComponentID(int i, WorkerComponentID wcid)
             {
-                wcids[node] = wcid;
+				if (!wcids.ContainsKey(i))
+					wcids[i] = wcid;
+                else
+                    throw new Exception("registerWorkerService: wcids[" + i + "] already exists !");
             }
 			
-            public override WorkerComponentID getWorkerComponentID(int node)
+            public override WorkerComponentID getWorkerComponentID(int i)
             {
-				return wcids [node];
+                foreach (KeyValuePair<int,WorkerComponentID> k in wcids)
+                    Console.WriteLine("wcid[{0}]={2} --- {1}", k.Key, i,k.Value);
+
+				return wcids [i];
             }
 
             public override string ToString()

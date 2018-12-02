@@ -143,7 +143,7 @@ public class SupplyParameterDAO{
 
 		//	Console.WriteLine ("SupplyParameterDAO: list ENTER " + id_functor_app);
 
-			IList<SupplyParameter> list = null;
+		IList<SupplyParameter> list = null;
         list = new List<SupplyParameter>();
  
 	   IDbConnection dbcon = Connector.DBcon;

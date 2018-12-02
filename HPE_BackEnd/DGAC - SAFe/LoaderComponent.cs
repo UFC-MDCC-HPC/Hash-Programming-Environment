@@ -48,8 +48,8 @@ namespace HPE_DGAC_LoadDB
 				Console.Write ("Object:");
                 if (o is InnerComponentType)
                 {
-					Console.WriteLine ("Object:InnerComponentType");
-                    if (inner == null) {
+					Console.WriteLine("Object:InnerComponentType " + ((InnerComponentType)o).localRef);
+					if (inner == null) {
                      inner = new List<InnerComponentType>();
                      innerAll = new List<InnerComponentType>();
                     }
@@ -370,7 +370,7 @@ namespace HPE_DGAC_LoadDB
         {
              foreach (InnerComponentType ic in innerAll) 
             {
-                if (ic.localRef.Equals(cRef))
+				if (ic.localRef.Equals(cRef))
                 {
                     return ic;
                 }

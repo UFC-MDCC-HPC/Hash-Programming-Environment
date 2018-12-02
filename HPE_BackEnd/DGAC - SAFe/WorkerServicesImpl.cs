@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -102,8 +102,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
-		//	Console.WriteLine ("WorkerServicesImpl - registerUserPort 1 - " + portName);
-            framework.registerUsesPort(mkPortName(portName), type, properties);
+		//	Console.WriteLine ("WorkerServicesImpl - registerUserPort 1" + portName);
+			framework.registerUsesPort(mkPortName(portName), type, properties);
 		//	Console.WriteLine ("WorkerServicesImpl - registerUserPort 2 - " + portName);
         }
 

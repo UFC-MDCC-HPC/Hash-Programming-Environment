@@ -68,24 +68,29 @@ public abstract class HUnit extends HPrimUnit implements IHUnit
 		 Map<String,HUnitSlice> us2_map = new HashMap<String,HUnitSlice>();
 		 for (HUnitSlice u2 : us2) 
 		 {
-			 HComponent cu2 = ((HComponent)u2.getBinding().getEntry().getConfiguration());
+			 HUnit u2_entry = (HUnit) u2.getBinding().getEntry();
+			 String u2_entry_basename = u2_entry.getBaseName();
+			 HComponent cu2 = ((HComponent)u2_entry.getConfiguration());
 			 String slice_name = cu2.getSavedName().get(c0);
+			 
 			 slice_name = slice_name == null ? cu2.getRef() : slice_name;
+			 slice_name += "." + u2_entry_basename;
+
 			 us2_map.put(slice_name, u2);
 		 }
 		 
 		 //if (this_!=null)
   	     for (HUnitSlice us__ : this_.getSlices()) 
   	     {  	
-  	    	 HComponent cus = ((HComponent)us__.getBinding().getEntry().getConfiguration());
-  	    	 String slice_name = cus.getSavedName().get(c0x);
-  	    	 slice_name = slice_name != null ? slice_name : cus.getRef();
-  	    	 
-  	    	 HUnitSlice us_prime = us__;
-  	    	 HUnit u_prime = (HUnit) us_prime.getBinding().getEntry();
-  	    	 HComponent c_prime = (HComponent) u_prime.getConfiguration();
+  	    	 HUnit us__entry = (HUnit) us__.getBinding().getEntry();
+  	    	 String us__entry_basename = us__entry.getBaseName();
+  	    	 HComponent cus = ((HComponent)us__entry.getConfiguration());
+  	    	 String slice_name = cus.getSavedName().get(c0x) ;
+  	    	 slice_name = slice_name == null ? cus.getRef() : slice_name ;
+  	    	 slice_name += "." + us__entry_basename;
   	    	 
   	    	 HUnitSlice us = /*us__; */ us2_map.containsKey(slice_name) ? us2_map.get(slice_name) : us__;
+  	    	 
   	    	 HUnit u = (HUnit) us.getBinding().getEntry();
   	    	 HComponent c = (HComponent) u.getConfiguration();
   	    	 
@@ -392,7 +397,7 @@ public abstract class HUnit extends HPrimUnit implements IHUnit
 					islice.addCompliantUnitSlice(uslice);	
 				} else {
 		        	JOptionPane.showMessageDialog(null,
-		        		    "Interfaces Does Not Match - ".concat(uslice.getInterface().getName(false,true)).concat(" vs ").concat(islice.getInterface().getName2()),
+		        		    "Interfaces do not match - ".concat(uslice.getInterface().getName(false,true)).concat(" vs ").concat(islice.getInterface().getName2()),
 		        		    "Error",
 		        		    JOptionPane.ERROR_MESSAGE);
 				}
@@ -819,7 +824,27 @@ public abstract class HUnit extends HPrimUnit implements IHUnit
 	  //  }
 	    
 	    public HUnitStub createStub(HComponent enc) {
-	    	return new HUnitStub(this,enc);
+	    	
+	    	HUnitStub return_stub = null;
+	    	List<HUnitStub> stub_list = new ArrayList<HUnitStub>();
+	    	
+	    	for (IHPrimUnit u_ : this.getClones())
+	    	{
+	    		HUnit u = (HUnit) u_;
+		    	HUnitStub unit_stub = new HUnitStub(u,enc);
+		    	unit_stub.setBounds(u.getBounds().getCopy());
+		    	
+		    	if (!u.isClone())
+		    		return_stub = unit_stub;
+		    	
+		    	if (u.isClone())
+		    		stub_list.add(unit_stub);
+	    	}
+
+	    	for (HUnitStub stub_item : stub_list)
+	    		return_stub.addStubClone(stub_item);
+	    	
+	    	return return_stub;
 	    }
 	    
 	    public void hideSlices() {
@@ -844,6 +869,8 @@ public abstract class HUnit extends HPrimUnit implements IHUnit
 	    	HUnit u = (HUnit) super.createReplica(cloned_unit, shift);
 	    	//u.stubs = new ArrayList<HUnitStub>(this.stubs);
 	    	u.unitSlices = new ArrayList<HUnitSlice>();
+			u.stubs = new ArrayList<HUnitStub>(this.stubs);
+			u.stubsEnc = new HashMap<HUnitStub,HComponent>(this.stubsEnc);
 	    	
 	    	for (HUnitSlice s : this.getSlices()) 
 	    	{

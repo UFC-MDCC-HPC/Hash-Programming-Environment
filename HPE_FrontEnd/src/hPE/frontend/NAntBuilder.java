@@ -260,17 +260,12 @@ public class NAntBuilder implements Runnable {
 
 								compile.setOutput(path_output);
 								compile.setTarget(src.getFileType());
-								IPath path_snk = new Path(HComponentFactoryImpl
-										.getFileInWorkspace(
-												new Path(c.getLocalLocation()))
-										.toString());
+								IPath path_snk = new Path(HComponentFactoryImpl.getFileInWorkspace(new Path(c.getLocalLocation())).toString());
 
 								// IPath path_snk =
 								// ResourcesPlugin.getWorkspace().getRoot().getFile(new
 								// Path(c.getRelativeLocation())).getLocation();
-								compile.setKeyfile(path_snk
-										.removeFileExtension()
-										.addFileExtension("snk"));
+								compile.setKeyfile(path_snk.removeFileExtension().addFileExtension("snk"));
 
 								// Sources
 								List<NAntCoreTypesFileSet> sources = compile

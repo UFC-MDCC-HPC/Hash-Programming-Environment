@@ -91,9 +91,9 @@ public class HPEPlatform {
 		String curDir = "";
 		String userName = null;
 		 //String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
-		// String urlWS = "http://localhost:8081/BackEndWS.asmx";
+		 String urlWS = "http://localhost:8081/BackEndWS.asmx";
 		//String urlWS = "http://200.19.177.96:8081/BackEndWS.asmx";
-		 String urlWS = "http://200.19.177.101:8080/BackEndWS.asmx";
+		// String urlWS = "http://200.19.177.101:8080/BackEndWS.asmx";
 		
 //		BrowseAndRunBackEndDialog.getCurrentEditor().doSave(null);
 		

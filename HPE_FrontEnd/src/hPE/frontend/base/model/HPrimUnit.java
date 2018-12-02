@@ -116,20 +116,20 @@ public abstract class HPrimUnit extends HVisualElement
 	 * @see hPE.model.IHPrimUnit#setName(java.lang.String)
 	 */
 	public void setName(String name) {
-		if (this.isClone()) {
-			this.cloneOf.setName(name);
-		} 
-		else {
+		//if (this.isClone()) {
+		//	this.cloneOf.setName(name);
+		//} 
+		//else {
 			this.name = name;
 			if (this.baseName == null) this.baseName = name;
-			for (IHPrimUnit u_ : this.getClones())
-			{
-				HPrimUnit u = (HPrimUnit) u_;
-			    u.name = name;
-			    u.baseName = this.baseName;
-			}
+		//	for (IHPrimUnit u_ : this.getClones())
+		//	{
+		//		HPrimUnit u = (HPrimUnit) u_;
+		//	    u.name = name;
+		//	    u.baseName = this.baseName;
+		//	}
 			
-		}
+		//}
 		
 		listeners.firePropertyChange("labelContents", null, name); //$NON-NLS-2$//$NON-NLS-1$
 	}
@@ -313,6 +313,9 @@ public abstract class HPrimUnit extends HVisualElement
 		}
 		
 		this.configuration = c;
+		for (IHPrimUnit u_clone : this.getClones())
+			((HPrimUnit) u_clone).configuration = c;
+		
 		configuration.newUnit((IHUnit)this);
 	}
 	
@@ -559,10 +562,21 @@ public abstract class HPrimUnit extends HVisualElement
 		if (this.getInterface() == null) {
         	   attachToInterface(which_interface);
 		}
-			
 		
 		
 	}
+	
+	public void cloneInterface()
+	{
+		try {
+			this.linkToInterface.setWhich_interface((HInterface)((HInterface)this.getInterface()).clone());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/*
 	public String toString() {
 		return this.getConfiguration().toString().concat(".u.").concat(this.getName());

@@ -214,9 +214,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static Component findHashComponent(IDictionary<string, int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)
         {
-			Console.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
-				
-            Component c;
+			Console.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app + " === " + acfaRef.Id_abstract);
+			IList<SupplyParameter> spdao_list = BackEnd.spdao.list(acfaRef.Id_functor_app);
+			foreach (SupplyParameter par in spdao_list)
+				if (par is SupplyParameterComponent) Console.WriteLine("PAR-C " + ((SupplyParameterComponent)par).Id_functor_app_actual);
+				else Console.WriteLine("PAR-P " + ((SupplyParameterParameter)par).Id_parameter);
+
+			Component c;
 
             if (acfaRef.ParametersList.Count == 0)
             {
@@ -239,16 +243,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 			writeTreeNode (root);
 
-			Console.WriteLine ("AFTER Resolution.sort(root)");
+            Console.WriteLine("AFTER Resolution.sort(root)");
 
             c = Resolution.tryGeneralize(root, root);
 
-			Console.WriteLine ("AFTER Resolution.tryGeneralize(root, root)");
+			Console.WriteLine ("AFTER Resolution.tryGeneralize(root, root) " + (c==null));
 
             if (acfaRef.ParametersList.Count == 0)
             {
                 cache.Add(acfaRef.Id_functor_app, c);
             }
+
+			Console.WriteLine("FINISH - FIND HASH COMPONENT");
 
 			return BackEnd.cdao.retrieve_libraryPath (c.Library_path);; // if c is null, there is not an implementation ....			
         }

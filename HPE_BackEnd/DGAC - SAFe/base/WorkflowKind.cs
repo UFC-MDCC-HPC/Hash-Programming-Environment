@@ -23,7 +23,7 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 		string SWLOrchestration { set; }
 		int WorkflowHandle { set; }
-		IWorkflowServices CoreServices { set; }
+		ICoreServices CoreServices { set; }
 	}
 
 	public abstract class Workflow : Activate, IWorkflowKind 
@@ -36,12 +36,13 @@ namespace br.ufc.pargo.hpe.kinds
 			set 
 			{
 				SAFeSWL_OperationAnyType w = FileUtil.readXML<SAFeSWL_OperationAnyType> (value);
+                Console.WriteLine("READING XML --- {0}", w == null);
 				w_tree = WorkflowParser.convertoToSWLAbstractTree (w);
 			} 
 		}
 
-		private IWorkflowServices core_services;
-		public IWorkflowServices CoreServices 
+		private ICoreServices core_services;
+		public ICoreServices CoreServices 
 		{ 
 			set 
 			{
@@ -62,6 +63,7 @@ namespace br.ufc.pargo.hpe.kinds
 		{
             Console.WriteLine("VISIT ORCHESTRATION !!! " + (w_tree == null));
 			w_tree.accept (new SWLVisitorOrchestrate (this.Services, workflow_handle, core_services));
+			Console.WriteLine("FINISH ORCHESTRATION !!! ");
 		}
 			
 	}

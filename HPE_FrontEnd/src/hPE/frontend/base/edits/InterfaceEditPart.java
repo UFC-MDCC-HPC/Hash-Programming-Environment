@@ -9,6 +9,7 @@ import hPE.frontend.base.model.HLinkToInterface;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.policies.AddReferencesEditPolicy;
 import hPE.frontend.base.policies.ChangeColorEditPolicy;
+import hPE.frontend.base.policies.CleanSourcesEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.NameDirectEditPolicy;
 import hPE.frontend.base.policies.OpenSourceEditPolicy;
@@ -56,8 +57,13 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		   this.installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new NameDirectEditPolicy());
 		   this.installEditPolicy(AddReferencesEditPolicy.ADD_REFERENCES, new AddReferencesEditPolicy());
 		} 
+		
  	    if (((ModelType) this.getModel()).getIsEditableSource())
+ 	    {
 	       this.installEditPolicy("OpenSourceEditPolicy", new OpenSourceEditPolicy());
+	       this.installEditPolicy("CleanSourcesEditPolicy", new CleanSourcesEditPolicy());
+ 	    }
+ 	    
 		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,new UnitFlowLayoutEditPolicy());
 		// allow the creation of connections and and the reconnection of connections between Shape instances
 		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
@@ -146,8 +152,11 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		
 		if (ev.getPropertyName().equals(ModelType.PROPERTY_EDITABLE_SOURCE)) {
 			   this.refresh();
-			   if (((ModelType) this.getModel()).getIsEditableSource())
+			   if (((ModelType) this.getModel()).getIsEditableSource()) 
+			   {
 			       this.installEditPolicy("OpenSourceEditPolicy", new OpenSourceEditPolicy());
+			       this.installEditPolicy("CleanSoucesEditPolicy", new CleanSourcesEditPolicy());
+			   }
 			}
 	}
 	

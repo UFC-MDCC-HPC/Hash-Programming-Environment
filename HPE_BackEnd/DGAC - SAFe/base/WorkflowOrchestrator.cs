@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using br.ufc.mdcc.hpcshelf.core;
+using static br.ufc.pargo.hpe.kinds.TaskBinding;
 
 namespace br.ufc.pargo.hpe.kinds
 {
@@ -29,9 +30,9 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 		private gov.cca.Services services;
 		int workflow_handle;
-		private IWorkflowServices core_services;
+		private ICoreServices core_services;
 
-		public SWLVisitorOrchestrate(gov.cca.Services services, int workflow_handle, IWorkflowServices core_services)
+		public SWLVisitorOrchestrate(gov.cca.Services services, int workflow_handle, ICoreServices core_services)
 		{
 			this.services = services;
 			this.workflow_handle = workflow_handle;
@@ -99,7 +100,8 @@ namespace br.ufc.pargo.hpe.kinds
 			IActionFuture future_handle;
 			action_port.invoke (action_name, out future_handle);
 
-			dict_async_invocations [handle] = future_handle;
+			if (handle != null)
+				dict_async_invocations[handle] = future_handle;
 
 			return true;
 		}
@@ -252,6 +254,8 @@ namespace br.ufc.pargo.hpe.kinds
 
 		public bool visit(SWLWorkflowIterate<bool> node)
 		{
+            // TODO: Take "node.until_clause" into consideration
+
 			Console.WriteLine ("ITERATE");
 
 			Debug.Assert(node!=null); Console.WriteLine(node!=null);
@@ -259,7 +263,7 @@ namespace br.ufc.pargo.hpe.kinds
 
 			bool breaking_flag = false;
 
-			while (!breaking_flag) 
+            while (!Terminate(node) && !breaking_flag) 
 			{
 				try 
 				{
@@ -275,12 +279,92 @@ namespace br.ufc.pargo.hpe.kinds
 				}
 				catch (Exception e) 
 				{
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);
+                    if (e.InnerException != null)
+                    {
+                        Console.WriteLine(e.InnerException.Message);
+                        Console.WriteLine(e.InnerException.StackTrace);
+                    }
 					throw e;
 				}
 			}
 
 			return true;
 		}
+
+        private bool Terminate (SWLWorkflowIterate<bool> node)
+        {
+            if (node.exit_clause == null && node.enter_clause == null)
+                return false;
+
+            Console.WriteLine("TERMINATE 1");
+
+			IActionFutureSet fs = new ActionFutureSet();
+			IActionFuture[] future_list = new IActionFuture[node.exit_clause.Length];
+			string[] enter_action_list = new string[node.exit_clause.Length];
+			string[] exit_action_list = new string[node.exit_clause.Length];
+
+			for (int i = 0; i < node.exit_clause.Length; i++)
+			{
+                Console.WriteLine("TERMINATE 2 {0}", i);
+
+                string exit_action = node.exit_clause[i].action;
+				string exit_port = node.exit_clause[i].id_port;
+
+				string enter_action = node.enter_clause[i].action;
+				string enter_port = node.enter_clause[i].id_port;
+
+                Console.WriteLine("TERMINATE 3 {0} / {1}.{2} -- {3}.{4}", i, exit_port, exit_action, enter_port, enter_action);
+
+                // It is supposed that both exit and enter action ports are the same;
+				ITaskBindingKind action_port_exit = port(exit_port);
+				ITaskBindingKind action_port_enter = port(enter_port);
+
+				Debug.Assert(action_port_exit == action_port_enter, "ITERATION: EXIT and ENTER action ports are distinct ! Check !");
+
+                Console.WriteLine("TERMINATE 4 {0} {1}", action_port_exit == null, action_port_enter == null);
+
+                IActionFuture f;
+				action_port_enter.invoke(new string[2] { exit_action, enter_action }, out f);
+				fs.addAction(f);
+
+                Console.WriteLine("TERMINATE 5 {0}", i);
+
+				future_list[i] = f;
+				enter_action_list[i] = enter_action;
+				exit_action_list[i] = exit_action;
+			}
+
+			Console.WriteLine("TERMINATE 6 -- BEFORE WAIT ALL");
+			fs.waitAll();
+			Console.WriteLine("TERMINATE 7 -- AFTER WAIT ALL");
+
+			int end_iteration = 0; //unknown=0; enter=1; exit=2
+
+            for (int i = 0; i < future_list.Length; i++)
+            {
+                string action_result = (string)future_list[i].Action;
+
+                Console.WriteLine("TERMINATE 8 i={0} -- result={1}", i, action_result);
+				
+                if (action_result.Equals(enter_action_list[i]) && end_iteration == 0)
+                    end_iteration = 1;
+
+                else if (action_result.Equals(exit_action_list[i]) && end_iteration == 0)
+                    end_iteration = 2;
+
+                else if (action_result.Equals(enter_action_list[i]) && end_iteration == 2)
+                    throw new Exception("ITERATE: Conflict in termination clause !");
+
+                else if (action_result.Equals(exit_action_list[i]) && end_iteration == 1)
+                    throw new Exception("ITERATE: Conflict in termination clause !");
+
+                Console.WriteLine("TERMINATE 9 i={0} -- end_iteration={1}", i, end_iteration);
+			}
+
+            return end_iteration == 2;
+        }
 
 		private IDictionary<string, ITaskBindingKind> dict_ports = new Dictionary<string, ITaskBindingKind>(); 
 

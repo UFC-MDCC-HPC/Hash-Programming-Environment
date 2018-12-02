@@ -88,13 +88,13 @@ namespace br.ufc.mdcc.hpcshelf.core
 			// CREATE SYSTEM COMPONENTS IF ALL CONTRACTS ARE AVAILABLE.
 			 tryCreateSystem (workflow_handle);
 
-
-			return workflow_handle;
+            return workflow_handle;
 		}
 
 		[WebMethod]
 		public void registerContract(int workflow_handle, string c_ref, string contract)
 		{
+            Console.WriteLine("REGISTER CONTRACT of " + c_ref);
 			Instantiator.ComponentFunctorApplicationType contextual_type = LoaderApp.deserialize<Instantiator.ComponentFunctorApplicationType> (contract);
 			registerContract (workflow_handle, c_ref, contextual_type);
 			delayed_contracts[workflow_handle].Remove (c_ref);
@@ -153,11 +153,17 @@ namespace br.ufc.mdcc.hpcshelf.core
 		{
 			IDictionary<string,Instantiator.UnitMappingType[]> unit_mapping = new Dictionary<string, Instantiator.UnitMappingType[]> ();
 
+            Console.WriteLine("1");
+
 			SAFeSWL_Architecture arch_desc = active_workflows [workflow_handle];
+
+			Console.WriteLine("2");
 
 			IDictionary<string, int> system_platform_facet_mapping = new Dictionary<string, int> ();
 
 			// Traverse platforms and determine the peer units.
+			Console.WriteLine("3");
+
 			int peer_index = 0;
 			foreach (SAFeSWL_Component c in arch_desc.solution) 
 				if (c is SAFeSWL_Platform)
@@ -172,12 +178,16 @@ namespace br.ufc.mdcc.hpcshelf.core
 					peer_index++;
 				}
 
+            Console.WriteLine("4 " + arch_desc.service_binding.Length + " --- " + system_platform_facet_mapping.Count);
+
 			IDictionary<string, string> placement = new Dictionary<string, string> ();
 
 			// LOOK FOR PLACEMENT BINDINGS OF COMPUTATIONS AND DATA SOURCES.
 			foreach (SAFeSWL_BindingService binding in arch_desc.service_binding)
 				if (system_platform_facet_mapping.ContainsKey (binding.provider_port.id_component))  // is it a placement port ?
 					placement.Add (binding.user_port.id_component, binding.provider_port.id_component);
+
+			Console.WriteLine("5");
 
 			// Traverse computations and data sources to determine the peer units where they are sitted on top.
 			foreach (SAFeSWL_Component c in arch_desc.solution)
@@ -187,7 +197,9 @@ namespace br.ufc.mdcc.hpcshelf.core
 					traverse_component (workflow_handle, c, peer_index_of_c, unit_mapping);
 				}
 
-            Instantiator.UnitMappingType um;
+			Console.WriteLine("6");
+
+			Instantiator.UnitMappingType um;
 			
             // WORKFLOW COMPONENT
 			int peer_index_of_w = system_platform_facet_mapping [placement [arch_desc.workflow.id_component]];
@@ -294,13 +306,17 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 			string cRef = workflow_contract [workflow_handle] [c.id_component].component_ref;
 
+            Console.WriteLine("traverse_component: {0}", cRef);
+                              
 			AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath (cRef);
 			IList<Interface> unit_list = BackEnd.idao.list (acf.Id_abstract);
 
-			// single unit expected here, called "node".
+            // single unit expected here, called "node".
 			foreach (Interface unit in unit_list) 
 			{
-				Instantiator.UnitMappingType um = new Instantiator.UnitMappingType ();
+                Console.WriteLine("unit : {0} {1} ", cRef, unit.Id_interface);
+
+                Instantiator.UnitMappingType um = new Instantiator.UnitMappingType ();
 				um.facet = 0;
 				um.facetSpecified = true;
 				um.facet_instance = 0;
@@ -346,7 +362,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 						      string arch_ref        // referência do componente no código arquitetural.
 		)   
 		{
-			Console.WriteLine ("DEPLOYING 0 - " + workflow_handle);
+            Console.WriteLine ("DEPLOYING 0 - " + workflow_handle + " --- " + arch_ref);
 			string result = null;
 
 			SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
@@ -407,17 +423,18 @@ namespace br.ufc.mdcc.hpcshelf.core
 		{
 			try 
 			{				
-				SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
+ 				SAFeSWL_Architecture arch_desc = active_workflows[workflow_handle]; //CoreServiceUtils.readArchitecture (arch_desc_xml);
 
 				string[] c_ids = workflow_contract [workflow_handle].Keys.ToArray();
 
 				IDictionary<string,string> platform_address_list = new Dictionary<string, string> ();
 
- 				IList<Thread> bag_of_threads = new List<Thread>();
-				
+				IList<Thread> bag_of_threads = new List<Thread>();
+
                 for (int i = 0; i < platforms.Count; i++)
                 {
                     string platform_ref = platforms[i];
+
 					Thread t = new Thread(new ParameterizedThreadStart(delegate (object o)
                         {
 	                        int facet_instance = (int)o;
@@ -556,31 +573,6 @@ namespace br.ufc.mdcc.hpcshelf.core
 		}
 
 		[WebMethod]
-		public void wait(int workflow_handle)
-		{
-			IList<Thread> bag = new List<Thread> ();
-
-			foreach (string pid in platforms) 
-			{
-				string platform_address = workflow_platform_address [workflow_handle] [pid];
-
-				Thread t = new Thread (new ThreadStart (delegate() 
-				{
-					ServiceUtils.PlatformServices.PlatformServices platform_access = new ServiceUtils.PlatformServices.PlatformServices (platform_address);
-					platform_access.Timeout = int.MaxValue;
-					platform_access.wait ();
-				}));
-
-				t.Start ();
-				bag.Add (t);
-			}
-
-			foreach (Thread t_join in bag)
-				t_join.Join ();
-
-		}
-
-		[WebMethod]
 		public void closeWorkflowSession (int workflow_handle)
 		{
 			active_workflows.Remove (workflow_handle);
@@ -602,10 +594,15 @@ namespace br.ufc.mdcc.hpcshelf.core
 
 			string[] cdesc_list = null;
 			try{
+                Console.WriteLine("resolve 0 " + contextual_type.component_ref);
 
-			br.ufc.pargo.hpe.backend.DGAC.database.Component[] cs = Resolution.findHashComponentAll(acfaRef); 			
-			cdesc_list = buildComponentDescription (cs);
+			    br.ufc.pargo.hpe.backend.DGAC.database.Component[] cs = Resolution.findHashComponentAll(acfaRef); 			
+			
+                Console.WriteLine("resolve 1 " + (cs.Length) );
 
+                cdesc_list = buildComponentDescription (cs);
+
+				Console.WriteLine("resolve 2");
 			}
 			catch (Exception e) 
 			{
@@ -808,13 +805,13 @@ namespace br.ufc.mdcc.hpcshelf.core
 		{
 			IList<string> cDescList = new List<string> ();
 
-			foreach (br.ufc.pargo.hpe.backend.DGAC.database.Component c in cs) 
+ 			foreach (br.ufc.pargo.hpe.backend.DGAC.database.Component c in cs) 
 			{
 				Instantiator.ComponentFunctorApplicationType contract;
 
 				AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve (c.Id_functor_app);
 				contract = BackEnd.saveACFAToInstantiator (acfa);
-
+				
 				ComponentReference.ComponentReference cref = new ComponentReference.ComponentReference ();
 				cref.component_ref = c.Library_path;
 				cref.contract = contract;

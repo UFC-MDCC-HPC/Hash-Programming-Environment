@@ -106,11 +106,12 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		List<Pair<String, HInterface>> interface_bounds = new ArrayList<Pair<String, HInterface>>();
 		HComponent topC = (HComponent) i.getConfiguration().getTopConfiguration();
 		
-		for (Triple<String,HInterface,String> p : i.getParameters(topC)) {
+		for (Triple<String,HInterface,String> p : i.getParameters(topC)) 
+		{
  			String varName = p.fst();
  			if (!varContext.contains(varName)) {
-	 			HInterface i1 = p.snd();
-	 			HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
+	 			//HInterface i1 = p.snd();
+	 			//HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
 	 			//if (c.isParameter() && c.getSupplier() == null) {
 	 			   List<HInterface> bounds = new ArrayList<HInterface>();
 	 			   HInterface bound = p.snd();
@@ -131,10 +132,8 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
  		for (Pair<String, HInterface> pair : interface_bounds) {
    		   String varName = pair.fst().split("@")[0];
    		   HInterface bound = pair.snd();
-   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false,varContext, varName) + "\n";
+   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
    		}
- 		
-		
         
         fillPortSlices(i,varContext);
         
@@ -174,10 +173,11 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		}
 		
 		String inheritedName2 = null;
-		String primInheritedName2 = i.hasSuperType() ? i.getInheritedName().split("<")[0] : null;
+		String primInheritedName2 = /*i.hasSuperType() ?*/ i.getInheritedName()/*.split("<")[0] : null*/;
 		
-		if (primInheritedName2 != null) {
-			inheritedName2 = procName.replaceFirst(i.getPrimName(), primInheritedName2); 
+		if (primInheritedName2 != null) 
+		{
+			inheritedName2 = primInheritedName2; /*procName.replaceFirst(i.getPrimName(), primInheritedName2)*/; 
 			HComponent cBase = ((HComponent) i.getConfiguration()).getSuperType();
 			String packageNameExtends = cBase.getPackagePath().toString();
 			String componentNameExtends = cBase.getComponentName();			
@@ -311,10 +311,10 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		}
 		
 		String inheritedName = null;
-		String primInheritedName = i.hasSuperType() ? i.getInheritedName().split("<")[0] : null;
+		String primInheritedName = /*i.hasSuperType() ?*/ i.getInheritedName()/*.split("<")[0] : null*/;
 		
 		if (primInheritedName != null) {
-			inheritedName = procName.replaceFirst(i.getPrimName(), primInheritedName); 
+			inheritedName = /*procName.replaceFirst(i.getPrimName(),*/ primInheritedName/*)*/; 
 			HComponent cBase = ((HComponent) i.getConfiguration()).getSuperType();
 			String packageNameExtends = cBase.getPackagePath().toString();
 			String componentNameExtends = cBase.getComponentName();			

@@ -48,6 +48,8 @@ public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNam
 	 */
 	public abstract void setName(String name);
 
+	public void cloneInterface();
+	
 	public abstract void remove();
 
 	/** 
@@ -219,7 +221,9 @@ public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNam
 	
 	public abstract String getSupersededName();
 
-	public abstract Collection<IHPrimUnit> getClones();
+	
+	
+	public abstract List<IHPrimUnit> getClones();
 
 	public abstract boolean isClone();
 

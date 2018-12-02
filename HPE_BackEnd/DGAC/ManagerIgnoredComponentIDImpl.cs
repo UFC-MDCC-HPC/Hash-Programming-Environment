@@ -19,7 +19,7 @@ namespace gov
 			#region attributes
 
 			private int[] nodes = null;
-			private IList<string>[] unit_ids = null;
+			private string[] unit_ids = null;
 			private int[] indexes = null;
 			private string instanceNamePrim = null;
 			private string classNamePrim = null;
@@ -40,7 +40,7 @@ namespace gov
 				this.instanceNamePrim = instanceName;
 				this.classNamePrim = className;
 				this.wcids = new Dictionary<int, WorkerComponentID>();
-				this.unit_ids = new IList<string>[0];
+				this.unit_ids = new string[0];
 				this.nodes = new int[0];
 			}
 
@@ -53,7 +53,7 @@ namespace gov
 				this.kind = kind;
 				this.wcids = new Dictionary<int, WorkerComponentID>();
 				this.nodes = new int[0];
-				this.unit_ids = new IList<string>[0];
+				this.unit_ids = new string[0];
 				this.portName = portName;	
 			}
 
@@ -91,7 +91,7 @@ namespace gov
 				set { this.nodes = value; }
 			}
 
-			public override IList<string>[] WorkerUnitNames
+			public override string[] WorkerUnitNames
 			{
 				get { return unit_ids; }
 				set { this.unit_ids = value; }
@@ -121,14 +121,18 @@ namespace gov
 
 			private IDictionary<int, WorkerComponentID> wcids = new Dictionary<int,WorkerComponentID>();
 
-			public override void registerWorkerComponentID(int node, WorkerComponentID wcid)
+			public override void registerWorkerComponentID(int i, WorkerComponentID wcid)
 			{
-				wcids[node] = wcid;
+
+				if (!wcids.ContainsKey(i))
+					wcids[i] = wcid;
+				else
+                    throw new Exception("registerWorkerService (ignored): wcids[" + i + "] already exists !");
 			}
 
-			public override WorkerComponentID getWorkerComponentID(int node)
+			public override WorkerComponentID getWorkerComponentID(int i)
 			{
-				return wcids [node];
+				return wcids [i];
 			}
 
 			public override string ToString()

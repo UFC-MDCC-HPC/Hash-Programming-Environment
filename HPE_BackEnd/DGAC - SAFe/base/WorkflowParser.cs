@@ -17,41 +17,18 @@ namespace br.ufc.pargo.hpe.kinds
 
 			switch (workflow.ItemElementName) 
 			{
-			case SAFeSWL.ItemChoiceType.skip:
-				return traverse(SAFeSWL.ItemChoiceType.skip, (SAFeSWL_OperationPrimitiveType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.@break:
-				return traverse(SAFeSWL.ItemChoiceType.@break, (SAFeSWL_OperationPrimitiveType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.@continue:
-				return traverse(SAFeSWL.ItemChoiceType.@continue, (SAFeSWL_OperationPrimitiveType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.start: 
-				return traverse(SAFeSWL.ItemChoiceType.start, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.wait:
-				return traverse(SAFeSWL.ItemChoiceType.wait, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.invoke:
-				return traverse(SAFeSWL.ItemChoiceType.invoke, (SAFeSWL_OperationPrimitiveInvokeActionType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.cancel:
-				return traverse(SAFeSWL.ItemChoiceType.cancel, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.sequence: 
-				return traverse(SAFeSWL.ItemChoiceType.sequence, (SAFeSWL_OperationManyType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.parallel:
-				return traverse(SAFeSWL.ItemChoiceType.parallel, (SAFeSWL_OperationManyType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.choice:
-				return traverse(SAFeSWL.ItemChoiceType.choice, (SAFeSWL_OperationChoiceType) workflow.Item);
-				break;
-			case SAFeSWL.ItemChoiceType.iterate:
-				return traverse(SAFeSWL.ItemChoiceType.iterate, (SAFeSWL_OperationAnyType) workflow.Item);
-				break;
-			default:
-				return null;
+			case SAFeSWL.ItemChoiceType.skip:      return traverse(SAFeSWL.ItemChoiceType.skip, (SAFeSWL_OperationPrimitiveType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.@break:    return traverse(SAFeSWL.ItemChoiceType.@break, (SAFeSWL_OperationPrimitiveType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.@continue: return traverse(SAFeSWL.ItemChoiceType.@continue, (SAFeSWL_OperationPrimitiveType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.start:     return traverse(SAFeSWL.ItemChoiceType.start, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.wait:      return traverse(SAFeSWL.ItemChoiceType.wait, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.invoke:    return traverse(SAFeSWL.ItemChoiceType.invoke, (SAFeSWL_OperationPrimitiveInvokeActionType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.cancel:    return traverse(SAFeSWL.ItemChoiceType.cancel, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.sequence:  return traverse(SAFeSWL.ItemChoiceType.sequence, (SAFeSWL_OperationManyType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.parallel:  return traverse(SAFeSWL.ItemChoiceType.parallel, (SAFeSWL_OperationManyType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.choice:    return traverse(SAFeSWL.ItemChoiceType.choice, (SAFeSWL_OperationChoiceType) workflow.Item);
+			case SAFeSWL.ItemChoiceType.iterate:   return traverse(SAFeSWL.ItemChoiceType.iterate, (SAFeSWL_IterateType) workflow.Item);
+			default: return null;
 			}
 
 
@@ -190,23 +167,16 @@ namespace br.ufc.pargo.hpe.kinds
 			foreach (SAFeSWL_SelectionGuardType select_guard in select_guard_list) 
 			{
 				guard_list.Add(new Tuple<string, string>( select_guard.id_port,	select_guard.action));
-				action_list.Add(traverse (select_guard.branch));
+				action_list.Add(traverse (select_guard));
 			}
 		}
 
-		private static SWLWorkflow<bool> traverse(SAFeSWL.ItemChoiceType element_name, SAFeSWL_OperationAnyType workflow)
-		{
-			SWLWorkflow<bool> action = traverse ((SAFeSWL_OperationAnyType)workflow); 
-			
-			if (element_name == SAFeSWL.ItemChoiceType.iterate) 
-			{
-				return new SWLWorkflowIterate<bool> (action);
-			}
-			else
-				throw new Exception("convert_to_abstract_syntax/traverse: iterate expected !");
-		}
+        private static SWLWorkflow<bool> traverse(SAFeSWL_SelectionGuardType workflow)
+        {
+            return null;
+        }
 
-		private static SWLWorkflow<bool>[] traverse(SAFeSWL_OperationManyType workflow)
+        private static SWLWorkflow<bool>[] traverse(SAFeSWL_OperationManyType workflow)
 		{
 			IList<SWLWorkflow<bool>> action_list = new List<SWLWorkflow<bool>> ();
 
@@ -247,7 +217,7 @@ namespace br.ufc.pargo.hpe.kinds
 					action_list.Add (traverse(SAFeSWL.ItemChoiceType.choice, (SAFeSWL_OperationChoiceType) workflow.Items[i]));
 					break;
 				case SAFeSWL.ItemsChoiceType.iterate:
-					action_list.Add (traverse(SAFeSWL.ItemChoiceType.iterate, (SAFeSWL_OperationAnyType) workflow.Items[i]));
+					action_list.Add (traverse(SAFeSWL.ItemChoiceType.iterate, (SAFeSWL_IterateType) workflow.Items[i]));
 					break;
 				}
 			}
@@ -258,6 +228,34 @@ namespace br.ufc.pargo.hpe.kinds
 			return actions;
 		}
 
+        private static SWLWorkflow<bool> traverse(SAFeSWL.ItemChoiceType element_name, SAFeSWL_IterateType workflow)
+        {
+            SWLWorkflow<bool> action;
+            switch (workflow.ItemElementName)
+            {
+                case SAFeSWL.ItemChoiceType.skip: action = traverse(SAFeSWL.ItemChoiceType.skip, (SAFeSWL_OperationPrimitiveType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.@break: action = traverse(SAFeSWL.ItemChoiceType.@break, (SAFeSWL_OperationPrimitiveType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.@continue: action = traverse(SAFeSWL.ItemChoiceType.@continue, (SAFeSWL_OperationPrimitiveType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.start: action = traverse(SAFeSWL.ItemChoiceType.start, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.wait: action = traverse(SAFeSWL.ItemChoiceType.wait, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.invoke: action = traverse(SAFeSWL.ItemChoiceType.invoke, (SAFeSWL_OperationPrimitiveInvokeActionType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.cancel: action = traverse(SAFeSWL.ItemChoiceType.cancel, (SAFeSWL_OperationPrimitiveInvokeActionAsyncType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.sequence: action = traverse(SAFeSWL.ItemChoiceType.sequence, (SAFeSWL_OperationManyType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.parallel: action = traverse(SAFeSWL.ItemChoiceType.parallel, (SAFeSWL_OperationManyType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.choice: action = traverse(SAFeSWL.ItemChoiceType.choice, (SAFeSWL_OperationChoiceType)workflow.Item); break;
+                case SAFeSWL.ItemChoiceType.iterate: action = traverse(SAFeSWL.ItemChoiceType.iterate, (SAFeSWL_IterateType)workflow.Item); break;
+                default: action = null; break;
+            }
+
+			if (element_name == SAFeSWL.ItemChoiceType.iterate)
+			{
+                return new SWLWorkflowIterate<bool>(action, workflow.exit, workflow.enter);
+			}
+			else
+				throw new Exception("convert_to_abstract_syntax/traverse: iterate expected !");
+
+		}
+	
 	}
 }
 

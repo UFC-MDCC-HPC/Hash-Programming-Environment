@@ -8,6 +8,7 @@ import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
 import hPE.frontend.base.actions.ChangeVariableNameAction;
+import hPE.frontend.base.actions.CleanSourcesAction;
 import hPE.frontend.base.actions.DetachInterfaceAction;
 import hPE.frontend.base.actions.ExposedAction;
 import hPE.frontend.base.actions.FuseComponentsAction;
@@ -474,11 +475,13 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = LiftUnitAction.LIFT_UNIT;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
-//		id = OpenSliceAction.OPEN_SLICE;
+//		id = OpenSliceAction.OPEN_SLICleanSources;
 //		bars.setGlobalActionHandler(id, registry.getAction(id));
 //		id = OpenSliceAction.CLOSE_SLICE;
 //		bars.setGlobalActionHandler(id, registry.getAction(id));		
 		id = OpenSourceAction.EDIT_SOURCE;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = CleanSourcesAction.CLEAN_SOURCES;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = AddReferencesAction.ADD_REFERENCES;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
@@ -673,6 +676,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 				
+		action = new CleanSourcesAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+
 		action = new AddReferencesAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());

@@ -199,13 +199,13 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	@Override
 	public IHPrimUnit cloneOf() {
 		// TODO Auto-generated method stub
-		return this.getActualUnit().cloneOf();
+		return ((HUnit) this.getActualUnit().cloneOf());
 	}
 
 	@Override
 	public int getIndexOfClone(IHPrimUnit u) {
 		// TODO Auto-generated method stub
-		return this.getActualUnit().getIndexOfClone(u);
+		return this.getClones().indexOf(u);
 	}
 
 	@Override
@@ -265,6 +265,12 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	@Override
 	public void setFacetInstance(int facet_instance) {
 		this.getActualUnit().setFacetInstance(facet_instance);
+		
+	}
+
+	@Override
+	public void cloneInterface() {
+		this.getActualUnit().cloneInterface();
 		
 	}
 

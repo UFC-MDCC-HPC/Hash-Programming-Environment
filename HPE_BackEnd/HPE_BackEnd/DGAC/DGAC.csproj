@@ -38,7 +38,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin</OutputPath>
+    <OutputPath>..\..\..\..\HPC-Shelf-Gust\lib</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,7 +46,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin</OutputPath>
+    <OutputPath>..\..\..\..\HPC-Shelf-Gust\lib</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -458,9 +458,6 @@
     <Compile Include="..\..\DGAC\base\SystemKind.cs">
       <Link>base\SystemKind.cs</Link>
     </Compile>
-    <Compile Include="..\..\DGAC\component_ref_instantiator.cs">
-      <Link>component_ref\component_ref_instantiator.cs</Link>
-    </Compile>
     <Compile Include="..\..\DGAC\ManagerComponentIDImpl.cs">
       <Link>manager\ManagerComponentIDImpl.cs</Link>
     </Compile>
@@ -584,14 +581,20 @@
     <Compile Include="..\..\DGAC\TCOL\action.logic\LogicActionCompute.cs">
       <Link>TCOL\action.logic\LogicActionCompute.cs</Link>
     </Compile>
-    <Compile Include="..\..\DGAC\IPlatformServices.cs">
-      <Link>platform_services\IPlatformServices.cs</Link>
-    </Compile>
     <Compile Include="..\..\DGAC\IWorkflowServices.cs">
       <Link>IWorkflowServices.cs</Link>
     </Compile>
     <Compile Include="..\..\DGAC\SourceDeployer.cs">
       <Link>deploy\SourceDeployer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\GoPort.cs">
+      <Link>base\GoPort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\IPlatformServices.cs">
+      <Link>IPlatformServices.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\component_ref_instantiator.cs">
+      <Link>deploy\component_ref_instantiator.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -686,9 +689,7 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="instantiator\" />
-    <Folder Include="component_ref\" />
     <Folder Include="TCOL\" />
-    <Folder Include="platform_services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

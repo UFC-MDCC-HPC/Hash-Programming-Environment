@@ -5,26 +5,14 @@
 using gov.cca;
 using br.ufc.pargo.hpe.basic;
 using System.ServiceModel;
+using gov.cca.ports;
 
 namespace br.ufc.pargo.hpe.ports
 {
-    [ServiceContract]
-	[ServiceKnownType(typeof(InitializePortWrapper))]
-    public interface InitializePort : Port
-    {
-		[OperationContract]
-        void on_initialize();
-
-		[OperationContract]
-     	void after_initialize();
-    }
-
 	[ServiceContract]
 	[ServiceKnownType(typeof(InitializePortWrapper))]
-	public interface MultipleInitializePort : InitializePort
+	public interface MultipleGoPort : GoPort
 	{
-        void addPort(InitializePort port);
+        void addPort(GoPort port);
 	}
-
-
 }

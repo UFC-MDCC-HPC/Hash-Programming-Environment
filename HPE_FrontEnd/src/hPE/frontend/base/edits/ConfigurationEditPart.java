@@ -9,6 +9,7 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HVisualElement;
+import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.policies.BrowseEditPolicy;
@@ -24,7 +25,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.ConnectionLayer;
@@ -89,30 +92,36 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 	{	
 		HComponent model = (ModelType) getModel();
 		
-		List children = new ArrayList();
+		Map children = new HashMap();		
 		
 		List<IHUnit> us = model.getUnits();
 		for (IHUnit u: us) 
-		    children.addAll(u.getClones());
+			for (IHPrimUnit u_clone : u.getClones())
+			{
+				if (!children.containsKey(u_clone))
+					children.put(u_clone,u_clone);
+			}
 		
 		for (HComponent c : model.getComponents()) 
-			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
-				children.add(c);
+			if (!children.containsKey(c) && !c.isHiddenInnerComponent()) 
+				children.put(c,c);
 		
 		Collection<HComponent> exposed_components = model.getExposedComponents();
 		for (HComponent c : exposed_components) 
 		{
 			List<HComponent> fusion_components = model.getFusionComponents(c.getRef());
 			if (fusion_components == null || !fusion_components.contains(c) || fusion_components.get(0) == c) 
-				if (!children.contains(c) && !c.isHiddenInnerComponent()) 
-					children.add(c);
+				if (!children.containsKey(c) && !c.isHiddenInnerComponent()) 
+					children.put(c,c);
 		}
 
 		for (HInterface an_interface : model.getInterfaces()) 
 			if (!(an_interface.getHidden())) 
-				children.add(an_interface);		
+				children.put(an_interface,an_interface);		
 		
-	    return children;		
+		List children_list = new ArrayList(children.values());
+		
+	    return children_list;		
 	}
 	
 	public void refreshChildren() {
@@ -200,13 +209,10 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		super.deactivate();
 	}
 	
-	protected void refreshVisuals() {
-		
-			
+	protected void refreshVisuals() 
+	{		
 		ModelType config = (ModelType) getModel();
-		
-		//config.cleanReplicators();
-		
+				
 		FigureType config_figure = (FigureType) getFigure();
 		String name = config.isAbstractConfiguration() ? "Abstract ": "" ;
 		String nameBase = "";

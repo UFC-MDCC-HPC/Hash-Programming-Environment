@@ -1,6 +1,10 @@
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC.dll.config
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC.dll
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/bin/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-Gust/lib-safe/DGAC.dll.config
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-Gust/lib-safe/DGAC.dll
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf-Gust/lib-safe/DGAC.pdb
+/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/DGAC - SAFe.csprojResolveAssemblyReference.cache
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/br.ufc.hpe.backend.DGAC.Properties.Resources.resources
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/DGAC - SAFe.csproj.GenerateResource.Cache
 /home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/DGAC - SAFe/obj/Debug/DGAC - SAFe.csproj.CoreCompileInputs.cache

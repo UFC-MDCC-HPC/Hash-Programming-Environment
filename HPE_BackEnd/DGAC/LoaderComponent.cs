@@ -42,13 +42,13 @@ namespace HPE_DGAC_LoadDB
 
         protected void LoadBodyItems(Object[] cb)
         {
-			Console.Write ("LoadBodyItems:" + cb==null);
+            Console.Write("LoadBodyItems:" + cb == null);
 			foreach (Object o in cb)
             {
 				Console.Write ("Object:");
                 if (o is InnerComponentType)
                 {
-					Console.WriteLine ("Object:InnerComponentType");
+                    Console.WriteLine ("Object:InnerComponentType " + ((InnerComponentType) o).localRef);
                     if (inner == null) {
                      inner = new List<InnerComponentType>();
                      innerAll = new List<InnerComponentType>();
@@ -368,7 +368,7 @@ namespace HPE_DGAC_LoadDB
 
         protected InnerComponentType lookForInnerComponent(string cRef)
         {
-             foreach (InnerComponentType ic in innerAll) 
+            foreach (InnerComponentType ic in innerAll) 
             {
                 if (ic.localRef.Equals(cRef))
                 {

@@ -46,18 +46,10 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <XspParameters Port="8085" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8082" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <Content Include="PlatformServices.asmx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="PlatformServices.asmx.cs">
-      <DependentUpon>PlatformServices.asmx</DependentUpon>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DGAC\DGAC.csproj">
       <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>

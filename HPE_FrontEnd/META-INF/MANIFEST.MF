@@ -29,5 +29,11 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: hPE.xml.component,
  hPE.xml.component.impl,
- hPE.xml.component.util
+ hPE.xml.component.util,
+ org.example.instantiator,
+ org.example.instantiator.impl,
+ org.example.instantiator.util,
+ org.example.sa.feCtree,
+ org.example.sa.feCtree.impl,
+ org.example.sa.feCtree.util
 Bundle-Vendor: ParGO/MDCC/UFC

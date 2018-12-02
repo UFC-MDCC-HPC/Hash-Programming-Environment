@@ -4,12 +4,11 @@
 
 using gov.cca;
 using br.ufc.pargo.hpe.basic;
-using System;
 using System.ServiceModel;
 
 namespace br.ufc.pargo.hpe.ports
 {
-	[ServiceContract]
+    [ServiceContract]
 	[ServiceKnownType(typeof(InitializePortWrapper))]
     public interface InitializePort : Port
     {
@@ -19,5 +18,13 @@ namespace br.ufc.pargo.hpe.ports
 		[OperationContract]
      	void after_initialize();
     }
+
+	[ServiceContract]
+	[ServiceKnownType(typeof(InitializePortWrapper))]
+	public interface MultipleInitializePort : InitializePort
+	{
+        void addPort(InitializePort port);
+	}
+
 
 }

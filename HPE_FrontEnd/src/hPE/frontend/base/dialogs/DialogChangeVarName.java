@@ -246,9 +246,8 @@ public class DialogChangeVarName extends JDialog {
 		return jButtonClose;
 	}
 	
-    private void changeVarName(Triple<String, List<HComponent>, HComponent> varToBeChanged, String newVarName) {
-        HComponent topC = (HComponent) c.getTopConfiguration();
-        
+    private void changeVarName(Triple<String, List<HComponent>, HComponent> varToBeChanged, String newVarName) 
+    {
         if (newVarName != null && !newVarName.equals("")) 
         {
             boolean allowed = true;
@@ -266,8 +265,6 @@ public class DialogChangeVarName extends JDialog {
 			        //	break;
 			        //} 
 	        		
-	        		// innerC.setVariableName(newVarName);
-	        		String oldVarName = innerC.getVariableName((HComponent) innerC.getTopConfiguration());
 	        		HComponent ownerOfinnerC = (HComponent) innerC.getConfiguration();
 	        		ownerOfinnerC.changeVariableName(/*oldVarName*/ varToBeChanged.fst(), newVarName);
 	        		

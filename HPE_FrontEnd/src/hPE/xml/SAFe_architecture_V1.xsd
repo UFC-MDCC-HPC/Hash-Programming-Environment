@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/SAFe_architecture_V6"
+	xmlns:tns="http://www.example.org/SAFe_architecture_V6"
+	elementFormDefault="qualified"
+	xmlns:Q1="http://www.example.org/instantiator">
+
+	<import schemaLocation="instantiator.xsd"
+		namespace="http://www.example.org/instantiator">
+	</import>
+
+	<element name="architecture" type="tns:SAFeSWL_ArchitectureType"></element>
+
+	<complexType name="SAFeSWL_ArchitectureType">
+		<sequence>
+			<element name="application" type="tns:SAFeSWL_ComponentType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="workflow" type="tns:SAFeSWL_WorkflowType" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="solution" type="tns:SAFeSWL_SolutionType" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="service_binding" type="tns:SAFeSWL_BindingServiceType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="action_binding" type="tns:SAFeSWL_BindingActionType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="application_name" type="string"></attribute>
+	</complexType>
+
+	<complexType name="SAFeSWL_ComponentType">
+		<sequence>
+			<element name="user_port" type="tns:SAFeSWL_PortType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="provider_port"
+				type="tns:SAFeSWL_PortType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="contract" type="tns:SAFeSWL_ContractType" maxOccurs="1"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="id_component" type="string"></attribute>
+	</complexType>
+
+	<complexType name="SAFeSWL_SolutionType">
+		<choice maxOccurs="unbounded" minOccurs="1">
+			<element name="computation" type="tns:SAFeSWL_ComputationType"></element>
+			<element name="datasource" type="tns:SAFeSWL_DataSourceType"></element>
+			<element name="connector" type="tns:SAFeSWL_ConnectorType"></element>
+			<element name="platform" type="tns:SAFeSWL_PlatformType"></element>
+		</choice>
+	</complexType>
+
+
+	<complexType name="SAFeSWL_BindingServiceType">
+		<sequence>
+			<element name="user_port" type="tns:SAFeSWL_PortType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="provider_port"
+				type="tns:SAFeSWL_PortType" maxOccurs="1" minOccurs="1">
+			</element>
+		</sequence>
+		<attribute name="name" type="string"></attribute>
+	</complexType>
+
+	<complexType name="SAFeSWL_BindingActionType">
+		<sequence>
+			<element name="peer" type="tns:SAFeSWL_PortType" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+		<attribute name="name" type="string"></attribute>
+	</complexType>
+
+	<complexType name="SAFeSWL_ComputationType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_WorkflowType"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_DataSourceType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_ComponentType"></extension>
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="SAFeSWL_ConnectorType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_WorkflowType">
+				<sequence>
+					<element name="facet" type="tns:SAFeSWL_ConnectorFacetType" maxOccurs="unbounded" minOccurs="0"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_PlatformType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_ComponentType">
+				<attribute name="platform_address" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_WorkflowType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_ComponentType">
+				<sequence>
+					<element name="action_port" type="tns:SAFeSWL_PortActionType"
+						maxOccurs="unbounded" minOccurs="0">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_PortEnvironmentType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_PortType"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_PortActionType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_PortType">
+				<sequence>
+					<element name="action" type="tns:SAFeSWL_ActionType"
+						maxOccurs="unbounded" minOccurs="0">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_PortType">
+		<attribute name="id_component" type="string" use="optional"></attribute>
+		<attribute name="id_port" type="string"></attribute>
+		<attribute name="facet" type="int" use="optional" default="0"></attribute>
+        <attribute name="facet_instance" type="int" use="optional" default="0"></attribute>
+        <attribute name="wsdl_path" type="string" use="optional"></attribute>
+	</complexType>
+
+	<complexType name="SAFeSWL_PortEnvironmentUserType">
+		<complexContent>
+			<extension base="tns:SAFeSWL_PortEnvironmentType"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_PortEnvironmentProvider">
+		<complexContent>
+			<extension base="tns:SAFeSWL_PortEnvironmentType"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_ContractType">
+		<choice>
+			<element name="uri" type="anyURI"></element>
+			<element name="instantiation_type" type="Q1:InstanceType"></element>
+		</choice>
+	</complexType>
+
+	<complexType name="SAFeSWL_ActionType">
+		<sequence>
+			<element name="alt" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+		<attribute name="name" type="string"></attribute>
+	</complexType>
+
+
+
+
+	<complexType name="SAFeSWL_ConnectorFacetType">
+		<attribute name="facet" type="int" use="required"></attribute>
+		<attribute name="multiplicity" type="int" use="required"></attribute>
+	</complexType>
+</schema>

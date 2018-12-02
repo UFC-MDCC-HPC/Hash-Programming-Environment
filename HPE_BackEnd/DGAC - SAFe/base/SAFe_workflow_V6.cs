@@ -15,6 +15,7 @@ namespace SAFeSWL {
     
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SAFeSWL_IterateType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SAFeSWL_SelectionGuardType))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
@@ -31,10 +32,10 @@ namespace SAFeSWL {
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("break", typeof(SAFeSWL_OperationPrimitiveType))]
         [System.Xml.Serialization.XmlElementAttribute("cancel", typeof(SAFeSWL_OperationPrimitiveInvokeActionAsyncType))]
-        [System.Xml.Serialization.XmlElementAttribute("choice", typeof(SAFeSWL_OperationChoiceType))]
+       // [System.Xml.Serialization.XmlElementAttribute("choice", typeof(SAFeSWL_OperationChoiceType))]
         [System.Xml.Serialization.XmlElementAttribute("continue", typeof(SAFeSWL_OperationPrimitiveType))]
         [System.Xml.Serialization.XmlElementAttribute("invoke", typeof(SAFeSWL_OperationPrimitiveInvokeActionType))]
-        [System.Xml.Serialization.XmlElementAttribute("iterate", typeof(SAFeSWL_OperationAnyType))]
+        [System.Xml.Serialization.XmlElementAttribute("iterate", typeof(SAFeSWL_IterateType))]
         [System.Xml.Serialization.XmlElementAttribute("parallel", typeof(SAFeSWL_OperationManyType))]
         [System.Xml.Serialization.XmlElementAttribute("sequence", typeof(SAFeSWL_OperationManyType))]
         [System.Xml.Serialization.XmlElementAttribute("skip", typeof(SAFeSWL_OperationPrimitiveType))]
@@ -75,6 +76,7 @@ namespace SAFeSWL {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SAFeSWL_OperationAnyType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SAFeSWL_IterateType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SAFeSWL_SelectionGuardType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SAFeSWL_OperationPrimitiveType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SAFeSWL_OperationPrimitiveInvokeActionType))]
@@ -185,7 +187,7 @@ namespace SAFeSWL {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(TypeName="SAFeSWL_OperationChoiceType", Namespace="http://www.example.org/SAFe_workflow_V6")]
-    public partial class SAFeSWL_OperationChoiceType {
+    public partial class SAFeSWL_OperationChoiceType1 {
         
         private SAFeSWL_SelectionGuardType[] selectField;
         
@@ -209,21 +211,9 @@ namespace SAFeSWL {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
     public partial class SAFeSWL_SelectionGuardType : SAFeSWL_OperationAnyType {
         
-        private SAFeSWL_OperationAnyType branchField;
-        
         private string id_portField;
         
         private string actionField;
-        
-        /// <remarks/>
-        public SAFeSWL_OperationAnyType branch {
-            get {
-                return this.branchField;
-            }
-            set {
-                this.branchField = value;
-            }
-        }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -247,7 +237,29 @@ namespace SAFeSWL {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
+    public partial class SAFeSWL_OperationChoiceType {
         
+        private SAFeSWL_SelectionGuardType[] selectField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("select")]
+        public SAFeSWL_SelectionGuardType[] select {
+            get {
+                return this.selectField;
+            }
+            set {
+                this.selectField = value;
+            }
+        }
+    }
+    
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
     [System.SerializableAttribute()]
@@ -263,10 +275,10 @@ namespace SAFeSWL {
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("break", typeof(SAFeSWL_OperationPrimitiveType))]
         [System.Xml.Serialization.XmlElementAttribute("cancel", typeof(SAFeSWL_OperationPrimitiveInvokeActionAsyncType))]
-        [System.Xml.Serialization.XmlElementAttribute("choice", typeof(SAFeSWL_OperationChoiceType))]
+        [System.Xml.Serialization.XmlElementAttribute("choice", typeof(SAFeSWL_OperationChoiceType1))]
         [System.Xml.Serialization.XmlElementAttribute("continue", typeof(SAFeSWL_OperationPrimitiveType))]
         [System.Xml.Serialization.XmlElementAttribute("invoke", typeof(SAFeSWL_OperationPrimitiveInvokeActionType))]
-        [System.Xml.Serialization.XmlElementAttribute("iterate", typeof(SAFeSWL_OperationAnyType))]
+        [System.Xml.Serialization.XmlElementAttribute("iterate", typeof(SAFeSWL_IterateType))]
         [System.Xml.Serialization.XmlElementAttribute("parallel", typeof(SAFeSWL_OperationManyType))]
         [System.Xml.Serialization.XmlElementAttribute("sequence", typeof(SAFeSWL_OperationManyType))]
         [System.Xml.Serialization.XmlElementAttribute("skip", typeof(SAFeSWL_OperationPrimitiveType))]
@@ -349,6 +361,41 @@ namespace SAFeSWL {
             }
             set {
                 this.actionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "0.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/SAFe_workflow_V6")]
+    public partial class SAFeSWL_IterateType : SAFeSWL_OperationAnyType {
+        
+        private SAFeSWL_OperationPrimitiveInvokeActionType[] exitField;
+        
+        private SAFeSWL_OperationPrimitiveInvokeActionType[] enterField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("exit")]
+        public SAFeSWL_OperationPrimitiveInvokeActionType[] exit {
+            get {
+                return this.exitField;
+            }
+            set {
+                this.exitField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("enter")]
+        public SAFeSWL_OperationPrimitiveInvokeActionType[] enter {
+            get {
+                return this.enterField;
+            }
+            set {
+                this.enterField = value;
             }
         }
     }

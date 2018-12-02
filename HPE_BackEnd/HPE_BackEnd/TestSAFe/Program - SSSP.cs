@@ -9,11 +9,11 @@ using System.Collections.Generic;
 namespace TestSAFe
 {
     // MainClass will make the role of the Application component.
-	class MainClass2 : HShelfApplication
+	class MainClass : HShelfApplication
 	{
-		public static void Main2 (string[] args)
+		public static void Main (string[] args)
 		{
-            string path_contracts = "/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/Run-Gust-PR/";
+            string path_contracts = "/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/Run-Gust-SSSP/";
             string path_architecture_file = Environment.GetEnvironmentVariable("SWL_ARCHITECTURE_FILE_LOCATION");
 			
             // The contracts will be provided by explicit files. However, it is possible to put

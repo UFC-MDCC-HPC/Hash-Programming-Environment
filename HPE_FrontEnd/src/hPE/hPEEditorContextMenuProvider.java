@@ -5,6 +5,7 @@ import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
 import hPE.frontend.base.actions.ChangeVariableNameAction;
+import hPE.frontend.base.actions.CleanSourcesAction;
 import hPE.frontend.base.actions.DetachInterfaceAction;
 import hPE.frontend.base.actions.ExposedAction;
 import hPE.frontend.base.actions.FuseComponentsAction;
@@ -265,6 +266,11 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
 		
+		action = getAction(CleanSourcesAction.CLEAN_SOURCES);
+		if (action.isEnabled())	{ 
+			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+		}
+
 		action = getAction(AddReferencesAction.ADD_REFERENCES);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		

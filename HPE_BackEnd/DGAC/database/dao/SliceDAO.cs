@@ -224,11 +224,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                s.Id_inner = (string)reader["id_inner"];
 	                s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
 	                s.PortName = (string)reader["property_name"];
-					if (!mem.ContainsKey(s.Id_inner))
-					{
-					   mem.Add(s.Id_inner, s.Id_inner);
+					//if (!mem.ContainsKey(s.Id_inner))
+					//{
+					//   mem.Add(s.Id_inner, s.Id_inner);
 		               list.Add(s);
-				    }
+				    //}
 	            }//while
 				
 				// clean up

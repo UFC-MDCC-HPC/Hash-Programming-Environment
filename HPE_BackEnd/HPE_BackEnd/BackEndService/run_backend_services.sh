@@ -6,6 +6,7 @@ export HPE_PATH_WORKER=/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-En
 export HPE_PATH_PLATFORM_SERVICE=/home/heron/Dropbox/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/PlatformService
 export PATH_TEXT_FILES_WORD_COUNTER_INPUT=/home/heron/SOURCE
 export PATH_TEXT_FILES_WORD_COUNTER_OUTPUT=/home/heron/SINK
+export PATH_GRAPH_FILE=/home/heron/hpe/carga_graph/amazon0302.e  
 sudo ps aux | grep -ie mono-service | awk '{print "kill -9 " $2}' | sudo sh -x
 sudo ps aux | grep -ie mpirun | awk '{print "kill -9 " $2}' | sudo sh -x
 sudo ps aux | grep -ie xsp4 | awk '{print "kill -9 " $2}' | sudo sh -x

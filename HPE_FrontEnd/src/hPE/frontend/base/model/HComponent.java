@@ -6,6 +6,7 @@ import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.commands.SplitEntryCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.interfaces.IComponent;
+import hPE.frontend.base.interfaces.IComponentEntry;
 import hPE.frontend.base.interfaces.IComputationConfiguration;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IPackageLocation;
@@ -30,6 +31,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -50,6 +52,8 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.internal.PartService;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 public abstract class HComponent extends HVisualElement implements HNamed,
 		Cloneable, IComponent, Serializable, IHasColor,
@@ -254,30 +258,64 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public final static String PROPERTY_INHERITS = "PROPERTY_INHERITS";
 
-	public void setExtends(HComponent inheritedFrom) {
+	public void setExtends(HComponent inheritedFrom) 
+	{
+		Map<String, List<HComponent>> free_pars = inheritedFrom.getFreeParameters(this, HComponent.BY_VARID);
+		for (Entry<String,List<HComponent>> p : free_pars.entrySet())
+			for (HComponent c : p.getValue())
+				 c.setVariableName(this, p.getKey());
 
 		List<IHUnit> us = ((List<IHUnit>) ((ArrayList<IHUnit>) inheritedFrom.getUnits()).clone());
 		
-		for (IHUnit the_source : us) {
+		for (IHUnit the_source: us) 
+		{				
 			HComponent c = (HComponent) the_source.getConfiguration();
 
-			if (!the_source.getHidden()) {
-				IBindingTarget the_target = c.newStubFor((HUnit) the_source, true, false, (HComponent) c.getConfiguration());
-				new HBinding(c, the_target, the_source); // TODO: setBinding ...
-															// antes estava
-															// HBinding(c,the_source,the_target)
+			if (!the_source.getHidden()) 
+			{
+				HComponent topConfiguration = (HComponent) c.getConfiguration();
+				IBindingTarget the_target = c.newStubFor((HUnit) the_source, true, false, topConfiguration);
+				 
+				List<IHPrimUnit> the_source_clone_list = the_source.getClones();
+				List<IHPrimUnit> the_target_clone_list = ((IHUnit)the_target).getClones();
+				int clones_size = the_source_clone_list.size();
+				
+				for (int i=0; i<clones_size;i++)
+				{				
+					IHUnit the_source_clone = (IHUnit) the_source_clone_list.get(i);
+					IBindingTarget the_target_clone = (IBindingTarget) the_target_clone_list.get(i);				
+					
+				    new HBinding(c, the_target_clone, the_source_clone); // TODO: setBinding ... antes estava HBinding(c,the_source,the_target)	
+				    
+					for (HUnitSlice uss : the_source_clone.getSlices()) {
+						uss.setHiddenSlice(true);
+					}
+				}				
+				
 				HInterface i = (HInterface) the_source.getInterface();
-				i.setExtends();
+				
 				for (HPort p : i.getPorts()) {
 					p.setInherited(true);
 				}
-				// i.setName(null);
-				// i.setEditable(false);
-				// if (!this.isAbstractConfiguration())
-				// i.setEditableSource(true);
-				for (HUnitSlice uss : the_source.getSlices()) {
-					uss.setHiddenSlice(true);
+					
+				for (IHPrimUnit the_source_clone : the_source_clone_list)
+				{
+					try {
+						the_source_clone.createInterface(i.getBounds().getTopLeft());
+						HInterface i_clone = (HInterface) the_source_clone.getInterface();
+						i_clone.setExtends(i);
+						i_clone.setColor(i.getColor());
+						i_clone.setInherited(topConfiguration);
+						for (HPort p : i_clone.getPorts()) {
+							p.setInherited(true);
+						}
+						
+					} catch (HPEAbortException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+				
 
 			}
 		}
@@ -291,7 +329,6 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			if (name != null)
 				c.getSavedName().put(this, name);
 		}
-		
 
 		listeners.firePropertyChange(PROPERTY_INHERITS, null, name); //$NON-NLS-2$//$NON-NLS-1$		
 	}
@@ -312,10 +349,31 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			HComponent c = (HComponent) the_source.getConfiguration();
 			//if (!the_source.getHidden()) 
 			{
-				IBindingTarget the_target = c.newStubFor((HUnit) the_source, false, true, (HComponent) c.getTopConfiguration());
-				new HBinding(c, the_target, the_source); // TODO: setBinding ...
-				HInterface i = (HInterface) the_target.getInterface();
-				i.setImplements(); // mark versions to be overriden ...
+				HComponent topConfiguration = (HComponent) c.getConfiguration();
+				IBindingTarget the_target = c.newStubFor((HUnit) the_source, true, false, topConfiguration);
+				 
+				List<IHPrimUnit> the_source_clone_list = the_source.getClones();
+				List<IHPrimUnit> the_target_clone_list = ((IHUnit)the_target).getClones();
+				int clones_size = the_source_clone_list.size();
+				
+				for (int i=0; i<clones_size;i++)
+				{				
+					IHUnit the_source_clone = (IHUnit) the_source_clone_list.get(i);
+					IBindingTarget the_target_clone = (IBindingTarget) the_target_clone_list.get(i);				
+					
+				    new HBinding(c, the_target_clone, the_source_clone); // TODO: setBinding ... antes estava HBinding(c,the_source,the_target)	
+				    
+					for (HUnitSlice uss : the_source_clone.getSlices()) {
+						uss.setHiddenSlice(true);
+					}
+				}				
+				
+				HInterface i = (HInterface) the_source.getInterface();
+				
+				for (HPort p : i.getPorts()) {
+					p.setInherited(true);
+				}
+
 				try 
 				{
 					((HUnit) the_source).updatePorts();
@@ -324,6 +382,25 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				{
 					e.printStackTrace();
 				}
+					
+				for (IHPrimUnit the_source_clone : the_source_clone_list)
+				{
+					try {
+						the_source_clone.createInterface(i.getBounds().getTopLeft());
+						HInterface i_clone = (HInterface) the_source_clone.getInterface();
+						i_clone.setImplements(i);
+						i_clone.setColor(i.getColor());
+						i_clone.setInherited(topConfiguration);
+						for (HPort p : i_clone.getPorts()) {
+							p.setInherited(true);
+						}
+						
+					} catch (HPEAbortException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
 			}
 		}
 
@@ -348,9 +425,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public boolean isAbstractConfiguration() {
-		this.isAbstract = this.isAbstract == IS_UNDEFINED ? (forceIsAbstractConfiguration() ? IS_ABSTRACT
-				: IS_CONCRETE)
-				: isAbstract;
+		this.isAbstract = this.isAbstract == IS_UNDEFINED ? (forceIsAbstractConfiguration() ? IS_ABSTRACT : IS_CONCRETE) : isAbstract;
 		return this.isAbstract == IS_ABSTRACT;
 	}
 
@@ -381,6 +456,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			if (u.getName2().equals(uName))
 				return u;
 
+		for (IHUnit u : this.getUnits())
+			for (IHPrimUnit u_ : u.getClones())
+				if (u_.getName2().equals(uName))
+					return (IHUnit) u_;
+
 		return null;
 	}
 
@@ -404,6 +484,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 						return (IHUnit) uu;
 				}
 			}
+		
+		for (IHUnit u : this.getUnits())
+			if (u.isCloned())
+				for (IHPrimUnit u_clone : u.getClones())
+				{
+					if (u_clone.getName2().equals(uName))
+						return (IHUnit) u_clone;
+				}
+		
 
 		return null;
 	}
@@ -599,10 +688,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				// if (c.getRef().equals(ref)) return c;
 				if (!c.getSavedName().isEmpty()) 
 				{
-					String originalName = c.getSavedName().get(this);
-					
-					if (c.getSavedName().get(this).equals(ref))
-						return c;
+					if (c.getSavedName().containsKey(this))							
+						if (c.getSavedName().get(this).equals(ref))
+							return c;
 				} else {
 					if (c.getRef().equals(ref))
 						return c;
@@ -610,7 +698,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 			catch (NullPointerException e)
 			{
-				System.out.print(true);
+				// System.out.print(true);
 			}
 		}
 		return null;
@@ -878,6 +966,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 		}
 
+		
 		listeners.firePropertyChange(NEW_COMPONENT, null, name);
 		listeners.firePropertyChange(UPDATE_NAME, null, name);
 	}
@@ -1039,11 +1128,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		Map<HComponent, HComponent> ls = new HashMap<HComponent, HComponent>();
 		ls.put(this, null);
 		for (HComponent c : this.getComponents()) {
-			for (Entry<HComponent, HComponent> c_ : c.getAllInnerComponents()
-					.entrySet())
+			for (Entry<HComponent, HComponent> c_ : c.getAllInnerComponents().entrySet())
 				if (!ls.containsKey(c_.getKey()))
-					ls.put(c_.getKey(),
-							c_.getValue() == null ? this : c_.getValue());
+					ls.put(c_.getKey(),	c_.getValue() == null ? this : c_.getValue());
 		}
 		return ls;
 	}
@@ -1296,13 +1383,13 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	private boolean isParameter = false;
 	private Map<HComponent, String> parameterIdentifier = new HashMap<HComponent, String>();
 
-	public void setParameter(String parId) {
-
+	public void setParameter(String parId) 
+	{		
 		HComponent c = (HComponent) this.getTopConfiguration();
-		String s = c.getLocalLocation();
+		//String s = c.getLocalLocation();
 
 		this.isParameter = true;
-		if (!this.parameterIdentifier.containsKey(s))
+		if (!this.parameterIdentifier.containsKey(c))
 			this.parameterIdentifier.put(c, parId);
 
 		if (!this.isConnected()) {
@@ -1312,8 +1399,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		this.forceUpdateName();
 
 		// TRY TO UPDATE ALL CONFIGURATION
-		((HComponent) this.getTopConfiguration()).listeners.firePropertyChange(
-				UPDATE_CONFIGURATION, null, name);
+		((HComponent) this.getTopConfiguration()).listeners.firePropertyChange(UPDATE_CONFIGURATION, null, name);
 
 	}
 
@@ -1321,7 +1407,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public String getVariableName() {
 		HComponent topC = (HComponent) this.getTopConfiguration();
-		HComponent base = topC.getWhoItImplements();
+		HComponent base = topC.getWhoItImplements(); 
+	//	if (base == null) 
+	//		base = topC.getSuperType();
+		
 		if (base == null) {
 			return this.getVariableName(topC);
 		} else {
@@ -1330,28 +1419,87 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	}
 
-	public String getVariableName(HComponent ctx) {
+	public String getVariableName2(HComponent ctx) {
 
 		if (this.variableName == null)
 			this.variableName = new HashMap<Integer, String>();
+		
+		HComponent c_previous = null;
+		HComponent c_current = this;
+        String last_variable = null;
+		
+		HComponent ctxTop = (HComponent) this.getTopConfiguration();
 
-		Integer code = ctx.getMyInstanceId();
+		do
+		{		
+			Integer code = c_current.getMyInstanceId();
 
-		if (this.variableName.containsKey(code))
-			return this.variableName.get(code);
-		else {
-			HComponent ctxTop = (HComponent) this.getTopConfiguration();
-			if (ctxTop.getWhoItImplements() == ctx) {
-				if (this.variableName.containsKey(ctxTop.getMyInstanceId())) {
-					return this.getVariableName(ctxTop);
+			if (this.variableName.containsKey(code))
+				last_variable = this.variableName.get(code).equals("?") ? last_variable : this.variableName.get(code);
+			else {
+				if (ctxTop.getWhoItImplements() == c_current) {
+					if (this.variableName.containsKey(ctxTop.getMyInstanceId())) {
+						last_variable = this.getVariableName(ctxTop);
+					}
 				}
 			}
-		}
-
-		HComponent ctxSuper = ctx.getSuperType();
-		return this.getWhoISupply() == null && ctxSuper != null ? this.getVariableName(ctxSuper) : "?";
+			
+			c_previous = c_current;
+			c_current = (HComponent) c_current.getConfiguration();
+		
+		} while (c_previous != ctx && c_current != null);		
+		
+        if (last_variable != null) 
+        	return last_variable;
+        else 
+        {		
+			HComponent ctxSuper = ctx.getSuperType();
+			return this.getWhoISupply() == null && ctxSuper != null ? this.getVariableName(ctxSuper) : "?";
+        }
 	}
 
+	
+	public String getVariableName(HComponent ctx) {
+		 
+        if (this.variableName == null)
+            this.variableName = new HashMap<Integer, String>();
+ 
+        Integer code = ctx.getMyInstanceId();
+ 
+        if (this.variableName.containsKey(code) && !this.variableName.get(code).equals(HComponent.UNDEFINED_NAME))
+            return this.variableName.get(code);
+        else {
+            HComponent ctxTop = (HComponent) this.getTopConfiguration();
+            if (ctxTop.getWhoItImplements() == ctx) {
+                if (this.variableName.containsKey(ctxTop.getMyInstanceId())) {
+                    return this.getVariableName(ctxTop);
+                }
+            }
+        }
+ 
+        String varName = HComponent.UNDEFINED_NAME;
+        
+        HComponent ctxSuper = ctx.getSuperType();
+        if (this.getWhoISupply() == null || this.getWhoISupply().isEmpty() && ctxSuper != null) 
+        	 varName = this.getVariableName(ctxSuper); 
+        
+        if (varName.equals(HComponent.UNDEFINED_NAME))
+        {        
+	        HComponent host_c = (HComponent) this.getConfiguration(); 
+	        
+	        while (host_c != null && host_c != ctx)
+	        {
+	        	 Integer host_code = host_c.getMyInstanceId();
+	        	 if (this.variableName.containsKey(host_code) && !this.variableName.get(host_code).equals(HComponent.UNDEFINED_NAME))
+	        		 varName = this.variableName.get(host_code);
+	        	
+	        	host_c = (HComponent) host_c.getConfiguration();
+	        }         
+        }
+        
+        return varName;
+       // return ctxSuper != null ? this.getVariableName(ctxSuper) : "?";
+    }
 	public void setVariableName(String varName) {
 		HComponent ctx = (HComponent) this.getTopConfiguration();
 		this.setVariableName(ctx, varName);
@@ -1363,7 +1511,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			this.variableName = new HashMap<Integer, String>();
 		
 		String currVar = this.variableName.get(ctx.getMyInstanceId());
-		if (currVar == null || (currVar != null && !currVar.equals(varName))) {
+		if (currVar == null || (currVar != null && !currVar.equals(varName))) 
+		{
 			this.variableName.put(ctx.getMyInstanceId(), varName);
 			try {
 				listeners.firePropertyChange(PROPERTY_IS_PARAMETER, null, this.getBounds());
@@ -1377,23 +1526,37 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	}
 
-	public void changeVariableName(String oldVarName, String newVarName) {
-		changeVariableName((HComponent) this.getTopConfiguration(), oldVarName,	newVarName);
+	public void changeVariableName(String parId, String newVarName) 
+	{
+		changeVariableName((HComponent) this.getTopConfiguration(), parId,	newVarName);
 	}
 
 	public void changeVariableName(HComponent ctx, String parId, String newVarName) 
 	{
+		
 		Map<String, List<HComponent>> parameters = this.getParameters();
-		for (Entry<String, List<HComponent>> par : parameters.entrySet()) {
-			HComponent c = par.getValue().get(0);
+		for (Entry<String, List<HComponent>> par : parameters.entrySet()) 
+		{
 			String parId_ = par.getKey() ; //c.getVariableName(ctx);
-			if (c.getSupplier() == null && parId_.equals(parId)) {
-				c.setVariableName(ctx, newVarName);
-			} else {
-				// HComponent owner_of_c = (HComponent) c.getConfiguration();
-				c.changeVariableName(ctx, parId, newVarName);
+			for (HComponent c : par.getValue())
+			{
+				if (c.getSupplier() == null && parId_.equals(parId)) 
+				{
+					c.setVariableName(ctx, newVarName);
+				} 
+				else 
+				{
+					// HComponent owner_of_c = (HComponent) c.getConfiguration();
+					c.changeVariableName(ctx, parId, newVarName);
+				}
 			}
 		}
+		
+		Map<String, List<HComponent>> fvars = this.getFreeParameters(ctx, HComponent.BY_VARID);
+		if (fvars.containsKey(newVarName))
+			for (HComponent c : fvars.get(newVarName))
+				c.setParameter(parId);
+		
 
 	}
 
@@ -1485,26 +1648,41 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	 * 
 	 * @see hPE.base.model.IComponent#isAbstract()
 	 */
-	public boolean isParameter() {
+	public boolean isParameter() 
+	{
 		return isParameter;
 	}
 
-	public String getParameterIdentifier() {
-		return this
-				.getParameterIdentifier((IComponent) this.getConfiguration());
+	public String getParameterIdentifier() 
+	{
+		return this.getParameterIdentifier((IComponent) this.getConfiguration());
 	}
 
-	public String getParameterIdentifier(IComponent c) {
+	public String getParameterIdentifier(IComponent c_) 
+	{
+		HComponent c = (HComponent) c_;
 
-		if (this.parameterIdentifier.containsKey(c/*.getLocalLocation()*/))
+		if (this.parameterIdentifier.containsKey(c/*.getLocalocation()*/))
 			return this.parameterIdentifier.get(c/*.getLocalLocation()*/);
 		else {
-			HComponent superType = getSuperType();
-			return superType != null ? superType.getParameterIdentifier(c)	: "type ?";
+			HComponent superType = c.getSuperType();
+			return superType != null ? this.getParameterIdentifier(superType)	: "type ?";
 		}
 
 	}
 
+	private class CompareParameterOrders implements Comparator<Entry<String, List<HComponent>>>
+	{
+		@Override
+		public int compare(Entry<String, List<HComponent>> arg0, Entry<String, List<HComponent>> arg1) {
+
+			int order0 = parameter_order.containsKey(arg0.getKey()) ? parameter_order.get(arg0.getKey()) : 0;
+			int order1 = parameter_order.containsKey(arg1.getKey()) ? parameter_order.get(arg1.getKey()) : 0;
+			
+			return order0 - order1;
+		}
+	}
+	
 	public String getParameterModifierName(boolean complete,
 			boolean showBounds, boolean showParId) {
 
@@ -1513,8 +1691,12 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		int parameterized = 0;
 		String nameWithParameters = "";
 
-		Set<Entry<String, List<HComponent>>> parameters = this.getParameters(topC).entrySet();
+		List<Entry<String, List<HComponent>>> parameters = new ArrayList(this.getParameters(topC).entrySet());
 
+		Comparator<? super Entry<String, List<HComponent>>> comparator = new CompareParameterOrders();
+		
+		java.util.Collections.sort(parameters,comparator);		
+		
 		for (Entry<String, List<HComponent>> entry : parameters) {
 
 			String parId = entry.getKey();
@@ -1528,7 +1710,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				
 				if (varName.equals("?"))
 					varName = config.getVariableName(this);
-				if (/* !complete || config.getSupplied() == null */true) {
+				if (!complete || (config.isParameter() && config.getSupplier() == null)) {
 					if (parameterized == 0)
 						nameWithParameters = nameWithParameters.concat("<");
 					parameterized++;
@@ -1592,51 +1774,128 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		for (HComponent c : this.getComponents()) {
 			if (c.isParameter()) {
 				String parId = c.getParameterIdentifier(this);
+				List<HComponent> cs;
 				if (parameters.containsKey(parId)) {
-					parameters.get(parId).add(c);
+					cs = parameters.get(parId);
+					if (!cs.contains(c)) 
+						cs.add(c);
 				} else {
-					List<HComponent> cs = new ArrayList<HComponent>();
+					cs = new ArrayList<HComponent>();
 					cs.add(c);
 					parameters.put(parId, cs);
 				}
 			}
+			else
+			{
+				
+			}
+//			for (Entry<String,List<HComponent>> c_prime : c.getParametersSetup().entrySet())
+	//		{
+		//		
+			//}
 
 		}
 		
-		HComponent cSuper = this.getSuperType();
+/*		HComponent cSuper = this.getSuperType();
 		if (cSuper != null) 
 		{
 		  Map<String, List<HComponent>> parameters_super = cSuper.getParametersSetup();
 		  for (Entry<String,List<HComponent>> par_super : parameters_super.entrySet())
-			  if (!parameters.containsKey(par_super.getKey())) 
-				  parameters.put(par_super.getKey(), par_super.getValue());
+		  {
+			  List<HComponent> cs;
+			  if (parameters.containsKey(par_super.getKey()))
+				  cs = parameters.get(par_super.getKey());
+			  else 
+			  { 
+				  cs = new ArrayList<HComponent>();
+				  parameters.put(par_super.getKey(), cs);
+			  }
+				
+			  for (HComponent c : par_super.getValue())
+		         if (!cs.contains(c)) 
+		        	 cs.add(c);
+		  }
 		}
-
+*/
 		return parameters;
 	}
 
-	protected Map<String, List<HComponent>> getFreeParameters(HComponent ctx, int key_kind)
+	public boolean isFreeParameter(HComponent ctx)
 	{
-		Map<String, List<HComponent>> parameters = new HashMap<String, List<HComponent>>();
-		
-		for (HComponent c : this.getComponents())
+		if (this.isParameter()) 
 		{
-			if (c.isParameter() && c.getSupplier() == null && c.getWhoISupply().isEmpty())
+			if (this.getSupplier() == null) return true;
+			else
 			{
-			   List<HComponent> cList = new ArrayList<HComponent>();
-			   cList.add(c);
-			   parameters.put(key_kind == this.BY_PARID ? c.getParameterIdentifier() : c.getVariableName(ctx), cList);
+				String parId = this.getParameterIdentifier(ctx);
+				if (!parId.equals("type ?"))
+					return true;
 			}
 			
-			Map<String, List<HComponent>> c_parameter_list = c.getParameters(ctx);
+		}
+		
+		return false;		
+	}
+	
+	public Map<String, List<HComponent>> getFreeParameters(HComponent ctx, int key_kind)
+	{
+		Map<String, List<HComponent>> parameters = new HashMap<String, List<HComponent>>();
+	
+		List<HComponent> cs = this.getComponents();
+		
+		Map<String, HComponent> ccc = null;
+		if (this != ctx) 
+			ccc = ctx.getParametersByDefinedVarNames();		
+
+		for (HComponent c : cs)
+		{
+			if (/*c.isParameter() && c.getSupplier() == null*/ c.isFreeParameter(ctx) /*&& c.getWhoISupply().isEmpty()*/)
+			{
+				if (!c.getWhoISupply().isEmpty())
+					System.out.print(true);
+				
+			   String key = key_kind == this.BY_PARID ? c.getParameterIdentifier() : c.getVariableName(ctx);
+			   List<HComponent> cList;			   
+			   if (parameters.containsKey(key))
+				  cList = parameters.get(key);
+			   else 
+			   {
+			      cList = new ArrayList<HComponent>();
+			      parameters.put(key, cList);
+			   }
+			   
+			   String varName = c.getVariableName(ctx);
+			   HComponent c_ = ccc != null ? ccc.get(varName) : null;
+			   
+			   if (c_ != null && !cList.contains(c_))
+				   cList.add(c_);
+			   
+			   if (!cList.contains(c))
+				   cList.add(c);
+			}
+			
+			Map<String, List<HComponent>> c_parameter_list = c.getParameters(ctx); // c.getFreeParameters(ctx, key_kind);
 			for (Entry<String, List<HComponent>> c_parameter : c_parameter_list.entrySet())
 			{
 			    String par_id = c_parameter.getKey();
 			    HComponent c_par = c_parameter.getValue().get(0);
 			   
-				if (c_par.getSupplier() == null && c_par.getWhoISupply().isEmpty()) {
+				if (/* c_par.getSupplier() == null &&*/ c_par.isFreeParameter(ctx) && c_par.getWhoISupply().isEmpty()) {
 				    String var_id = c_par.getVariableName(ctx);
-					parameters.put(key_kind == this.BY_PARID ? par_id : var_id, c_parameter.getValue());
+				    
+				    String key = key_kind == this.BY_PARID ? par_id : var_id;
+				    List<HComponent> cList;			   
+					
+					if (parameters.containsKey(key))
+						  cList = parameters.get(key);
+					else 
+					{
+					      cList = new ArrayList<HComponent>();
+					      parameters.put(key, cList);
+					}
+					for (HComponent c_ : c_parameter.getValue())
+						if (!cList.contains(c_)) 
+							cList.add(c_/*.getSupplier()*/);
 				}
 			   
 			}
@@ -1695,18 +1954,18 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return parameters;
 	}
 
-	protected Map<String, List<HComponent>> getParameters(HComponent cThis) {
-
+	protected Map<String, List<HComponent>> getParameters(HComponent cThis) 
+	{
 		Map<String, List<HComponent>> parameters = new HashMap<String, List<HComponent>>();
 		Map<String, String> vars = new HashMap<String, String>();
 
 		Map<String, HComponent> ccc = null;
-		if (this != cThis) {
-			ccc = cThis.getParametersByDefinedVarNames();
-		}
+		if (this != cThis) 
+			ccc = cThis.getParametersByDefinedVarNames();		
 
 		Map<String, List<HComponent>> parameter_setup_list = this.getParametersSetup();
-		for (Entry<String, List<HComponent>> parameter_setup : parameter_setup_list.entrySet()) {
+		for (Entry<String, List<HComponent>> parameter_setup : parameter_setup_list.entrySet())
+		{
 			String parId = parameter_setup.getKey();
 			List<HComponent> cList = parameter_setup.getValue();
 			for (HComponent c : cList) {
@@ -1721,11 +1980,17 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				    c_ = c.getSupplier();
 				}
 				
-				addParameter(parId, c_, parameters);
-				if (c != c_)
-					addParameter(parId, c, parameters);
-				if (!varName.equals(UNDEFINED_NAME))
-					vars.put(varName, parId);
+				// Checks if 
+				HComponent c__ = c.getSupplierIn(this); 
+				
+				if (c__.isParameter())
+				{
+				    addParameter(parId, c_, parameters);
+				    if (c != c_)
+					    addParameter(parId, c, parameters);
+					if (!varName.equals(UNDEFINED_NAME))
+						vars.put(varName, parId);
+				}
 			}
 		}
 
@@ -1759,11 +2024,18 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return parameters;
 	}
 
-	private void addParameter(String parId, HComponent c, Map<String, List<HComponent>> parameters) {
-		if (parameters.containsKey(parId)) {
-			parameters.get(parId).add(c);
-		} else {
-			List<HComponent> l = new ArrayList<HComponent>();
+	private void addParameter(String parId, HComponent c, Map<String, List<HComponent>> parameters) 
+	{
+		List<HComponent> l;
+		if (parameters.containsKey(parId)) 
+		{
+			l = parameters.get(parId);
+			if (!l.contains(c))
+				l.add(c);
+		} 
+		else 
+		{
+			l = new ArrayList<HComponent>();
 			l.add(c);
 			parameters.put(parId, l);
 		}
@@ -1809,7 +2081,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		{
 			List<HComponent> cList = par.getValue();
 			for (HComponent c : cList) {
-				String varName = c.getVariableName();
+				String varName = c.getVariableName(cThis);
 				if (!varName.equals(HComponent.UNDEFINED_NAME)) 
 				{ // only variables with defined names.
 					parameters.put(varName, c);
@@ -1828,6 +2100,37 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return parameters;
 	}
 
+	public Map<String, HComponent> getParametersByDefinedVarNames2() 
+	{
+		HComponent cThis = this; // .getWhoItImplements() == null ? this :
+									// this.getWhoItImplements();
+
+		Map<String, HComponent> parameters = new HashMap<String, HComponent>();
+
+		for (Entry<String, List<HComponent>> par : cThis.getParametersSetup().entrySet()) 
+		{
+			List<HComponent> cList = par.getValue();
+			for (HComponent c : cList) {
+				String varName = c.getVariableName(cThis);
+				if (!varName.equals(HComponent.UNDEFINED_NAME)) 
+				{ // only variables with defined names.
+					parameters.put(varName, c);
+				}
+			}
+		}
+
+		for (Entry<String, HComponent> supply : cThis.supplyMemory.entrySet()) 
+		{
+			String varName = supply.getKey();
+			HComponent c = supply.getValue();
+			c = c.getSupplier() != null ? c.getSupplier() : c;
+			parameters.put(varName, c);
+		}
+
+		return parameters;
+	}
+
+	
 	public List<String> getVars() 
 	{
 
@@ -1850,23 +2153,26 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	private HComponent supplier = null;
+	private HComponent supplier_context = null;
 
-	private void setSupplier(HComponent c) {
+	private void setSupplier(HComponent c) 
+	{
+		if (this == c)
+			System.out.print(true);
+		
 		this.supplier = c;
-		//c.setRef(this.getRef());
-		// this.isParameter = true;
-		// this.parameterIdentifier.putAll(c.parameterIdentifier); // DUVIDA...
-		// antes apenas
-		// atribu�a
-		// ...
-		// this.setVariableName(c.getVariableName());
-		// this.setVariableName(c.variableName);
+	}
+
+	private void setSupplierContext(HComponent ctx) 
+	{
+		this.supplier_context = ctx;
+		
 	}
 
 
 	public boolean representsOpenParameter() 
 	{
-	    return this.getSupplier() == null && this.getWhoISupply().isEmpty();
+	    return (this.isParameter() || this.getSupplier() == null) && ( this.getWhoISupply().isEmpty());
 	}
 	
 	// TODO: TOP LEVEL PARAMETERS ...
@@ -1883,13 +2189,58 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return supplier;
 	}
 
-	/*
-	 * private List suppliedParameters = new ArrayList();
-	 * 
-	 * public boolean isSupplied(HConfiguration component) { if
-	 * (this.suppliedParameters == null) this.suppliedParameters = new
-	 * ArrayList(); return this.suppliedParameters.contains(component); }
-	 */
+	// TODO: TOP LEVEL PARAMETERS ...
+	public HComponent getSupplierContext() {
+		// return this.getSupplierComponent(this.getVariableName());
+		HComponent supplier = null;
+		HComponent supplier_next = this.supplier;
+		HComponent supplier_context = null;
+		HComponent supplier_context_next = this.supplier_context;
+		while (supplier_next != null) 
+		{
+			supplier = supplier_next;
+			supplier_context = supplier_context_next;
+			supplier_next = supplier.supplier;
+			supplier_context_next = supplier.supplier_context;
+			if (supplier == supplier_next)
+				break;
+		}
+		return supplier_context;
+	}
+
+	public HComponent getSupplierIn(HComponent ctx) 
+	{
+		// return this.getSupplierComponent(this.getVariableName());
+		HComponent supplier = this;
+		HComponent supplier_next = this.supplier;
+		while (supplier_next != null && supplier.getConfiguration() != ctx) 
+		{
+			supplier = supplier_next;
+			supplier_next = supplier.supplier;
+			if (supplier == supplier_next)
+				break;
+		}
+		return supplier;
+	}
+
+	// TODO ...
+	 public boolean isSuppliedParameter() 
+	 { 
+          if (this.isParameter())
+          {
+        	  if (this.getSupplier() != null)
+        		  return true;
+        	  
+        	  
+          }
+          else
+          {
+        	  return true;
+          }
+          
+          return false;
+	 }
+	 
 
 	public boolean isConnected() {
 		for (IHUnit u : this.getAllUnits()) {
@@ -1933,7 +2284,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		// only one parent configuration, the top configuration itself.
 	}
 
-	public List<HComponent> getDirectParentConfigurations() {
+	public List<HComponent> getDirectParentConfigurations() 
+	{
 		List<HComponent> trash = new ArrayList<HComponent>();
 		for (HComponent c : this.configurations) {
 			if (c.isRemoved()) {
@@ -1944,7 +2296,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return this.configurations;
 	}
 
-	public List<HComponent> getTopParentConfigurations() {
+	public List<HComponent> getTopParentConfigurations() 
+	{
 		List<HComponent> l = new ArrayList<HComponent>();
 		HComponent topC = (HComponent) this.getTopConfiguration();
 		for (HComponent c : this.getAllParentConfigurations()) {
@@ -2025,45 +2378,71 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public IComponent getSubTypeImageOf(HComponent c) {
 
-		if (this.getComponentName().equals(c.getComponentName())) { // They are
-																	// the same
-																	// components.
-																	// Check
-																	// parameteres.
+		if (this.getQualifiedName().equals(c.getQualifiedName())) 
+		{   // They are the same components. Check parameteres.
+			
+			Map<String, List<HComponent>> lll1 = this.getParameters();
+			Map<String, List<HComponent>> lll2 = c.getParameters();
 
-			if (this.getParameters().size() == 0)
+			Map<String, List<HComponent>> lll1_var = new HashMap<String, List<HComponent>>();
+			for (Entry<String,List<HComponent>> e : lll1.entrySet())
+			{
+				List<HComponent> value = e.getValue();
+				String key = takeSonOf(value, this).getVariableName(this); 
+				lll1_var.put(key, value);
+			}
+			
+/*			Map<String, List<HComponent>> lll2_var = new HashMap<String, List<HComponent>>();
+			for (Entry<String,List<HComponent>> e : lll2.entrySet())
+			{
+				String par_id = e.getKey();
+				List<HComponent> value = e.getValue();
+				HComponent host_c = (HComponent)c.getConfiguration().getConfiguration();
+				String key = takeSonOf(value, c).getVariableName(c);
+				lll2_var.put(key, value);
+			}
+*/
+			if (lll1.size() == 0)
 				return this; // MATCH !!!!!!!!
 
-			if (this.getParameters().size() == c.getParameters().size()) {
-				// C[V1,V2,...,Vn] <: C[X1,X2,...,Xn] iif V1 <: X1 & V2 <: X2 &
-				// ... & Vn <: Xn
-				Iterator<Entry<String, List<HComponent>>> ps = c
-						.getParameters().entrySet().iterator();
-				boolean checkParameters = true;
-				int pos = 0;
-				while (ps.hasNext() && checkParameters) {
-					Entry<String, List<HComponent>> valCEntry = ps.next();
-					String parId = valCEntry.getKey();
-					List<HComponent> valC = valCEntry.getValue();
-					List<HComponent> v = this.getParameterByName(parId);
-					if (v != null) {
-						// Check parameter subtyping
-						checkParameters = v.get(0).isSubTypeOf(valC.get(0))
-								&& checkParameters;
-					} else {
-						System.out
-								.println("CONSISTENCY ERROR !!! (isSubTypeOf): Variable Name NOT found !");
-						return null;
-					}
-					pos++;
+			// C[V1,V2,...,Vn] <: C[X1,X2,...,Xn] iif V1 <: X1 & V2 <: X2 &
+			// ... & Vn <: Xn
+			Iterator<Entry<String, List<HComponent>>> ps = lll2.entrySet().iterator();
+			boolean checkParameters = true;
+			while (ps.hasNext() && checkParameters) 
+			{
+				Entry<String, List<HComponent>> valCEntry = ps.next();
+				String parId = valCEntry.getKey();
+				List<HComponent> valC = valCEntry.getValue();
+				
+				HComponent valC0 = /*valC.get(0);*/  takeSonOf(valC, c);
+				
+	            String varId = valC0.getVariableName(c);
+                
+                if (varId.equals("?"))
+                	System.out.print(true);
+                
+                List<HComponent> v_ = lll1.get(parId);
+                List<HComponent> v = lll1_var.get(varId);
+				HComponent v0 = takeSonOf(v, c); // .get(0);					
+				
+				if (v != null) 
+				{
+					// Checks whether v0 is subtype of valC0
+					boolean check1 = v0.isSubTypeOf(valC0);
+					// Checks whether v0 is a parameter. So, valC0 may replace v0 if it is a subtype of v0 (bound).
+					boolean check2 = v0.isParameter() && valC0.isSubTypeOf(v0);
+					
+					checkParameters = (check1 || check2) && checkParameters;
+				} 
+				else 
+				{
+					System.out.println("CONSISTENCY ERROR !!! (isSubTypeOf): Variable Name NOT found !");
+					return null;
 				}
-				if (checkParameters)
-					return this; // MATCH !!!!!
-			} else {
-				System.out
-						.println("CONSISTENCY ERROR !!! (isSubTypeOf): Parameters does not Match");
-				return null;
 			}
+			if (checkParameters)
+				return this; // MATCH !!!!!
 		}
 
 		// Check if they are of the same component kind (There is no subtype
@@ -2094,8 +2473,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public HComponent getSuperType() {
 
 		for (HComponent sc : this.getComponents()) {
-			if (sc.isSuperType()
-					&& (sc.allUnitsAreStubs() || sc.getUnits().size() == 0)) {
+			if ((sc.isSuperType()) && (sc.allUnitsAreStubs() || sc.getUnits().size() == 0)) {
 				return sc;
 			}
 		}
@@ -2206,18 +2584,23 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return "?";
 	}
 
-	public List<Pair<HComponent, HComponent>> getSubTypeImageOf2(HComponent c) {
-
+	public List<Pair<HComponent, HComponent>> getSubTypeImageOf2(HComponent c) 
+	{
 		List<Pair<HComponent, HComponent>> lr = new ArrayList<Pair<HComponent, HComponent>>();
 
-		if (this.getComponentName().equals(c.getComponentName())) { // They are
-																	// the same
-																	// components.
-																	// Check
-																	// parameteres.
+		if (this.getQualifiedName().equals(c.getQualifiedName())) 
+		{   // They are the same components. Check parameteres.
 
 			Map<String, List<HComponent>> lll1 = this.getParameters();
 			Map<String, List<HComponent>> lll2 = c.getParameters();
+
+			Map<String, List<HComponent>> lll1_var = new HashMap<String, List<HComponent>>();
+			for (Entry<String,List<HComponent>> e : lll1.entrySet())
+			{
+				List<HComponent> value = e.getValue();
+				String key = takeSonOf(value, this).getVariableName(this); 
+				lll1_var.put(key, value);
+			}
 
 			if (lll1.size() == 0) {
 				lr.add(new Pair(c, this.getLeastSubType())); // MATCH !!!!!!!!
@@ -2227,8 +2610,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			// Collection i = this.getParameters();
 			// Collection j = c.getParameters();
 
-			if (lll1.size() == lll2.size()) 
-			{
+		//	if (lll1.size() == lll2.size()) 
+			//{
 				// C[V1,V2,...,Vn] <: C[X1,X2,...,Xn] iif V1 <: X1 & V2 <: X2 &
 				// ... & Vn <: Xn
 				Iterator<Entry<String, List<HComponent>>> ps = lll2.entrySet().iterator();
@@ -2237,26 +2620,44 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				while (ps.hasNext() && checkParameters) 
 				{
 					Entry<String, List<HComponent>> valCEntry = ps.next();
-					String parId = valCEntry.getKey(); // (String)
-														// valC.getParameterIdentifier(this);
+					String parId = valCEntry.getKey();
 					List<HComponent> valC = valCEntry.getValue();
-					List<HComponent> v = this.getParameterByName(parId);
-					HComponent v0 = v.get(0);
-					HComponent valC0 = valC.get(0);
+					
+					HComponent valC0 = /*valC.get(0);*/  takeSonOf(valC, c);
+					
+		            String varId = valC0.getVariableName(c);
+	                
+	                if (varId.equals("?"))
+	                	System.out.print(true);
+	                
+	                List<HComponent> v_ = lll1.get(parId);
+	                List<HComponent> v = lll1_var.get(varId);
+					HComponent v0 = takeSonOf(v, c); // .get(0);					
 					if (v != null) 
 					{
 						// Check parameter subtyping
 
-						checkParameters = v0.isSubTypeOf(valC0)	&& checkParameters;
+						// Checks whether v0 is subtype of valC0
+						boolean check1 = v0.isSubTypeOf(valC0);
+						// Checks whether v0 is a parameter. So, valC0 may replace v0 if it is a subtype of v0 (bound).
+						boolean check2 = v0.isParameter() && valC0.isSubTypeOf(v0);
+						
+						checkParameters = (check1 || check2) && checkParameters;
 						if (checkParameters) 
-						{
-							lr.addAll(v0.getSubTypeImageOf2(valC0));
-						}
+							if (check1)
+								lr.addAll(v0.getSubTypeImageOf2(valC0));
+							else if (check2)
+							{
+								List<Pair<HComponent,HComponent>> l = new ArrayList<Pair<HComponent,HComponent>>();
+								l.add(new Pair<HComponent,HComponent>(valC0, valC0));
+								lr.addAll(l);
+							}
+								
+						
 					} 
 					else 
 					{
-						System.out
-								.println("CONSISTENCY ERROR !!! (isSubTypeOf): Variable Name NOT found !");
+						System.out.println("CONSISTENCY ERROR !!! (isSubTypeOf): Variable Name NOT found !");
 						return null;
 					}
 					pos++;
@@ -2266,11 +2667,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 																	// !!!!!!!!
 					return lr; // MATCH !!!!!
 				}
-			} else {
-				System.out
-						.println("CONSISTENCY ERROR !!! (isSubTypeOf): Parameters does not Match");
-				return null;
-			}
+		//	} else {
+		//		System.out.println("CONSISTENCY ERROR !!! (isSubTypeOf): Parameters does not Match");
+		//		return null;
+		//	}
 		}
 
 		// Check if they are of the same component kind (There is no subtype
@@ -2299,30 +2699,6 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	}
 
-	public Map<String, Set<HComponent>> getVariablesSubTyping(HComponent ctx,
-			HComponent c) {
-
-		Map<String, Set<HComponent>> ls = new HashMap<String, Set<HComponent>>();
-
-		for (Pair<HComponent, HComponent> p : this.getSubTypeImageOf2(c)) {
-			HComponent c1 = p.fst();
-			HComponent c2 = p.snd();
-			if (c1.isParameter() && c.getSupplier() == null) {
-				String varName = c1.getVariableName(ctx);
-				if (ls.containsKey(varName)) {
-					ls.get(varName).add(c2);
-				} else {
-					Set<HComponent> l = new HashSet<HComponent>();
-					l.add(c2);
-					ls.put(varName, l);
-				}
-
-			}
-		}
-
-		return ls;
-
-	}
 
 	public Map<HComponent, HComponent> getComponentsToSupply(String varName,
 			HComponent model) {
@@ -2384,8 +2760,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return l.iterator();
 	}
 
-	static int BY_VARID = 0;
-	static int BY_PARID = 1;
+	public static int BY_VARID = 0;
+	public static int BY_PARID = 1;
 	
 	// TODO: TOP LEVEL PARAMETERS ...
 	public void unify(HComponent model, HComponent supplied, Map<String, Pair<HComponent,Boolean>> toSupply) 
@@ -2395,16 +2771,39 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	//	model.setBounds(supplied.getBounds());
 	//	model.setName(supplied.getRef());
 		
-		Map<String, List<HComponent>> model_parameters = model.getParameters(this);
+		Map<String, List<HComponent>> model_parameters = ((HComponent)model.getSubTypeImageOf(supplied)).getParameters(this);
 		
-		Map<String, List<HComponent>> free_parameters_supplied_1 = supplied.getParameters(supplied);
+/*		Map<String, List<HComponent>> model_parameters_var = new HashMap<String, List<HComponent>>();
+		for (Entry<String,List<HComponent>> e : model_parameters.entrySet())
+		{
+			List<HComponent> value = e.getValue();
+			HComponent valC0 = value.get(0);
+			for (HComponent valC0_ : value)
+				if (valC0_.getConfiguration()==supplied)
+					valC0 = valC0_;
+
+			String key = valC0.getVariableName(model);
+			model_parameters_var.put(key, value);
+		}
+	*/	
+		Map<String, List<HComponent>> free_parameters_supplied_1 = supplied.getParameters(model);
         for (Entry<String, List<HComponent>> par : free_parameters_supplied_1.entrySet())
         {
+			//HComponent valC0 = par.getValue().get(0);
+			//for (HComponent valC0_ : par.getValue())
+			//	if (valC0_.getConfiguration()==supplied)
+			//		valC0 = valC0_;
+
+			//String varId = valC0.getVariableName(supplied);
+        	
         	String parId = par.getKey();
         	if (model_parameters.containsKey(parId)) 
         	{
-            	HComponent par_supplier = model_parameters.get(parId).get(0);
-            	HComponent par_supplied = par.getValue().get(0);
+        		List<HComponent> par_supplier_list =  model_parameters.get(parId);
+        		List<HComponent> par_supplied_list = par.getValue();
+        		
+            	HComponent par_supplier = takeSonOf(par_supplier_list, model);
+            	HComponent par_supplied = takeSonOf(par_supplied_list, supplied);
             	
             	if (par_supplied.representsOpenParameter() && !par_supplier.representsOpenParameter())
             	{
@@ -2426,9 +2825,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
              	   if (!varIdSupplier.equals(varIdSupplied)) 
                        throw new UnifySignaturesException();
             	} 
-            	else 
+            	else if (!par_supplied.representsOpenParameter() && par_supplier.representsOpenParameter())
             	{
-            		
+	            	String supplyingVarId = par_supplier.getVariableName(this);
+	            	Pair<HComponent,Boolean> pair_supplied = new Pair<HComponent,Boolean>(par_supplied,true);
+	            	toSupply.put(supplyingVarId, pair_supplied);	            	
             	}
             	unify(par_supplier, par_supplied, toSupply);
         	}
@@ -2438,14 +2839,27 @@ public abstract class HComponent extends HVisualElement implements HNamed,
         
 	}
 	
+	private HComponent takeSonOf(List<HComponent> par_supplier_list, HComponent supplier2) {
+		
+		for (HComponent c : par_supplier_list)
+			if (c.getConfiguration() == supplier2)
+				return c;
+		
+		return par_supplier_list.get(0);
+	}
+
 	public String getQualifiedName() {
 		return this.getPackagePath().toPortableString() + "." + this.getComponentName();
 	}
+	public void supplyParameter(String varName, HComponent model)
+	{
+		supplyParameter(varName, model, this);
+	}
 
-	public void supplyParameter(String varName, HComponent model) 
-	{		
+	public void supplyParameter(String varName, HComponent model, HComponent context) 
+	{				
 		try 
-		{						
+		{				
 			Map<String, Pair<HComponent,Boolean>> toSupply = new HashMap<String,Pair<HComponent,Boolean>>();
 			Pair<HComponent,Boolean> pair_model = new Pair<HComponent,Boolean>(model,false);
 			toSupply.put(varName, pair_model);
@@ -2459,8 +2873,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 					alignPublicInnerComponents(model, supplied);
 				}
 			
-			supplyParameter(toSupply);
-		
+			supplyParameter(toSupply, context);		
 		} 
 		catch (UnifySignaturesException e) 
 		{
@@ -2475,7 +2888,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		for (HComponent c : supplied.getInnerComponents())
 		{
 			String originalName = c.getOriginalName();
-			HComponent c_prime = model.getInnerComponent(originalName);
+			HComponent c_prime = model.getInnerComponent(originalName != null ? originalName : c.getRef());
 			if(c_prime != null) 
 			{
 				c_prime.setExposed(c.isPublic(),c.exposedFalsifiedContext);
@@ -2491,11 +2904,70 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				c_prime.fusedWith.add(c);
 				c.fusedWith.add(c_prime);
 			}
-			
 		}
+		/*
+		for (IHUnit u_ : model.getUnits())
+		{
+			HUnit u = (HUnit) u_;
+			
+			for (HUnitSlice s : u.getSlices())
+			{
+				IHUnit us = (IHUnit) s.getComponentEntry();
+				
+				HComponent us_c = (HComponent) us.getComponent();
+				
+				if (us_c.getConfiguration() == model)
+				{
+					IHUnit u_super = null;					
+					HComponent supplied_ = supplied;
+					
+					do
+					{
+						u_super = (HUnit) supplied_.getUnitByName(u_.getBaseName());
+						if (u_super.getBinding() == null)
+						{
+							u_super = null;
+							if (supplied_.isParameter())
+							{  
+							    String varName = supplied_.getParameterIdentifier((HComponent) supplied_.getConfiguration());
+							    HComponent supplied_c = (HComponent) supplied_.getConfiguration();
+								HComponent supplied_c_super = supplied_c.getSuperType();
+								if (supplied_c_super == null)
+									break;
+								List<HComponent> cs = supplied_c_super.getParameterByName(varName);
+							    
+								supplied_ = supplied_c_super.getInnerComponent(cs.get(0).getRef());
+							}
+						}
+					}
+					while (u_super==null);
+					
+					if (u_super != null)
+					{
+						HUnitSlice u_super_slice = (HUnitSlice) u_super.getBinding().getPort();
+						HUnit u_super_enclosing = (HUnit) u_super_slice.getUnit();
+						
+						s.setUnit(u_super_enclosing);
+						u_super_enclosing.addUnitSlice(s);
+						
+						System.out.println(s.getBinding().getEntry().getConfiguration().getRef());
+					}
+				}
+			}
+		}
+		System.out.println(true);
+		
+		*/
+		
+		
 	}
 
-	public void supplyParameter(Map<String, Pair<HComponent,Boolean>> toSupply) 
+	public void supplyParameter(Map<String, Pair<HComponent,Boolean>> toSupply)
+	{
+		supplyParameter(toSupply, this);
+	}
+	
+	public void supplyParameter(Map<String, Pair<HComponent,Boolean>> toSupply, HComponent context) 
 	{
 		for (Entry<String, Pair<HComponent,Boolean>> supply_item : toSupply.entrySet())
 		{
@@ -2511,16 +2983,26 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 			this.rememberSupply(varName, model, transitive);
 	
-			this.setSupplied(model, varName);
+			this.setSupplied(model, varName, context);
 		}
 	}
 
-	private void setSupplied(HComponent model, String varName) {
+	private void setSupplied(HComponent model, String varName, HComponent context) {
 
 		model.setVariableName(this, varName);
+		 
+		Collection<HComponent> cList = this.getComponents();		
 		
-		for (HComponent c : this.getComponents()) 
-		{
+		for (HComponent c : cList) 
+		{			
+			if (c.isParameter() && c.getSupplier() == null && c.getVariableName(this).equals(varName))
+			{
+				c.setSupplier(model);
+				c.setSupplierContext(context);
+				model.addSuppliedByMe(c);
+				//c.setSupplied(model, c_.getVariableName(c));				
+			}			
+
 			Map<String, List<HComponent>> c_parameters = c.getParametersSetup();
 			for (Entry<String, List<HComponent>> c_par : c_parameters.entrySet()) 
 			{
@@ -2534,12 +3016,13 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 						{
 							//HComponent model = model_.getMyCopy();
 							c_.setSupplier(model);
+							c_.setSupplierContext(context);
 							model.addSuppliedByMe(c_);
-							c.setSupplied(model, varName_);
-							String parId = c_.getParameterIdentifier();
-							String s = c.getLocalLocation();
-							if (!model.parameterIdentifier.containsKey(c))
-								model.parameterIdentifier.put(c, parId);
+							c.setSupplied(model, /*varName_*/ c_.getVariableName(c), context);
+//							String parId = c_.getParameterIdentifier();
+	//						String s = c.getLocalLocation();
+							//if (!model.parameterIdentifier.containsKey(c))
+							//	model.parameterIdentifier.put(c, parId);
 							
 							//model.setVariableName(c, varName_);
 						}
@@ -2547,8 +3030,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				}
 			}
 		}
+		
+		HComponent cSuper = this.getSuperType();
+		if (cSuper != null)
+			cSuper.setSupplied(model, varName, context);
+		
+		return;
 	}
 	
+
 	private List<HComponent> supplied_by_me = new ArrayList<HComponent>();
 
 	private void addSuppliedByMe(HComponent c_) 
@@ -2659,20 +3149,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			return null;
 		}
 
-		Rectangle bounds = unit.getBounds().getCopy();
-		HUnitStub uStub = unit.createStub(topConfiguration);
-		uStub.setBounds(bounds);
-		int iu = this.getUnits().indexOf(unit); /*
-												 * REMARK: new StubFor is now
-												 * called only in subtyping or
-												 * implements. There are no
-												 * cloned unit
-												 */
+		HUnitStub uStub = null;
+
+		uStub = unit.createStub(topConfiguration);
+		int iu = this.getUnits().indexOf(unit); /* REMARK: new StubFor is now called only in subtyping or implements. There are no cloned unit */
 		unit.setConfiguration(topConfiguration);
 		uStub.setConfiguration(this);
 		this.getUnits().remove(uStub);
-		this.getUnits().add(iu, uStub); // PLACE uStub in the same position of
-										// unit
+		this.getUnits().add(iu, uStub); // PLACE uStub in the same position of unit
 
 		uStub.setColocatedUnits(unit.getColocatedUnits());
 		unit.emptyColocatedUnits();
@@ -2687,9 +3171,20 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		} else {
 			i.setConfiguration(topConfiguration);
 		}
-
+				
 		unit.hideSlices();
 		unit.loadSavedBounds();
+		if (unit.isCloned())
+		{
+			Rectangle bounds = unit.getBounds().getCopy();
+			Rectangle bounds_clone = bounds;
+			for (IHPrimUnit u : unit.getClones())
+			{				
+				u.setBounds(bounds_clone.getCopy());
+				bounds_clone.translate(bounds_clone.width,0);								
+			}
+		}
+		
 		return uStub;
 	}
 
@@ -3274,8 +3769,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		HComponent me = this.isSuperType() ? (HComponent) this.getConfiguration() : this;
 		return me.exposedFalsifiedContext == c;
 	}
-
-	static public void supersede3(HComponent c1, HComponent c2, boolean forSupply) 
+	
+	static public void supersede3(HComponent c1, HComponent c2, boolean forSupply/*, HComponent context*/) 
 	{
 		HComponent cTop = (HComponent) c1.getTopConfiguration();
 		String cRef = c1.getRef();
@@ -3284,7 +3779,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		cList.add(c2);
 		cTop.addFusion(cRef,cList);
 		
-		matchParameters(c1,c2);		
+		matchParameters(c1,c2/*, context*/);		
 		
 		c1.getSavedName().putAll(c2.getSavedName());
 		for (HComponent c1f: c1.getFusedWith())
@@ -3300,49 +3795,73 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		}
 	}
 
-	private static void matchParameters(HComponent c1, HComponent c2) 
+	private static void matchParameters(HComponent c1, HComponent c2/*, HComponent context*/) 
 	{	
-		Map<String, List<HComponent>> pars1 = c1.getParameters();
+		Map<String, List<HComponent>> pars1 = c1.getParameters(); 
 		Map<String, List<HComponent>> pars2 = c2.getParameters();
+		
+		//boolean flag = false;
 		
 	    for (Entry<String,List<HComponent>> par: pars1.entrySet())
 	    {
 	        String par_id = par.getKey();
 	        HComponent cvar_1 = par.getValue().get(0);
-	        if (pars2.containsKey(par_id))
-	        { 
-	        	HComponent cvar_2 = pars2.get(par_id).get(0);
-	
-		        if (cvar_1.isSubTypeOf(cvar_2) && !cvar_1.isEquivalentTo(cvar_2))
-		        {   
-		        	List<HComponent> cs =  cvar_2.getInnerTopConfigurations();
-		        	if (!cs.isEmpty()) 
-		        	{
-			        	HComponent cvar_2_enclosing = (HComponent) cs.get(0);
-			        	cvar_2_enclosing.supplyParameter(cvar_2.getVariableName(cvar_2_enclosing), cvar_1);
-		        	}
+	        //for (HComponent cvar_1 : par.getValue())
+	        //{
+		        if (pars2.containsKey(par_id))
+		        { 
+		        	HComponent cvar_2 = pars2.get(par_id).get(0);
+			        if (cvar_1.isSubTypeOf(cvar_2) && !cvar_1.isEquivalentTo(cvar_2))
+			        {   
+			        	// flag = true;
+			        	List<HComponent> cs_2 =  cvar_2.getInnerTopConfigurations();
+			        	List<HComponent> cs_1 =  cvar_1.getInnerTopConfigurations();
+			        	if (!cs_2.isEmpty()) 
+			        	{
+				        	HComponent cvar_2_enclosing = (HComponent) cs_2.get(0);
+				        	HComponent cvar_1_enclosing = (HComponent) cs_1.get(0);
+				        	String var_2 = cvar_2.getVariableName(cvar_2_enclosing);
+				        	//String var_1 = cvar_1.getVariableName(cvar_1_enclosing);
+				        	//String var_21 = cvar_2.getVariableName((HComponent) cvar_2_enclosing.getTopConfiguration());
+				        	//String var_11 = cvar_1.getVariableName((HComponent) cvar_1_enclosing.getTopConfiguration());
+				        	boolean b1 = cvar_1.isFreeParameter(cvar_1_enclosing);
+				        	//boolean b2 = cvar_2.isFreeParameter(cvar_2_enclosing);
+				        	if (!var_2.equals("?") && !b1)
+				        		cvar_2_enclosing.supplyParameter(var_2, cvar_1/*,context*/);				        	
+			        	}
+			        }
 		        }
-	        }
+	        //}
 	    }
 		
-	    for (Entry<String,List<HComponent>> par: pars2.entrySet())
-	    {
-	        String par_id = par.getKey();
-	        HComponent cvar_2 = par.getValue().get(0);
-	        if (pars1.containsKey(par_id))
-	        { 
-		        HComponent cvar_1 = pars1.get(par_id).get(0);
-		        if (cvar_2.isSubTypeOf(cvar_1) /*&& !cvar_2.isEquivalentTo(cvar_1)*/) 
-		        {
-		        	List<HComponent> cs =  cvar_1.getInnerTopConfigurations();
-		        	if (!cs.isEmpty()) 
-		        	{
-		        		HComponent cvar_1_enclosing = (HComponent) cs.get(0);
-		        		cvar_1_enclosing.supplyParameter(cvar_1.getVariableName(cvar_1_enclosing), cvar_2);
-		        	}
+	    //if (!flag)
+		    for (Entry<String,List<HComponent>> par: pars2.entrySet())
+		    {
+		        String par_id = par.getKey();
+		        HComponent cvar_2 = par.getValue().get(0);
+		        if (pars1.containsKey(par_id))
+		        { 
+		        	HComponent cvar_1 = pars1.get(par_id).get(0);
+			        //for (HComponent cvar_1 : pars1.get(par_id))
+			        //{
+				        if (cvar_2.isSubTypeOf(cvar_1) /*&& !cvar_2.isEquivalentTo(cvar_1)*/) 
+				        {
+				        	List<HComponent> cs_1 =  cvar_1.getInnerTopConfigurations();
+				        	List<HComponent> cs_2 =  cvar_2.getInnerTopConfigurations();
+				        	if (!cs_1.isEmpty()) 
+				        	{
+				        		HComponent cvar_1_enclosing = (HComponent) cs_1.get(0);
+				        		HComponent cvar_2_enclosing = (HComponent) cs_2.get(0);
+					        	String var_1 = cvar_1.getVariableName(cvar_1_enclosing);
+					        	//String var_2 = cvar_1.getVariableName(cvar_2_enclosing);
+					        	boolean b2 = cvar_2.isFreeParameter(cvar_2_enclosing);
+					        	if (!var_1.equals("?") && !b2)
+					        		cvar_1_enclosing.supplyParameter(var_1, cvar_2/*, context*/);
+				        	}
+				        }
+			        //}
 		        }
-	        }
-	    }
+		    }
 		
 		
 	}
@@ -3490,7 +4009,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return true;
 	}
 
-	public List<HComponent> getInnerTopConfigurations() 
+	public List<HComponent> getInnerTopDirectConfigurations() 
 	{
 		List<HComponent> l = new ArrayList<HComponent>(); // this.getAllParentConfigurations();
 
@@ -3498,13 +4017,49 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		for (HComponent c : this.getAllParentConfigurations()) {
 			if (c.getDirectParentConfigurations().contains(topC)) {
 				l.add(c);
-				l.addAll(c.getExposedComponents());
 			}
 
 		}
 
 		return l;
 
+	}
+
+	public List<HComponent> getInnerTopConfigurations() 
+	{
+		List<HComponent> l = new ArrayList<HComponent>(); // this.getAllParentConfigurations();
+
+		HComponent topC = (HComponent) this.getTopConfiguration();
+		for (HComponent c : this.getAllParentConfigurations()) 
+		{	
+			if (c.visibleInConfiguration(topC)) 
+			{
+				l.add(c);
+				//l.addAll(c.getExposedComponents());
+			}
+		}
+
+		return l;
+	}
+
+
+	private boolean visibleInConfiguration(HComponent c) 
+	{
+		return visibleInConfiguration(c, this.isExposed, this.exposedFalsifiedContext);
+	}
+
+	private boolean visibleInConfiguration(HComponent c, boolean isExposed, HComponent hiddenContext) 
+	{
+		HComponent super_c = (HComponent) this.getConfiguration();
+		
+	    if (super_c == c)
+	    	return true;
+	    else if (isExposed)
+	    	return super_c.visibleInConfiguration(c, isExposed, hiddenContext);
+	    else if (!isExposed && hiddenContext != null && hiddenContext != super_c)
+	    	return super_c.visibleInConfiguration(c, isExposed, hiddenContext);
+	    else 
+	    	return false;
 	}
 
 	public List<HComponent> getAllParentConfigurations() {
@@ -3765,20 +4320,22 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return new Pair<String, Integer>(name_, overhead);
 	}
 
-	public boolean hasFreeVariables() {
-
+	public boolean hasFreeVariables() 
+	{
 		HComponent topC = (HComponent) this.getTopConfiguration();
 
-		Map<String, List<HComponent>> params = this.getParameters(topC);
+		//Map<String, List<HComponent>> params = this.getParameters(topC);
 
-		for (Entry<String, List<HComponent>> entry : params.entrySet()) {
+		Map<String, List<HComponent>> params = this.getFreeParameters(topC, HComponent.BY_VARID);
+
+		for (Entry<String, List<HComponent>> entry : params.entrySet()) 
+		{
 			List<HComponent> cs = entry.getValue();
 			// for (HComponent c : cs) {
 			HComponent c = cs.get(0);
 			String parIdAtTopC = c.getParameterIdentifier(topC);
 			String varName = c.getVariableName();
-			if (parIdAtTopC.equals("type ?") && !c.isInnerOfFreeParameter()
-					&& (c.isParameter() && c.getSupplier() == null))
+			if (parIdAtTopC.equals("type ?") && !c.isInnerOfFreeParameter()	&& (c.isParameter() && c.getSupplier() == null))
 				return true;
 			// }
 
@@ -3787,8 +4344,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return false;
 	}
 
-	private boolean isInnerOfFreeParameter() {
-
+	private boolean isInnerOfFreeParameter() 
+	{
 		List<HComponent> cs = this.getAllParentConfigurations();
 		HComponent topC = (HComponent) this.getTopConfiguration();
 		for (HComponent c : cs) {
@@ -3825,24 +4382,19 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public void createComponentKey() throws IOException {
 
-		IPath pathKeyFile = (new Path(this.getLocalLocation()))
-				.removeFileExtension().addFileExtension("snk");
-		IPath pathPubFile = (new Path(this.getLocalLocation()))
-				.removeFileExtension().addFileExtension("pub");
+		IPath pathKeyFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("snk");
+		IPath pathPubFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("pub");
 		// boolean okSNK =
 		// ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
 		// boolean okPUB =
 		// ResourcesPlugin.getWorkspace().getRoot().exists(pathPubFile);
-		boolean okSNK = HComponentFactoryImpl.existsInWorkspace(pathKeyFile
-				.setDevice(null));
-		boolean okPUB = HComponentFactoryImpl.existsInWorkspace(pathPubFile
-				.setDevice(null));
+		boolean okSNK = HComponentFactoryImpl.existsInWorkspace(pathKeyFile.setDevice(null));
+		boolean okPUB = HComponentFactoryImpl.existsInWorkspace(pathPubFile.setDevice(null));
 
 		boolean success = true;
 
 		if (!okSNK || !okPUB) {
-			String sn_path = HPEProperties.getInstance().getValue(
-					PreferenceConstants.SN_PATH);
+			String sn_path = HPEProperties.getInstance().getValue(PreferenceConstants.SN_PATH);
 
 			// IFolder file =
 			// ResourcesPlugin.getWorkspace().getRoot().getFolder(new
@@ -3865,11 +4417,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				java.io.File systemFile = systemPath.toFile();
 
 				if (success && !okSNK) {
-					int r = CommandLine.runCommand(new String[] { sn_path,
-							"-k", this.getComponentName() + ".snk" },
-							systemFile);
+					int r = CommandLine.runCommand(new String[] { sn_path, "-k", this.getComponentName() + ".snk" }, systemFile);
 					success = r == CommandLine.SUCESSFULL_COMMAND;
-
 				}
 
 				if (success && !okPUB) {
@@ -3883,25 +4432,29 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 		}
 
-		if (success) {
-			// IFile fileW =
-			// ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
-			java.io.File fileW = HComponentFactoryImpl
-					.getFileInWorkspace(pathPubFile.setDevice(null));
-			if (fileW.getAbsolutePath() != null) {
+		if (success) 
+		{
+			java.io.File fileW = HComponentFactoryImpl.getFileInWorkspace(pathPubFile.setDevice(null));
+			if (fileW.getAbsolutePath() != null) 
+			{
 				InputStream is = new FileInputStream(fileW);
 				byte[] pk = new byte[is.available()];
 				is.read(pk);
 				is.close();
 				String pkStr = null;
-				try {
+				try 
+				{
 					pkStr = getHexString(pk);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					e.printStackTrace();
 				}
 				this.setHashComponentUID(pkStr);
 			}
-		} else {
+		} 
+		else 
+		{
 			JOptionPane
 					.showMessageDialog(
 							null,
@@ -3937,14 +4490,16 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public int getMyInstanceId() {
 		return myInstanceId;
+		
+		//return this.getSuperType() == null ? myInstanceId : this.getSuperType().getMyInstanceId();
 	}
 
-	public void hideInnerComponent(HComponent c) {
-		if (this.getInnerComponents().contains(c)) {
-			c.setHiddenInnerComponent(true);
-		}
-		listeners.firePropertyChange(NEW_COMPONENT, null, name); //$NON-NLS-2$//$NON-NLS-1$	
-	}
+	//public void hideInnerComponent(HComponent c) {
+	//	if (this.getInnerComponents().contains(c)) {
+	//		c.setHiddenInnerComponent(true);
+	//	}
+	//	listeners.firePropertyChange(NEW_COMPONENT, null, name); //$NON-NLS-2$//$NON-NLS-1$	
+	//}
 
 	protected void setHiddenInnerComponent(boolean hidden	) {
 		this.hiddenInnerComponent = hidden;
@@ -3972,18 +4527,17 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		this.setHiddenInnerComponent(true);
 	}
 
-	public boolean isInnerComponentOf(HComponent c1) {
-
+	public boolean isInnerComponentOf(HComponent c1) 
+	{
 		List<HComponent> csParent = this.getDirectParentConfigurations();
-		if (csParent.contains(c1)) {
+		if (csParent.contains(c1)) 
 			return true;
-		} else {
-			for (HComponent thisParent : csParent) {
-				if (thisParent.isInnerComponentOf(c1)) {
+		else 
+			for (HComponent thisParent : csParent) 
+			{
+				if (thisParent.isInnerComponentOf(c1))
 					return true;
-				}
 			}
-		}
 
 		return false;
 	}
@@ -4001,10 +4555,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return current_c;
 	}
 
-	public HInterface getInterfaceByName(String primName) {
-		for (HInterface i : this.getInterfaces()) {
-			if (i.getPrimBaseName() != null
-					&& i.getPrimBaseNameAll().contains(primName))
+	public HInterface getInterfaceByName(String primName) 
+	{
+		for (HInterface i : this.getInterfaces()) 
+		{
+			if (i.getConfiguration() == this && i.getPrimBaseName() != null	&& i.getPrimBaseNameAll().contains(primName))
 				return i;
 		}
 		return null;
@@ -4157,46 +4712,6 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		facet_configuration.put(facet, multiple);		
 	}
 
-	private Map<Integer,Integer> facet_cardinality = new HashMap<Integer,Integer>();
-
-	public void setupMultipleFacet(int facet, int cardinality) throws Exception 
-	{
-		boolean multiple_facet = facet_configuration.get(facet);
-		if (cardinality > 1 && !multiple_facet)
-			throw new Exception("Trying to multiply by " + cardinality + " singleton facet " + facet + "in " + this.getRef());
-		facet_cardinality.put(facet, cardinality);		
-		
-		// REPLICATE UNITS !
-		List<HUnit> us = this.getUnitsInFacet(facet);
-		for (HUnit u : us)
-		{			
-			u.setFacetInstance(0);
-			for (int facet_instance=1; facet_instance < cardinality; facet_instance ++)
-			{
-				HUnit u_clone_clone = (HUnit) u.createReplica(u, u.getClones().size()-1);
-				u_clone_clone.setFacetInstance(facet_instance);
-			}
-			
-			// TODO: ...
-			for(HUnitSlice u_slice : u.getSlices())
-			{
-			   HUnit slice_unit = (HUnit) u_slice.getComponentEntry();
-			   HComponent c = (HComponent) slice_unit.getComponent();
-	           if (c.IsExposedFalsifiedContextTop())
-	           {
-	        	   // check whether it has a single and non-multiple facet.
-	        	   Map<Integer,Boolean> facet_config = c.getFacetConfiguration();
-	        	   if (facet_config.size() == 0 /* default */ || (facet_config.size() == 1 && !facet_config.get(0)))
-	        	   {
-	        		   System.out.print(c.getRef());
-	        		   HComponent c_clone = (HComponent) c.clone();
-	        		   this.addComponent(c_clone);
-	        	   }
-	           }
-			}			
-	    }			
-	}
-
 	private List<HUnit> getUnitsInFacet(int facet) 
 	{
 		List<HUnit> us = new ArrayList<HUnit>();
@@ -4214,10 +4729,6 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return facet_configuration;
 	}
 	
-	public Map<Integer,Integer> getFacetCardinality() {
-		
-		return facet_cardinality;
-	}
 	
 	private List<HComponent> facet_multiplied_of_ic = new ArrayList<HComponent>();
 
@@ -4242,6 +4753,42 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	private int index_replica = 0;
+
+	private List<Integer> multiple_facets_revoked = null;
 	
+	public void setRevokeMultipleFacet(List<Integer> multiple_facets_revoked) 
+	{
+		this.multiple_facets_revoked = multiple_facets_revoked;		
+	}
 	
+	public List<Integer> getRevokeMultipleFacet() 
+	{
+		if (multiple_facets_revoked == null)
+			multiple_facets_revoked = new ArrayList<Integer>();
+		return this.multiple_facets_revoked;		
+	}
+	
+	private int peer_size = 1;
+
+	public void setPeerSize(int copies) 
+	{
+	      this.peer_size = copies;		
+	}
+	
+	public int getPeerSize() 
+	{
+	      return this.peer_size;		
+	}
+	
+	private HComponent replication_context = null;
+
+	public void setReplicationContext(HComponent component) 
+	{
+		replication_context = component;		
+	}
+	
+	public HComponent getReplicationContext()
+	{
+		return replication_context;
+	}
 }

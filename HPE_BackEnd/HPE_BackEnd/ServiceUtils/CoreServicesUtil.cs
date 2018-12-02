@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using SAFeSWL;
-using System.Diagnostics;
 using System.IO;
-using br.ufc.pargo.hpe.backend.DGAC.utils;
-using br.ufc.pargo.hpe.backend.DGAC.database;
-using br.ufc.pargo.hpe.backend.DGAC;
-using System.Xml.Serialization;
-using System.Xml;
-using br.ufc.pargo.hpe.backend;
 using System.Threading;
-using ServiceUtils.PlatformServices;
+using System.Xml;
+using System.Xml.Serialization;
 using br.ufc.mdcc.hpcshelf.backend.platform;
+using br.ufc.pargo.hpe.backend;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using SAFeSWL;
 
 namespace br.ufc.mdcc.hpcshelf.core
 {
-	public interface IBackendServices 
+    public interface IBackendServices 
 	{
 		string deploy (string platform_config);
 	}
@@ -78,7 +76,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 			return false;
 		}
 
-		public static IDictionary<string,string> readPlatformAddresses (SAFeSWL_Architecture arch_desc)
+/*		public static IDictionary<string,string> readPlatformAddresses (SAFeSWL_Architecture arch_desc)
 		{
 			IDictionary<string,string> result = new Dictionary<string, string> ();
 
@@ -97,7 +95,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 			return arch_desc.application_name;
 		}
 
-
+*/
 
 
 		#endregion
@@ -228,6 +226,7 @@ namespace br.ufc.mdcc.hpcshelf.core
 				}
 			br.ufc.pargo.hpe.backend.DGAC.database.Connector.closeConnection ();
 		}
+		
 
 		private static string[] calculateDependenciesOf (int id_functor_app)
 		{

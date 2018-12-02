@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -36,12 +36,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[DataMember]
         private string instanceName;
 
-        public WorkerServicesImpl(IWorkerObject framework, ComponentID cid, IUnit unit)
+		[DataMember]
+		private string unitName = "";
+
+		public WorkerServicesImpl(IWorkerObject framework, ComponentID cid, IUnit unit)
         {
 			this.cid = cid;
             this.instanceName = cid.getInstanceName();
             this.framework = framework;
             unit.CID = cid;
+            this.unitName = unit.Id_unit;
             framework.registerComponentID_unit(cid, this, unit);
         }
 
@@ -56,8 +60,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private string mkPortName(string portName)
         {
-			//Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
-            return this.instanceName + ":" + portName.Trim();
+			Console.WriteLine ("mkPortName 1: " + this.GetHashCode() + ":" + this.instanceName + ":" + portName.Trim() /*+ unitName.Trim()*/);
+            return /*this.GetHashCode() + ":" +*/  this.instanceName + ":" + portName.Trim() /*+ unitName.Trim()*/;
         }
 
 
@@ -80,6 +84,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			Port port = framework.getServicePort(cid, mkPortName(portName));
 			if (port==null) 
 			{
+                Console.WriteLine("getPortNonBlocking port==null --- {0}", portName);
 				port = framework.getPortNonblocking (mkPortName (portName));
 			}
 			return port;
@@ -174,6 +179,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			Port port = framework.getServicePort(cid, mkPortName(portName));
 			if (port==null) 
 			{
+				Console.WriteLine("getPortNonBlocking remote port==null --- {0}", portName);
 				port = framework.getPortNonblocking (mkPortName (portName));
 			}
 			return port;
@@ -192,7 +198,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		public void registerUsesPort(string portName, string type, TypeMap properties)
 		{
-		//	Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 1 - " + portName);
+		//	Console.WriteLine ("RemoteItemChoiceType - " + portName);
 			framework.registerUsesPort(mkPortName(portName), type, properties);
 		//	Console.WriteLine ("RemoteWorkerServicesImpl - registerUserPort 2 - " + portName);
 		}
@@ -232,8 +238,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		private string mkPortName(string portName)
 		{
-			//Console.WriteLine ("mkPortName: " + this.instanceName + ":" + portName.Trim());
-			return this.instanceName + ":" + portName.Trim();
+            int hash_code = framework.getServicesHashCode(RemoteKey);
+            
+			Console.WriteLine("mkPortName 2: " + hash_code + ":" + this.instanceName + ":" + portName.Trim() /*+ unitName.Trim()*/);
+			return /*hash_code + ":" +*/ this.instanceName + ":" + portName.Trim() /*+ unitName.Trim()*/;
 		}
 	}
 

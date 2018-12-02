@@ -10,6 +10,7 @@ using gov.cca.ports;
 using System.Threading;
 using MPI;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace br.ufc.pargo.hpe.kinds
 {
@@ -18,24 +19,33 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 		// (1) invokes and waits for action completion.
 		void invoke(object action_id);
+		object invoke(object[] action_id);
 
 		// (2) invokes and returns a future object for further testing or waiting of action completion.
 		void invoke(object action_id, out IActionFuture future);
+		void invoke(object[] action_id, out IActionFuture future);
 
 		// (3) As (2), but it only completes after executing a procedure.
 		void invoke(object action_id, Action reaction, out IActionFuture future);
+		void invoke(object[] action_id, Action[] reaction, out IActionFuture future);
 	}
 	
 	public abstract class TaskBinding : Activate, ITaskBindingKind 
 	{
+		// (1) invokes and waits for action completion.
 		public abstract void invoke(object action_id);
+		public abstract object invoke(object[] action_id);
 
+		// (2) invokes and returns a future object for further testing or waiting of action completion.
 		public abstract void invoke(object action_id, out IActionFuture future);
+		public abstract void invoke(object[] action_id, out IActionFuture future);
 
 		// (3) As (2), but it only completes after executing a procedure.
 		public abstract void invoke(object action_id, Action reaction, out IActionFuture future);
+		public abstract void invoke(object[] action_id, Action[] reaction, out IActionFuture future);
 
-		internal class ActionFuture : IActionFuture
+
+        internal class ActionFuture : IActionFuture
 		{
 			private RequestList request_list = null;
 			private ManualResetEvent sync = null;
@@ -86,9 +96,16 @@ namespace br.ufc.pargo.hpe.kinds
 
 			private IList<AutoResetEvent> waiting_sets = new List<AutoResetEvent> ();
 
-			public RequestList RequestList { get { return request_list; } } 
+			public RequestList RequestList { get { return request_list; } }
 
-			public void registerWaitingSet(AutoResetEvent waiting_set)
+            private object action;
+
+            public object Action {
+                get { return action; }
+				set { action = value; }
+			}
+
+            public void registerWaitingSet(AutoResetEvent waiting_set)
 			{
 				lock (waiting_lock) 
 				{
@@ -104,15 +121,19 @@ namespace br.ufc.pargo.hpe.kinds
 			}
 		}
 
-		internal class ActionFutureSet : IActionFutureSet
+        internal class ActionFutureSet : IActionFutureSet
 		{
 			IList<IActionFuture> pending_list = new List<IActionFuture>();
+			IList<IActionFuture> future_list = new List<IActionFuture>();
 
 			#region ActionFutureSet implementation
 			public void addAction (IActionFuture new_future)
-			{								
+			{
 				lock (sync_oper)
-					pending_list.Add (new_future);
+				{
+					pending_list.Add(new_future);
+					future_list.Add(new_future);
+				}
 
 				if (sync_future != null)
 					new_future.registerWaitingSet (sync_future);
@@ -202,6 +223,16 @@ namespace br.ufc.pargo.hpe.kinds
 				return completed_action_future;
 			}
 
+			public IEnumerator<IActionFuture> GetEnumerator()
+			{
+				return future_list.GetEnumerator();
+			}
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return future_list.GetEnumerator();
+			}
+
 			public IActionFuture[] Pending 
 			{
 				get 
@@ -226,9 +257,10 @@ namespace br.ufc.pargo.hpe.kinds
 		IActionFutureSet createSet();
 		void registerWaitingSet (AutoResetEvent waiting_set);
 		void unregisterWaitingSet (AutoResetEvent waiting_set);
+        object Action { get; }
 	}
 
-	public interface IActionFutureSet 
+	public interface IActionFutureSet: IEnumerable<IActionFuture>
 	{
 		void addAction(IActionFuture new_future);
 

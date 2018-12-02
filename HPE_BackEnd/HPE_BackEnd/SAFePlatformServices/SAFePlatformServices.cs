@@ -192,6 +192,8 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 			IList<Interface> units = BackEnd.idao.list (acf.Id_abstract);
 			instantiator.unit_mapping = new Instantiator.UnitMappingType[units.Count];
 
+            Console.WriteLine("buildInstantiatorStringOfSystem 0 " + units.Count);
+
 			int iu = 0;
 			foreach (Interface u in units) 
 			{
@@ -211,6 +213,8 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 				iu++;
 			}
 
+            Console.WriteLine("buildInstantiatorStringOfSystem 1");
+
 			instantiator.facet_address = new Instantiator.FacetAddressType[facet_address_list.Length];
 			for (int i = 0; i < facet_address_list.Length; i++) 
 			{
@@ -229,6 +233,7 @@ namespace br.ufc.mdcc.hpcshelf.backend.platform
 				instantiator.facet_address [i].port = uri.Port;
 			}
 
+			Console.WriteLine("buildInstantiatorStringOfSystem 2");
 
 			string instantiator_string = LoaderApp.serializeInstantiator (instantiator);
 
