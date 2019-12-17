@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/SAFe_ctree" xmlns:tns="http://www.example.org/SAFe_ctree" elementFormDefault="qualified" xmlns:Q1="http://www.example.org/instantiator">
+
+    <import schemaLocation="instantiator.xsd" namespace="http://www.example.org/instantiator"></import>
+    <element name="component" type="tns:ComponentHierarchyType"></element>
+    
+    <complexType name="ComponentHierarchyType">
+    	<sequence>
+    		<element name="public_inner_component"
+    			type="tns:PublicInnerComponentType" maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="private_inner_component"
+    			type="tns:PrivateInnerComponentType" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="host_component" type="tns:StringListType"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    		<element name="unit" type="Q1:UnitMappingType"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    		<element name="facet_list" type="tns:FacetType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="unit_2" type="Q1:UnitMappingType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="id" type="string"></attribute>
+    	<attribute name="component_choice" type="string"></attribute>
+    	<attribute name="is_qualifier" type="boolean"></attribute>
+    	<attribute name="kind" type="string"></attribute>
+    	<attribute name="resolving_delayed" type="boolean"
+    		use="optional">
+    	</attribute>
+    	<attribute name="component_choice_2" type="string" use="optional"></attribute>
+    </complexType>
+
+    <complexType name="PrivateInnerComponentType">
+    	<complexContent>
+    		<extension base="tns:ComponentHierarchyType">
+    			<sequence>
+    				<element name="facet" type="int" maxOccurs="unbounded" minOccurs="0"></element>
+    			</sequence>
+    			<attribute name="id_inner" type="string"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+
+    <complexType name="InnerComponentTypeList"></complexType>
+
+    <complexType name="StringListType">
+    	<sequence>
+    		<element name="id" type="string"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    	</sequence>
+    	<attribute name="id_inner" type="string"></attribute>
+    </complexType>
+
+    <complexType name="UnitType">
+    	<sequence>
+    		<element name="port_names" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="unit_mapping" type="Q1:UnitMappingType" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="id_unit" type="string"></attribute>
+    	<attribute name="assembly_string" type="string"></attribute>
+    	<attribute name="class_name" type="string"></attribute>
+    </complexType>
+
+    <complexType name="FacetType">
+    	<sequence>
+    		<element name="facet" type="int" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="facet_instance" type="int"></attribute>
+    </complexType>
+
+    <complexType name="FacetTopologyType">
+    	<attribute name="facet_instance" type="int"></attribute>
+    	<attribute name="facet" type="int"></attribute>
+    </complexType>
+
+    <complexType name="PublicInnerComponentType">
+    	<sequence>
+    		<element name="inner" type="tns:PublicInnerComponentIdType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="id_inner" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="PublicInnerComponentIdType">
+    	<sequence>
+    		<element name="facet" type="int" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="id" type="string"></attribute>
+    </complexType>
+</schema>

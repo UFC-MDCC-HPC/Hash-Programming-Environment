@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/SAFe_driver" xmlns:tns="http://www.example.org/SAFe_driver" elementFormDefault="qualified">
+
+    <element name="component" type="tns:IDriverComponent"></element>
+    
+    <complexType name="IDriverComponent">
+    	<sequence>
+    		<element name="context_argument"
+    			type="tns:IDriverContextArgument" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="placement" type="tns:IDriverPlacement"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    		<element name="port" type="tns:IDriverPort"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="kind" use="required">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="Binding"></enumeration>
+    				<enumeration value="Connector"></enumeration>
+    				<enumeration value="Computation"></enumeration>
+    				<enumeration value="VirtualPlatform"></enumeration>
+    				<enumeration value="DataSource"></enumeration>
+    				<enumeration value="Workflow"></enumeration>
+    				<enumeration value="Application"></enumeration>
+    				<enumeration value="System"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="library_path" type="string" use="required"></attribute>
+    </complexType>
+
+    <simpleType name="IDriverKindType">
+    	<restriction base="string">
+    		<enumeration value="Binding"></enumeration>
+    		<enumeration value="Computation"></enumeration>
+    		<enumeration value="Connector"></enumeration>
+    		<enumeration value="VirtualPlatform"></enumeration>
+    		<enumeration value="DataSource"></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="IDriverContextArgument">
+    	<choice>
+    		<element name="restriction"
+    			type="tns:IDriverContextArgument" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="quantifier" type="decimal"></element>
+    	</choice>
+    	<attribute name="parameter_id" type="string" use="required"></attribute>
+    	<attribute name="library_path" type="string" use="optional"></attribute>
+    </complexType>
+
+    <complexType name="IDriverPlacement">
+    	<sequence>
+    		<element name="virtual_platform" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="facet" type="int" use="required"></attribute>
+    </complexType>
+
+    <complexType name="IDriverPort">
+    	<attribute name="index" type="int" use="required"></attribute>
+    	<attribute name="facet_host" type="int" use="required"></attribute>
+    	<attribute name="facet_binding" type="int" use="required"></attribute>
+    	<attribute name="binding" type="string" use="optional"
+    		default="null">
+    	</attribute>
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="component" type="string" use="required"></attribute>
+    	<attribute name="role" use="required">
+    	    		<simpleType>
+    			 <restriction base="string">
+    				<enumeration value="peer"></enumeration>
+    				<enumeration value="client"></enumeration>
+    				<enumeration value="server"></enumeration>
+    				<enumeration value="client_server"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </complexType>
+
+    <simpleType name="NewSimpleType">
+    	<restriction base="string"></restriction>
+    </simpleType>
+
+
+    <complexType name="IDriverContract">
+    	<choice>
+    		<element name="context_argument"
+    			type="tns:IDriverContextArgument" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="quantifier" type="decimal"></element>
+    	</choice>
+    	<attribute name="library_path" type="string" use="optional"></attribute>
+    </complexType>
+
+    <element name="contract" type="tns:IDriverContract"></element>
+
+    <element name="port_info" type="tns:IDriverPortInfo"></element>
+    
+    <complexType name="IDriverPortInfo">
+    	<sequence>
+    		<element name="port" type="tns:IDriverPortInfoElement" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="IDriverPortInfoElement">
+        <attribute name="name" type="string" use="required"></attribute>
+        <attribute name="index" type="int" use="required"></attribute>
+        <attribute name="role" type="string" use="required"></attribute>
+    	<attribute name="facet" type="int" use="required"></attribute>
+    </complexType>
+</schema>
