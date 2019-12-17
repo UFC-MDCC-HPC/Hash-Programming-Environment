@@ -201,21 +201,21 @@ public interface ComponentBodyType extends EObject {
 	EList<UnitType> getUnit();
 
 	/**
-	 * Returns the value of the '<em><b>Enumerator</b></em>' containment reference list.
-	 * The list contents are of type {@link hPE.xml.component.EnumeratorType}.
+	 * Returns the value of the '<em><b>Enumerator</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Enumerator</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Enumerator</em>' containment reference list.
+	 * @return the value of the '<em>Enumerator</em>' attribute list.
 	 * @see hPE.xml.component.ComponentPackage#getComponentBodyType_Enumerator()
-	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='enumerator' group='#group:0'"
 	 * @generated
 	 */
-	EList<EnumeratorType> getEnumerator();
+	EList<String> getEnumerator();
 
 	/**
 	 * Returns the value of the '<em><b>Fusions Of Replicators</b></em>' containment reference list.

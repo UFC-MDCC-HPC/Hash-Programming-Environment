@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ComponentInUseType#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getPackage <em>Package</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getParameterId <em>Parameter Id</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentInUseType#getQuantifierValue <em>Quantifier Value</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
@@ -405,6 +406,32 @@ public interface ComponentInUseType extends EObject {
 	 * @generated
 	 */
 	void setParameterId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Quantifier Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Only for quantifiers ...
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Quantifier Value</em>' attribute.
+	 * @see #setQuantifierValue(String)
+	 * @see hPE.xml.component.ComponentPackage#getComponentInUseType_QuantifierValue()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='quantifier_value'"
+	 * @generated
+	 */
+	String getQuantifierValue();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentInUseType#getQuantifierValue <em>Quantifier Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Quantifier Value</em>' attribute.
+	 * @see #getQuantifierValue()
+	 * @generated
+	 */
+	void setQuantifierValue(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Version</b></em>' attribute.

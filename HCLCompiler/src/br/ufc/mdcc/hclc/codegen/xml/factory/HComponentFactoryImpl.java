@@ -736,68 +736,67 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private Map<String, List<Slice>> unitEnumerators = new HashMap<String, List<Slice>>();
 	private Map<UnitSliceType, String> unitOfSlice = new HashMap<UnitSliceType,String>();
 	
-	private void saveUnitSlices(Slice_list slice_list, EList slicesX) {
+	private void saveUnitSlices(Slice_list slice_list, EList slicesX) 
+	{				
+		for (Slice slice : slice_list) 
+		{
+		    if (!this.isSliceEnumerator(slice)) 
+		    {
+			    UnitSliceType sliceX = factory.createUnitSliceType();
+			    
+				String cRef = null;
+				String uRef = null;
+				int replica = 0;
+				String sName = null;
 
+				cRef = slice.getIdInner();
+				uRef = slice.getIdUnitInner();
+				sName = slice.getId();
+				boolean transitive;
+
+				sliceX.setReplica(0);
+				sliceX.setCRef(cRef);
+				sliceX.setURef(uRef);
+				sliceX.setSliceName(sName);
+				sliceX.setTransitive(this.ports.containsKey(cRef));				
+
+				slicesX.add(sliceX);
 				
-		for (Slice slice : slice_list) {
-			    if (!this.isSliceEnumerator(slice)) {
-				    UnitSliceType sliceX = factory.createUnitSliceType();
-				    
-					String cRef = null;
-					String uRef = null;
-					int replica = 0;
-					String sName = null;
-	
-					cRef = slice.getIdInner();
-					uRef = slice.getIdUnitInner();
-					sName = slice.getId();
-					boolean transitive;
-	
-					sliceX.setReplica(0);
-					sliceX.setCRef(cRef);
-					sliceX.setURef(uRef);
-					sliceX.setSliceName(sName);
-					sliceX.setTransitive(this.ports.containsKey(cRef));				
-	
-					slicesX.add(sliceX);
-					
-					List<UnitSliceType> slices = null;
-					if (!slicesOfInner.containsKey(cRef)) {
-						slices = new ArrayList<UnitSliceType>();
-						slicesOfInner.put(cRef, slices);
-					} else {
-						slices = slicesOfInner.get(cRef);
-					}
-					slices.add(sliceX);
-					this.unitOfSlice.put(sliceX, slice.getUnit());
-					
-					
-			    } else {
-			    	String cRef = slice.getIdInner();
-			    	String uRef = slice.getUnit();
-			    	List<Slice> list = null;
-			    	
-			    	if (slice_enumerators.containsKey(cRef)) {
-			    		list = slice_enumerators.get(cRef);
-			    	} else {
-			    	    list = new ArrayList<Slice>();
-			    	    slice_enumerators.put(cRef, list);
-			    	}
-		    		list.add(slice);
-		    		
-		    		// Remember unit enumerators
-					if (!unitEnumerators.containsKey(uRef)) {
-						list = new ArrayList<Slice>();
-						unitEnumerators.put(uRef, list);
-					} else {
-						list = unitEnumerators.get(uRef);
-					}
-					list.add(slice);
-		    		
-		    		
-			    }
-			}
+				List<UnitSliceType> slices = null;
+				if (!slicesOfInner.containsKey(cRef)) {
+					slices = new ArrayList<UnitSliceType>();
+					slicesOfInner.put(cRef, slices);
+				} else {
+					slices = slicesOfInner.get(cRef);
+				}
+				slices.add(sliceX);
+				this.unitOfSlice.put(sliceX, slice.getUnit());
+				
+				
+		    } else {
+		    	String cRef = slice.getIdInner();
+		    	String uRef = slice.getUnit();
+		    	List<Slice> list = null;
+		    	
+		    	if (slice_enumerators.containsKey(cRef)) {
+		    		list = slice_enumerators.get(cRef);
+		    	} else {
+		    	    list = new ArrayList<Slice>();
+		    	    slice_enumerators.put(cRef, list);
+		    	}
+	    		list.add(slice);
+	    		
+	    		// Remember unit enumerators
+				if (!unitEnumerators.containsKey(uRef)) {
+					list = new ArrayList<Slice>();
+					unitEnumerators.put(uRef, list);
+				} else {
+					list = unitEnumerators.get(uRef);
+				}
+				list.add(slice);    	
+		    }
 		}
+	}
 	
 
 	private Map<Inner_Component, SplitType> delayResolveSplits = new HashMap<Inner_Component, SplitType>();

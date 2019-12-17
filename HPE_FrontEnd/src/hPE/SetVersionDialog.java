@@ -8,6 +8,7 @@ import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.frontend.kinds.tactical.model.HTacticalComponent;
 import hPE.frontend.kinds.topology.model.HTopologyComponent;
@@ -38,7 +39,7 @@ public class SetVersionDialog extends Composite {
 	private Button radioEnvironment = null;
 	private Button radioArchitecture = null;
 	private Button radioQualifier = null;
-	private Button radioService = null;
+	private Button radioQuantifier = null;
 	private Button radioCertifier = null;
 	private Button radioTactical = null;
 	private Button radioBinding = null;
@@ -137,11 +138,11 @@ public class SetVersionDialog extends Composite {
 		radioQualifier.addSelectionListener(sl);
 		radioQualifier.setSelection(false);
 
-		radioService = new Button(groupKinds, SWT.RADIO);
-		radioService.addSelectionListener(sl);
-		radioService.setSelection(false);
-		radioService.setBounds(new Rectangle(263, 30, 120, 18));
-		radioService.setText(HTopologyComponent.KIND);		
+		radioQuantifier = new Button(groupKinds, SWT.RADIO);
+		radioQuantifier.addSelectionListener(sl);
+		radioQuantifier.setSelection(false);
+		radioQuantifier.setBounds(new Rectangle(263, 30, 120, 18));
+		radioQuantifier.setText(HQuantifierComponent.KIND);		
 		
 		radioBinding = new Button(groupKinds, SWT.RADIO);
 		radioBinding.addSelectionListener(sl);
@@ -181,8 +182,8 @@ public class SetVersionDialog extends Composite {
   		return this.radioDataStructure;
 	}
 
-	public Button getRadioEnumerator() {
-  		return this.radioEnumerator;
+	public Button getRadioQuantifier() {
+  		return this.radioQuantifier;
 	}
 
 	public Button getRadioEnvironment() {
@@ -198,7 +199,7 @@ public class SetVersionDialog extends Composite {
 	}
 
 	public Button getRadioTopology() {
-		return this.radioService;
+		return this.radioQuantifier;
 	}
 	
 	public Button getRadioCertifier() {
@@ -232,7 +233,6 @@ public class SetVersionDialog extends Composite {
 	}
 	
 	private Integer[] safeVersion = new Integer[] {1,0,0,0};
-	private Button radioEnumerator = null;
 	public void SetEnabledVersionSetting(boolean enable) {
 		if (!enable) {
 			if (!(spinnerV1.getSelection() == 1 && 

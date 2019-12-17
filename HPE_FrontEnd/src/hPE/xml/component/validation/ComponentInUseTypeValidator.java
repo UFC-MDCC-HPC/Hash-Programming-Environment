@@ -35,5 +35,7 @@ public interface ComponentInUseTypeValidator {
 	boolean validateName(String value);
 	boolean validatePackage(String value);
 	boolean validateParameterId(String value);
+	boolean validateQuantifierValue(String value);
+
 	boolean validateVersion(String value);
 }

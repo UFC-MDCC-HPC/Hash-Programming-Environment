@@ -1,14 +1,12 @@
 package hPE.frontend.kinds.qualifier.model;
 
-import org.eclipse.emf.common.util.URI;
-
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
-import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
-import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
-import hPE.frontend.kinds.certifier.model.HCertifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
+
+import org.eclipse.emf.common.util.URI;
 
 public class HQualifierComponent extends HBaseKindComponent {
 
@@ -29,6 +27,7 @@ public class HQualifierComponent extends HBaseKindComponent {
 	
     public boolean accepts(IComponent c) {
     	if (c instanceof HQualifierComponent) return true;
+    	if (c instanceof HQuantifierComponent) return true;
     	return super.accepts(c);
     }
 

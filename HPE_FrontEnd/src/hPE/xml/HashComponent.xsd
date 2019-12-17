@@ -36,7 +36,7 @@
 
 
 
-        	<element name="enumerator" type="tns:EnumeratorType">
+        	<element name="enumerator" type="string">
         	</element>
 
 
@@ -135,7 +135,9 @@
 			<element name="unitBounds" type="tns:UnitBoundsType"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
-			<element name="revokeMultipleFacet" type="int" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="revokeMultipleFacet" type="int"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
 		</sequence>
 		<attribute name="package" type="string"></attribute>
 		<attribute name="name" type="string"></attribute>
@@ -148,7 +150,13 @@
 		<attribute name="hash_component_UID" type="string"
 			use="optional">
 		</attribute>
-		<attribute name="index_replica" type="int" use="optional" default="0"></attribute>
+		<attribute name="index_replica" type="int" use="optional"
+			default="0">
+		</attribute>
+		<attribute name="quantifier_value" type="string" use="optional">
+			<annotation>
+				<documentation>Only for quantifiers ...</documentation>
+			</annotation></attribute>
 	</complexType>
 
 	<simpleType name="SupportedKinds">
@@ -160,7 +168,7 @@
 			<enumeration value="Environment"></enumeration>
 			<enumeration value="Qualifier"></enumeration>
 			<enumeration value="Application"></enumeration>
-			<enumeration value="Enumerator"></enumeration>
+			<enumeration value="Quantifier"></enumeration>
 			<enumeration value="Binding"></enumeration>
 			<enumeration value="Topology"></enumeration>
 			<enumeration value="System"></enumeration>
@@ -202,31 +210,6 @@
 			</sequence>
 		<attribute name="cRef" type="string" use="optional"></attribute>
 	</complexType>
-	<complexType name="EnumeratorType">
-		<sequence>
-			<element name="originRef" maxOccurs="unbounded"
-				minOccurs="0" type="string">
-			</element>
-			<element name="links" type="tns:EnumerableType"
-				maxOccurs="unbounded" minOccurs="1">
-			</element>
-			<element name="visualDescription"
-				type="tns:VisualElementAttributes">
-			</element>
-
-			<element name="fromRecursion"
-				type="tns:EnumeratorFromRecursionType" maxOccurs="1"
-				minOccurs="0">
-			</element>
-		</sequence>
-		<attribute name="ref" type="string" use="required"></attribute>
-		<attribute name="varId" type="string" use="optional"
-			default="*">
-		</attribute>
-		<attribute name="cardinality" type="int" use="optional"></attribute>
-		<attribute name="fromSplit" type="boolean" use="required"></attribute>
-
-	</complexType>
 	<complexType name="UnitRefType">
 		<sequence></sequence>
 		<attribute name="cRef" type="string" use="optional"
@@ -252,12 +235,6 @@
 		<attribute name="cRef" type="string" use="required"></attribute>
 		<attribute name="direct" type="boolean" use="optional" default="true"></attribute>
 	</complexType>
-	<complexType name="EnumeratorRefType">
-		<sequence>
-			</sequence>
-		<attribute name="cRef" type="string" use="required">
-		</attribute>
-	</complexType>
 	<complexType name="ComponentHeaderType">
 		<sequence minOccurs="1" maxOccurs="1">
 			<element name="baseType" type="tns:BaseTypeType"
@@ -270,7 +247,10 @@
 			<element name="visualAttributes"
 				type="tns:VisualElementAttributes" minOccurs="0" maxOccurs="1">
 			</element>
-			<element name="facet_configuration" type="tns:FacetConfigurationType" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="facet_configuration"
+				type="tns:FacetConfigurationType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
 		</sequence>
 		<attribute name="kind" type="tns:SupportedKinds"></attribute>
 		<attribute name="name" type="string"></attribute>
@@ -279,6 +259,10 @@
 		<attribute name="hash_component_UID" type="string"></attribute>
 		<attribute name="isAbstract" type="boolean"></attribute>
 		<attribute name="locationURI" type="anyURI" use="optional"></attribute>
+		<attribute name="bound_value" type="string" use="optional">
+			<annotation>
+				<documentation>For quantifiers ...</documentation>
+			</annotation></attribute>
 	</complexType>
 	<complexType name="InterfaceSliceType">
 		<sequence>
@@ -321,37 +305,8 @@
 
 
 
-	<complexType name="EnumerableType">
-		<sequence></sequence>
-		<attribute name="ref" type="string" use="required"></attribute>
-	</complexType>
-	<complexType name="EnumerableUnitType">
-		<complexContent>
-			<extension base="tns:EnumerableType">
-				<sequence></sequence>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="EnumerableComponentType">
-		<complexContent>
-			<extension base="tns:EnumerableType">
-				<sequence></sequence>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="EnumerableUnitSliceType">
-		<complexContent>
-			<extension base="tns:EnumerableType">
-				<sequence></sequence>
-				<attribute name="uRef" type="string" use="required"></attribute>
-				<attribute name="cRef" type="string"></attribute>
-				<attribute name="sRef" type="string"></attribute>
-				<attribute name="splitReplica" type="int"></attribute>
-			</extension>
-		</complexContent>
-	</complexType>
 
 	<complexType name="ParameterRenaming">
 		<attribute name="formFieldId" type="string" use="required"></attribute>
@@ -550,9 +505,6 @@
     	<attribute name="pRef" type="string"></attribute>
     </complexType>
 
-    <complexType name="EnumeratorFromRecursionType">
-    	<attribute name="cRef" type="string"></attribute>
-    </complexType>
 
     <complexType name="VersionType">
     	<attribute name="field1" type="int"></attribute>
@@ -564,15 +516,6 @@
     <attribute name="NewAttribute" type="string"></attribute>
 
 
-    <complexType name="EnumerableEntryType">
-    	<complexContent>
-    		<extension base="tns:EnumerableType">
-    			<attribute name="cRef" type="string"></attribute>
-    			<attribute name="uRef" type="string"></attribute>
-    			<attribute name="index" type="int" use="optional"></attribute>
-    		</extension>
-    	</complexContent>
-    </complexType>
 
     <complexType name="InterfaceParameterType">
     	<attribute name="parid" type="string"></attribute>

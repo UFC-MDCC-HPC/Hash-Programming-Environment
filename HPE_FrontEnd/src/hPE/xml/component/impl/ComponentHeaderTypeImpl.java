@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getVersions <em>Versions</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getVisualAttributes <em>Visual Attributes</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getFacetConfiguration <em>Facet Configuration</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getBoundValue <em>Bound Value</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getKind <em>Kind</em>}</li>
@@ -86,6 +87,26 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 	 * @ordered
 	 */
 	protected EList<FacetConfigurationType> facetConfiguration;
+
+	/**
+	 * The default value of the '{@link #getBoundValue() <em>Bound Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBoundValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String BOUND_VALUE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getBoundValue() <em>Bound Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBoundValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected String boundValue = BOUND_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getHashComponentUID() <em>Hash Component UID</em>}' attribute.
@@ -359,6 +380,27 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getBoundValue() {
+		return boundValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBoundValue(String newBoundValue) {
+		String oldBoundValue = boundValue;
+		boundValue = newBoundValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_HEADER_TYPE__BOUND_VALUE, oldBoundValue, boundValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getHashComponentUID() {
 		return hashComponentUID;
 	}
@@ -566,6 +608,8 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 				return getVisualAttributes();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
 				return getFacetConfiguration();
+			case ComponentPackage.COMPONENT_HEADER_TYPE__BOUND_VALUE:
+				return getBoundValue();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return getHashComponentUID();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
@@ -604,6 +648,9 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
 				getFacetConfiguration().clear();
 				getFacetConfiguration().addAll((Collection<? extends FacetConfigurationType>)newValue);
+				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__BOUND_VALUE:
+				setBoundValue((String)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID((String)newValue);
@@ -647,6 +694,9 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
 				getFacetConfiguration().clear();
 				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__BOUND_VALUE:
+				setBoundValue(BOUND_VALUE_EDEFAULT);
+				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID(HASH_COMPONENT_UID_EDEFAULT);
 				return;
@@ -685,6 +735,8 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 				return visualAttributes != null;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__FACET_CONFIGURATION:
 				return facetConfiguration != null && !facetConfiguration.isEmpty();
+			case ComponentPackage.COMPONENT_HEADER_TYPE__BOUND_VALUE:
+				return BOUND_VALUE_EDEFAULT == null ? boundValue != null : !BOUND_VALUE_EDEFAULT.equals(boundValue);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return HASH_COMPONENT_UID_EDEFAULT == null ? hashComponentUID != null : !HASH_COMPONENT_UID_EDEFAULT.equals(hashComponentUID);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
@@ -711,7 +763,9 @@ public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implem
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (hashComponentUID: ");
+		result.append(" (boundValue: ");
+		result.append(boundValue);
+		result.append(", hashComponentUID: ");
 		result.append(hashComponentUID);
 		result.append(", isAbstract: ");
 		if (isAbstractESet) result.append(isAbstract); else result.append("<unset>");

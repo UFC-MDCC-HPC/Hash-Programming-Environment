@@ -89,20 +89,20 @@ public class ComponentEditPart<ModelType extends HComponent,
         	component = (HComponent) (ccc.containsKey(varName) ? ccc.get(varName) : component);
         	
     	    component_figure.setAbstract();
-    	    showBounds = showBounds && ((!topC.getVars().contains(varName)) || component.isTopConfiguration());
+    	    // showBounds = showBounds && (/*(!topC.getVars().contains(varName)) ||*/ component.isTopConfiguration());
     	    if (varName.equals("?")) {
     	        name += (showParId ? component.getParameterIdentifier((IComponent)component.getConfiguration()) : "") + (showBounds ? " = " + component.getVariableName(topC) +  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
     	    }
     	    else {
-    	    	name += varName + (showBounds ?  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
+    	    	name += varName + (showBounds ?  ": " + component.getPackagePath() + "." + component.getNameWithParameters(false, showBounds, showParId) : "");
     	    }
         }
         else {
         	component_figure.setNonAbstract();
-            name += component.getNameWithParameters(false, showBounds, showParId);
+            name += component.getPackagePath() + "." + component.getNameWithParameters(false, showBounds, showParId);
         }
 
-        String name_ =  HComponent.breakLines(" " + component.getPackagePath() + "." + name + " ");
+        String name_ =  HComponent.breakLines(" " + name + " ");
         
 		Label ff = new Label(" " + name_ + " ");
 		Font font = new Font(null, "Courier New", 8, SWT.BOLD);
@@ -125,7 +125,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 	}
 	
 
-	private Rectangle calculateBounds(ModelType component) {
+	protected Rectangle calculateBounds(ModelType component) {
 		Rectangle bounds = component.getBounds();
 		//if (component.isDirectSonOfTheTopConfiguration()) {
 			return bounds;

@@ -189,13 +189,16 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 					old_c_current = c_current;
 					c_current = (HComponent) c_current.getConfiguration();
 				}
-				while ((old_c_current != cThis && c_supplier_ != null));
+				while ((old_c_current != cThis && c_current != null && c_supplier_ != null));
 				
 				List<HComponent> c_supplied_by_supplier = null;
 				HComponent c_supplier_ctx = null;
 				
 				if (c_supplier == null || (c_supplied_by_supplier = c_supplier.getWhoISupply()).isEmpty() || cContext.isInnerComponentOf(c_supplier_ctx = c_supplied_by_supplier.get(0).getSupplierContext()) || (cContext == c_supplier_ctx && !cContext.isAbstract()))
 				{
+					HComponent c_supplier_old = c_supplier.getSupplier();
+					c_supplier = c_supplier_old != null ? c_supplier_old : c_supplier;
+					
 					is_supplier = c_supplier.getInterfaceByName(is.getPrimName()); 
 					is_supplier = is_supplier == null ? is : is_supplier;
 	
@@ -546,7 +549,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 			boolean abs = c.isAbstractConfiguration();
 
-			String type = srcVersion.getFiles().size() == 0 ? (srcsUndef.containsKey(srcVersion) ? srcsUndef.get(srcVersion) : "Undefined") : srcVersion.getSynthesizerType(abs);
+			String type = srcVersion.getFiles().size() == 0 ? (srcsUndef.containsKey(srcVersion) ? srcsUndef.get(srcVersion) : srcVersion.getSynthesizerType(abs)) : srcVersion.getSynthesizerType(abs);
 
 			switch (columnIndex) {
 			case 0:
@@ -604,8 +607,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 			comboBox2.addItemListener(ComboListener.getInstance());
 
-			ComboListener.getInstance().setSelectedFileNames(
-					getSelectedFileNames());
+			ComboListener.getInstance().setSelectedFileNames(getSelectedFileNames());
 			ComboListener.getInstance().setCombo(comboBox2);
 			ComboListener.getInstance().setTable(jTable);
 
@@ -836,9 +838,9 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	public String getInheritedName() 
 	{
-		if (this.inheritedName == null) {
+		//if (this.inheritedName == null) {
 			this.saveInheritedName();
-		}
+		//}
 		return this.inheritedName;
 	}
 

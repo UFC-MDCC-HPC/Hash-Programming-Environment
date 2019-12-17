@@ -38,6 +38,7 @@ import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.frontend.kinds.tactical.model.HTacticalComponent;
 import hPE.frontend.kinds.topology.model.HTopologyComponent;
@@ -521,12 +522,11 @@ public final class HComponentFactoryImpl implements HComponentFactory
 					URI locationUri = location /* xInnerC.getLocation() */!= null ? URI.createURI(location) : URI.createURI(HPEProperties.get(PreferenceConstants.LOCAL_LOCATION));
 					String ref = xInnerC.getLocalRef();
 					
-					if (ref.equals("platform_peer"))
-						System.out.print(true);
-					
 					// String version = xInnerC.getVersion();
 					boolean isExposed = xInnerC.isExposed();
 					boolean isMultiple = xInnerC.isSetMultiple() ? xInnerC.isMultiple() : false;
+					String quantifier_value = xInnerC.getQuantifierValue(); // only for quantifiers ...
+						
 
 					java.io.File fileCache = getCachePath(package_, name);
 					URI innerUri = null;
@@ -594,7 +594,11 @@ public final class HComponentFactoryImpl implements HComponentFactory
 	
 						if (retrieveLibraries)
 							retrieveLibraries(innerC, locationUri);
-	
+
+						if (quantifier_value != null)
+							((HQuantifierComponent)innerC).setValue(quantifier_value);
+
+						
 						List<HComponent> cList = null;
 						if (mC.containsKey(ref))
 							cList = mC.get(ref); 
@@ -1012,9 +1016,6 @@ public final class HComponentFactoryImpl implements HComponentFactory
 		{
 			String pRef = port.getLocalRef();
 			
-			if (pRef.equals("platform_peer"))
-				System.out.print(true);
-			
 			boolean pIsExposed = port.isExposed();
 			
 			List<HComponent> p_list = new ArrayList<HComponent>();
@@ -1278,7 +1279,9 @@ public final class HComponentFactoryImpl implements HComponentFactory
 			String hash_component_UID = xCheader.getHashComponentUID();
 			String locationURI = xCheader.getLocationURI();
 			boolean isAbstract = xCheader.isIsAbstract();
-
+			
+			String bound_value = kind == SupportedKinds.QUANTIFIER ? xCheader.getBoundValue() : null;
+	
 			int copies = level > 1 ? checkFacetCardinality(xCheader, multiple_facets_revoked, name) : 1;
 
 			this.isConcrete = false;
@@ -1288,6 +1291,10 @@ public final class HComponentFactoryImpl implements HComponentFactory
 			{			
 				component = this.createComponent(kind, name, uri);
 				component_list.add(component);
+				
+				// Bound value of quantifiers ...
+				if (bound_value != null)
+					((HQuantifierComponent)component).setValue(bound_value);
 				
 				component.setPackagePath(new Path(packagePath));
 				component.setHashComponentUID(hash_component_UID);
@@ -1469,10 +1476,11 @@ public final class HComponentFactoryImpl implements HComponentFactory
 	{		
 		int copies = 1;
 		EList<FacetConfigurationType> facet_config_list = xCheader.getFacetConfiguration();
-	    
-	    for (FacetConfigurationType facet_config : facet_config_list)
+	    				   
+		for (FacetConfigurationType facet_config : facet_config_list)
 	    {
 	       int facet = facet_config.getFacet();
+	       
 	       boolean facet_multiple = facet_config.isMultiple() && !multiple_facets_revoked.contains(facet);
 	       if (facet_cardinality.containsKey(facet) && facet_cardinality.get(facet) > 1 && !facet_multiple)
 	       {
@@ -1766,6 +1774,9 @@ public final class HComponentFactoryImpl implements HComponentFactory
 		xH.setLocationURI(c.getRemoteLocation());
 
 		xH.setIsAbstract(c.isAbstract());
+		
+		if (c instanceof HQuantifierComponent)
+			xH.setBoundValue(((HQuantifierComponent) c).getValue());
 
 		VisualElementAttributes v = factory.createVisualElementAttributes();
 		saveVisualDescription(c, v);
@@ -2202,6 +2213,12 @@ public final class HComponentFactoryImpl implements HComponentFactory
 			throw new UndefinedRefInnerException(ic);
 		}
 
+		if (ic instanceof HQuantifierComponent)
+		{
+			HQuantifierComponent icq = (HQuantifierComponent) ic;
+			d.setQuantifierValue(icq.getValue());
+		}
+		
 		d.getRevokeMultipleFacet().addAll(ic.getRevokeMultipleFacet());
 		d.setLocalRef(localRef);
 		d.setLocation(location);
@@ -2224,7 +2241,6 @@ public final class HComponentFactoryImpl implements HComponentFactory
 		savePorts(ic, ports);
 		saveUnitBounds(ic.getUnits(), unitBounds);
 		saveVisualDescription(ic, v);
-
 	}
 
 	private void savePorts(HComponent ic, EList<InnerComponentType> ports)
@@ -2992,7 +3008,6 @@ public final class HComponentFactoryImpl implements HComponentFactory
 				{
 					for (HUnitSlice usPort : usPorts) 
 					{
-					//	HUnit usPortSource = (HUnit) usPort.getComponentEntry();
 						String usPortName = usPort.getConfiguration().getRef();
 						portNames.put(usPortName, usPortName);
 					}
@@ -3040,7 +3055,8 @@ public final class HComponentFactoryImpl implements HComponentFactory
 				{
 					for (HUnitSlice usPort : usPorts) {
 						String usPortName = usPort.getConfiguration().getRef();
-						portsX.add(usPortName);
+						String sliceName = usPort.getComponentEntry().getName2();
+						portsX.add(usPortName + "." + sliceName);
 					}
 				}
 
@@ -3736,6 +3752,8 @@ public final class HComponentFactoryImpl implements HComponentFactory
 			c = new HEnvironmentComponent(name, location, uri);
 		} else if (kind.getName().equals(HQualifierComponent.KIND)) {
 			c = new HQualifierComponent(name, location, uri);
+		} else if (kind.getName().equals(HQuantifierComponent.KIND)) {
+			c = new HQuantifierComponent(name, location, uri);
 			// } else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
 			// c = new HEnumeratorComponent(name, location, uri);
 		} else if (kind.getName().equals(HCertifierComponent.KIND)) {

@@ -41,6 +41,9 @@
     				<element name="iterate"
     					type="tns:SAFeSWL_IterateType">
     				</element>
+    				<element name="semaphore" type="tns:SAFeSWL_CreateSemaphore"></element>
+    				<element name="p" type="string"></element>
+    				<element name="v" type="string"></element>
     			</choice>
     		</extension>
     	</complexContent>
@@ -87,18 +90,43 @@
 	<complexType name="SAFeSWL_OperationAnyType">
 		<complexContent>
 			<extension base="tns:SAFeSWL_OperationBaseType">
-				<choice maxOccurs="1" minOccurs="0" >
-					<element name="skip" type="tns:SAFeSWL_OperationPrimitiveType">	</element>
-					<element name="break" type="tns:SAFeSWL_OperationPrimitiveType"> </element>
-					<element name="continue" type="tns:SAFeSWL_OperationPrimitiveType">	</element>
-					<element name="start" type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType"> </element>
-					<element name="wait" type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType"> </element>
-					<element name="cancel" type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType"> </element>
-					<element name="invoke" type="tns:SAFeSWL_OperationPrimitiveInvokeActionType">	</element>
-					<element name="sequence" type="tns:SAFeSWL_OperationManyType"> </element>
-					<element name="parallel" type="tns:SAFeSWL_OperationManyType"> </element>
-					<element name="choice" type="tns:SAFeSWL_OperationChoiceType"> </element>
-					<element name="iterate" type="tns:SAFeSWL_IterateType">	</element>
+				<choice maxOccurs="1" minOccurs="0">
+					<element name="skip"
+						type="tns:SAFeSWL_OperationPrimitiveType">
+					</element>
+					<element name="break"
+						type="tns:SAFeSWL_OperationPrimitiveType">
+					</element>
+					<element name="continue"
+						type="tns:SAFeSWL_OperationPrimitiveType">
+					</element>
+					<element name="start"
+						type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType">
+					</element>
+					<element name="wait"
+						type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType">
+					</element>
+					<element name="cancel"
+						type="tns:SAFeSWL_OperationPrimitiveInvokeActionAsyncType">
+					</element>
+					<element name="invoke"
+						type="tns:SAFeSWL_OperationPrimitiveInvokeActionType">
+					</element>
+					<element name="sequence"
+						type="tns:SAFeSWL_OperationManyType">
+					</element>
+					<element name="parallel"
+						type="tns:SAFeSWL_OperationManyType">
+					</element>
+					<element name="choice"
+						type="tns:SAFeSWL_OperationChoiceType">
+					</element>
+					<element name="iterate"
+						type="tns:SAFeSWL_IterateType">
+					</element>
+					<element name="semaphore" type="tns:SAFeSWL_CreateSemaphore"></element>
+					<element name="p" type="string"></element>
+					<element name="v" type="string"></element>
 				</choice>
 			</extension>
 		</complexContent>
@@ -184,5 +212,10 @@ a usar um único "select" no branch. </documentation>
 				<attribute name="until" type="string"></attribute>
 			</extension>
 		</complexContent>
+	</complexType>
+
+	<complexType name="SAFeSWL_CreateSemaphore">
+		<attribute name="id" type="string" use="required"></attribute>
+		<attribute name="value" type="int" use="optional" default="0"></attribute>
 	</complexType>
 </schema>

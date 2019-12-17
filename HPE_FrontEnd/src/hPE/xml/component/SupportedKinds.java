@@ -89,14 +89,14 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	APPLICATION(6, "Application", "Application"), /**
-	 * The '<em><b>Enumerator</b></em>' literal object.
+	 * The '<em><b>Quantifier</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #ENUMERATOR_VALUE
+	 * @see #QUANTIFIER_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	ENUMERATOR(7, "Enumerator", "Enumerator"),
+	QUANTIFIER(7, "Quantifier", "Quantifier"),
 
 	/**
 	 * The '<em><b>Binding</b></em>' literal object.
@@ -125,22 +125,22 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	SYSTEM(10, "System", "System"), /**
-	 * The '<em><b>Certifier</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #PROXY_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	CERTIFIER(11, "Certifier", "Certifier"), /**
 	 * The '<em><b>Tactical</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #PROXY_VALUE
+	 * @see #TACTICAL_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	TACTICAL(12, "Tactical", "Tactical");
+	TACTICAL(11, "Tactical", "Tactical"), /**
+	 * The '<em><b>Certifier</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CERTIFIER_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CERTIFIER(12, "Certifier", "Certifier");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -248,19 +248,19 @@ public enum SupportedKinds implements Enumerator {
 	public static final int APPLICATION_VALUE = 6;
 
 	/**
-	 * The '<em><b>Enumerator</b></em>' literal value.
+	 * The '<em><b>Quantifier</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Enumerator</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #ENUMERATOR
-	 * @model name="Enumerator"
+	 * @see #QUANTIFIER
+	 * @model name="Quantifier"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ENUMERATOR_VALUE = 7;
+	public static final int QUANTIFIER_VALUE = 7;
 
 
 	/**
@@ -310,21 +310,6 @@ public enum SupportedKinds implements Enumerator {
 	public static final int SYSTEM_VALUE = 10;
 
 	/**
-	 * The '<em><b>Certifier</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Certifier</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #CERTIFIER
-	 * @model name="Certifier"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int CERTIFIER_VALUE = 11;
-
-	/**
 	 * The '<em><b>Tactical</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -337,7 +322,22 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TACTICAL_VALUE = 12;
+	public static final int TACTICAL_VALUE = 11;
+
+	/**
+	 * The '<em><b>Certifier</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Certifier</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #CERTIFIER
+	 * @model name="Certifier"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CERTIFIER_VALUE = 12;
 
 	/**
 	 * An array of all the '<em><b>Supported Kinds</b></em>' enumerators.
@@ -354,12 +354,12 @@ public enum SupportedKinds implements Enumerator {
 			ENVIRONMENT,
 			QUALIFIER,
 			APPLICATION,
-			ENUMERATOR,
+			QUANTIFIER,
 			BINDING,
 			TOPOLOGY,
 			SYSTEM,
+			TACTICAL,
 			CERTIFIER,
-			TACTICAL
 		};
 
 	/**
@@ -417,12 +417,12 @@ public enum SupportedKinds implements Enumerator {
 			case ENVIRONMENT_VALUE: return ENVIRONMENT;
 			case QUALIFIER_VALUE: return QUALIFIER;
 			case APPLICATION_VALUE: return APPLICATION;
-			case ENUMERATOR_VALUE: return ENUMERATOR;
+			case QUANTIFIER_VALUE: return QUANTIFIER;
 			case BINDING_VALUE: return BINDING;
 			case TOPOLOGY_VALUE: return TOPOLOGY;
 			case SYSTEM_VALUE: return SYSTEM;
-			case CERTIFIER_VALUE: return CERTIFIER;
 			case TACTICAL_VALUE: return TACTICAL;
+			case CERTIFIER_VALUE: return CERTIFIER;
 		}
 		return null;
 	}

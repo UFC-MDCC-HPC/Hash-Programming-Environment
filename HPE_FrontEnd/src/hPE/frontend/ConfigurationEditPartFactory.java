@@ -195,6 +195,26 @@ import hPE.frontend.kinds.qualifier.model.HQualifierInterfaceSlice;
 import hPE.frontend.kinds.qualifier.model.HQualifierUnit;
 import hPE.frontend.kinds.qualifier.model.HQualifierUnitSlice;
 import hPE.frontend.kinds.qualifier.model.IHQualifierUnit;
+import hPE.frontend.kinds.quantifier.edits.QuantifierComponentEditPart;
+import hPE.frontend.kinds.quantifier.edits.QuantifierConfigurationEditPart;
+import hPE.frontend.kinds.quantifier.edits.QuantifierEntryEditPart;
+import hPE.frontend.kinds.quantifier.edits.QuantifierInterfaceEditPart;
+import hPE.frontend.kinds.quantifier.edits.QuantifierInterfaceSliceEditPart;
+import hPE.frontend.kinds.quantifier.edits.QuantifierUnitEditPart;
+import hPE.frontend.kinds.quantifier.edits.QuantifierUnitSliceEditPart;
+import hPE.frontend.kinds.quantifier.figures.QuantifierComponentFigure;
+import hPE.frontend.kinds.quantifier.figures.QuantifierConfigurationFigure;
+import hPE.frontend.kinds.quantifier.figures.QuantifierEntryFigure;
+import hPE.frontend.kinds.quantifier.figures.QuantifierInterfaceFigure;
+import hPE.frontend.kinds.quantifier.figures.QuantifierInterfaceSliceFigure;
+import hPE.frontend.kinds.quantifier.figures.QuantifierUnitFigure;
+import hPE.frontend.kinds.quantifier.figures.QuantifierUnitSliceFigure;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierInterface;
+import hPE.frontend.kinds.quantifier.model.HQuantifierInterfaceSlice;
+import hPE.frontend.kinds.quantifier.model.HQuantifierUnit;
+import hPE.frontend.kinds.quantifier.model.HQuantifierUnitSlice;
+import hPE.frontend.kinds.quantifier.model.IHQuantifierUnit;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationComponentEditPart;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationConfigurationEditPart;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationEntryEditPart;
@@ -289,6 +309,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new SynchronizationConfigurationEditPart<HSynchronizationComponent,SynchronizationConfigurationFigure>();
 				else if (model instanceof HQualifierComponent)
 					part = new QualifierConfigurationEditPart<HQualifierComponent,QualifierConfigurationFigure>();
+				else if (model instanceof HQuantifierComponent)
+					part = new QuantifierConfigurationEditPart<HQuantifierComponent,QuantifierConfigurationFigure>();
 				else if (model instanceof HEnvironmentComponent)
 					part = new EnvironmentConfigurationEditPart<HEnvironmentComponent,EnvironmentConfigurationFigure>();
 				else if (model instanceof HCertifierComponent)
@@ -321,6 +343,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new SynchronizationComponentEditPart<HSynchronizationComponent,SynchronizationComponentFigure>();
 				else if (model instanceof HQualifierComponent)
 					part = new QualifierComponentEditPart<HQualifierComponent,QualifierComponentFigure>();
+				else if (model instanceof HQuantifierComponent)
+					part = new QuantifierComponentEditPart<HQuantifierComponent,QuantifierComponentFigure>();
 				else if (model instanceof HEnvironmentComponent)
 					part = new EnvironmentComponentEditPart<HEnvironmentComponent,EnvironmentComponentFigure>();
 				else if (model instanceof HCertifierComponent)
@@ -357,6 +381,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentUnitEditPart<HEnvironmentUnit,EnvironmentUnitFigure>();
 				else if (model instanceof IHQualifierUnit) 
 					part = new QualifierUnitEditPart<HQualifierUnit,QualifierUnitFigure>();
+				else if (model instanceof IHQuantifierUnit) 
+					part = new QuantifierUnitEditPart<HQuantifierUnit,QuantifierUnitFigure>();
 				else if (model instanceof IHCertifierUnit) 
 					part = new CertifierUnitEditPart<HCertifierUnit,CertifierUnitFigure>();
 				else if (model instanceof IHTacticalUnit) 
@@ -382,6 +408,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentEntryEditPart<HEnvironmentUnit,EnvironmentEntryFigure>();
 				else if (model instanceof HQualifierUnit) 
 					part = new QualifierEntryEditPart<HQualifierUnit,QualifierEntryFigure>();
+				else if (model instanceof HQuantifierUnit) 
+					part = new QuantifierEntryEditPart<HQuantifierUnit,QuantifierEntryFigure>();
 				else if (model instanceof HCertifierUnit) 
 					part = new CertifierEntryEditPart<HCertifierUnit,CertifierEntryFigure>();
 				else if (model instanceof HTacticalUnit) 
@@ -409,6 +437,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new EnvironmentUnitSliceEditPart<HEnvironmentUnitSlice,EnvironmentUnitSliceFigure>();
 			else if (model instanceof HQualifierUnitSlice) 
 			    part = new QualifierUnitSliceEditPart<HQualifierUnitSlice,QualifierUnitSliceFigure>();
+			else if (model instanceof HQuantifierUnitSlice) 
+			    part = new QuantifierUnitSliceEditPart<HQuantifierUnitSlice,QuantifierUnitSliceFigure>();
 			else if (model instanceof HCertifierUnitSlice) 
 			    part = new CertifierUnitSliceEditPart<HCertifierUnitSlice,CertifierUnitSliceFigure>();
 			else if (model instanceof HTacticalUnitSlice) 
@@ -434,6 +464,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new EnvironmentInterfaceSliceEditPart<HEnvironmentInterfaceSlice,EnvironmentInterfaceSliceFigure>();
 			else if (model instanceof HQualifierInterfaceSlice) 
 			    part = new QualifierInterfaceSliceEditPart<HQualifierInterfaceSlice,QualifierInterfaceSliceFigure>();
+			else if (model instanceof HQuantifierInterfaceSlice) 
+			    part = new QuantifierInterfaceSliceEditPart<HQuantifierInterfaceSlice,QuantifierInterfaceSliceFigure>();
 			else if (model instanceof HCertifierInterfaceSlice) 
 			    part = new CertifierInterfaceSliceEditPart<HCertifierInterfaceSlice,CertifierInterfaceSliceFigure>();
 			else if (model instanceof HTacticalInterfaceSlice) 
@@ -461,6 +493,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 				part = new EnvironmentInterfaceEditPart<HEnvironmentInterface,EnvironmentInterfaceFigure>();
 			else if (model instanceof HQualifierInterface)
 				part = new QualifierInterfaceEditPart<HQualifierInterface,QualifierInterfaceFigure>();
+			else if (model instanceof HQuantifierInterface)
+				part = new QuantifierInterfaceEditPart<HQuantifierInterface,QuantifierInterfaceFigure>();
 			else if (model instanceof HCertifierInterface)
 				part = new CertifierInterfaceEditPart<HCertifierInterface,CertifierInterfaceFigure>();
 			else if (model instanceof HTacticalInterface)

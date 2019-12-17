@@ -10,6 +10,7 @@ import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -32,6 +33,7 @@ public class HSynchronizationComponent extends HActivateComponent {
 	
     public boolean accepts(IComponent c) {
     	if (c instanceof HQualifierComponent) return true;
+    	if (c instanceof HQuantifierComponent) return true;
     	if (c instanceof HSynchronizationComponent) return true;
     	if (c instanceof HComputationComponent) return true;
     	if (c instanceof HDataComponent) return true;

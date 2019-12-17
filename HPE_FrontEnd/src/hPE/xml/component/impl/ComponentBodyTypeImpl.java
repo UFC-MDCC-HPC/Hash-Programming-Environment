@@ -8,7 +8,6 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentBodyType;
 import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExternalLibraryType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
@@ -174,7 +173,7 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<EnumeratorType> getEnumerator() {
+	public EList<String> getEnumerator() {
 		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__ENUMERATOR);
 	}
 
@@ -233,8 +232,6 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 				return ((InternalEList<?>)getInterface()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.COMPONENT_BODY_TYPE__UNIT:
 				return ((InternalEList<?>)getUnit()).basicRemove(otherEnd, msgs);
-			case ComponentPackage.COMPONENT_BODY_TYPE__ENUMERATOR:
-				return ((InternalEList<?>)getEnumerator()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS:
 				return ((InternalEList<?>)getFusionsOfReplicators()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY:
@@ -332,7 +329,7 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 				return;
 			case ComponentPackage.COMPONENT_BODY_TYPE__ENUMERATOR:
 				getEnumerator().clear();
-				getEnumerator().addAll((Collection<? extends EnumeratorType>)newValue);
+				getEnumerator().addAll((Collection<? extends String>)newValue);
 				return;
 			case ComponentPackage.COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS:
 				getFusionsOfReplicators().clear();

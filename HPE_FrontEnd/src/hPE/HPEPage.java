@@ -9,6 +9,7 @@ import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.frontend.kinds.tactical.model.HTacticalComponent;
 import hPE.frontend.kinds.topology.model.HTopologyComponent;
@@ -144,7 +145,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			case 5: c = new HEnvironmentComponent(s,null,uriAbsolutePath); break;
 			case 6: c = new HQualifierComponent(s,null,uriAbsolutePath); break;
 			case 7: c = new HApplicationComponent(s,null,uriAbsolutePath); break;
-		    case 8: c = new HTopologyComponent(s,null,uriAbsolutePath); break;
+		    case 8: c = new HQuantifierComponent(s,null,uriAbsolutePath); break;
 			case 10: c = new HCertifierComponent(s,null,uriAbsolutePath); break;
 			case 11: c = new HBindingComponent(s,null,uriAbsolutePath); break;
 			case 12: c = new HTacticalComponent(s,null,uriAbsolutePath); break;
@@ -244,11 +245,8 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		} if( e.getSource() == composite2.getRadioApplication() ){
 			modelSelected1 = 7;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == composite2.getRadioTopology() ){
+		} if( e.getSource() == composite2.getRadioQuantifier() ){
 			modelSelected1 = 8;
-			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == composite2.getRadioEnumerator() ){
-			modelSelected1 = 9;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		} if( e.getSource() == composite2.getRadioCertifier() ){
 			modelSelected1 = 10;

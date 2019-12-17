@@ -541,6 +541,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return name;
 	}
 
+	public String getComponentNameForPrinting() {
+		return this.getComponentName();
+	}
+
 	public void setComponentName(String name) {
 		this.name = name;
 		listeners.firePropertyChange(UPDATE_NAME, null, name); //$NON-NLS-2$//$NON-NLS-1$	
@@ -1695,7 +1699,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		Comparator<? super Entry<String, List<HComponent>>> comparator = new CompareParameterOrders();
 		
-		java.util.Collections.sort(parameters,comparator);		
+		java.util.Collections.sort(parameters,comparator);
 		
 		for (Entry<String, List<HComponent>> entry : parameters) {
 
@@ -1726,8 +1730,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 								+ (showParId ? parId + " " + this.getVarianceModifier(parId) + " = " : "")
 								+ (showVar ? varName : "")
 								+ (showVar && showBounds_ ? ": " : "")
-								+ (showBounds_ ? config.getNameWithParameters(
-										complete, showBounds, showParId) : "");
+								+ (showBounds_ ? config.getNameWithParameters(complete, showBounds, showParId) : "");
 						// } else {
 						// nameWithParameters = nameWithParameters
 						// + (showParId ? parId + " = " : "")
@@ -1741,7 +1744,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		}
 
 		if (parameterized > 0) {
-			nameWithParameters = nameWithParameters.concat(">");
+			nameWithParameters = nameWithParameters + ">";
 		}
 
 		return nameWithParameters;
@@ -1759,7 +1762,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public String getNameWithParameters(boolean complete, boolean showBounds,  boolean showParId) {
 
-		return this.getComponentName() + this.getParameterModifierName(complete, showBounds, showParId);
+		return this.getComponentNameForPrinting() + this.getParameterModifierName(complete, showBounds, showParId);
 
 	}
 
@@ -2114,7 +2117,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				String varName = c.getVariableName(cThis);
 				if (!varName.equals(HComponent.UNDEFINED_NAME)) 
 				{ // only variables with defined names.
-					parameters.put(varName, c);
+					//HComponent c_supplier = c.getSupplier();
+					parameters.put(varName, c /*c_supplier == null ? c : c.getSupplier()*/);
 				}
 			}
 		}
@@ -4405,7 +4409,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			// tratar melhor no futuro
 			if (!new File(sn_path).exists()) {
 				throw new IOException(
-						"THE PREFERENCE VARIABLE MONO_BIN_PATH IS MANDATORY. CONFIGURE ON THE PREFERENCE PAGE!");
+						"ERROR (createComponentKey) - THE PREFERENCE VARIABLE MONO_BIN_PATH IS MANDATORY. CONFIGURE ON THE PREFERENCE PAGE!");
 			}
 
 			IPath loc = HComponentFactoryImpl.buildWPath(new Path(this.getRelativeLocation())); // file.getLocation();

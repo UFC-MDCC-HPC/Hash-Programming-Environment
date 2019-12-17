@@ -6,6 +6,7 @@ import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.certifier.model.HCertifierComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -30,6 +31,7 @@ public class HBindingComponent extends HBaseKindComponent {
     {
     	if (c instanceof HBindingComponent) return true;
     	if (c instanceof HQualifierComponent) return true;
+    	if (c instanceof HQuantifierComponent) return true;
     	return super.accepts(c);
     }
 

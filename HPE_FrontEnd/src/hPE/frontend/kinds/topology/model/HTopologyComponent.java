@@ -10,6 +10,7 @@ import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 
 public class HTopologyComponent extends HBaseKindComponent {
 
@@ -31,7 +32,8 @@ public class HTopologyComponent extends HBaseKindComponent {
     public boolean accepts(IComponent c) {
     	if (c instanceof HTopologyComponent) return true;
     	if (c instanceof HQualifierComponent) return true;
-    	return super.accepts(c);
+    	if (c instanceof HQuantifierComponent) return true;
+   	return super.accepts(c);
     }
 
     public String kindString() {

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getVersions <em>Versions</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getVisualAttributes <em>Visual Attributes</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getFacetConfiguration <em>Facet Configuration</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentHeaderType#getBoundValue <em>Bound Value</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}</li>
@@ -122,6 +123,32 @@ public interface ComponentHeaderType extends EObject {
 	 * @generated
 	 */
 	EList<FacetConfigurationType> getFacetConfiguration();
+
+	/**
+	 * Returns the value of the '<em><b>Bound Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * For quantifiers ...
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Bound Value</em>' attribute.
+	 * @see #setBoundValue(String)
+	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_BoundValue()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='bound_value'"
+	 * @generated
+	 */
+	String getBoundValue();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentHeaderType#getBoundValue <em>Bound Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Bound Value</em>' attribute.
+	 * @see #getBoundValue()
+	 * @generated
+	 */
+	void setBoundValue(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Hash Component UID</b></em>' attribute.

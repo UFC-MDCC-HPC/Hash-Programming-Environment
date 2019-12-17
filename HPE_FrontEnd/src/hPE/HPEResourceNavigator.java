@@ -1,7 +1,12 @@
 package hPE;
 
 import hPE.frontend.backend.HPEPlatform;
+import hPE.frontend.base.codegen.HBEAbstractSourceCodeFile;
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.policies.OpenSourceEditPolicy;
 import hPE.frontend.connector.xml.XMLConfigurationGenerator;
 import hPE.ui.preferences.PreferenceConstants;
 import hPE.xml.factory.HComponentFactory;
@@ -13,6 +18,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collection;
 
 import javax.swing.JOptionPane;
 
@@ -81,13 +89,13 @@ public class HPEResourceNavigator extends ResourceNavigator {
 			   
 			   
 			   mainMenu.add(
-					   new Action("Deploy " + fname) {
+					   new Action("Save ALL") {
 						   public void run()  {
 							        DataInputStream in = null;
                                     try{
 									    // Open the file that is the first 
 									    // command line parameter
-                                    	String path = HPEProperties.get(PreferenceConstants.HPE_HOME) + Path.SEPARATOR + "to_deploy.txt";
+                                    	String path = HPEProperties.get(PreferenceConstants.HPE_HOME) + Path.SEPARATOR + "to_save.txt";
 									    FileInputStream fstream = new FileInputStream(path);
 									    // Get the object of DataInputStream
 									    in = new DataInputStream(fstream);
@@ -100,21 +108,47 @@ public class HPEResourceNavigator extends ResourceNavigator {
 										    	break;
 									    	else if (!strLine.startsWith("#"))
 										    {	
-									    		boolean compile_flag = strLine.lastIndexOf('*') < 0;
-									    		if (!compile_flag)
-									    			strLine = strLine.substring(0,strLine.lastIndexOf('*'));									    		
+									    		//boolean compile_flag = strLine.lastIndexOf('*') < 0;
+									    		//if (!compile_flag)
+									    		//	strLine = strLine.substring(0,strLine.lastIndexOf('*'));									    		
 									    		
 										        int i = strLine.lastIndexOf('.');
-										        String p = strLine + Path.SEPARATOR + strLine.substring(i+1) + ".hpe";
+										        
+										        String base_path = "/home/heron/Dropbox/Copy/ufc_mdcc_hpc/HPC-Shelf/BackendServices_EC2/platforms";
+										        
+										        String p = base_path + Path.SEPARATOR + strLine + Path.SEPARATOR + strLine.substring(i+1) + ".hpe";
 										    	
-												System.out.println("started: deploying " + p);
+												System.out.println("started: saving " + p);
 												java.io.File file2 = new File(p);
 												URI uri = URI.createFileURI(p);
 												HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false).get(0);
+												
+												List<HInterface> it_list = new ArrayList<HInterface>(c.getInterfaces());
+												HInterface it = it_list.get(it_list.size()-1);
+																		
+												HBESourceVersion version = null;
+												HBEAbstractSynthesizer synthesizer = null;
+												Collection<HBESourceVersion> vs = it.getSourceVersions();
+												if (vs.size()==1) {
+													Object[] vsa = vs.toArray();
+													version = (HBESourceVersion) vsa[0];
+													synthesizer = it.getSupportedSynthesizers().get(0);
+												} else {
+													throw new Exception("Unexpected interface with more than one version (OpenSourceEditPolicy)");
+												}
+										    	 HBESourceVersion code = synthesizer.synthesize(it,version.getVersionID());
+
+										    	 for (HBEAbstractSourceCodeFile srcFile : code.getFiles()) 
+										    		{ 
+										    			srcFile.persistSourceFile();
+
+										    		}												
+												
+												
 												factory.saveComponent(c,file2,null);
 												
-											    HPEPlatform.deployByPath(p, compile_flag);
-											    System.out.println("finished: deploying " + p);
+											    //HPEPlatform.deployByPath(p, compile_flag);
+											    System.out.println("finished: saving " + p);
 										    } 
 										    
 								    	JOptionPane.showMessageDialog(null, "Finished !");

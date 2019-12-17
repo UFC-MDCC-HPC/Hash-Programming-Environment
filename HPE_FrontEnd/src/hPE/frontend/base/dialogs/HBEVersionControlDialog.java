@@ -146,9 +146,13 @@ public class HBEVersionControlDialog extends JDialog {
 		    comboBox.setName("Source Type");  
 		    c.setCellRenderer(renderer);
 		    try {
-		    if (jTable.getRowCount() > 0)
+		    if (jTable.getRowCount() > 0) {
+		        jTable.changeSelection(0, 0, false, false);		        
 		        jTable.setRowSelectionInterval(0, 0);
-		    } catch (Exception e) {}
+		    }
+		    } catch (Exception e) {
+		    	System.out.print(".");
+		    }
 
 	     }
 		return jTable;

@@ -5,6 +5,7 @@ import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -27,6 +28,7 @@ public class HPlatformComponent extends HQualifierComponent {
 	
     public boolean accepts(IComponent c) {
     	if (c instanceof HQualifierComponent) return true;
+    	if (c instanceof HQuantifierComponent) return true;
     	if (c instanceof HPlatformComponent) return true;
     	if (c instanceof HEnvironmentComponent) return true;
     	return super.accepts(c);

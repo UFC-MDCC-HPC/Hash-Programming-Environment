@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getPackage <em>Package</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getParameterId <em>Parameter Id</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getQuantifierValue <em>Quantifier Value</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
@@ -278,6 +279,26 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 	 * @ordered
 	 */
 	protected String parameterId = PARAMETER_ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getQuantifierValue() <em>Quantifier Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getQuantifierValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String QUANTIFIER_VALUE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getQuantifierValue() <em>Quantifier Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getQuantifierValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected String quantifierValue = QUANTIFIER_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
@@ -632,6 +653,27 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getQuantifierValue() {
+		return quantifierValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setQuantifierValue(String newQuantifierValue) {
+		String oldQuantifierValue = quantifierValue;
+		quantifierValue = newQuantifierValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_IN_USE_TYPE__QUANTIFIER_VALUE, oldQuantifierValue, quantifierValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getVersion() {
 		return version;
 	}
@@ -702,6 +744,8 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 				return getPackage();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				return getParameterId();
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__QUANTIFIER_VALUE:
+				return getQuantifierValue();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__VERSION:
 				return getVersion();
 		}
@@ -760,6 +804,9 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				setParameterId((String)newValue);
 				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__QUANTIFIER_VALUE:
+				setQuantifierValue((String)newValue);
+				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__VERSION:
 				setVersion((String)newValue);
 				return;
@@ -814,6 +861,9 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				setParameterId(PARAMETER_ID_EDEFAULT);
 				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__QUANTIFIER_VALUE:
+				setQuantifierValue(QUANTIFIER_VALUE_EDEFAULT);
+				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__VERSION:
 				setVersion(VERSION_EDEFAULT);
 				return;
@@ -855,6 +905,8 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 				return PACKAGE_EDEFAULT == null ? package_ != null : !PACKAGE_EDEFAULT.equals(package_);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				return PARAMETER_ID_EDEFAULT == null ? parameterId != null : !PARAMETER_ID_EDEFAULT.equals(parameterId);
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__QUANTIFIER_VALUE:
+				return QUANTIFIER_VALUE_EDEFAULT == null ? quantifierValue != null : !QUANTIFIER_VALUE_EDEFAULT.equals(quantifierValue);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__VERSION:
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
 		}
@@ -889,6 +941,8 @@ public class ComponentInUseTypeImpl extends MinimalEObjectImpl.Container impleme
 		result.append(package_);
 		result.append(", parameterId: ");
 		result.append(parameterId);
+		result.append(", quantifierValue: ");
+		result.append(quantifierValue);
 		result.append(", version: ");
 		result.append(version);
 		result.append(')');

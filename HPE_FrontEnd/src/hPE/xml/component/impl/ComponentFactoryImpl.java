@@ -70,14 +70,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.CONDITION_TYPE: return createConditionType();
 			case ComponentPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case ComponentPackage.ENTRY_TYPE: return createEntryType();
-			case ComponentPackage.ENUMERABLE_COMPONENT_TYPE: return createEnumerableComponentType();
-			case ComponentPackage.ENUMERABLE_ENTRY_TYPE: return createEnumerableEntryType();
-			case ComponentPackage.ENUMERABLE_TYPE: return createEnumerableType();
-			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE: return createEnumerableUnitSliceType();
-			case ComponentPackage.ENUMERABLE_UNIT_TYPE: return createEnumerableUnitType();
-			case ComponentPackage.ENUMERATOR_FROM_RECURSION_TYPE: return createEnumeratorFromRecursionType();
-			case ComponentPackage.ENUMERATOR_REF_TYPE: return createEnumeratorRefType();
-			case ComponentPackage.ENUMERATOR_TYPE: return createEnumeratorType();
 			case ComponentPackage.EXPOSE_PORT_TYPE: return createExposePortType();
 			case ComponentPackage.EXTENDS_TYPE: return createExtendsType();
 			case ComponentPackage.EXTENSION_TYPE_TYPE: return createExtensionTypeType();
@@ -267,86 +259,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public EntryType createEntryType() {
 		EntryTypeImpl entryType = new EntryTypeImpl();
 		return entryType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumerableComponentType createEnumerableComponentType() {
-		EnumerableComponentTypeImpl enumerableComponentType = new EnumerableComponentTypeImpl();
-		return enumerableComponentType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumerableEntryType createEnumerableEntryType() {
-		EnumerableEntryTypeImpl enumerableEntryType = new EnumerableEntryTypeImpl();
-		return enumerableEntryType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumerableType createEnumerableType() {
-		EnumerableTypeImpl enumerableType = new EnumerableTypeImpl();
-		return enumerableType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumerableUnitSliceType createEnumerableUnitSliceType() {
-		EnumerableUnitSliceTypeImpl enumerableUnitSliceType = new EnumerableUnitSliceTypeImpl();
-		return enumerableUnitSliceType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumerableUnitType createEnumerableUnitType() {
-		EnumerableUnitTypeImpl enumerableUnitType = new EnumerableUnitTypeImpl();
-		return enumerableUnitType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumeratorFromRecursionType createEnumeratorFromRecursionType() {
-		EnumeratorFromRecursionTypeImpl enumeratorFromRecursionType = new EnumeratorFromRecursionTypeImpl();
-		return enumeratorFromRecursionType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumeratorRefType createEnumeratorRefType() {
-		EnumeratorRefTypeImpl enumeratorRefType = new EnumeratorRefTypeImpl();
-		return enumeratorRefType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EnumeratorType createEnumeratorType() {
-		EnumeratorTypeImpl enumeratorType = new EnumeratorTypeImpl();
-		return enumeratorType;
 	}
 
 	/**

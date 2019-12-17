@@ -10,6 +10,7 @@ import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.quantifier.model.HQuantifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.frontend.kinds.tactical.model.HTacticalComponent;
 
@@ -34,6 +35,7 @@ public class HCertifierComponent extends HActivateComponent {
 	
     public boolean accepts(IComponent c) {
 	   	if (c instanceof HQualifierComponent) return true;
+    	if (c instanceof HQuantifierComponent) return true;
 	   	if (c instanceof HDataComponent) return true;
 	   	if (c instanceof HPlatformComponent) return true;
 	   	if (c instanceof HEnvironmentComponent) return true;

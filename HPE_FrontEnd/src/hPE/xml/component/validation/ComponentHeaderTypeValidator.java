@@ -26,6 +26,8 @@ public interface ComponentHeaderTypeValidator {
 	boolean validateVisualAttributes(VisualElementAttributes value);
 	boolean validateFacetConfiguration(EList<FacetConfigurationType> value);
 
+	boolean validateBoundValue(String value);
+
 	boolean validateHashComponentUID(String value);
 	boolean validateIsAbstract(boolean value);
 	boolean validateKind(SupportedKinds value);

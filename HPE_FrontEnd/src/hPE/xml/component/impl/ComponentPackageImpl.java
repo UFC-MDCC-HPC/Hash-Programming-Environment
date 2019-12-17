@@ -17,14 +17,6 @@ import hPE.xml.component.ComponentType;
 import hPE.xml.component.ConditionType;
 import hPE.xml.component.DocumentRoot;
 import hPE.xml.component.EntryType;
-import hPE.xml.component.EnumerableComponentType;
-import hPE.xml.component.EnumerableEntryType;
-import hPE.xml.component.EnumerableType;
-import hPE.xml.component.EnumerableUnitSliceType;
-import hPE.xml.component.EnumerableUnitType;
-import hPE.xml.component.EnumeratorFromRecursionType;
-import hPE.xml.component.EnumeratorRefType;
-import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExposePortType;
 import hPE.xml.component.ExtendsType;
 import hPE.xml.component.ExtensionTypeType;
@@ -153,62 +145,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass entryTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumerableComponentTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumerableEntryTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumerableTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumerableUnitSliceTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumerableUnitTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumeratorFromRecursionTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumeratorRefTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumeratorTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -803,8 +739,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getComponentBodyType_Enumerator() {
-		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(10);
+	public EAttribute getComponentBodyType_Enumerator() {
+		return (EAttribute)componentBodyTypeEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -884,7 +820,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_HashComponentUID() {
+	public EAttribute getComponentHeaderType_BoundValue() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -893,7 +829,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_IsAbstract() {
+	public EAttribute getComponentHeaderType_HashComponentUID() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -902,7 +838,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Kind() {
+	public EAttribute getComponentHeaderType_IsAbstract() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -911,7 +847,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_LocationURI() {
+	public EAttribute getComponentHeaderType_Kind() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -920,7 +856,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Name() {
+	public EAttribute getComponentHeaderType_LocationURI() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -929,8 +865,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_PackagePath() {
+	public EAttribute getComponentHeaderType_Name() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentHeaderType_PackagePath() {
+		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -1064,8 +1009,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Version() {
+	public EAttribute getComponentInUseType_QuantifierValue() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentInUseType_Version() {
+		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -1192,240 +1146,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EReference getEntryType_VisualDescription() {
 		return (EReference)entryTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumerableComponentType() {
-		return enumerableComponentTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumerableEntryType() {
-		return enumerableEntryTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableEntryType_CRef() {
-		return (EAttribute)enumerableEntryTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableEntryType_Index() {
-		return (EAttribute)enumerableEntryTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableEntryType_URef() {
-		return (EAttribute)enumerableEntryTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumerableType() {
-		return enumerableTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableType_Ref() {
-		return (EAttribute)enumerableTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumerableUnitSliceType() {
-		return enumerableUnitSliceTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableUnitSliceType_CRef() {
-		return (EAttribute)enumerableUnitSliceTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableUnitSliceType_SplitReplica() {
-		return (EAttribute)enumerableUnitSliceTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableUnitSliceType_SRef() {
-		return (EAttribute)enumerableUnitSliceTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumerableUnitSliceType_URef() {
-		return (EAttribute)enumerableUnitSliceTypeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumerableUnitType() {
-		return enumerableUnitTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumeratorFromRecursionType() {
-		return enumeratorFromRecursionTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumeratorFromRecursionType_CRef() {
-		return (EAttribute)enumeratorFromRecursionTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumeratorRefType() {
-		return enumeratorRefTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumeratorRefType_CRef() {
-		return (EAttribute)enumeratorRefTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEnumeratorType() {
-		return enumeratorTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumeratorType_OriginRef() {
-		return (EAttribute)enumeratorTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getEnumeratorType_Links() {
-		return (EReference)enumeratorTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getEnumeratorType_VisualDescription() {
-		return (EReference)enumeratorTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getEnumeratorType_FromRecursion() {
-		return (EReference)enumeratorTypeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumeratorType_Cardinality() {
-		return (EAttribute)enumeratorTypeEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumeratorType_FromSplit() {
-		return (EAttribute)enumeratorTypeEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumeratorType_Ref() {
-		return (EAttribute)enumeratorTypeEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEnumeratorType_VarId() {
-		return (EAttribute)enumeratorTypeEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -3294,7 +3014,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__RECURSIVE_ENTRY);
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__INTERFACE);
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__UNIT);
-		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__ENUMERATOR);
+		createEAttribute(componentBodyTypeEClass, COMPONENT_BODY_TYPE__ENUMERATOR);
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS);
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY);
 
@@ -3303,6 +3023,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__VERSIONS);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__FACET_CONFIGURATION);
+		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__BOUND_VALUE);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__IS_ABSTRACT);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__KIND);
@@ -3324,6 +3045,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__NAME);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PACKAGE);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PARAMETER_ID);
+		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__QUANTIFIER_VALUE);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__VERSION);
 
 		componentTypeEClass = createEClass(COMPONENT_TYPE);
@@ -3343,40 +3065,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		entryTypeEClass = createEClass(ENTRY_TYPE);
 		createEReference(entryTypeEClass, ENTRY_TYPE__VISUAL_DESCRIPTION);
-
-		enumerableComponentTypeEClass = createEClass(ENUMERABLE_COMPONENT_TYPE);
-
-		enumerableEntryTypeEClass = createEClass(ENUMERABLE_ENTRY_TYPE);
-		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__CREF);
-		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__INDEX);
-		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__UREF);
-
-		enumerableTypeEClass = createEClass(ENUMERABLE_TYPE);
-		createEAttribute(enumerableTypeEClass, ENUMERABLE_TYPE__REF);
-
-		enumerableUnitSliceTypeEClass = createEClass(ENUMERABLE_UNIT_SLICE_TYPE);
-		createEAttribute(enumerableUnitSliceTypeEClass, ENUMERABLE_UNIT_SLICE_TYPE__CREF);
-		createEAttribute(enumerableUnitSliceTypeEClass, ENUMERABLE_UNIT_SLICE_TYPE__SPLIT_REPLICA);
-		createEAttribute(enumerableUnitSliceTypeEClass, ENUMERABLE_UNIT_SLICE_TYPE__SREF);
-		createEAttribute(enumerableUnitSliceTypeEClass, ENUMERABLE_UNIT_SLICE_TYPE__UREF);
-
-		enumerableUnitTypeEClass = createEClass(ENUMERABLE_UNIT_TYPE);
-
-		enumeratorFromRecursionTypeEClass = createEClass(ENUMERATOR_FROM_RECURSION_TYPE);
-		createEAttribute(enumeratorFromRecursionTypeEClass, ENUMERATOR_FROM_RECURSION_TYPE__CREF);
-
-		enumeratorRefTypeEClass = createEClass(ENUMERATOR_REF_TYPE);
-		createEAttribute(enumeratorRefTypeEClass, ENUMERATOR_REF_TYPE__CREF);
-
-		enumeratorTypeEClass = createEClass(ENUMERATOR_TYPE);
-		createEAttribute(enumeratorTypeEClass, ENUMERATOR_TYPE__ORIGIN_REF);
-		createEReference(enumeratorTypeEClass, ENUMERATOR_TYPE__LINKS);
-		createEReference(enumeratorTypeEClass, ENUMERATOR_TYPE__VISUAL_DESCRIPTION);
-		createEReference(enumeratorTypeEClass, ENUMERATOR_TYPE__FROM_RECURSION);
-		createEAttribute(enumeratorTypeEClass, ENUMERATOR_TYPE__CARDINALITY);
-		createEAttribute(enumeratorTypeEClass, ENUMERATOR_TYPE__FROM_SPLIT);
-		createEAttribute(enumeratorTypeEClass, ENUMERATOR_TYPE__REF);
-		createEAttribute(enumeratorTypeEClass, ENUMERATOR_TYPE__VAR_ID);
 
 		exposePortTypeEClass = createEClass(EXPOSE_PORT_TYPE);
 		createEAttribute(exposePortTypeEClass, EXPOSE_PORT_TYPE__CREF);
@@ -3663,10 +3351,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		enumerableComponentTypeEClass.getESuperTypes().add(this.getEnumerableType());
-		enumerableEntryTypeEClass.getESuperTypes().add(this.getEnumerableType());
-		enumerableUnitSliceTypeEClass.getESuperTypes().add(this.getEnumerableType());
-		enumerableUnitTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		guardConditionTypeEClass.getESuperTypes().add(this.getGuardType());
 		innerComponentTypeEClass.getESuperTypes().add(this.getComponentInUseType());
 		protocolCombinatorTypeEClass.getESuperTypes().add(this.getProtocolType());
@@ -3696,7 +3380,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentBodyType_RecursiveEntry(), this.getRecursiveEntryType(), null, "recursiveEntry", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentBodyType_Interface(), this.getInterfaceType(), null, "interface", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentBodyType_Unit(), this.getUnitType(), null, "unit", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getComponentBodyType_Enumerator(), this.getEnumeratorType(), null, "enumerator", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentBodyType_Enumerator(), theXMLTypePackage.getString(), "enumerator", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentBodyType_FusionsOfReplicators(), this.getFusionsOfReplicatorsType(), null, "fusionsOfReplicators", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentBodyType_ExternalLibrary(), this.getExternalLibraryType(), null, "externalLibrary", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
@@ -3705,6 +3389,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentHeaderType_Versions(), this.getVersionType(), null, "versions", null, 1, -1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentHeaderType_VisualAttributes(), this.getVisualElementAttributes(), null, "visualAttributes", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentHeaderType_FacetConfiguration(), this.getFacetConfigurationType(), null, "facetConfiguration", null, 0, -1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentHeaderType_BoundValue(), theXMLTypePackage.getString(), "boundValue", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_IsAbstract(), theXMLTypePackage.getBoolean(), "isAbstract", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Kind(), this.getSupportedKinds(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3726,6 +3411,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getComponentInUseType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Package(), theXMLTypePackage.getString(), "package", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_ParameterId(), theXMLTypePackage.getString(), "parameterId", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentInUseType_QuantifierValue(), theXMLTypePackage.getString(), "quantifierValue", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Version(), theXMLTypePackage.getID(), "version", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(componentTypeEClass, ComponentType.class, "ComponentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3745,40 +3431,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(entryTypeEClass, EntryType.class, "EntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEntryType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, EntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(enumerableComponentTypeEClass, EnumerableComponentType.class, "EnumerableComponentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(enumerableEntryTypeEClass, EnumerableEntryType.class, "EnumerableEntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnumerableEntryType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumerableEntryType_Index(), theXMLTypePackage.getInt(), "index", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumerableEntryType_URef(), theXMLTypePackage.getString(), "uRef", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(enumerableTypeEClass, EnumerableType.class, "EnumerableType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnumerableType_Ref(), theXMLTypePackage.getString(), "ref", null, 1, 1, EnumerableType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(enumerableUnitSliceTypeEClass, EnumerableUnitSliceType.class, "EnumerableUnitSliceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnumerableUnitSliceType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, EnumerableUnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumerableUnitSliceType_SplitReplica(), theXMLTypePackage.getInt(), "splitReplica", null, 0, 1, EnumerableUnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumerableUnitSliceType_SRef(), theXMLTypePackage.getString(), "sRef", null, 0, 1, EnumerableUnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumerableUnitSliceType_URef(), theXMLTypePackage.getString(), "uRef", null, 1, 1, EnumerableUnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(enumerableUnitTypeEClass, EnumerableUnitType.class, "EnumerableUnitType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(enumeratorFromRecursionTypeEClass, EnumeratorFromRecursionType.class, "EnumeratorFromRecursionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnumeratorFromRecursionType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, EnumeratorFromRecursionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(enumeratorRefTypeEClass, EnumeratorRefType.class, "EnumeratorRefType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnumeratorRefType_CRef(), theXMLTypePackage.getString(), "cRef", null, 1, 1, EnumeratorRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(enumeratorTypeEClass, EnumeratorType.class, "EnumeratorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnumeratorType_OriginRef(), theXMLTypePackage.getString(), "originRef", null, 0, -1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEnumeratorType_Links(), this.getEnumerableType(), null, "links", null, 1, -1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEnumeratorType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEnumeratorType_FromRecursion(), this.getEnumeratorFromRecursionType(), null, "fromRecursion", null, 0, 1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumeratorType_Cardinality(), theXMLTypePackage.getInt(), "cardinality", null, 0, 1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumeratorType_FromSplit(), theXMLTypePackage.getBoolean(), "fromSplit", null, 1, 1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumeratorType_Ref(), theXMLTypePackage.getString(), "ref", null, 1, 1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumeratorType_VarId(), theXMLTypePackage.getString(), "varId", "*", 0, 1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(exposePortTypeEClass, ExposePortType.class, "ExposePortType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getExposePortType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, ExposePortType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4036,12 +3688,12 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENVIRONMENT);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.QUALIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.APPLICATION);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENUMERATOR);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.QUANTIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.BINDING);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TOPOLOGY);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SYSTEM);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.CERTIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TACTICAL);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.CERTIFIER);
 
 		initEEnum(varianceTypeEEnum, VarianceType.class, "VarianceType");
 		addEEnumLiteral(varianceTypeEEnum, VarianceType.COVARIANT);
@@ -4264,6 +3916,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "facet_configuration"
 		   });	
 		addAnnotation
+		  (getComponentHeaderType_BoundValue(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "bound_value"
+		   });	
+		addAnnotation
 		  (getComponentHeaderType_HashComponentUID(), 
 		   source, 
 		   new String[] {
@@ -4404,6 +4063,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "parameter_id"
 		   });	
 		addAnnotation
+		  (getComponentInUseType_QuantifierValue(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "quantifier_value"
+		   });	
+		addAnnotation
 		  (getComponentInUseType_Version(), 
 		   source, 
 		   new String[] {
@@ -4509,188 +4175,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });	
-		addAnnotation
-		  (enumerableComponentTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumerableComponentType",
-			 "kind", "empty"
-		   });	
-		addAnnotation
-		  (enumerableEntryTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumerableEntryType",
-			 "kind", "empty"
-		   });	
-		addAnnotation
-		  (getEnumerableEntryType_CRef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "cRef"
-		   });	
-		addAnnotation
-		  (getEnumerableEntryType_Index(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "index"
-		   });	
-		addAnnotation
-		  (getEnumerableEntryType_URef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "uRef"
-		   });	
-		addAnnotation
-		  (enumerableTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumerableType",
-			 "kind", "empty"
-		   });	
-		addAnnotation
-		  (getEnumerableType_Ref(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "ref"
-		   });	
-		addAnnotation
-		  (enumerableUnitSliceTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumerableUnitSliceType",
-			 "kind", "empty"
-		   });	
-		addAnnotation
-		  (getEnumerableUnitSliceType_CRef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "cRef"
-		   });	
-		addAnnotation
-		  (getEnumerableUnitSliceType_SplitReplica(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "splitReplica"
-		   });	
-		addAnnotation
-		  (getEnumerableUnitSliceType_SRef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "sRef"
-		   });	
-		addAnnotation
-		  (getEnumerableUnitSliceType_URef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "uRef"
-		   });	
-		addAnnotation
-		  (enumerableUnitTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumerableUnitType",
-			 "kind", "empty"
-		   });	
-		addAnnotation
-		  (enumeratorFromRecursionTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumeratorFromRecursionType",
-			 "kind", "empty"
-		   });	
-		addAnnotation
-		  (getEnumeratorFromRecursionType_CRef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "cRef"
-		   });	
-		addAnnotation
-		  (enumeratorRefTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumeratorRefType",
-			 "kind", "empty"
-		   });	
-		addAnnotation
-		  (getEnumeratorRefType_CRef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "cRef"
-		   });	
-		addAnnotation
-		  (enumeratorTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "EnumeratorType",
-			 "kind", "elementOnly"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_OriginRef(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "originRef"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_Links(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "links"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_VisualDescription(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "visualDescription"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_FromRecursion(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "fromRecursion"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_Cardinality(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "cardinality"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_FromSplit(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "fromSplit"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_Ref(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "ref"
-		   });	
-		addAnnotation
-		  (getEnumeratorType_VarId(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "varId"
 		   });	
 		addAnnotation
 		  (exposePortTypeEClass, 
